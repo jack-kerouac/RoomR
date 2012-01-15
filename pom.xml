@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>de.iws</groupId>
+	<artifactId>livingroom</artifactId>
+	<packaging>war</packaging>
+	<version>1.0-SNAPSHOT</version>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.6</java.version>
+
+		<!-- PLATFORM -->
+		<!-- Specify AppEngine version for your project. It should match SDK version pointed to by ${gae.home} property (Typically, 
+			one used by your Eclipse plug-in) -->
+		<gae.version>1.6.0</gae.version>
+
+		<!-- DI -->
+		<guice.version>3.0</guice.version>
+
+		<!-- STORAGE -->
+		<twig.version>1.0.4</twig.version>
+
+		<!-- UI -->
+
+
+		<!-- LOGGING -->
+		<slf4j.version>[1.6, 1.7)</slf4j.version>
+		<logback.version>[0.9, 1.0)</logback.version>
+
+		<!-- UTIL -->
+		<guava.version>10.0.1</guava.version>
+		<joda-money.version>0.6</joda-money.version>
+		<joda-time.version>[2.0, 2.1)</joda-time.version>
+
+
+		<!-- TEST -->
+		<junit.version>[4.0, 5.0)</junit.version>
+		<mockito.version>[1.8, 1.9)</mockito.version>
+
+		<!-- Upload to http://test.latest.<applicationName>.appspot.com by default -->
+		<gae.application.version>test</gae.application.version>
+
+		<!-- port defaults to 8080 -->
+		<gae.port>8080</gae.port>
+	</properties>
+
+
+	<repositories>
+		<!-- <repository> -->
+		<!-- <id>objectify-appengine</id> -->
+		<!-- <url>http://objectify-appengine.googlecode.com/svn/maven</url> -->
+		<!-- </repository> -->
+		<repository>
+			<id>twig</id>
+			<url>http://mvn.twig-persist.googlecode.com/hg</url>
+		</repository>
+	</repositories>
+
+	<dependencies>
+
+		<!-- PLATFORM -->
+
+		<dependency>
+			<groupId>com.google.appengine</groupId>
+			<artifactId>appengine-api-1.0-sdk</artifactId>
+			<version>${gae.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.appengine</groupId>
+			<artifactId>appengine-tools-sdk</artifactId>
+			<version>${gae.version}</version>
+		</dependency>
+
+
+		<!-- DI -->
+
+		<dependency>
+			<groupId>com.google.inject</groupId>
+			<artifactId>guice</artifactId>
+			<version>${guice.version}</version>
+		</dependency>
+
+		<!-- STORAGE -->
+
+		<dependency>
+			<groupId>com.vercer.engine.persist</groupId>
+			<artifactId>twig-persist</artifactId>
+			<version>${twig.version}</version>
+		</dependency>
+
+
+		<!-- UI -->
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		
+
+		<!-- MVC -->
+
+		<dependency>
+			<groupId>org.zdevra</groupId>
+			<artifactId>lime</artifactId>
+			<version>0.2.0.rc2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.sitemesh</groupId>
+			<artifactId>sitemesh</artifactId>
+			<version>3.0-alpha-2</version>
+		</dependency>
+
+
+		<!-- LOGGING -->
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+
+		<!-- This bridges Jakarta Commons Logging (JCL) to use the SLF4J-API. It is required, since JCL is an optional dependency 
+			of springframework.test. A JUnit-Test using ReflectionTestUtils fails when this dependency (or JCL) is not on the classpath. -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${slf4j.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- this bridges java.util.logging to use SLF4J-API. To install this bridge, the following call in the code is required: 
+			SLF4JBridgeHandler.install(); see more on this here: http://blog.cn-consult.dk/2009/03/bridging-javautillogging-to-slf4j.html -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jul-to-slf4j</artifactId>
+			<version>${slf4j.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+
+
+		<!-- UTIL -->
+
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>${guava.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.joda</groupId>
+			<artifactId>joda-money</artifactId>
+			<version>${joda-money.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>${joda-time.version}</version>
+		</dependency>
+
+
+		<!-- TEST -->
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.easytesting</groupId>
+			<artifactId>fest-assert</artifactId>
+			<version>1.4</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- GAE libraries for local testing as described here: http://code.google.com/appengine/docs/java/howto/unittesting.html -->
+		<dependency>
+			<groupId>com.google.appengine</groupId>
+			<artifactId>appengine-api-labs</artifactId>
+			<version>${gae.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.appengine</groupId>
+			<artifactId>appengine-api-stubs</artifactId>
+			<version>${gae.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.appengine</groupId>
+			<artifactId>appengine-testing</artifactId>
+			<version>${gae.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>${mockito.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+
+
+
+	<build>
+		<finalName>livingroom</finalName>
+
+		<plugins>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>net.kindleit</groupId>
+				<artifactId>maven-gae-plugin</artifactId>
+				<version>0.9.2</version>
+				<dependencies>
+					<!-- <dependency> -->
+					<!-- <groupId>net.kindleit</groupId> -->
+					<!-- <artifactId>gae-runtime</artifactId> -->
+					<!-- <version>${gae.version}</version> -->
+					<!-- <type>pom</type> -->
+					<!-- </dependency> -->
+					<dependency>
+						<groupId>com.google.appengine</groupId>
+						<artifactId>appengine-tools-sdk</artifactId>
+						<version>${gae.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>com.google.appengine</groupId>
+						<artifactId>appengine-api-1.0-sdk</artifactId>
+						<version>${gae.version}</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<serverId>appengine.google.com</serverId>
+					<appDir>${basedir}/target/${project.build.finalName}</appDir>
+				</configuration>
+			</plugin>
+		
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<configuration>
+					<scanIntervalSeconds>1</scanIntervalSeconds>
+					<webAppConfig>
+						<contextPath>/</contextPath>
+					</webAppConfig>
+				</configuration>
+			</plugin>
+
+
+		</plugins>
+
+	</build>
+
+	<profiles>
+
+		<!-- We can configure our integration server to activate this profile and perform gae:deploy, thus uploading latest snapshot 
+			to the http://1.latest.<applicationName>.appspot.com automatically -->
+		<profile>
+			<id>integration-build</id>
+			<properties>
+				<gae.application.version>stage</gae.application.version>
+
+				<!-- Produce pretty JS during GWT compilation for test environment -->
+				<gwt.style>PRETTY</gwt.style>
+			</properties>
+		</profile>
+
+		<!-- This profile will activate automatically during release and upload application to the http://2.latest.<applicationName>.appspot.com 
+			(We might want to set the 2nd version as our applications Default version to be accessible at http://<applicationName>.appspot.com) -->
+		<profile>
+			<id>release-build</id>
+			<activation>
+				<property>
+					<name>performRelease</name>
+					<value>true</value>
+				</property>
+			</activation>
+
+			<properties>
+				<!-- During release, set application version in appengine-web.xml to 2 -->
+				<gae.application.version>release</gae.application.version>
+
+				<!-- Produce compressed JS during GWT compilation for production environment -->
+				<gwt.style>OBFUSCATED</gwt.style>
+			</properties>
+		</profile>
+	</profiles>
+
+</project>
+

@@ -1,0 +1,139 @@
+<%@ page pageEncoding="utf-8" %>
+
+<html>
+<head>
+	<title>create offer</title>
+</head>
+<body>
+	<h1>Ein WG-Zimmer finden</h1>
+	<div id="form_container">
+		<form id="create_offer_form" method="post" action="requests">
+			
+			<fieldset id="request1" class="step">
+				<legend>WG-Suche (1/3) - Essentials</legend>
+				
+				<fieldset id="livingPeriod_price_size">
+					<legend>Zeit, Preis und Größe</legend>	
+					
+					<div class="radiobuttongrouplabel">Suche Zimmer ab:</div>
+					<ul class="radiolist">
+						<li>
+							<input type="radio" name="livingPeriod" value="fromNowOn" id="livingPeriod_fromNowOn" checked="checked"/>
+							<label for="livingPeriod_fromNowOn" class="radiobuttonlabel">ab sofort</label>
+						</li>
+						
+						<li>
+							<input type="radio" name="livingPeriod" value="startDate" id="livingPeriod_startDate"/>
+							<label for="livingPeriod_startDate" class="radiobuttonlabel">ab <input name="startDate" type="date"/></label>
+						</li>
+						
+						<li>
+							<input type="radio" name="livingPeriod" value="limitedPeriod" id="livingPeriod_limitedPeriod">
+							<label for="livingPeriod_limitedPeriod" class="radiobuttonlabel">
+								von <input id="fromDate" name="fromDate" type="date">
+								bis <input id="toDate" name="toDate" type="date">
+							</label>
+						</li>
+					</ul>
+	
+					<label for="maxrent">Kosten soll das pro Monat maximal</label>
+					<input id="maxrent" name="maxrent" type="text"> €
+	
+					<label for="minroomsize">das Zimmer soll mindestens so groß sein: </label>
+					<input id="minroomsize" name="minroomsize" type="text"> m²
+				</fieldset>
+				
+				
+				<fieldset id="room_mates">
+					<legend>Mitbewohner</legend>
+					
+					<label for="max_size">Maximale WG-Größe</label>
+					<input id="max_size" name="max_size" type="number">
+
+					<div class="radiobuttongrouplabel">Zusammensetzung</div>
+					<ul class="radiolist">
+						<li>
+							<input type="radio" name="mixture" value="only_female" id="mixture_only_female"/>
+							<label for="mixture_only_female" class="radiobuttonlabel">Nur Frauen</label>
+						</li>
+						
+						<li>
+							<input type="radio" name="mixture" value="only_male" id="mixture_only_male"/>
+							<label for="mixture_only_male" class="radiobuttonlabel">Nur Männer</label>
+						</li>
+						
+						<li>
+							<input type="radio" name="mixture" value="whatever" id="mixture_whatever">
+							<label for="mixture_whatever" class="radiobuttonlabel">Egal</label>
+						</li>
+					</ul>
+				</fieldset>
+			</fieldset>
+			
+			<fieldset id="location" class="step">
+				<legend>WG-Suche (2/3) - Lage</legend>
+				
+				<fieldset id="quarters">
+					<legend>Stadtviertel</legend>
+
+					<fieldset id="city_center">
+						<legend>Zentrum</legend>
+						<ul class="checkboxlist">
+							<li>
+								<input type="checkbox" name="quarter" value="Lehel" id="Lehel">
+								<label for="Lehel">Lehel</label>
+							</li>
+							<li>
+								<input type="checkbox" name="quarter" value="Ludwigvorstadt" id="Ludwigvorstadt">
+								<label for="Ludwigvorstadt">Ludwigvorstadt</label>
+							</li>
+							<li>
+								<input type="checkbox" name="quarter" value="Maxvorstadt" id="Maxvorstadt">
+								<label for="Maxvorstadt">Maxvorstadt</label>
+							</li>
+							<li>
+								<input type="checkbox" name="quarter" value="Haidhausen" id="Haidhausen">
+								<label for="Haidhausen">Haidhausen</label>
+							</li>
+							<li>
+								<input type="checkbox" name="quarter" value="Schwanthalerhöhe" id="Schwanthalerhöhe">
+								<label for="Schwanthalerhöhe">Schwanthalerhöhe</label>
+							</li>
+						</ul>
+					</fieldset>
+					
+					<fieldset id="city_north">
+						<legend>Nord</legend>
+						<input type="checkbox" name="quarter" value="Schwabing">Schwabing
+						<input type="checkbox" name="quarter" value="Schwabing West">Schwabing West
+						<input type="checkbox" name="quarter" value="Milbertshofen">Milbertshofen
+						<input type="checkbox" name="quarter" value="Feldmoching">Feldmoching
+					</fieldset>
+				</fieldset>
+				
+				<fieldset id="transportation">
+					<legend>Öffentliche Verkehrsmittel</legend>
+					<div>Innerhalb von <input id="minutes_to_walk" name="minutes_to_walk" type="number"> Gehminuten bei der</div>
+
+					<input type="checkbox" name="transport_line" value="U1">U1<br/>
+					<input type="checkbox" name="transport_line" value="U2">U2<br/>
+					<input type="checkbox" name="transport_line" value="S1">S1<br/>
+					<input type="checkbox" name="transport_line" value="S2">S2<br/>
+				</fieldset>
+				
+			</fieldset>
+			
+			<fieldset id="register" class="step">
+				<legend>WG-Suche (3/3) - Über mich</legend>
+				
+				<fb:registration fields="name,birthday,gender,location,email"
+					redirect-uri="https://developers.facebook.com/tools/echo/" width="530"></fb:registration>
+			</fieldset>
+		
+			<input type="reset">
+			<input type="submit">
+			
+		</form>
+	</div>
+</body>
+</html>
