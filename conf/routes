@@ -1,0 +1,25 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                                       Application.index
+
+# Ignore favicon requests
+GET     /favicon.ico                            404
+
+# Map static resources from the /app/public folder to the /public path
+GET     /public/                                staticDir:public
+
+# create room offers
+GET		/createOffer							Application.createOffer
+
+# create room offers
+GET		/createRequest							Application.createRequest
+
+# create room offers
+POST		/requests							Requests.create
+
+
+# Catch all
+*       /{controller}/{action}                  {controller}.{action}
