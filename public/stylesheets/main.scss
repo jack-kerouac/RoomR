@@ -263,8 +263,6 @@ td { vertical-align: top; }
 }
 
 
-
-
 /* for first step */
 
 #maxrent {
@@ -281,12 +279,12 @@ td { vertical-align: top; }
 /* for third step */
 
 
-
+$headlineColor: #60a4ca;
 
 /* CONTENT */
 
 h1 {
-	color: #60a4ca;
+	color: $headlineColor;
 }
 
 
