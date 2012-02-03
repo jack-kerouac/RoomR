@@ -12,7 +12,8 @@ public final class Location {
 	private Address address;
 
 	@SuppressWarnings("unused")
-	private Location() {}
+	private Location() {
+	}
 
 	public Location(String quarter, Address address) {
 		super();
@@ -24,13 +25,22 @@ public final class Location {
 		return quarter;
 	}
 
+	public void setQuarter(String quarter) {
+		this.quarter = quarter;
+	}
+
 	public Address getAddress() {
 		return address;
 	}
 
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
 	@Override
 	public String toString() {
-		return Objects.toStringHelper(this).add("quarter", quarter).add("address", address).toString();
+		return Objects.toStringHelper(this).add("quarter", quarter)
+				.add("address", address).toString();
 	}
 
 }

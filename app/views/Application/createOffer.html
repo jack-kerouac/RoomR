@@ -3,6 +3,7 @@
 
 #{set 'moreScripts'}
     #{get 'moreScripts' /}
+    #{script 'libs/play-jqvalidate.min.js' /}
 <script type="text/javascript">
 	$(document).ready(function() {
 		
@@ -48,10 +49,19 @@
 
 
 <h1>Create offer</h1>
-<form id="createOfferForm" method="post" action="offers">
+
+#{jqvalid.form @Offers.createOffer(), id: 'createOfferForm'}
 	<fieldset id="location" class="step">
-		<label for="quarter">Quarter</label>
-		<input id="quarter" name="quarter" type="text">
+		${offer}
+		${offer.location}
+		${offer.location.quarter}
+	
+		#{jqvalid.field 'offer.location.quarter'}
+			<label for="${field.id}">&{field.name}</label>
+			<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}">
+			<span class="error">${field.error}</span>
+		#{/}
+	
 		<fieldset id="address">
 			<label for="street">Street</label>
 			<input id="street" name="street" type="text">
@@ -73,4 +83,4 @@
 	</fieldset>
 	<input type="submit">
 	<input type="reset">
-</form>
+#{/jqvalid.form}

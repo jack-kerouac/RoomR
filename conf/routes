@@ -13,11 +13,12 @@ GET     /public/                                staticDir:public
 
 # create room offers
 GET		/createOffer							Application.createOffer
+POST	/offers									Offers.createOffer
 
 # create room offers
 GET		/createRequest							Application.createRequest
 
-# create room offers
+# create room request
 POST		/requests							Requests.create
 
 
