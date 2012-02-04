@@ -1,7 +1,7 @@
 /* Author: Florian Rampp */
 
 $(document).ready(function () {
-	$("#create_offer_form").formwizard({
+	$("#create_request_form").formwizard({
 		formPluginEnabled : false,
 		validationEnabled : false,
 		historyEnabled : true,

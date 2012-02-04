@@ -212,7 +212,13 @@ td { vertical-align: top; }
 /* ==|== primary styles =====================================================
    ========================================================================== */
 
-@import "custom";
+/* DO NOT USE THE SHORT NOTATION '@import "layout";' here, since then, reloading does not work, see: http://groups.google.com/group/play-framework/browse_thread/thread/7779c863216ea08e */
+@import "_layout.scss";
+@import "_general.scss";
+
+@import "_start.scss";
+@import "_createOffer.scss";
+@import "_createRequest.scss";
 
 /* ==|== non-semantic helper classes ===================== ===================
    Please define your styles before this section.

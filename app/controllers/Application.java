@@ -16,7 +16,7 @@ import play.mvc.Controller;
 
 public class Application extends Controller {
 
-	public static void index() {
+	public static void start() {
 		render();
 	}
 

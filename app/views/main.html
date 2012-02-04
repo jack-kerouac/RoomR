@@ -12,7 +12,7 @@
 	More info: h5bp.com/b/378 -->
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	
-	<title>#{get 'title' /}</title>
+	<title>RoomR - #{get 'title' /}</title>
 	<meta name="description" content="BLABLA">
 	<meta name="author" content="Florian Rampp">
 	
@@ -39,8 +39,8 @@
 </head>
 
 <body>
-	<header>Munich Living #{get 'title' /}</header>
-	<div id="main" role="main">
+	<header>RoomR - #{get 'title' /}</header>
+	<div id="content" role="main">
         #{doLayout /}
 	</div>
 	<footer>A custom footer, ... copyright, blabla</footer>
@@ -59,7 +59,7 @@
 		Modernizr.load([
 			// Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline
 			{
-				load: '//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js',
+				load: '//ajax.googleapis.cfromDateom/ajax/libs/jquery/1.6.2/jquery.min.js',
 				complete: function() {
 					if (!window.jQuery) {
 						Modernizr.load("@{'/public/javascripts/libs/jquery-1.6.2.min.js'}");

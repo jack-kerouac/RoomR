@@ -1,0 +1,25 @@
+$column-width: $content-width / 2;
+
+$column-padding: 10px;
+
+
+#seeker_panel, #offerer_panel {
+	width: $column-width - 2 * $column-padding;
+	padding: $column-padding;
+	
+	text-align: center;
+}
+
+
+
+#seeker_panel {
+	float: left;
+	
+	background-color: white;
+}
+
+#offerer_panel {
+	margin-left: $column-width - 2 * $column-padding + $content-padding;
+
+	background-color: white;
+}

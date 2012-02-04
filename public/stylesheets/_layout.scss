@@ -1,0 +1,41 @@
+/* LAYOUT */
+
+/* more info on using the body tag to change site width here: http://www.sitepoint.com/styling-the-html-and-body-elements/ */
+
+$overall-width: 1000px;
+$content-padding: 20px;
+$content-width: $overall-width - 2 * $content-padding;
+
+html {  
+	background-color: #333;
+}
+
+
+body {
+	position: relative;
+	background-color: #fff;
+	width: $overall-width;
+	margin: 0 auto;
+}
+
+header {
+	color: white;
+	background-color: #60a4ca;
+
+	padding: 10px;
+}
+
+
+#content {
+	min-height: 100%;
+	
+	padding: $content-padding;
+	height: 100%;
+}
+
+footer {
+	color: white;
+	background-color: #60a4ca;
+	
+	padding: 10px;
+}
