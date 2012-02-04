@@ -11,8 +11,7 @@ public final class Location {
 
 	private Address address;
 
-	@SuppressWarnings("unused")
-	private Location() {
+	public Location() {
 	}
 
 	public Location(String quarter, Address address) {

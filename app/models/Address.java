@@ -8,7 +8,7 @@ public final class Address {
 	private String city;
 
 	@SuppressWarnings("unused")
-	private Address() {
+	public Address() {
 	}
 
 	public Address(String street, int streetNumber, int zipCode, String city) {

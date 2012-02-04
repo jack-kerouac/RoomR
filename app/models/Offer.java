@@ -1,7 +1,7 @@
 package models;
 
-import com.google.appengine.repackaged.com.google.common.base.Objects;
 import com.google.code.twig.annotation.Id;
+import com.google.common.base.Objects;
 
 public final class Offer {
 	@Id
@@ -11,9 +11,7 @@ public final class Offer {
 
 	private RoomDetails roomDetails;
 
-	@SuppressWarnings("unused")
-	private Offer() {
-	}
+	public Offer() {}
 
 	public Offer(Location location, RoomDetails roomDetails) {
 		this.location = location;
@@ -28,17 +26,16 @@ public final class Offer {
 		this.location = location;
 	}
 
-//	public RoomDetails getRoomDetails() {
-//		return roomDetails;
-//	}
-//
-//	public void setRoomDetails(RoomDetails roomDetails) {
-//		this.roomDetails = roomDetails;
-//	}
+	public RoomDetails getRoomDetails() {
+		return roomDetails;
+	}
+
+	public void setRoomDetails(RoomDetails roomDetails) {
+		this.roomDetails = roomDetails;
+	}
 
 	@Override
 	public String toString() {
-		return Objects.toStringHelper(this).add("location", location)
-				.add("room details", roomDetails).toString();
+		return Objects.toStringHelper(this).add("location", location).add("roomDetails", roomDetails).toString();
 	}
 }

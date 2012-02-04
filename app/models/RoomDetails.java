@@ -20,7 +20,7 @@ public final class RoomDetails {
 	private double rentAmount;
 
 	@SuppressWarnings("unused")
-	private RoomDetails() {}
+	public RoomDetails() {}
 
 	public RoomDetails(Interval freePeriod, Money rent) {
 		super();
@@ -30,6 +30,14 @@ public final class RoomDetails {
 		Preconditions.checkArgument(rent.getCurrencyUnit() == DEFAULT_CURRENCY, "only " + DEFAULT_CURRENCY
 				+ " is supported as currency");
 		this.rentAmount = rent.getAmount().doubleValue();
+	}
+	
+	public void setFreePeriodStart(Date freePeriodStart) {
+		this.freePeriodStart = freePeriodStart;
+	}
+	
+	public void setFreePeriodEnd(Date freePeriodEnd) {
+		this.freePeriodEnd = freePeriodEnd;
 	}
 
 	public Interval getFreePeriod() {

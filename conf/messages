@@ -1,3 +1,13 @@
 # You can specialize this file for each language.
 # For example, for French create a messages.fr file
 #
+
+
+offer.location.quarter=Quarter
+offer.location.address.street=Street
+offer.location.address.streetNumber=Street number
+offer.location.address.zipCode=ZIP code
+offer.location.address.city=City
+offer.roomDetails.freePeriodStart=From
+offer.roomDetails.freePeriodEnd=To
+offer.roomDetails.rent=Rent
