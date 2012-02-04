@@ -1,15 +1,18 @@
 package models;
 
-public final class Address {
+import play.data.validation.Max;
+import play.data.validation.Required;
 
+public final class Address {
+	@Required
 	private String street;
+	@Max(10)
 	private int streetNumber;
 	private int zipCode;
 	private String city;
 
 	@SuppressWarnings("unused")
-	public Address() {
-	}
+	public Address() {}
 
 	public Address(String street, int streetNumber, int zipCode, String city) {
 		super();

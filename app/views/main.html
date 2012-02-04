@@ -62,7 +62,7 @@
 				load: '//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js',
 				complete: function() {
 					if (!window.jQuery) {
-						Modernizr.load('js/libs/jquery-1.6.2.min.js');
+						Modernizr.load("@{'/public/javascripts/libs/jquery-1.6.2.min.js'}");
 					}
 				}
 			},

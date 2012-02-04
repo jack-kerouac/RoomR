@@ -1,14 +1,18 @@
 package models;
 
+import play.data.validation.Email;
+import play.data.validation.MaxSize;
+import play.data.validation.Required;
+import play.data.validation.Valid;
+
 import com.google.appengine.repackaged.com.google.common.base.Objects;
 
 public final class Location {
 
-	/**
-	 * MAXLENGTH: 20
-	 */
-	private String quarter;
+	@MaxSize(3)
+	public String quarter;
 
+	@Valid
 	private Address address;
 
 	public Location() {
