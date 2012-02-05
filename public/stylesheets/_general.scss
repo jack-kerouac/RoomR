@@ -17,3 +17,9 @@ $headlineColor: #60a4ca;
 h1 {
 	color: $headlineColor;
 }
+
+
+.hasError {
+	background-color: red;
+	color: white;
+}

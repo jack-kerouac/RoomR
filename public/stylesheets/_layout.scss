@@ -1,23 +1,21 @@
-/* LAYOUT */
-
-/* more info on using the body tag to change site width here: http://www.sitepoint.com/styling-the-html-and-body-elements/ */
 
 $overall-width: 1000px;
 $content-padding: 20px;
+
 $content-width: $overall-width - 2 * $content-padding;
 
 html {  
 	background-color: #333;
 }
 
-
+/* more info on using the body tag to change site width here: http://www.sitepoint.com/styling-the-html-and-body-elements/ */
 body {
 	position: relative;
 	background-color: #fff;
 	width: $overall-width;
 	margin: 0 auto;
 	
-	box-shadow:         3px 2px 5px 0px #222;
+	box-shadow: 3px 2px 5px 0px #222;
 }
 
 header {
