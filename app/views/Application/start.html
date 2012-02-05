@@ -2,8 +2,8 @@
 #{set title:'Start' /}
 
 <div id="seeker_panel">
-    <a href="createRequest">Du willst eine WG finden?</a>
+   #{a @Application.createRequest()}Du willst eine WG finden?#{/a}
 </div>
 <div id="offerer_panel">
-    <a href="@{Application.createOffer()}">Du willst einen neuen Mitbewohner finden?</a>
+    #{a @Application.createOffer()}Du willst einen neuen Mitbewohner finden?#{/a}
 </div>
