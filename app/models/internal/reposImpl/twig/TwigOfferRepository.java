@@ -9,26 +9,32 @@ import models.OfferRepository;
 import com.google.appengine.repackaged.com.google.common.collect.ImmutableSet;
 import com.google.code.twig.ObjectDatastore;
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 
 public class TwigOfferRepository implements OfferRepository {
 
-	private final ObjectDatastore datastore;
+	private final Provider<ObjectDatastore> datastoreProvider;
 
 	@Inject
-	public TwigOfferRepository(ObjectDatastore datastore) {
+	public TwigOfferRepository(Provider<ObjectDatastore> datastoreProvider) {
 		super();
-		this.datastore = datastore;
+		this.datastoreProvider = datastoreProvider;
 	}
 
 	@Override
 	public void add(Offer offer) {
-		datastore.store(offer);
+		datastoreProvider.get().store(offer);
 	}
 
 	@Override
 	public Set<Offer> findAll() {
-		Iterator<Offer> InQuarter = datastore.find(Offer.class);
+		Iterator<Offer> InQuarter = datastoreProvider.get().find(Offer.class);
 		return ImmutableSet.copyOf(InQuarter);
+	}
+	
+	@Override
+	public Offer find(long id) {
+		return datastoreProvider.get().load(Offer.class, id);
 	}
 
 }

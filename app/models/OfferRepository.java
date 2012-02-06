@@ -8,4 +8,6 @@ public interface OfferRepository {
 	
 	public Set<Offer> findAll();
 
+	public Offer find(long id);
+
 }
