@@ -2,6 +2,8 @@
 # For example, for French create a messages.fr file
 #
 
+views.Offers.viewAll.title=All offers
+
 
 offer.location.quarter=Quarter
 offer.location.address.street=Street

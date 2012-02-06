@@ -1,0 +1,14 @@
+#{extends 'main.html' /}
+#{set title:&{'views.Offers.viewAll.title'} /}
+
+#{set 'moreScripts'}
+    #{get 'moreScripts' /}
+#{/set}
+
+#{list items:offers, as:'offer'}
+	<div class="">
+		Quarter: ${offer.location.quarter}<br />
+		Address: ${offer.location.address.street} ${offer.location.address.streetNumber} ${offer.location.address.zipCode}
+		 
+	</div>
+#{/list}
