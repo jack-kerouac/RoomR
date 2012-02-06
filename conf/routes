@@ -13,14 +13,14 @@ GET     /public/                                staticDir:public
 
 # create room offers
 GET		/offers									Application.createOffer
-POST	/offers									Offers.createOffer
+POST	/offers/									Offers.createOffer
 
 GET		/offers/								Offers.viewAll
 GET		/offers/{id}							Offers.viewOffer
 
 # create room requests
 GET		/requests								Application.createRequest
-POST	/requests								Requests.create
+POST	/requests/								Requests.create
 
 # Catch all
 *       /{controller}/{action}                  {controller}.{action}
