@@ -10,3 +10,4 @@
 /eclipse/
 precompiled/
 server.pid
+war/WEB-INF/appengine-generated/
