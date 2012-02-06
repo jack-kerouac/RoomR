@@ -10,7 +10,7 @@ public final class Offer {
 	private Long id;
 
 	@Valid
-	private Location location;
+	public Location location;
 	
 	@Valid
 	private RoomDetails roomDetails;

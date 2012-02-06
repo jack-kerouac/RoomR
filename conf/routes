@@ -12,8 +12,8 @@ GET     /favicon.ico                            404
 GET     /public/                                staticDir:public
 
 # create room offers
-GET		/offers									Application.createOffer
-POST	/offers/									Offers.createOffer
+GET		/createOffer							Offers.offerForm
+POST	/offers/								Offers.createOffer
 
 GET		/offers/								Offers.viewAll
 GET		/offers/{id}							Offers.viewOffer

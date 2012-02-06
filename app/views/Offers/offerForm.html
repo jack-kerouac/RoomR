@@ -1,5 +1,5 @@
 #{extends 'main.html' /}
-#{set title:'create offer' /}
+#{set title:'Anzeige anlegen' /}
 
 #{set 'moreScripts'}
     #{get 'moreScripts' /}
@@ -11,72 +11,69 @@
 
 
 <h1>Create offer</h1>
-#{form @Offers.createOffer(), id:'createOfferForm'}
+#{jqvalid.form @Offers.createOffer(), id:'create_offer_form'}
 	<fieldset id="location" class="step">
-		${offer}
-	
-		#{field 'offer.location.quarter'}
-		<p>
-			<label for="${field.id}">&{field.name}</label>
+		#{jqvalid.field 'offer.location.quarter'}
+		<div class="field">
+			<label for="${field.id}" class="caption">&{field.name}</label>
 			<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
 			<span class="error">${field.error}</span>
-		</p>
+		</div>
 		#{/}
 	
 		<fieldset id="address">
-			#{field 'offer.location.address.street'}
-			<p>
-				<label for="${field.id}">&{field.name}</label>
+			#{jqvalid.field 'offer.location.address.street'}
+			<div class="field">
+				<label for="${field.id}" class="caption">&{field.name}</label>
 				<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
 				<span class="error">${field.error}</span>
-			</p>
+			</div>
 			#{/}
-			#{field 'offer.location.address.streetNumber'}
-			<p>
-				<label for="${field.id}">&{field.name}</label>
+			#{jqvalid.field 'offer.location.address.streetNumber'}
+			<div class="field">
+				<label for="${field.id}" class="caption">&{field.name}</label>
 				<input id="${field.id}" name="${field.name}" type="number" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
 				<span class="error">${field.error}</span>
-			</p>
+			</div>
 			#{/}
-			#{field 'offer.location.address.zipCode'}
-			<p>
-				<label for="${field.id}">&{field.name}</label>
+			#{jqvalid.field 'offer.location.address.zipCode'}
+			<div class="field">
+				<label for="${field.id}" class="caption">&{field.name}</label>
 				<input id="${field.id}" name="${field.name}" type="number" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
 				<span class="error">${field.error}</span>
-			</p>
+			</div>
 			#{/}
-			#{field 'offer.location.address.city'}
-			<p>
-				<label for="${field.id}">&{field.name}</label>
+			#{jqvalid.field 'offer.location.address.city'}
+			<div class="field">
+				<label for="${field.id}" class="caption">&{field.name}</label>
 				<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
 				<span class="error">${field.error}</span>
-			</p>
+			</div>
 			#{/}
 		</fieldset>
 	</fieldset>
 	<fieldset id="roomDetails" class="step">
-		#{field 'offer.roomDetails.freePeriodStart'}
-		<p>
-			<label for="${field.id}">&{field.name}</label>
+		#{jqvalid.field 'offer.roomDetails.freePeriodStart'}
+		<div class="field">
+			<label for="${field.id}" class="caption">&{field.name}</label>
 			<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
 			<span class="error">${field.error}</span>
-		</p>
+		</div>
 		#{/}
-		#{field 'offer.roomDetails.freePeriodEnd'}
-		<p>
-			<label for="${field.id}">&{field.name}</label>
+		#{jqvalid.field 'offer.roomDetails.freePeriodEnd'}
+		<div class="field">
+			<label for="${field.id}" class="caption">&{field.name}</label>
 			<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
 			<span class="error">${field.error}</span>
-		</p>
+		</div>
 		#{/}
-		#{field 'offer.roomDetails.rent'}
-		<p>
-			<label for="${field.id}">&{field.name}</label>
+		#{jqvalid.field 'offer.roomDetails.rent'}
+		<div class="field">
+			<label for="${field.id}" class="caption">&{field.name}</label>
 			<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
 			<span class="error">${field.error}</span>
-		</p>
+		</div>
 		#{/}
 	</fieldset>
 	<input type="submit">
-	<input type="reset">
-#{/form}
+#{/jqvalid.form}

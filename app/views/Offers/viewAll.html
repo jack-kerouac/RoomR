@@ -5,6 +5,8 @@
     #{get 'moreScripts' /}
 #{/set}
 
+<ul class="offers">
 #{list items:offers, as:'offer'}
-	#{displayOffer offer:offer, as:'teaser' /}
+	<li class="offer">#{displayOffer offer:offer, as:'teaser' /}</li>
 #{/list}
+</ul>
