@@ -3,6 +3,7 @@
 #
 
 views.Offers.viewAll.title=All offers
+views.Offers.viewOffer.title=Single offer
 
 
 offer.location.quarter=Quarter
