@@ -5,7 +5,7 @@
 
 Offer(1):
   location:
-    quarter: LEH
+    quarter: Lehel
     address:
       street: SampleStreet
       streetNumber: 1
@@ -13,3 +13,26 @@ Offer(1):
       city: Munich
   roomDetails:
     rentAmount: 123.0
+
+Offer(2):
+  location:
+    quarter: Lehe
+    address:
+      street: SampleStreet
+      streetNumber: 2
+      zipCode: 80683
+      city: Munich
+  roomDetails:
+    rentAmount: 200.0
+
+
+Offer(3):
+  location:
+    quarter: Leh
+    address:
+      street: SampleStreet
+      streetNumber: 3
+      zipCode: 80684
+      city: Munich
+  roomDetails:
+    rentAmount: 300.0

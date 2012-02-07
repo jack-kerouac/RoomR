@@ -31,6 +31,34 @@ $(document).ready(function () {
 			}
 		});
 	});
+	
+
+	
+	
+	var updateOfferResultList = function() {
+	   $('#offerResultList').load('/offers', $('#search_offers_form').serialize());
+	}
+	
+	$('#search_offers_form input').each(function() {
+		   // Save current value of element
+		   $(this).data('oldVal', $(this).val());
+
+		   // Look for changes in the value
+		   $(this).bind("propertychange keyup input paste", function(event){
+			   // If value has changed...
+			   if ($(this).data('oldVal') != $(this).val()) {
+				   // Updated stored value
+				   $(this).data('oldVal', $(this).val());
+
+				   // TODO: replace the link here
+				   updateOfferResultList();
+			   }
+		   });
+	 });
+	
+	// update list to account for initial content of the field
+	updateOfferResultList();
+	 
 });
 
 

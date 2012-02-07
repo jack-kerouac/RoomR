@@ -7,14 +7,13 @@ import com.google.appengine.repackaged.com.google.common.base.Objects;
 
 public final class Location {
 
-	@MaxSize(3)
+	@MaxSize(10)
 	public String quarter;
 
 	@Valid
 	public Address address;
 
-	public Location() {
-	}
+	public Location() {}
 
 	public Location(String quarter, Address address) {
 		super();
@@ -40,8 +39,7 @@ public final class Location {
 
 	@Override
 	public String toString() {
-		return Objects.toStringHelper(this).add("quarter", quarter)
-				.add("address", address).toString();
+		return Objects.toStringHelper(this).add("quarter", quarter).add("address", address).toString();
 	}
 
 }

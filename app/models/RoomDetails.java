@@ -17,7 +17,7 @@ public final class RoomDetails {
 	private Date freePeriodStart;
 	private Date freePeriodEnd;
 
-	private double rentAmount;
+	public double rentAmount;
 
 	@SuppressWarnings("unused")
 	public RoomDetails() {}

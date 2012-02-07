@@ -59,45 +59,45 @@
 		Modernizr.load([
 			// Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline
 			{
-				load: '//ajax.googleapis.cfromDateom/ajax/libs/jquery/1.6.2/jquery.min.js',
+				load: '//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js',
 				complete: function() {
 					if (!window.jQuery) {
 						Modernizr.load("@{'/public/javascripts/libs/jquery-1.6.2.min.js'}");
 					}
 				}
 			},
-			{
-				load: '//connect.facebook.net/en_US/all.js',
-				complete: function() {
-					FB.init({
-						appId : '312919605386817', // App ID
-						//channelUrl : '//WWW.YOUR_DOMAIN.COM/channel.html', // Channel File
-						status : true, // check login status
-						cookie : true, // enable cookies to allow the server to access the session
-						logging : true, // enable logging
-						oauth : true, // enable OAuth 2.0
-						xfbml : true  // parse XFBML
-					});
+// 			{
+// 				load: '//connect.facebook.net/en_US/all.js',
+// 				complete: function() {
+// 					FB.init({
+// 						appId : '312919605386817', // App ID
+// 						//channelUrl : '//WWW.YOUR_DOMAIN.COM/channel.html', // Channel File
+// 						status : true, // check login status
+// 						cookie : true, // enable cookies to allow the server to access the session
+// 						logging : true, // enable logging
+// 						oauth : true, // enable OAuth 2.0
+// 						xfbml : true  // parse XFBML
+// 					});
 		
-					// Additional initialization code here
+// 					// Additional initialization code here
 		
-					update = function(response) {
-						if(response.authResponse) {
-							// logged in and connected user, someone you know
-							console.log("user logged into FB: " + response);
-						} else {
-							// no user session available, someone you dont know
-							console.log("user NOT logged into FB: " + response);
-						}
-					};
+// 					update = function(response) {
+// 						if(response.authResponse) {
+// 							// logged in and connected user, someone you know
+// 							console.log("user logged into FB: " + response);
+// 						} else {
+// 							// no user session available, someone you dont know
+// 							console.log("user NOT logged into FB: " + response);
+// 						}
+// 					};
 		
-					FB.getLoginStatus(update, true);
+// 					FB.getLoginStatus(update, true);
 					
-					FB.Event.subscribe('auth.login', update);
-					FB.Event.subscribe('auth.logout', update);
-				}
-			},
-			{
+// 					FB.Event.subscribe('auth.login', update);
+// 					FB.Event.subscribe('auth.logout', update);
+// 				}
+// 			},
+ 			{
 				load: "@{'/public/javascripts/libs/jquery-ui-1.8.16.custom.min.js'}"
 			},
 			{

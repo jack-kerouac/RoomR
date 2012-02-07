@@ -1,0 +1,30 @@
+#{extends 'main.html' /}
+#{set title:'Anzeigen suchen' /}
+
+#{set 'moreScripts'}
+    #{get 'moreScripts' /}
+#{/set}
+
+
+<h1>Anzeigen suchen</h1>
+<form id="search_offers_form">
+	<fieldset id="location" class="step">
+		#{jqvalid.field 'quarter'}
+		<div class="field">
+			<label for="${field.id}" class="caption">&{field.name}</label>
+			<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
+			<span class="error">${field.error}</span>
+		</div>
+		#{/}
+		
+		#{jqvalid.field 'maxRent'}
+		<div class="field">
+			<label for="${field.id}" class="caption">&{field.name}</label>
+			<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
+			<span class="error">${field.error}</span>
+		</div>
+		#{/}
+	</fieldset>
+</form>
+
+<ul id="offerResultList"></ul>
