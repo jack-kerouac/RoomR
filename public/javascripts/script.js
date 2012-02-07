@@ -36,7 +36,7 @@ $(document).ready(function () {
 	
 	
 	var updateOfferResultList = function() {
-	   $('#offerResultList').load('/offers', $('#search_offers_form').serialize());
+	   $('.offers').load('/offers', $('#search_offers_form').serialize());
 	}
 	
 	$('#search_offers_form input').each(function() {
