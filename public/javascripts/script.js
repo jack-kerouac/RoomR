@@ -32,28 +32,32 @@ $(document).ready(function () {
 		});
 	});
 	
-
-	
-	
 	var updateOfferResultList = function() {
-	   $('.offers').load('/offers', $('#search_offers_form').serialize());
+	   $('.offers').load('/offers', $('#search_offers_form').serialize(), function(responseText, textStatus, XMLHttpRequest) {
+		   $('.offer').hide().fadeIn(500);
+	   });
 	}
 	
 	$('#search_offers_form input').each(function() {
-		   // Save current value of element
+		var typingTimer;               // timer identifier
+		var doneTypingInterval = 200;  // time in ms, 5 second for example
 		   $(this).data('oldVal', $(this).val());
 
-		   // Look for changes in the value
-		   $(this).bind("propertychange keyup input paste", function(event){
-			   // If value has changed...
+			// start the countdown
+		   $(this).bind("propertychange keyup input paste", function() {
 			   if ($(this).data('oldVal') != $(this).val()) {
-				   // Updated stored value
 				   $(this).data('oldVal', $(this).val());
 
-				   // TODO: replace the link here
-				   updateOfferResultList();
+			       clearTimeout(typingTimer);
+			       typingTimer = setTimeout(doneTyping, doneTypingInterval);
 			   }
 		   });
+	
+		   // user is "finished typing," do something
+		   function doneTyping() {
+				updateOfferResultList();
+		   }
+
 	 });
 	
 	// update list to account for initial content of the field
