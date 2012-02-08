@@ -2,8 +2,10 @@
 #{set title:'Start' /}
 
 <div id="seeker_panel">
-   #{a @Application.createRequest()}Du willst eine WG finden?#{/a}
+    <p>#{a @Application.createRequest()}Du willst eine WG finden?#{/a}</p>
+    <p>#{a @Search.searchForm()}Instant Search#{/a}</p>
 </div>
 <div id="offerer_panel">
-    #{a @Application.createOffer()}Du willst einen neuen Mitbewohner finden?#{/a}
+    <p>#{a @Offers.offerForm()}Du willst einen neuen Mitbewohner finden?#{/a}</p>
+    <p>#{a @Offers.viewAll()}Display all offers#{/a}</p>
 </div>

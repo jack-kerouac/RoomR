@@ -217,7 +217,10 @@ td { vertical-align: top; }
 @import "_general.scss";
 
 @import "_start.scss";
-@import "_createOffer.scss";
+
+@import "_offerForm.scss";
+@import "_viewAllOffers.scss";
+
 @import "_createRequest.scss";
 
 /* ==|== non-semantic helper classes ===================== ===================

@@ -5,11 +5,11 @@ import play.data.validation.Required;
 
 public final class Address {
 	@Required
-	private String street;
+	public String street;
 	@Max(10)
-	private int streetNumber;
-	private int zipCode;
-	private String city;
+	public int streetNumber;
+	public int zipCode;
+	public String city;
 
 	@SuppressWarnings("unused")
 	public Address() {}

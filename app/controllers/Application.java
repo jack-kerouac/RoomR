@@ -1,35 +1,24 @@
 package controllers;
 
-import models.Address;
-import models.Location;
-import models.Offer;
-import models.RoomDetails;
-
-import org.joda.money.CurrencyUnit;
-import org.joda.money.Money;
-import org.joda.time.DateTime;
-import org.joda.time.Duration;
-import org.joda.time.Interval;
-
+import play.mvc.Before;
 import play.mvc.Controller;
-
+import util.DevelopmentModelDataLoader;
 
 public class Application extends Controller {
-
 	public static void start() {
 		render();
 	}
 
-	public static void createOffer() {
-		Offer offer = new Offer(new Location("Lehel", new Address("", 0, 0, "")),
-				new RoomDetails(new Interval(new DateTime(),
-						Duration.standardDays(365)), Money.of(CurrencyUnit.EUR,
-						0)));
-		render(offer);
-	}
-	
+
 	public static void createRequest() {
 		render();
 	}
 
+	@Before
+	public static void importDevModels() {
+		// using Plays OnApplicationStart annotation does not work for
+		// GAE-enabled applications, so we load the development data as soon as
+		// we get the first request to the start page
+		DevelopmentModelDataLoader.ensureLoaded();
+	}
 }

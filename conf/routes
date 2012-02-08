@@ -12,12 +12,20 @@ GET     /favicon.ico                            404
 GET     /public/                                staticDir:public
 
 # create room offers
-GET		/createOffer							Application.createOffer
-POST	/offers									Offers.createOffer
+GET		/createOffer							Offers.offerForm
+POST	/offers/								Offers.createOffer
+
+GET		/offers/								Offers.viewAll
+GET		/offers/{id}							Offers.viewOffer
 
 # create room requests
-GET		/createRequest							Application.createRequest
-POST	/requests								Requests.create
+GET		/requests								Application.createRequest
+POST	/requests/								Requests.create
+
+# search
+GET		/search									Search.searchForm
+GET		/offers									Search.offers
+
 
 # Catch all
 *       /{controller}/{action}                  {controller}.{action}

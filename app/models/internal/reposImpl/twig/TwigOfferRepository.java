@@ -31,5 +31,10 @@ public class TwigOfferRepository implements OfferRepository {
 		Iterator<Offer> InQuarter = datastoreProvider.get().find(Offer.class);
 		return ImmutableSet.copyOf(InQuarter);
 	}
+	
+	@Override
+	public Offer find(long id) {
+		return datastoreProvider.get().load(Offer.class, id);
+	}
 
 }

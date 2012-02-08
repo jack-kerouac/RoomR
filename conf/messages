@@ -2,12 +2,15 @@
 # For example, for French create a messages.fr file
 #
 
+views.Offers.viewAll.title=All offers
+views.Offers.viewOffer.title=Single offer
 
-offer.location.quarter=Quarter
-offer.location.address.street=Street
+
+offer.location.quarter=Stadtviertel
+offer.location.address.street=Straße
 offer.location.address.streetNumber=Street number
-offer.location.address.zipCode=ZIP code
-offer.location.address.city=City
+offer.location.address.zipCode=PLZ
+offer.location.address.city=Stadt
 offer.roomDetails.freePeriodStart=From
 offer.roomDetails.freePeriodEnd=To
 offer.roomDetails.rent=Rent

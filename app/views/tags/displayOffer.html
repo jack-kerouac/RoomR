@@ -1,0 +1,10 @@
+*{ Display an offer in one of these modes: 'teaser' }*
+
+<div class="${_as == 'teaser' ? 'teaser' : ''}">
+	Quarter: ${_offer.location.quarter}<br />
+	Address: ${_offer.location.address}<br />
+	
+	<div class="toString">
+		${_offer}
+	</div>
+</div>

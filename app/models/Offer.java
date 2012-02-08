@@ -1,7 +1,5 @@
 package models;
 
-import javax.persistence.Entity;
-
 import play.data.validation.Valid;
 
 import com.google.code.twig.annotation.Id;
@@ -12,7 +10,7 @@ public final class Offer {
 	private Long id;
 
 	@Valid
-	private Location location;
+	public Location location;
 	
 	@Valid
 	private RoomDetails roomDetails;
@@ -22,6 +20,10 @@ public final class Offer {
 	public Offer(Location location, RoomDetails roomDetails) {
 		this.location = location;
 		this.roomDetails = roomDetails;
+	}
+	
+	public Long getId() {
+		return id;
 	}
 
 	public Location getLocation() {

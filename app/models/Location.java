@@ -1,22 +1,19 @@
 package models;
 
-import play.data.validation.Email;
 import play.data.validation.MaxSize;
-import play.data.validation.Required;
 import play.data.validation.Valid;
 
 import com.google.appengine.repackaged.com.google.common.base.Objects;
 
 public final class Location {
 
-	@MaxSize(3)
+	@MaxSize(10)
 	public String quarter;
 
 	@Valid
-	private Address address;
+	public Address address;
 
-	public Location() {
-	}
+	public Location() {}
 
 	public Location(String quarter, Address address) {
 		super();
@@ -42,8 +39,7 @@ public final class Location {
 
 	@Override
 	public String toString() {
-		return Objects.toStringHelper(this).add("quarter", quarter)
-				.add("address", address).toString();
+		return Objects.toStringHelper(this).add("quarter", quarter).add("address", address).toString();
 	}
 
 }
