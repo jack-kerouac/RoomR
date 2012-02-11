@@ -3,7 +3,7 @@
 # For each entity type to get imported correctly, you have to adapt
 # DevelopmentModelDataLoader.
 
-Offer(1):
+offer.Offer(1):
   location:
     quarter: Lehel
     address:
@@ -14,7 +14,7 @@ Offer(1):
   roomDetails:
     rentAmount: 123.0
 
-Offer(2):
+offer.Offer(2):
   location:
     quarter: Lehe
     address:
@@ -25,8 +25,7 @@ Offer(2):
   roomDetails:
     rentAmount: 200.0
 
-
-Offer(3):
+offer.Offer(3):
   location:
     quarter: Leh
     address:

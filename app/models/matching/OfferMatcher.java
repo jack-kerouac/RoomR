@@ -2,7 +2,7 @@ package models.matching;
 
 import java.util.List;
 
-import models.Offer;
+import models.offer.Offer;
 
 import org.joda.money.Money;
 

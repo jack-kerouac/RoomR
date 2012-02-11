@@ -1,4 +1,4 @@
-package models;
+package models.offer;
 
 import play.data.validation.Valid;
 

@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-import models.Address;
-import models.Location;
-import models.Offer;
-import models.OfferRepository;
-import models.RoomDetails;
+import models.common.Address;
+import models.offer.Location;
+import models.offer.Offer;
+import models.offer.OfferRepository;
+import models.offer.RoomDetails;
 
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;

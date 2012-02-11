@@ -4,8 +4,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import models.Offer;
 import models.matching.OfferMatcher;
+import models.offer.Offer;
 
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;

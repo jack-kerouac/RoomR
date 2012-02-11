@@ -1,35 +1,35 @@
 package models.common;
 
+import play.data.validation.Min;
+
 import com.google.common.base.Preconditions;
 
 public final class Age implements Comparable<Age> {
 
-	private final int age;
+	@Min(0)
+	public int years;
 
-	public Age(int age) {
-		Preconditions.checkArgument(age >= 0, "age must be greater than 0");
-		this.age = age;
-	}
-
-	public int getValue() {
-		return age;
+	public Age() {}
+	
+	public Age(int years) {
+		this.years = years;
 	}
 
 	@Override
 	public int compareTo(Age o) {
-		return new Integer(age).compareTo(o.age);
+		return new Integer(years).compareTo(o.years);
 	}
 
 	@Override
 	public String toString() {
-		return age + " years";
+		return years + " years";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + age;
+		result = prime * result + years;
 		return result;
 	}
 
@@ -42,7 +42,7 @@ public final class Age implements Comparable<Age> {
 		if (getClass() != obj.getClass())
 			return false;
 		Age other = (Age) obj;
-		if (age != other.age)
+		if (years != other.years)
 			return false;
 		return true;
 	}

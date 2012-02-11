@@ -4,8 +4,8 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import models.Offer;
-import models.OfferRepository;
+import models.offer.Offer;
+import models.offer.OfferRepository;
 import play.Play;
 import play.Play.Mode;
 import play.modules.guice.InjectSupport;

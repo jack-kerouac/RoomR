@@ -1,4 +1,4 @@
-package models;
+package models.common;
 
 import play.data.validation.Max;
 import play.data.validation.Required;

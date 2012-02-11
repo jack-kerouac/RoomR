@@ -1,5 +1,6 @@
-package models;
+package models.offer;
 
+import models.common.Address;
 import play.data.validation.MaxSize;
 import play.data.validation.Valid;
 

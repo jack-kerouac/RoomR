@@ -1,4 +1,4 @@
-package models.offering.flatshare;
+package models.common;
 
 /**
  * British/german numbering system for floors!

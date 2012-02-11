@@ -1,4 +1,4 @@
-package models;
+package models.offer;
 
 import java.util.Set;
 

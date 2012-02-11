@@ -3,8 +3,8 @@ package models.internal.reposImpl.twig;
 import java.util.Iterator;
 import java.util.Set;
 
-import models.Offer;
-import models.OfferRepository;
+import models.offer.Offer;
+import models.offer.OfferRepository;
 
 import com.google.code.twig.ObjectDatastore;
 import com.google.common.collect.ImmutableSet;

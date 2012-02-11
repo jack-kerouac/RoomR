@@ -18,10 +18,6 @@ POST	/offers/								Offers.createOffer
 GET		/offers/								Offers.viewAll
 GET		/offers/{id}							Offers.viewOffer
 
-# create room requests
-GET		/requests								Application.createRequest
-POST	/requests/								Requests.create
-
 # search
 GET		/search									Search.searchForm
 GET		/offers									Search.offers

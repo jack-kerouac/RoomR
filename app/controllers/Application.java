@@ -8,12 +8,8 @@ import play.mvc.Controller;
 import util.DevelopmentModelDataLoader;
 
 public class Application extends Controller {
+	
 	public static void start() {
-		render();
-	}
-
-
-	public static void createRequest() {
 		render();
 	}
 
