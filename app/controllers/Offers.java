@@ -1,7 +1,6 @@
 package controllers;
 
 import java.util.ArrayList;
-import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -37,10 +36,8 @@ public class Offers extends Controller {
 	}
 
 	private static Offer createEmptyOffer() {
-		return new Offer(new Location("Lehel", new Address("", 0, 0, "")),
-				new RoomDetails(new Interval(new DateTime(),
-						Duration.standardDays(365)), Money.of(CurrencyUnit.EUR,
-						0)));
+		return new Offer(new Location("Lehel", new Address("", 0, 0, "")), new RoomDetails(new Interval(new DateTime(),
+				Duration.standardDays(365)), Money.of(CurrencyUnit.EUR, 0)));
 	}
 
 	public static void createOffer(@Valid Offer offer) {
@@ -57,7 +54,6 @@ public class Offers extends Controller {
 
 	public static void viewAll() {
 		ArrayList<Offer> offers = Lists.newArrayList(offerRepository.findAll());
-		
 		render(offers);
 	}
 

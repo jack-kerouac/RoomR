@@ -26,6 +26,5 @@ POST	/requests/								Requests.create
 GET		/search									Search.searchForm
 GET		/offers									Search.offers
 
-
 # Catch all
 *       /{controller}/{action}                  {controller}.{action}
