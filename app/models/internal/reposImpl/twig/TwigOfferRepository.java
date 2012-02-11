@@ -6,8 +6,8 @@ import java.util.Set;
 import models.Offer;
 import models.OfferRepository;
 
-import com.google.appengine.repackaged.com.google.common.collect.ImmutableSet;
 import com.google.code.twig.ObjectDatastore;
+import com.google.common.collect.ImmutableSet;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 

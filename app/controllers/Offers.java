@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -20,6 +21,8 @@ import play.data.validation.Valid;
 import play.modules.guice.InjectSupport;
 import play.mvc.Controller;
 
+import com.google.common.collect.Lists;
+
 @InjectSupport
 public class Offers extends Controller {
 
@@ -29,15 +32,20 @@ public class Offers extends Controller {
 	public static void offerForm(Offer offer) {
 		if (offer == null)
 			// no offer to prefill form withs
-			offer = new Offer(new Location("Lehel", new Address("", 0, 0, "")), new RoomDetails(new Interval(
-					new DateTime(), Duration.standardDays(365)), Money.of(CurrencyUnit.EUR, 0)));
+			offer = createEmptyOffer();
 		render(offer);
 	}
 
+	private static Offer createEmptyOffer() {
+		return new Offer(new Location("Lehel", new Address("", 0, 0, "")),
+				new RoomDetails(new Interval(new DateTime(),
+						Duration.standardDays(365)), Money.of(CurrencyUnit.EUR,
+						0)));
+	}
 
 	public static void createOffer(@Valid Offer offer) {
 		if (validation.hasErrors()) {
-//			params.flash(); // add http parameters to the flash scope
+			// params.flash(); // add http parameters to the flash scope
 			validation.keep(); // keep the errors for the next request
 			Offers.offerForm(offer);
 		}
@@ -48,7 +56,8 @@ public class Offers extends Controller {
 	}
 
 	public static void viewAll() {
-		Set<Offer> offers = offerRepository.findAll();
+		ArrayList<Offer> offers = Lists.newArrayList(offerRepository.findAll());
+		
 		render(offers);
 	}
 
