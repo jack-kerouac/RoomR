@@ -7,19 +7,18 @@ import org.joda.money.Money;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
-import com.google.appengine.api.search.Preconditions;
-import com.google.appengine.repackaged.com.google.common.base.Objects;
+import com.google.common.base.Objects;
+import com.google.common.base.Preconditions;
 
 public final class RoomDetails {
 
 	public final static CurrencyUnit DEFAULT_CURRENCY = CurrencyUnit.EUR;
 
-	private Date freePeriodStart;
-	private Date freePeriodEnd;
+	public Date freePeriodStart;
+	public Date freePeriodEnd;
 
 	public double rentAmount;
 
-	@SuppressWarnings("unused")
 	public RoomDetails() {}
 
 	public RoomDetails(Interval freePeriod, Money rent) {
