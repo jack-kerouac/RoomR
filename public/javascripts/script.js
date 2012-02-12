@@ -48,6 +48,13 @@ roomr.instantSearch = (function() {
 					updateOfferResultList();
 			   }
 		});
+		$('#search_offers_form select').each(function() {
+				// start the countdown
+			   $(this).change(function() {
+				   updateOfferResultList()
+			   });
+		});
+		
 		
 		// update list to account for initial content of the field
 		updateOfferResultList();

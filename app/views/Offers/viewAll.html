@@ -1,7 +1,7 @@
 #{extends 'main.html' /}
 #{set title:messages.get('views.Offers.viewAll.title') /}
 
-<ul class="offers">
+<ul class="all_offers">
 #{list items:offers, as:'offer'}
 	<li class="offer">#{displayOffer offer:offer, as:'teaser' /}</li>
 #{/list}

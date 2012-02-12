@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.inject.Inject;
 
+import models.common.Floor;
 import models.matching.OfferMatcher;
 import models.offer.Offer;
 import models.offer.OfferRepository;
@@ -21,14 +22,14 @@ public class TrivialMatcher implements OfferMatcher {
 	private OfferRepository offerRepository;
 
 	@Override
-	public List<Offer> match(final String quarterPrefix, final Money maxRent) {
+	public List<Offer> match(final Money maxRent, final Floor floor) {
 		Set<Offer> allOffers = offerRepository.findAll();
 
 		Set<Offer> offers = Sets.filter(allOffers, new Predicate<Offer>() {
 			@Override
 			public boolean apply(Offer offer) {
 				Money rent = offer.roomDetails.getTotalRentPerMonth();
-				return (rent.isLessThan(maxRent) || rent.isEqual(maxRent));
+				return (offer.flatshare.floor == floor) && (rent.isLessThan(maxRent) || rent.isEqual(maxRent));
 			}
 		});
 
