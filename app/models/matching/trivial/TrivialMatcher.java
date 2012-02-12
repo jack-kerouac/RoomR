@@ -36,4 +36,24 @@ public class TrivialMatcher implements OfferMatcher {
 		return Lists.newArrayList(offers);
 	}
 
+//	private final Provider<ObjectDatastore> datastoreProvider;
+//
+//	@Inject
+//	public TrivialMatcher(Provider<ObjectDatastore> datastoreProvider) {
+//		this.datastoreProvider = datastoreProvider;
+//	}
+//
+//	@Override
+//	public List<Offer> match(final Money maxRent, final Floor floor) {
+//		ObjectDatastore store = datastoreProvider.get();
+//
+//		List<Offer> offers = store
+//				.find()
+//				.type(Offer.class)
+//				.addFilter("roomDetails.totalRentPerMonthInEuro", FilterOperator.LESS_THAN_OR_EQUAL,
+//						maxRent.getAmount().doubleValue()).returnAll().now();
+//
+//		return offers;
+//	}
+	
 }
