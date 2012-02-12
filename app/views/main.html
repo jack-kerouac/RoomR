@@ -101,7 +101,10 @@
 				load: "@{'/public/javascripts/libs/jquery-ui-1.8.17.custom.min.js'}"
 			},
 			{
-				load: ["@{'/public/javascripts/plugins.js'}", "@{'/public/javascripts/script.js'}"]
+				load: ["@{'/public/javascripts/plugins.js'}", "@{'/public/javascripts/script.js'}"],
+				complete: function() {
+					$(document).ready(roomr.init);
+				}
 			},
 			// always load analytics last.
 			{
