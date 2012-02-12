@@ -27,9 +27,8 @@ public class TrivialMatcher implements OfferMatcher {
 		Set<Offer> offers = Sets.filter(allOffers, new Predicate<Offer>() {
 			@Override
 			public boolean apply(Offer offer) {
-				Money rent = offer.getRoomDetails().getRent();
-				return offer.getLocation().getQuarter().startsWith(quarterPrefix)
-						&& (rent.isLessThan(maxRent) || rent.isEqual(maxRent));
+				Money rent = offer.roomDetails.getTotalRentPerMonth();
+				return (rent.isLessThan(maxRent) || rent.isEqual(maxRent));
 			}
 		});
 

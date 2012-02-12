@@ -2,16 +2,23 @@ package models.common;
 
 import java.text.DecimalFormat;
 
+import com.google.code.twig.annotation.Embedded;
+
 /**
  * This class is representing an area measure for a room in square meter.
  * 
  * @author "Florian Rampp (Florian.Rampp@web.de)"
  * 
  */
+@Embedded
 public final class FloorSpace {
 
-	private final double squareMeters;
+	public double squareMeters;
 
+	public FloorSpace() {
+		super();
+	}
+	
 	public FloorSpace(double squareMeters) {
 		super();
 		this.squareMeters = squareMeters;

@@ -4,9 +4,14 @@ header {
 }
 
 
-body {
+
+body, button, input, select, textarea {
 	line-height: 130%;
+	font-size: 14px;
+	
+	font-family: Georgia, "Times New Roman", Times, serif;
 }
+
 
 
 
@@ -16,30 +21,118 @@ $headlineColor: #60a4ca;
 
 h1 {
 	color: $headlineColor;
+	font-size: 25px;
 }
-
 
 /* FORMS */
+/** according to http://24ways.org/2009/have-a-field-day-with-html5-forms */
 
-input {
-	border: 1px solid gray;
-	padding: 2px;
-}
-
-.field {
-	margin: 5px;
-}
-
-
-
-
-label.caption {
-	width: 120px;
-	display: inline-block;
-	text-align: right;
+form {
 	
-	font-weight: bold;
+	/* THE FORM AND ITS FIELDSETS */
+	
+	background: #70b4da;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	padding: 20px;
+	width: 500px;
+	
+	fieldset {
+		border : none;
+		margin-bottom: 10px;
+	}
+
+	legend {
+		color: #0E3B54;
+		font-size: 16px;
+		font-weight: bold;
+		padding-bottom: 10px;
+		text-shadow: 0 1px 1px #A2CFE8;
+	}
+	
+	/* counters not working properly... WHY? */
+	/*> fieldset > legend:before {
+		counter-increment: fieldsets;
+		content: "Schritt " counter(fieldsets) ": ";
+	}*/
+	
+	/* THE FIELDS */
+	
+	fieldset ul {
+		margin: 0;
+		padding: 0;
+	}
+	
+	fieldset > ul > li {
+		background: #b9cf6a;
+		background: rgba(255, 255, 255, .3);
+		border-color: #e3ebc3;
+		border-color: rgba(255, 255, 255, .6);
+		border-style: solid;
+		border-width: 2px;
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		border-radius: 5px;
+		line-height: 30px;
+		list-style: none;
+		padding: 5px 10px;
+		margin-bottom: 2px;
+	}
+	
+
+	label.caption {
+		display: inline-block;
+/* 		text-align: right; */
+		
+/* 		font-weight: bold; */
+		width: 120px;
+	}
+	
+	
+		
+	input, textarea {
+		background: #ffffff;
+		border: none;
+		-moz-border-radius: 3px;
+		-webkit-border-radius: 3px;
+		-khtml-border-radius: 3px;
+		border-radius: 3px;
+		
+		font-style: italic;
+		outline: none;
+		padding: 5px;
+		width: 200px;
+    }
+
+	input:not([type=submit]):focus, textarea:focus {
+		background: #eaeaea;
+	}
+
+	button {
+		background: rgb(14, 59, 84);
+		border: none;
+		-moz-border-radius: 20px;
+		-webkit-border-radius: 20px;
+		-khtml-border-radius: 20px;
+		border-radius: 20px;
+		color: #ffffff;
+		display: block;
+		font-size: 14px;
+		letter-spacing: 1px;
+		margin: auto;
+		padding: 7px 25px;
+		text-shadow: 0 1px 1px #000000;
+		text-transform: uppercase;
+	}
+	
+	button:hover {
+		background: rgb(4, 49, 74);
+		cursor: pointer;
+	}
 }
+
+
 
 /* error messages in forms */
 /* error message that is returned by a request */ 

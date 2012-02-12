@@ -2,8 +2,9 @@ package models.common;
 
 import play.data.validation.Min;
 
-import com.google.common.base.Preconditions;
+import com.google.code.twig.annotation.Embedded;
 
+@Embedded
 public final class Age implements Comparable<Age> {
 
 	@Min(0)

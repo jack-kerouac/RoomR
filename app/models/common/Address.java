@@ -3,6 +3,9 @@ package models.common;
 import play.data.validation.Max;
 import play.data.validation.Required;
 
+import com.google.code.twig.annotation.Embedded;
+
+@Embedded
 public final class Address {
 	@Required
 	public String street;

@@ -15,6 +15,9 @@ public class TwigOfferRepository implements OfferRepository {
 
 	private final Provider<ObjectDatastore> datastoreProvider;
 
+	// TODO: replace this counter
+	private static long offerIdCounter = 1;
+	
 	@Inject
 	public TwigOfferRepository(Provider<ObjectDatastore> datastoreProvider) {
 		super();
@@ -23,6 +26,8 @@ public class TwigOfferRepository implements OfferRepository {
 
 	@Override
 	public void add(Offer offer) {
+		if(offer.id == null)
+			offer.id = offerIdCounter++;
 		datastoreProvider.get().store(offer);
 	}
 

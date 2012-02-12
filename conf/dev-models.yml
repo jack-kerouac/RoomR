@@ -4,34 +4,76 @@
 # DevelopmentModelDataLoader.
 
 offer.Offer(1):
-  location:
-    quarter: Lehel
+  id: 1
+  flatshare:
     address:
-      street: SampleStreet
-      streetNumber: 1
-      zipCode: 80689
+      street: Stuntzstraße
+      streetNumber: 23
+      zipCode: 81677
       city: Munich
+    floor: basement
+    smokingTolerance: prohibited
   roomDetails:
-    rentAmount: 123.0
-
+    totalRentPerMonthInEuro: 350.0
+    roomSize.squareMeters: 15.0
+  criteria:
+    minAge.years: 10
+    maxAge.years: 20
+    genders: [male,female]
+    
+    
 offer.Offer(2):
-  location:
-    quarter: Lehe
+  id: 2
+  flatshare:
     address:
-      street: SampleStreet
-      streetNumber: 2
-      zipCode: 80683
+      street: Knöbelstraße
+      streetNumber: 14
+      zipCode: 80538
       city: Munich
+    floor: first
+    smokingTolerance: allowedInRoom
   roomDetails:
-    rentAmount: 200.0
-
+    totalRentPerMonthInEuro: 500.0
+    roomSize.squareMeters: 30.0
+  criteria:
+    minAge.years: 15
+    maxAge.years: 25
+    genders: male
+    
+    
 offer.Offer(3):
-  location:
-    quarter: Leh
+  id: 3
+  flatshare:
     address:
-      street: SampleStreet
-      streetNumber: 3
-      zipCode: 80684
+      street: Fraunhoferstraße
+      streetNumber: 33
+      zipCode: 80469
       city: Munich
+    floor: third
+    smokingTolerance: allowedInFlat
   roomDetails:
-    rentAmount: 300.0
+    totalRentPerMonthInEuro: 400.0
+    roomSize.squareMeters: 25.0
+  criteria:
+    minAge.years: 20
+    maxAge.years: 30
+    genders: female
+    
+    
+offer.Offer(4):
+  id: 4
+  flatshare:
+    address:
+      street: Deisenhofenerstraße
+      streetNumber: 10
+      zipCode: 81539
+      city: Munich
+    floor: forth
+    smokingTolerance: prohibited
+  roomDetails:
+    totalRentPerMonthInEuro: 250.0
+    roomSize.squareMeters: 12.0
+  criteria:
+    minAge.years: 20
+    maxAge.years: 80
+    genders: [female,male]

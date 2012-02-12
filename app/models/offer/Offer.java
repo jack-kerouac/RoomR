@@ -1,49 +1,36 @@
 package models.offer;
 
+import models.flatshare.Flatshare;
 import play.data.validation.Valid;
 
+import com.google.code.twig.annotation.Child;
 import com.google.code.twig.annotation.Id;
+import com.google.code.twig.annotation.Independent;
 import com.google.common.base.Objects;
 
 public final class Offer {
+
 	@Id
-	private Long id;
+	public Long id;
 
 	@Valid
-	public Location location;
+	@Independent
+	public Flatshare flatshare;
 	
 	@Valid
-	private RoomDetails roomDetails;
+	@Child
+	public RoomDetails roomDetails;
+
+	@Valid
+	@Child
+	public SeekerCriteria criteria;
 
 	public Offer() {}
 
-	public Offer(Location location, RoomDetails roomDetails) {
-		this.location = location;
-		this.roomDetails = roomDetails;
-	}
-	
-	public Long getId() {
-		return id;
-	}
-
-	public Location getLocation() {
-		return location;
-	}
-
-	public void setLocation(Location location) {
-		this.location = location;
-	}
-
-	public RoomDetails getRoomDetails() {
-		return roomDetails;
-	}
-
-	public void setRoomDetails(RoomDetails roomDetails) {
-		this.roomDetails = roomDetails;
-	}
-
 	@Override
 	public String toString() {
-		return Objects.toStringHelper(this).add("location", location).add("roomDetails", roomDetails).toString();
+		return Objects.toStringHelper(this).add("flatshare", flatshare).add("room details", roomDetails).add("seeker criteria", criteria)
+				.toString();
 	}
+
 }

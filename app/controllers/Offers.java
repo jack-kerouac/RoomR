@@ -4,23 +4,19 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-import models.common.Address;
-import models.offer.Location;
+import models.common.Age;
+import models.common.Floor;
+import models.common.Gender;
+import models.flatshare.SmokingTolerance;
 import models.offer.Offer;
 import models.offer.OfferRepository;
-import models.offer.RoomDetails;
-
-import org.joda.money.CurrencyUnit;
-import org.joda.money.Money;
-import org.joda.time.DateTime;
-import org.joda.time.Duration;
-import org.joda.time.Interval;
-
+import models.offer.SeekerCriteria;
 import play.data.validation.Valid;
 import play.modules.guice.InjectSupport;
 import play.mvc.Controller;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 @InjectSupport
 public class Offers extends Controller {
@@ -29,15 +25,18 @@ public class Offers extends Controller {
 	private static OfferRepository offerRepository;
 
 	public static void offerForm(Offer offer) {
-		if (offer == null)
-			// no offer to prefill form withs
-			offer = createEmptyOffer();
-		render(offer);
-	}
-
-	private static Offer createEmptyOffer() {
-		return new Offer(new Location("Lehel", new Address("", 0, 0, "")), new RoomDetails(new Interval(new DateTime(),
-				Duration.standardDays(365)), Money.of(CurrencyUnit.EUR, 0)));
+		if (offer == null) {
+			// no offer to prefill form with
+			offer = new Offer();
+			offer.criteria = new SeekerCriteria();
+			offer.criteria.minAge = new Age(18);
+			offer.criteria.maxAge = new Age(50);
+			offer.criteria.genders = Sets.newHashSet(Gender.male, Gender.female);
+		}
+		
+		Floor[] floors = Floor.values();
+		SmokingTolerance[] smokingTolerances = SmokingTolerance.values();
+		render(offer, floors, smokingTolerances);
 	}
 
 	public static void createOffer(@Valid Offer offer) {
@@ -49,7 +48,7 @@ public class Offers extends Controller {
 
 		offerRepository.add(offer);
 
-		viewOffer(offer.getId());
+		viewOffer(offer.id);
 	}
 
 	public static void viewAll() {

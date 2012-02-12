@@ -1,10 +1,9 @@
 package models.offer;
 
-import java.util.Date;
+import models.common.FloorSpace;
 
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
-import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
 import com.google.common.base.Objects;
@@ -13,43 +12,27 @@ import com.google.common.base.Preconditions;
 public final class RoomDetails {
 
 	public final static CurrencyUnit DEFAULT_CURRENCY = CurrencyUnit.EUR;
-
-	public Date freePeriodStart;
-	public Date freePeriodEnd;
-
-	public double rentAmount;
+	
+	public double totalRentPerMonthInEuro;
+	
+	public FloorSpace roomSize;
 
 	public RoomDetails() {}
 
 	public RoomDetails(Interval freePeriod, Money rent) {
 		super();
-		freePeriodStart = freePeriod.getStart().toDate();
-		freePeriodEnd = freePeriod.getEnd().toDate();
-
 		Preconditions.checkArgument(rent.getCurrencyUnit() == DEFAULT_CURRENCY, "only " + DEFAULT_CURRENCY
 				+ " is supported as currency");
-		this.rentAmount = rent.getAmount().doubleValue();
-	}
-	
-	public void setFreePeriodStart(Date freePeriodStart) {
-		this.freePeriodStart = freePeriodStart;
-	}
-	
-	public void setFreePeriodEnd(Date freePeriodEnd) {
-		this.freePeriodEnd = freePeriodEnd;
+		this.totalRentPerMonthInEuro = rent.getAmount().doubleValue();
 	}
 
-	public Interval getFreePeriod() {
-		return new Interval(new DateTime(freePeriodStart), new DateTime(freePeriodEnd));
-	}
-
-	public Money getRent() {
-		return Money.of(DEFAULT_CURRENCY, rentAmount);
+	public Money getTotalRentPerMonth() {
+		return Money.of(DEFAULT_CURRENCY, totalRentPerMonthInEuro);
 	}
 
 	@Override
 	public String toString() {
-		return Objects.toStringHelper(this).add("free period", getFreePeriod()).add("rent", getRent()).toString();
+		return Objects.toStringHelper(this).add("rent", getTotalRentPerMonth()).add("room size", roomSize).toString();
 	}
 	
 }

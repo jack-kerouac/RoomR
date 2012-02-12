@@ -63,6 +63,21 @@ $(document).ready(function () {
 	// update list to account for initial content of the field
 	updateOfferResultList();
 	 
+	
+	var minAgeInput = $('#create_offer_form #ageRangeSelect input:eq(0)');
+	var maxAgeInput = $('#create_offer_form #ageRangeSelect input:eq(1)');
+	$('#create_offer_form #ageRangeSelect').append('<div class="slider">');
+
+	$('#create_offer_form #ageRangeSelect div.slider').slider({
+		range: true,
+		min: 0,
+		max: 99,
+		values: [ minAgeInput.val(), maxAgeInput.val()],
+		slide: function( event, ui ) {
+			minAgeInput.val(ui.values[0]);
+			maxAgeInput.val(ui.values[1]);
+		}
+	});
 });
 
 

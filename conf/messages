@@ -2,15 +2,23 @@
 # For example, for French create a messages.fr file
 #
 
+genders.male=Mann
+genders.female=Frau
+
 views.Offers.viewAll.title=All offers
 views.Offers.viewOffer.title=Single offer
 
+offer.criteria.genders=Geschlecht
+offer.criteria.ageRange=Alter
+offer.criteria.minAge.years=Mindestalter
+offer.criteria.maxAge.years=Maximalalter
 
-offer.location.quarter=Stadtviertel
-offer.location.address.street=Straße
-offer.location.address.streetNumber=Street number
-offer.location.address.zipCode=PLZ
-offer.location.address.city=Stadt
-offer.roomDetails.freePeriodStart=From
-offer.roomDetails.freePeriodEnd=To
-offer.roomDetails.rent=Rent
+offer.flatshare.address.street=Straße
+offer.flatshare.address.streetNumber=Hausnummer
+offer.flatshare.address.zipCode=PLZ
+offer.flatshare.address.city=Stadt
+offer.flatshare.floor=Stockwerk
+offer.flatshare.smokingTolerance=Rauchen
+
+offer.roomDetails.totalRentPerMonthInEuro=Miete pro Monat
+offer.roomDetails.roomSize.squareMeters=Zimmergröße
