@@ -21,8 +21,19 @@ var roomr = (function() {
 roomr.instantSearch = (function() {
 	var my = {};
 	
+	function calcColor(p) {
+		var red = p < 50 ? 255 : Math.round(256 - (p - 50) * 5.12);
+		var green = p > 50 ? 255 : Math.round((p) * 5.12);
+		return "rgb(" + red + "," + green + ", 0)";
+	}
+	
 	function updateOfferResultList() {
-	   $('.offers').load('/offers', $('#search_offers_form').serialize(), function(responseText, textStatus, XMLHttpRequest) {
+		// omit empty input fields
+	   $('.offers').load('/offers', $('#search_offers_form :input[value]').serialize(), function(responseText, textStatus, XMLHttpRequest) {
+		   $('.offers .score:not(.undefined)').each(function() {
+			   $(this).css('background-color', calcColor($(this).text().replace('%', '')));
+		   });
+		   
 		   $('.offer').hide().fadeIn(500);
 	   });
 	}

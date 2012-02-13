@@ -1,0 +1,10 @@
+*{ Display an offer with a rank }*
+
+<div>
+	<div class="score${_offer.matchingScore.defined ? '' : ' undefined'}">${_offer.matchingScore}</div>
+	<div>Address: ${_offer.offer.flatshare.address}</div>
+	
+	<div class="toString">
+		${_offer}
+	</div>
+</div>

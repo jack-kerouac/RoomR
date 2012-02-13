@@ -1,0 +1,33 @@
+.offers {
+	
+	padding: 0;
+	
+	li {
+		margin-left: 50px;
+		position: relative;
+	}
+	
+	.score {
+		color: white;
+
+		font-weight: bold;
+		
+		float: left;
+		position: absolute;
+ 		left: -53px;
+
+		width: 40px;
+ 		padding: 5px; 
+ 		
+ 		text-align: right;
+ 		
+		border-top-left-radius: 10px;
+		border-bottom-left-radius: 10px;
+		
+		text-shadow: gray 1px 1px;
+	}
+	.undefined {
+		background-color: rgb(150, 150, 255);
+	}
+
+}
