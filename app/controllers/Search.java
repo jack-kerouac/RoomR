@@ -4,15 +4,16 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import models.common.Age;
 import models.common.Floor;
+import models.common.Gender;
 import models.matching.OfferMatcher;
-import models.offer.Offer;
-
-import org.joda.money.CurrencyUnit;
-import org.joda.money.Money;
-
+import models.matching.RankedRoomOffer;
+import models.request.RoomRequest;
 import play.modules.guice.InjectSupport;
 import play.mvc.Controller;
+
+import com.google.common.base.Optional;
 
 @InjectSupport
 public class Search extends Controller {
@@ -22,17 +23,14 @@ public class Search extends Controller {
 
 	public static void searchForm() {
 		Floor[] floors = Floor.values();
-		render((Object)floors);
+		render((Object) floors);
 	}
 
-	public static void offers(String maxRent, Floor floor) {
-		if(floor == null && (maxRent == null || maxRent.isEmpty()))
-			render();
-		
-		Money maxRentMoney = maxRent.isEmpty() ? Money.of(CurrencyUnit.EUR, 100000.0) : Money.of(CurrencyUnit.EUR, Double.valueOf(maxRent));
-		
-		List<Offer> offers = matcher.match(maxRentMoney, floor);
-		
+	public static void offers(RoomRequest request, Age seekerAge, Gender seekerGender) {
+		List<RankedRoomOffer> offers = matcher.match(request, Optional.fromNullable(seekerAge),
+				Optional.fromNullable(seekerGender));
+
 		render(offers);
 	}
+	
 }

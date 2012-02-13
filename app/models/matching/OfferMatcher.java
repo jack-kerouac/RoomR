@@ -2,13 +2,17 @@ package models.matching;
 
 import java.util.List;
 
-import models.common.Floor;
-import models.offer.Offer;
+import models.common.Age;
+import models.common.Gender;
+import models.request.RoomRequest;
 
-import org.joda.money.Money;
+import com.google.common.base.Optional;
 
 public interface OfferMatcher {
 
-	public List<Offer> match(Money maxRentMoney, Floor floor);
-	
+	/**
+	 * The returned list of {@link RankedRoomOffer} is sorted by the {@link RankedRoomOffer#matchingScore}.
+	 */
+	public List<RankedRoomOffer> match(RoomRequest request, Optional<Age> seekerAge, Optional<Gender> seekerGender);
+
 }

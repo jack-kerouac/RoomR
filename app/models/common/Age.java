@@ -21,6 +21,14 @@ public final class Age implements Comparable<Age> {
 		return new Integer(years).compareTo(o.years);
 	}
 
+	public boolean isLessThan(Age age) {
+		return this.years < age.years;
+	}
+	
+	public boolean isMoreThan(Age age) {
+		return this.years > age.years;
+	}
+	
 	@Override
 	public String toString() {
 		return years + " years";

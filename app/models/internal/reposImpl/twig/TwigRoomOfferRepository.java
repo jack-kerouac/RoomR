@@ -3,15 +3,15 @@ package models.internal.reposImpl.twig;
 import java.util.Iterator;
 import java.util.Set;
 
-import models.offer.Offer;
-import models.offer.OfferRepository;
+import models.offer.RoomOffer;
+import models.offer.RoomOfferRepository;
 
 import com.google.code.twig.ObjectDatastore;
 import com.google.common.collect.ImmutableSet;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
-public class TwigOfferRepository implements OfferRepository {
+public class TwigRoomOfferRepository implements RoomOfferRepository {
 
 	private final Provider<ObjectDatastore> datastoreProvider;
 
@@ -19,27 +19,27 @@ public class TwigOfferRepository implements OfferRepository {
 	private static long offerIdCounter = 1;
 	
 	@Inject
-	public TwigOfferRepository(Provider<ObjectDatastore> datastoreProvider) {
+	public TwigRoomOfferRepository(Provider<ObjectDatastore> datastoreProvider) {
 		super();
 		this.datastoreProvider = datastoreProvider;
 	}
 
 	@Override
-	public void add(Offer offer) {
+	public void add(RoomOffer offer) {
 		if(offer.id == null)
 			offer.id = offerIdCounter++;
 		datastoreProvider.get().store(offer);
 	}
 
 	@Override
-	public Set<Offer> findAll() {
-		Iterator<Offer> InQuarter = datastoreProvider.get().find(Offer.class);
+	public Set<RoomOffer> findAll() {
+		Iterator<RoomOffer> InQuarter = datastoreProvider.get().find(RoomOffer.class);
 		return ImmutableSet.copyOf(InQuarter);
 	}
 	
 	@Override
-	public Offer find(long id) {
-		return datastoreProvider.get().load(Offer.class, id);
+	public RoomOffer find(long id) {
+		return datastoreProvider.get().load(RoomOffer.class, id);
 	}
 
 }

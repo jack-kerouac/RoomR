@@ -8,7 +8,7 @@ import com.google.code.twig.annotation.Id;
 import com.google.code.twig.annotation.Independent;
 import com.google.common.base.Objects;
 
-public final class Offer {
+public final class RoomOffer {
 
 	@Id
 	public Long id;
@@ -25,7 +25,7 @@ public final class Offer {
 	@Child
 	public SeekerCriteria criteria;
 
-	public Offer() {}
+	public RoomOffer() {}
 
 	@Override
 	public String toString() {

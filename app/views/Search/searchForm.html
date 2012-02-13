@@ -3,18 +3,46 @@
 
 <h1>Anzeigen suchen</h1>
 <form id="search_offers_form">
-	<fieldset id="location" class="step">
+	<fieldset id="request" class="step">
 		<ul>
 			<li>
-			#{jqvalid.field 'floor'}
+			#{jqvalid.field 'request.city'}
 				<label for="${field.id}" class="caption">&{field.name}</label>
-				#{select 'floor', items:floors, value:2 /}
+				<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
+				<span class="error">${field.error}</span>
+			#{/}
+			</li>
+			
+						<li>
+			#{jqvalid.field 'request.minRoomSize.squareMeters'}
+				<label for="${field.id}" class="caption">&{field.name}</label>
+				<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
 				<span class="error">${field.error}</span>
 			#{/}
 			</li>
 		
 			<li>
-			#{jqvalid.field 'maxRent'}
+			#{jqvalid.field 'request.maxRentPerMonthInEuro'}
+				<label for="${field.id}" class="caption">&{field.name}</label>
+				<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
+				<span class="error">${field.error}</span>
+			#{/}
+			</li>
+		</ul>
+	</fieldset>
+			
+	<fieldset id="additionalParameters" class="step">
+		<ul>
+			<li>
+			#{jqvalid.field 'seekerAge.years'}
+				<label for="${field.id}" class="caption">&{field.name}</label>
+				<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
+				<span class="error">${field.error}</span>
+			#{/}
+			</li>
+			
+			<li>
+			#{jqvalid.field 'seekerGender'}
 				<label for="${field.id}" class="caption">&{field.name}</label>
 				<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
 				<span class="error">${field.error}</span>

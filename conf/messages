@@ -22,3 +22,11 @@ offer.flatshare.smokingTolerance=Rauchen
 
 offer.roomDetails.totalRentPerMonthInEuro=Miete pro Monat
 offer.roomDetails.roomSize.squareMeters=Zimmergröße
+
+
+
+request.city=Stadt
+request.minRoomSize.squareMeters=Min. Zimmergröße
+request.maxRentPerMonthInEuro=Max. Miete pro Monat
+seekerAge.years=Dein Alter
+seekerGender=Dein Geschlecht

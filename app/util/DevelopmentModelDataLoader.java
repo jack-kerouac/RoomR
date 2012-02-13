@@ -4,8 +4,8 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import models.offer.Offer;
-import models.offer.OfferRepository;
+import models.offer.RoomOffer;
+import models.offer.RoomOfferRepository;
 import play.Play;
 import play.Play.Mode;
 import play.modules.guice.InjectSupport;
@@ -14,7 +14,7 @@ import play.test.Fixtures;
 @InjectSupport
 public class DevelopmentModelDataLoader {
 	@Inject
-	private static OfferRepository offerRepository;
+	private static RoomOfferRepository offerRepository;
 
 	/**
 	 * Loads all model entities in dev-models.yml if in dev mode. This method
@@ -37,8 +37,8 @@ public class DevelopmentModelDataLoader {
 		Map<String, Object> idCache = Fixtures.idCache;
 
 		for (Object o : idCache.values()) {
-			if (o instanceof Offer) {
-				offerRepository.add((Offer) o);
+			if (o instanceof RoomOffer) {
+				offerRepository.add((RoomOffer) o);
 			}
 		}
 	}

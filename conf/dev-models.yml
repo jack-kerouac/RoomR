@@ -3,7 +3,7 @@
 # For each entity type to get imported correctly, you have to adapt
 # DevelopmentModelDataLoader.
 
-offer.Offer(1):
+offer.RoomOffer(1):
   id: 1
   flatshare:
     address:
@@ -22,7 +22,7 @@ offer.Offer(1):
     genders: [male,female]
     
     
-offer.Offer(2):
+offer.RoomOffer(2):
   id: 2
   flatshare:
     address:
@@ -41,7 +41,7 @@ offer.Offer(2):
     genders: male
     
     
-offer.Offer(3):
+offer.RoomOffer(3):
   id: 3
   flatshare:
     address:
@@ -60,7 +60,7 @@ offer.Offer(3):
     genders: female
     
     
-offer.Offer(4):
+offer.RoomOffer(4):
   id: 4
   flatshare:
     address:
