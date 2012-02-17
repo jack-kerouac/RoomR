@@ -34,7 +34,8 @@
 	<!-- All JavaScript at the bottom, except for Modernizr / Respond.
 	Modernizr enables HTML5 elements & feature detects; Respond is a polyfill for min/max-width CSS3 Media Queries
 	For optimal performance, use a custom Modernizr build: www.modernizr.com/download/ -->
-	<script src="@{'/public/javascripts/libs/modernizr-2.0.6.min.js'}"></script>
+	#{script 'libs/modernizr-2.5.2.min.js' /}
+	
 	#{get 'moreScripts' /}
 </head>
 
@@ -52,10 +53,7 @@
 	
 	<!-- JavaScript at the bottom for fast page loading -->
 	
-	<!-- Change UA-XXXXX-X to be your site's ID -->
 	<script>
-		window._gaq = [['_setAccount', 'UAXXXXXXXX1'], ['_trackPageview'], ['_trackPageLoadTime']];
-		
 		Modernizr.load([
 			// Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline
 			{
@@ -105,14 +103,19 @@
 				complete: function() {
 					$(document).ready(roomr.init);
 				}
-			},
-			// always load analytics last.
-			{
-				load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
 			}
 		]);
 	</script>
 	
+	  <!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
+       mathiasbynens.be/notes/async-analytics-snippet -->
+	<script>
+		var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview'],['_trackPageLoadTime']];
+		(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+		g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+		s.parentNode.insertBefore(g,s)}(document,'script'));
+	</script>
+  
 	<!-- Prompt IE 6 users to install Chrome Frame. Remove this if you want to support IE 6.
 	chromium.org/developers/how-tos/chrome-frame-getting-started -->
 	<!--[if lt IE 7 ]>
