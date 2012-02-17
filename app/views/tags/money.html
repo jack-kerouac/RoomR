@@ -1,0 +1,3 @@
+*{ ${new org.joda.money.format.MoneyFormatterBuilder().appendAmountLocalized().toFormatter().print(_arg) } }*
+
+${_arg.rounded(0, java.math.RoundingMode.HALF_UP ).getAmountMajorInt() + " " + _arg.getCurrencyUnit().getSymbol(java.util.Locale.GERMANY) }

@@ -1,3 +1,19 @@
+/* a tag that is attached to the left side of the box */
+@mixin box_tag {
+	float: left;
+	position: absolute;
+	left: -53px;
+
+	width: 40px;
+	padding: 5px; 
+		
+	text-align: right;
+		
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+}
+
+
 .offers {
 	
 	padding: 0;
@@ -5,29 +21,62 @@
 	li {
 		margin-left: 50px;
 		position: relative;
-	}
+		
+		.score {
+			@include box_tag;
+		
+			color: white;
+			text-shadow: gray 1px 1px;
+			font-weight: bold;
+			
+			top: 10px;
+		}
+		.undefined {
+			background-color: rgb(150, 150, 255);
+		}
+		
+		
+		.total_rent {
+			@include box_tag;
+			
+			color: white;
+			text-shadow: gray 1px 1px;
+			font-weight: bold;
 	
-	.score {
-		color: white;
-
-		font-weight: bold;
+			
+			background-color: rgb(100, 100, 255);
+			
+			top: 50px;
+		}
 		
-		float: left;
-		position: absolute;
- 		left: -53px;
-
-		width: 40px;
- 		padding: 5px; 
- 		
- 		text-align: right;
- 		
-		border-top-left-radius: 10px;
-		border-bottom-left-radius: 10px;
+		.location {
+			width: 300px;
+			margin: 10px;
 		
-		text-shadow: gray 1px 1px;
-	}
-	.undefined {
-		background-color: rgb(150, 150, 255);
+			position: absolute;
+			right: 0;
+			top: 0;
+						
+			.address {
+				display: inline-block;
+			
+				text-align: right;
+				padding: 10px;
+			}
+			
+			.map {
+				position: absolute;
+				right: 0px;
+			
+				display: inline-block;
+						
+				width: 100px;
+				height: 100px;
+				background-color: green;
+			}
+			
+		}
+		
 	}
 
 }
