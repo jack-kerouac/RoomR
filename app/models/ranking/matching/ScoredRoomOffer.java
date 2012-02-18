@@ -1,11 +1,11 @@
-package models.matching;
+package models.ranking.matching;
 
 import models.common.Score;
 import models.offer.RoomOffer;
 
 import com.google.common.base.Objects;
 
-public class RankedRoomOffer implements Comparable<RankedRoomOffer> {
+public class ScoredRoomOffer implements Comparable<ScoredRoomOffer> {
 
 	public RoomOffer offer;
 
@@ -13,11 +13,11 @@ public class RankedRoomOffer implements Comparable<RankedRoomOffer> {
 	public Score matchingScore;
 
 	@Override
-	public int compareTo(RankedRoomOffer o) {
+	public int compareTo(ScoredRoomOffer o) {
 		return this.matchingScore.compareTo(o.matchingScore);
 	}
 
-	public RankedRoomOffer(RoomOffer offer, Score matchingScore) {
+	public ScoredRoomOffer(RoomOffer offer, Score matchingScore) {
 		this.offer = offer;
 		this.matchingScore = matchingScore;
 	}

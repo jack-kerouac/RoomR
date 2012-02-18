@@ -4,6 +4,9 @@ import com.google.common.base.Preconditions;
 
 public final class Score implements Comparable<Score> {
 
+	public static final Score MAX = defined(1.0);
+	public static final Score MIN = defined(0.0);
+	
 	private final double value;
 	private final boolean defined;
 
