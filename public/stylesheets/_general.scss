@@ -25,6 +25,18 @@ h1 {
 	margin-top: 0;
 }
 
+
+
+a { color: #00e; }
+a:visited { color: #00a; }
+a:hover { color: #06e; }
+a:focus { outline: thin dotted; }
+
+/* Improve readability when focused and hovered in all browsers: h5bp.com/h */
+a:hover, a:active { outline: 0; }
+
+
+
 /* FORMS */
 /** according to http://24ways.org/2009/have-a-field-day-with-html5-forms */
 
@@ -130,6 +142,11 @@ form {
 	button:hover {
 		background: rgb(4, 49, 74);
 		cursor: pointer;
+	}
+	
+	
+	input.age {
+		width: 20px;
 	}
 }
 

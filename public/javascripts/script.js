@@ -29,7 +29,7 @@ roomr.instantSearch = (function() {
 	
 	function updateOfferResultList() {
 		// omit empty input fields
-	   $('.offers').load('/offers', $('#search_offers_form :input[value]').serialize(), function(responseText, textStatus, XMLHttpRequest) {
+	   $('.offers').load('/offers', $(':input[value]', $('#search_offers_form')).serialize(), function(responseText, textStatus, XMLHttpRequest) {
 		   $('.offers .score:not(.undefined)').each(function() {
 			   $(this).css('background-color', calcColor($(this).text().replace('%', '')));
 		   });
@@ -39,7 +39,7 @@ roomr.instantSearch = (function() {
 	}
 	
 	my.init = function() {
-		$('#search_offers_form input').each(function() {
+		$(':input:not(:checkbox, :radio)', $('#search_offers_form')).each(function() {
 			var typingTimer;               // timer identifier
 			var doneTypingInterval = 200;  // time in ms, 5 second for example
 			   $(this).data('oldVal', $(this).val());
@@ -59,7 +59,7 @@ roomr.instantSearch = (function() {
 					updateOfferResultList();
 			   }
 		});
-		$('#search_offers_form select').each(function() {
+		$(':checkbox, :radio', $('#search_offers_form')).each(function() {
 				// start the countdown
 			   $(this).change(function() {
 				   updateOfferResultList()

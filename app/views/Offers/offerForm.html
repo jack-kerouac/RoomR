@@ -36,11 +36,11 @@
 			#{jqvalid.field 'offer.criteria.ageRange'}
 				<label class="caption">&{field.name}</label>
 				#{jqvalid.field 'offer.criteria.minAge.years'}
-				<input id="${field.id}" name="${field.name}" type="number" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
+				<input id="${field.id}" name="${field.name}" type="number" data-validate="${field.validationData}" value="${field.value}" class="age ${field.errorClass}">
 				#{/}
 				&nbsp;&#8210;&nbsp;
 				#{jqvalid.field 'offer.criteria.maxAge.years'}
-				<input id="${field.id}" name="${field.name}" type="number" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
+				<input id="${field.id}" name="${field.name}" type="number" data-validate="${field.validationData}" value="${field.value}" class="age ${field.errorClass}">
 				#{/}
 				<span class="error">${field.error}</span>
 			#{/}
