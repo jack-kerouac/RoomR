@@ -1,32 +1,5 @@
 #create_offer {
 
-#gendersSelect {
-	ul {
-		list-style: none;
-		
-		/* the list should appear next to the label, not below it */
-		display: inline;
-		
-		li {
-			/* we want a horizontal list */			
-			display: inline;	
-			padding-right: 20px;
-		
-			/* the caption label for the checkboxes should have a default width, not the one from the normal caption labels */			
-			label  {
-				width: auto;
-			}
-
-			/* drop the input elements down a little, so that they appear next to the text */
-			input {
-				position: relative;
-				top: 3px;
-			}
-		}
-	
-	}	
-}
-
 #ageRangeSelect {
 	.slider {
 		display: inline-block;

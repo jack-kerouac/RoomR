@@ -32,11 +32,18 @@
 
 .offers {
 	
-	padding: 0;
-	
 	li {
-		margin-left: 50px;
+		margin-left: 10px;
 		position: relative;
+		margin-bottom: 20px;
+		padding: 10px;
+
+		list-style: none;
+	
+		background-color: #EFF9FF;
+		border: 3px solid gray;
+		border-radius: 10px;
+	
 		
 		.score {
 			@include box_tag;
@@ -91,6 +98,10 @@
 				background-color: green;
 			}
 		}
+	}
+	
+	li.offer:last-of-type {
+		margin-bottom: 0px;
 	}
 }
 
