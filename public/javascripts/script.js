@@ -34,7 +34,10 @@ roomr.instantSearch = (function() {
 		// omit empty input fields
 		$('.offers').load('/offers', $(':input[value]', $('#search_offers_form')).serialize(), function(responseText, textStatus, XMLHttpRequest) {
 			$('.offers .score:not(.undefined)').each(function() {
-			$(this).css('background-color', calcColor($(this).text().replace('%', '')));
+				$(this).css('background-color', calcColor($(this).text().replace('%', '')));
+
+				// without the relative property, the tooltip is not displayed
+				$(this).tooltip( { relative: true });
 			});
 	  
 			$('#loading').hide();

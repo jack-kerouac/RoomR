@@ -9,7 +9,19 @@
 
 <div>
 	<div class="score${_offer.matchingScore.defined ? '' : ' undefined'}">${score}</div>
-	
+	<div class="criteria_tooltip">
+		<div class="met_criteria">
+		met criteria: ${_offer.metCriteria}
+		</div>
+		
+		<div class="unmet_criteria">
+		unmet criteria: ${_offer.unmetCriteria}
+		</div>
+		
+		<div class="undefined_criteria">
+		undefined criteria: ${_offer.undefinedCriteria}
+		</div>
+	</div>
 	
 	<div class="location">
 		<div class="address">#{address flatshare.address /}</div>

@@ -7,6 +7,14 @@
 	width: 100%;
 }
 
+.criteria_tooltip {
+	display: none;
+	padding: 10px;
+	background-color: white;
+	border: 1px solid black;
+}
+
+
 
 /* a tag that is attached to the left side of the box */
 @mixin box_tag {

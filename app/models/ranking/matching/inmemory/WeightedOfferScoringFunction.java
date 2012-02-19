@@ -49,70 +49,51 @@ public class WeightedOfferScoringFunction implements OfferScoringFunction {
 
 	// @formatter:on
 
+	double totalWeight = 0.0, totalScore = 0.0;
+
+	Set<MatchingCriterion> metCriteria = Sets.newLinkedHashSet();
+	Set<MatchingCriterion> unmetCriteria = Sets.newLinkedHashSet();
+	Set<MatchingCriterion> undefinedCriteria = Sets.newLinkedHashSet();
+
+	/**
+	 * This method is not thread safe!
+	 */
 	@Override
 	public ScoredRoomOffer apply(RoomOffer offer) {
-		double totalWeight = 0.0, totalScore = 0.0;
+		evaluateScore(new AgeScorer().score(offer, seekerAge), AGE);
+		evaluateScore(new GenderScorer().score(offer, seekerGender), GENDER);
 
-		Set<MatchingCriterion> unmetCriteria = Sets.newLinkedHashSet();
+		evaluateScore(new CityScorer().score(offer, request.getCity()), CITY);
+		evaluateScore(new RoomSizeScorer().score(offer, request.getMinRoomSize()), ROOM_SIZE);
+		evaluateScore(new RentPerMonthScorer().score(offer, request.getMaxRent()), RENT_PER_MONTH);
 
-		// AGE
-		{
-			Score ageScore = new AgeScorer().score(offer, seekerAge);
-			if (ageScore.isDefined()) {
-				if (!ageScore.isMax())
-					unmetCriteria.add(AGE);
-				totalWeight += weights.get(AGE);
-				totalScore += weights.get(AGE) * ageScore.getValue();
-			}
-		}
-
-		// GENDER
-		{
-			Score genderScore = new GenderScorer().score(offer, seekerGender);
-			if (genderScore.isDefined()) {
-				if (!genderScore.isMax())
-					unmetCriteria.add(GENDER);
-				totalWeight += weights.get(GENDER);
-				totalScore += weights.get(GENDER) * genderScore.getValue();
-			}
-		}
-
-		// CITY
-		{
-			Score cityScore = new CityScorer().score(offer, request.getCity());
-			if (cityScore.isDefined()) {
-				if (!cityScore.isMax())
-					unmetCriteria.add(CITY);
-				totalWeight += weights.get(CITY);
-				totalScore += weights.get(CITY) * cityScore.getValue();
-			}
-		}
-		
-		// MIN ROOM SIZE
-		{
-			Score roomSizeScore = new RoomSizeScorer().score(offer, request.getMinRoomSize());
-			if (roomSizeScore.isDefined()) {
-				if (!roomSizeScore.isMax())
-					unmetCriteria.add(ROOM_SIZE);
-				totalWeight += weights.get(ROOM_SIZE);
-				totalScore += weights.get(ROOM_SIZE) * roomSizeScore.getValue();
-			}
-		}
-		
-		// MAX RENT PER MONTH
-		{
-			Score rentPerMonthScore = new RentPerMonthScorer().score(offer, request.getMaxRent());
-			if (rentPerMonthScore.isDefined()) {
-				if (!rentPerMonthScore.isMax())
-					unmetCriteria.add(RENT_PER_MONTH);
-				totalWeight += weights.get(RENT_PER_MONTH);
-				totalScore += weights.get(RENT_PER_MONTH) * rentPerMonthScore.getValue();
-			}
-		}
-		
+		ScoredRoomOffer scoredRoomOffer;
 		if (totalWeight != 0.0)
-			return new ScoredRoomOffer(offer, Score.defined(totalScore / totalWeight), unmetCriteria);
+			scoredRoomOffer = new ScoredRoomOffer(offer, Score.defined(totalScore / totalWeight), metCriteria,
+					unmetCriteria, undefinedCriteria);
 		else
-			return new ScoredRoomOffer(offer, Score.undefined(), unmetCriteria);
+			scoredRoomOffer = new ScoredRoomOffer(offer, Score.undefined(), metCriteria, unmetCriteria,
+					undefinedCriteria);
+
+		totalWeight = 0.0;
+		totalScore = 0.0;
+		metCriteria = Sets.newLinkedHashSet();
+		unmetCriteria = Sets.newLinkedHashSet();
+		undefinedCriteria = Sets.newLinkedHashSet();
+		
+		return scoredRoomOffer;
+	}
+
+	private void evaluateScore(Score score, MatchingCriterion criterion) {
+		if (score.isDefined()) {
+			if (score.isMax())
+				metCriteria.add(criterion);
+			else
+				unmetCriteria.add(criterion);
+			totalWeight += weights.get(criterion);
+			totalScore += weights.get(criterion) * score.getValue();
+		} else {
+			undefinedCriteria.add(criterion);
+		}
 	}
 }
