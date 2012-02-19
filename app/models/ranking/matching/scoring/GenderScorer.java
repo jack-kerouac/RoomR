@@ -4,7 +4,7 @@ import models.common.Gender;
 import models.common.Score;
 import models.offer.RoomOffer;
 
-public final class GenderScorer implements AttributeScorer<Gender> {
+public final class GenderScorer extends AbstractAttributeScorer<Gender> {
 
 	@Override
 	public Score score(RoomOffer offer, Gender seekerGender) {

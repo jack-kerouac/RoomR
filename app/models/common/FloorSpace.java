@@ -13,7 +13,7 @@ import com.google.code.twig.annotation.Embedded;
 @Embedded
 public final class FloorSpace {
 
-	public double squareMeters;
+	public Double squareMeters;
 
 	public FloorSpace() {
 		super();

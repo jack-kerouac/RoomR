@@ -27,6 +27,10 @@ public class Search extends Controller {
 	}
 
 	public static void offers(RoomRequest request, Age seekerAge, Gender seekerGender) {
+		// if no attribute of the request is set, the whole request is null. Thus, create one.
+		if(request == null)
+			request = new RoomRequest();
+		
 		List<ScoredRoomOffer> offers = ranker.search(request, Optional.fromNullable(seekerAge),
 				Optional.fromNullable(seekerGender));
 

@@ -6,7 +6,7 @@ import models.offer.RoomOffer;
 
 import com.google.common.collect.Range;
 
-public final class AgeScorer implements AttributeScorer<Age> {
+public final class AgeScorer extends AbstractAttributeScorer<Age> {
 
 	private final int MAX_YEARS_TOLERANCE = 5;
 

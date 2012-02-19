@@ -1,5 +1,7 @@
 package models.ranking.matching;
 
+import java.util.Set;
+
 import models.common.Score;
 import models.offer.RoomOffer;
 
@@ -12,14 +14,22 @@ public class ScoredRoomOffer implements Comparable<ScoredRoomOffer> {
 	// / 0.0 .. 1.0
 	public Score matchingScore;
 
+	public Set<MatchingCriterion> metCriteria;
+	public Set<MatchingCriterion> unmetCriteria;
+	public Set<MatchingCriterion> undefinedCriteria;
+	
+	
 	@Override
 	public int compareTo(ScoredRoomOffer o) {
 		return this.matchingScore.compareTo(o.matchingScore);
 	}
 
-	public ScoredRoomOffer(RoomOffer offer, Score matchingScore) {
+	public ScoredRoomOffer(RoomOffer offer, Score matchingScore, Set<MatchingCriterion> metCriteria, Set<MatchingCriterion> unmetCriteria, Set<MatchingCriterion> undefinedCriteria) {
 		this.offer = offer;
 		this.matchingScore = matchingScore;
+		this.metCriteria = metCriteria;
+		this.unmetCriteria = unmetCriteria;
+		this.undefinedCriteria = undefinedCriteria;
 	}
 
 	@Override
