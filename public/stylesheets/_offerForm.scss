@@ -1,5 +1,6 @@
-#gendersSelect {
+#create_offer {
 
+#gendersSelect {
 	ul {
 		list-style: none;
 		
@@ -24,14 +25,20 @@
 		}
 	
 	}	
-	
 }
 
 #ageRangeSelect {
-	
 	.slider {
 		display: inline-block;
 		width: 200px;
 		margin-left: 30px;
 	}
+}
+
+#map_canvas {
+	float: right;
+	width: 300px;
+	height: 300px;	
+}
+
 }

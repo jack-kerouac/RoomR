@@ -1,22 +1,3 @@
-#loading {
-	color: red;
-	font-size: 20px;
-	font-weight: bold;
-	margin: 20px;
-	text-align: center;
-	width: 100%;
-}
-
-.criteria_tooltip {
-	display: none;
-	width: 300px;
-	padding: 10px;
-	background-color: white;
-	border: 1px solid black;
-}
-
-
-
 /* a tag that is attached to the left side of the box */
 @mixin box_tag {
 	float: left;
@@ -30,6 +11,22 @@
 		
 	border-top-left-radius: 10px;
 	border-bottom-left-radius: 10px;
+}
+
+#search_offer {
+
+#loading {
+	margin: 20px;
+	text-align: center;
+	width: 100%;
+}
+
+.criteria_tooltip {
+	display: none;
+	width: 300px;
+	padding: 10px;
+	background-color: white;
+	border: 1px solid black;
 }
 
 
@@ -93,9 +90,8 @@
 				height: 100px;
 				background-color: green;
 			}
-			
 		}
-		
 	}
+}
 
 }

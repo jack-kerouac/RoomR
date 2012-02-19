@@ -1,5 +1,6 @@
 #{extends 'main.html' /}
 #{set title:'Anzeige anlegen' /}
+#{set pageId:'create_offer' /}
 
 #{set 'moreScripts'}
     #{get 'moreScripts' /}
@@ -11,12 +12,15 @@
 
 
 <h1>Create offer</h1>
-#{jqvalid.form @Offers.createOffer(), id:'create_offer_form'}
+
+<div id="map_canvas"></div>
+
+#{form @Offers.createOffer(), id:'create_offer_form'}
 	<fieldset name="seeker criteria" class="step">
 		<legend>Wen suchst du?</legend>
 		<ul>
 			<li id="gendersSelect">
-				#{jqvalid.field 'offer.criteria.genders'}
+				#{field 'offer.criteria.genders'}
 				<label for="${field.id}" class="caption">&{field.name}</label>
 				<ul>
 					<li>
@@ -33,13 +37,13 @@
 			</li>
 		
 			<li id="ageRangeSelect">
-			#{jqvalid.field 'offer.criteria.ageRange'}
+			#{field 'offer.criteria.ageRange'}
 				<label class="caption">&{field.name}</label>
-				#{jqvalid.field 'offer.criteria.minAge.years'}
+				#{field 'offer.criteria.minAge.years'}
 				<input id="${field.id}" name="${field.name}" type="number" data-validate="${field.validationData}" value="${field.value}" class="age ${field.errorClass}">
 				#{/}
 				&nbsp;&#8210;&nbsp;
-				#{jqvalid.field 'offer.criteria.maxAge.years'}
+				#{field 'offer.criteria.maxAge.years'}
 				<input id="${field.id}" name="${field.name}" type="number" data-validate="${field.validationData}" value="${field.value}" class="age ${field.errorClass}">
 				#{/}
 				<span class="error">${field.error}</span>
@@ -50,33 +54,33 @@
 
 	<fieldset name="flatshare" class="step">
 		<legend>Deine WG</legend>
-		<fieldset name="address">
+		<fieldset name="address" class="adr">
 			<ul>
 				<li>
-				#{jqvalid.field 'offer.flatshare.address.street'}
+				#{field 'offer.flatshare.address.street'}
 					<label for="${field.id}" class="caption">&{field.name}</label>
-					<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
+					<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass} street">
 					<span class="error">${field.error}</span>
 				#{/}
 				</li>
 				<li>
-				#{jqvalid.field 'offer.flatshare.address.streetNumber'}
+				#{field 'offer.flatshare.address.streetNumber'}
 					<label for="${field.id}" class="caption">&{field.name}</label>
-					<input id="${field.id}" name="${field.name}" type="number" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
+					<input id="${field.id}" name="${field.name}" type="number" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass} streetnumber">
 					<span class="error">${field.error}</span>
 				#{/}
 				</li>
 				<li>
-				#{jqvalid.field 'offer.flatshare.address.zipCode'}
+				#{field 'offer.flatshare.address.zipCode'}
 					<label for="${field.id}" class="caption">&{field.name}</label>
-					<input id="${field.id}" name="${field.name}" type="number" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
+					<input id="${field.id}" name="${field.name}" type="number" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass} postal-code">
 					<span class="error">${field.error}</span>
 				#{/}
 				</li>
 				<li>
-				#{jqvalid.field 'offer.flatshare.address.city'}
+				#{field 'offer.flatshare.address.city'}
 					<label for="${field.id}" class="caption">&{field.name}</label>
-					<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
+					<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass} locality">
 					<span class="error">${field.error}</span>
 				#{/}
 				</li>
@@ -85,7 +89,7 @@
 		
 		<ul>
 			<li>
-			#{jqvalid.field 'offer.flatshare.floor'}
+			#{field 'offer.flatshare.floor'}
 				<label for="${field.id}" class="caption">&{field.name}</label>
 				#{select 'offer.flatshare.floor', items:floors, value:2, id:'offer_flatshare_floor', class:'field' /}
 				<span class="error">${field.error}</span>
@@ -93,7 +97,7 @@
 			</li>
 			
 			<li>
-			#{jqvalid.field 'offer.flatshare.smokingTolerance'}
+			#{field 'offer.flatshare.smokingTolerance'}
 				<label for="${field.id}" class="caption">&{field.name}</label>
 				#{select 'offer.flatshare.smokingTolerance', items:smokingTolerances, value:2, id:'offer_flatshare_smokingTolerance', class:'field' /}
 				<span class="error">${field.error}</span>
@@ -106,14 +110,14 @@
 		<legend>Das Zimmer</legend>
 		<ul>
 			<li>
-			#{jqvalid.field 'offer.roomDetails.totalRentPerMonthInEuro'}
+			#{field 'offer.roomDetails.totalRentPerMonthInEuro'}
 				<label for="${field.id}" class="caption">&{field.name}</label>
 				<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
 				<span class="error">${field.error}</span>
 			#{/}
 			</li>
 			<li>
-			#{jqvalid.field 'offer.roomDetails.roomSize.squareMeters'}
+			#{field 'offer.roomDetails.roomSize.squareMeters'}
 				<label for="${field.id}" class="caption">&{field.name}</label>
 				<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
 				<span class="error">${field.error}</span>
@@ -122,4 +126,4 @@
 		</ul>
 	</fieldset>
 	<button type="submit">Anzeige einstellen!</button>
-#{/jqvalid.form}
+#{/form}
