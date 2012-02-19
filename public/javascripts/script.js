@@ -3,16 +3,44 @@
 var roomr = (function() {
 	var my = {};
 	
-	var modules = [];
+	var modules = {};
 	
-	my.addModule = function(module) {
-		modules.push(module);
+	my.addTypingFinishedCallback = function(elements, callback, doneTypingTimeout) {
+		var targets = $(elements);
+		var typingTimer;               // timer identifier
+		
+		if (typeof doneTypingTimeout == 'undefined') {
+			doneTypingTimeout = 200;
+		}
+
+		targets.each(function() {
+			$(this).data('oldVal', $(this).val());
+			$(this).bind("propertychange keyup input paste", function() {
+				var changed = false;
+				targets.each(function() {
+					changed = changed || $(this).data('oldVal') != $(this).val();
+				});
+				
+				if (changed) {
+					targets.each(function() {
+						$(this).data('oldVal', $(this).val());
+					});
+
+					clearTimeout(typingTimer);
+					typingTimer = setTimeout(callback, doneTypingTimeout);
+				}
+			});
+		});
+	}
+	
+	my.addModule = function(pageId, module) {
+		modules[pageId] = module;
 	};
 	
-	my.init = function() {
-		$.each(modules, function(idx, module){
-			module.init();
-		});
+	my.init = function(pageId) {
+		if (pageId in modules) {
+			modules[pageId].init();
+		}
 	};
 	
 	return my;
@@ -44,23 +72,7 @@ roomr.instantSearch = (function() {
 	
 	my.init = function() {
 		$(':input:not(:checkbox, :radio)', $('#search_offers_form')).each(function() {
-			var typingTimer;               // timer identifier
-			var doneTypingInterval = 200;  // time in ms, 5 second for example
-			   $(this).data('oldVal', $(this).val());
-	
-			   $(this).bind("propertychange keyup input paste", function() {
-				   if ($(this).data('oldVal') != $(this).val()) {
-					   $(this).data('oldVal', $(this).val());
-	
-				       clearTimeout(typingTimer);
-				       typingTimer = setTimeout(doneTyping, doneTypingInterval);
-				   }
-			   });
-		
-			   // user is "finished typing," do something
-			   function doneTyping() {
-					updateOfferResultList();
-			   }
+			roomr.addTypingFinishedCallback(this, updateOfferResultList);
 		});
 		$(':checkbox, :radio', $('#search_offers_form')).each(function() {
 			   $(this).change(function() {
@@ -72,7 +84,7 @@ roomr.instantSearch = (function() {
 		updateOfferResultList();
 	};
 	
-	roomr.addModule(my);
+	roomr.addModule('search_offer', my);
 	return my;
 }());
 
@@ -80,7 +92,7 @@ roomr.requestForm = (function() {
 	var my = {};
 
 	my.init = function() {
-		$("#create_request_form").formwizard({
+		$("#create_request").formwizard({
 			formPluginEnabled : false,
 			validationEnabled : false,
 			historyEnabled : true,
@@ -112,21 +124,70 @@ roomr.requestForm = (function() {
 		});
 	};
 	
-	roomr.addModule(my);
+	roomr.addModule('create_request', my);
 	return my;
 }());
 
 
 roomr.createOffer = (function() {
 	var my = {};
+	
+	var offerMap;
+	var geocoder;
+	var addressMarker;
+	
+	var street;
+	var streetNumber;
+	var zipCode;
+	var city;
 
-	my.init = function() {
+	geocodeAddress = function() {
+		var address = street.val() + ' ' + streetNumber.val() + ', ';
+		if (zipCode.val() != '' || city.val() != '') {
+			address = address + zipCode.val() + ' ' + city.val();
+		} else {
+			address = address + 'München';
+		}
 		
-		var minAgeInput = $('#create_offer_form #ageRangeSelect input:eq(0)');
-		var maxAgeInput = $('#create_offer_form #ageRangeSelect input:eq(1)');
-		$('#create_offer_form #ageRangeSelect').append('<div class="slider">');
+		new google.maps.Geocoder().geocode({ 'address': address, 'region': 'de' }, function(results, status) {
+			if (status == google.maps.GeocoderStatus.OK) {
+				offerMap.setCenter(results[0].geometry.location);
+				offerMap.panToBounds(results[0].geometry.viewport);
+				
+			    addressMarker = addressMarker || new google.maps.Marker({
+			        map: offerMap
+			    });
+			    addressMarker.setPosition(results[0].geometry.location);
+			} else {
+				alert("Geocode was not successful for the following reason: " + status);
+			}
+		});
+	};
+	
+	initializeMap = function(mapCanvas) {
+		geocoder = new google.maps.Geocoder();
+	    var latlng = new google.maps.LatLng(48.1505, 11.5586);
+	    var options = {
+	      zoom: 8,
+	      center: latlng,
+	      mapTypeId: google.maps.MapTypeId.ROADMAP
+	    };
+	    offerMap = new google.maps.Map(mapCanvas, options);
+	    
+	    street = $('.adr .street');
+	    streetNumber = $('.adr .streetnumber');
+	    zipCode = $('.adr .postal-code');
+	    city = $('.adr .locality');
+	    
+    	roomr.addTypingFinishedCallback([street, streetNumber, zipCode, city], geocodeAddress, 1000);
+	};
+	
+	my.init = function() {
+		var minAgeInput = $('#create_offer #ageRangeSelect input:eq(0)');
+		var maxAgeInput = $('#create_offer #ageRangeSelect input:eq(1)');
+		$('#create_offer #ageRangeSelect').append('<div class="slider">');
 
-		$('#create_offer_form #ageRangeSelect div.slider').slider({
+		$('#create_offer #ageRangeSelect div.slider').slider({
 			range: true,
 			min: 0,
 			max: 99,
@@ -137,8 +198,12 @@ roomr.createOffer = (function() {
 			}
 		});
 		
+		var offerFormCanvas = $("#map_canvas");
+		if (offerFormCanvas.length == 1) {
+			initializeMap(offerFormCanvas.get(0));
+		}
 	};
 	
-	roomr.addModule(my);
+	roomr.addModule('create_offer', my);
 	return my;
 }());

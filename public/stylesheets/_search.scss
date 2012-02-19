@@ -1,13 +1,3 @@
-#loading {
-	color: red;
-	font-size: 20px;
-	font-weight: bold;
-	margin: 20px;
-	text-align: center;
-	width: 100%;
-}
-
-
 /* a tag that is attached to the left side of the box */
 @mixin box_tag {
 	float: left;
@@ -23,6 +13,16 @@
 	border-bottom-left-radius: 10px;
 }
 
+#search_offer {
+
+#loading {
+	color: red;
+	font-size: 20px;
+	font-weight: bold;
+	margin: 20px;
+	text-align: center;
+	width: 100%;
+}
 
 .offers {
 	
@@ -84,9 +84,8 @@
 				height: 100px;
 				background-color: green;
 			}
-			
 		}
-		
 	}
+}
 
 }
