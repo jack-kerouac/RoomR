@@ -28,14 +28,18 @@ roomr.instantSearch = (function() {
 	}
 	
 	function updateOfferResultList() {
+		$('#loading').show();
+		$('.offer').hide();
+		
 		// omit empty input fields
-	   $('.offers').load('/offers', $(':input[value]', $('#search_offers_form')).serialize(), function(responseText, textStatus, XMLHttpRequest) {
-		   $('.offers .score:not(.undefined)').each(function() {
-			   $(this).css('background-color', calcColor($(this).text().replace('%', '')));
-		   });
-		   
-		   $('.offer').hide().fadeIn(500);
-	   });
+		$('.offers').load('/offers', $(':input[value]', $('#search_offers_form')).serialize(), function(responseText, textStatus, XMLHttpRequest) {
+			$('.offers .score:not(.undefined)').each(function() {
+			$(this).css('background-color', calcColor($(this).text().replace('%', '')));
+			});
+	  
+			$('#loading').hide();
+			$('.offer').fadeIn(500);
+		});
 	}
 	
 	my.init = function() {
@@ -44,7 +48,6 @@ roomr.instantSearch = (function() {
 			var doneTypingInterval = 200;  // time in ms, 5 second for example
 			   $(this).data('oldVal', $(this).val());
 	
-				// start the countdown
 			   $(this).bind("propertychange keyup input paste", function() {
 				   if ($(this).data('oldVal') != $(this).val()) {
 					   $(this).data('oldVal', $(this).val());
@@ -60,12 +63,10 @@ roomr.instantSearch = (function() {
 			   }
 		});
 		$(':checkbox, :radio', $('#search_offers_form')).each(function() {
-				// start the countdown
 			   $(this).change(function() {
 				   updateOfferResultList()
 			   });
 		});
-		
 		
 		// update list to account for initial content of the field
 		updateOfferResultList();
