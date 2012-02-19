@@ -37,7 +37,7 @@ roomr.instantSearch = (function() {
 				$(this).css('background-color', calcColor($(this).text().replace('%', '')));
 
 				// without the relative property, the tooltip is not displayed
-				$(this).tooltip( { relative: true });
+				$(this).tooltip( { relative: true, offset: [-5, 0] });
 			});
 	  
 			$('#loading').hide();
