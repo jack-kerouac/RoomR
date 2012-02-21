@@ -14,7 +14,7 @@ offer.criteria.minAge.years=Mindestalter
 offer.criteria.maxAge.years=Maximalalter
 
 offer.flatshare.address.street=Straße
-offer.flatshare.address.streetNumber=Hausnummer
+offer.flatshare.address.streetNumber=Nr.
 offer.flatshare.address.zipCode=PLZ
 offer.flatshare.address.city=Stadt
 offer.flatshare.floor=Stockwerk

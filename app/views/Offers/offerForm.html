@@ -62,10 +62,8 @@
 					<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass} street">
 					<span class="error">${field.error}</span>
 				#{/}
-				</li>
-				<li>
 				#{field 'offer.flatshare.address.streetNumber'}
-					<label for="${field.id}" class="caption">&{field.name}</label>
+					<label for="${field.id}">&{field.name}</label>
 					<input id="${field.id}" name="${field.name}" type="number" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass} streetnumber">
 					<span class="error">${field.error}</span>
 				#{/}
@@ -76,10 +74,8 @@
 					<input id="${field.id}" name="${field.name}" type="number" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass} postal-code">
 					<span class="error">${field.error}</span>
 				#{/}
-				</li>
-				<li>
 				#{field 'offer.flatshare.address.city'}
-					<label for="${field.id}" class="caption">&{field.name}</label>
+					<label for="${field.id}">&{field.name}</label>
 					<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass} locality">
 					<span class="error">${field.error}</span>
 				#{/}

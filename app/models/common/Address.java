@@ -1,5 +1,6 @@
 package models.common;
 
+import play.data.validation.Match;
 import play.data.validation.Required;
 
 import com.google.code.twig.annotation.Embedded;
@@ -9,13 +10,14 @@ public final class Address {
 	@Required
 	public String street;
 	public int streetNumber;
-	public int zipCode;
+	@Match("[0-9]{5}")
+	public String zipCode;
 	public String city;
 
 	@SuppressWarnings("unused")
 	public Address() {}
 
-	public Address(String street, int streetNumber, int zipCode, String city) {
+	public Address(String street, int streetNumber, String zipCode, String city) {
 		super();
 		this.street = street;
 		this.streetNumber = streetNumber;
@@ -39,11 +41,11 @@ public final class Address {
 		this.streetNumber = streetNumber;
 	}
 
-	public int getZipCode() {
+	public String getZipCode() {
 		return zipCode;
 	}
 
-	public void setZipCode(int zipCode) {
+	public void setZipCode(String zipCode) {
 		this.zipCode = zipCode;
 	}
 

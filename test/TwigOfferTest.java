@@ -6,8 +6,8 @@ import models.common.FloorSpace;
 import models.common.Gender;
 import models.flatshare.Flatshare;
 import models.flatshare.SmokingTolerance;
-import models.offer.RoomOffer;
 import models.offer.RoomDetails;
+import models.offer.RoomOffer;
 import models.offer.SeekerCriteria;
 
 import org.joda.money.CurrencyUnit;
@@ -50,7 +50,7 @@ public class TwigOfferTest {
 		offer.flatshare = new Flatshare();
 		offer.flatshare.floor = Floor.second;
 		offer.flatshare.smokingTolerance = SmokingTolerance.allowedInRoom;
-		offer.flatshare.address = new Address("Knöbelstr.", 14, 80538, "München");
+		offer.flatshare.address = new Address("Knöbelstr.", 14, "80538", "München");
 
 		offer.roomDetails = new RoomDetails(new Interval(new DateTime(), Duration.standardDays(10)), Money.of(
 				CurrencyUnit.EUR, 10.0));
