@@ -136,7 +136,6 @@ roomr.createOffer = (function() {
 	var my = {};
 	
 	var streetMap;
-	var streetViewMap;
 	var geocoder;
 	var addressMarker;
 	
@@ -180,8 +179,7 @@ roomr.createOffer = (function() {
 						zoom : 1
 					}
 				};
-			    var panorama = new google.maps.StreetViewPanorama(document.getElementById("street_view_canvas"), panoramaOptions);
-			    streetViewMap.setStreetView(panorama);
+			    new google.maps.StreetViewPanorama(document.getElementById("street_view_canvas"), panoramaOptions);
 			} else {
 				alert("Geocode was not successful for the following reason: " + status);
 			}
@@ -227,7 +225,6 @@ roomr.createOffer = (function() {
 		});
 		
 		streetMap = initializeMap($("#map_canvas").get(0));
-		streetViewMap = initializeMap($("#street_view_canvas").get(0));
 	};
 	
 	roomr.addModule('create_offer', my);
