@@ -158,8 +158,10 @@ roomr.createOffer = (function() {
 			if (status == google.maps.GeocoderStatus.OK) {
 				// auto complete postal code
 				// super fragile
-				$('.postal-code').val(results[0].address_components[7].long_name);
-				$('.locality').val(results[0].address_components[3].long_name);
+				if(typeof results[0].address_components[7] != 'undefined')
+					$('.postal-code').val(results[0].address_components[7].long_name);
+				if(typeof results[0].address_components[3] != 'undefined')
+					$('.locality').val(results[0].address_components[3].long_name);
 				
 				// street map
 				streetMap.setCenter(results[0].geometry.location);
