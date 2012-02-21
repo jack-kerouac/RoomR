@@ -135,7 +135,8 @@ roomr.requestForm = (function() {
 roomr.createOffer = (function() {
 	var my = {};
 	
-	var offerMap;
+	var streetMap;
+	var streetViewMap;
 	var geocoder;
 	var addressMarker;
 	
@@ -153,14 +154,34 @@ roomr.createOffer = (function() {
 		}
 		
 		new google.maps.Geocoder().geocode({ 'address': address, 'region': 'de' }, function(results, status) {
+			var panoramaOptions;
+			
 			if (status == google.maps.GeocoderStatus.OK) {
-				offerMap.setCenter(results[0].geometry.location);
-				offerMap.panToBounds(results[0].geometry.viewport);
+				// auto complete postal code
+				// super fragile
+				$('.postal-code').val(results[0].address_components[7].long_name);
+				$('.locality').val(results[0].address_components[3].long_name);
+				
+				// street map
+				streetMap.setCenter(results[0].geometry.location);
+				streetMap.panToBounds(results[0].geometry.viewport);
 				
 			    addressMarker = addressMarker || new google.maps.Marker({
-			        map: offerMap
+			        map: streetMap
 			    });
 			    addressMarker.setPosition(results[0].geometry.location);
+			    
+			    // street view
+				panoramaOptions = {
+					position : results[0].geometry.location,
+					pov : {
+						heading : 34,
+						pitch : 10,
+						zoom : 1
+					}
+				};
+			    var panorama = new google.maps.StreetViewPanorama(document.getElementById("street_view_canvas"), panoramaOptions);
+			    streetViewMap.setStreetView(panorama);
 			} else {
 				alert("Geocode was not successful for the following reason: " + status);
 			}
@@ -168,6 +189,8 @@ roomr.createOffer = (function() {
 	};
 	
 	initializeMap = function(mapCanvas) {
+		var map;
+		
 		geocoder = new google.maps.Geocoder();
 	    var latlng = new google.maps.LatLng(48.1505, 11.5586);
 	    var options = {
@@ -175,7 +198,7 @@ roomr.createOffer = (function() {
 	      center: latlng,
 	      mapTypeId: google.maps.MapTypeId.ROADMAP
 	    };
-	    offerMap = new google.maps.Map(mapCanvas, options);
+	    map = new google.maps.Map(mapCanvas, options);
 	    
 	    street = $('.adr .street');
 	    streetNumber = $('.adr .streetnumber');
@@ -183,6 +206,8 @@ roomr.createOffer = (function() {
 	    city = $('.adr .locality');
 	    
     	roomr.addTypingFinishedCallback([street, streetNumber, zipCode, city], geocodeAddress, 1000);
+    	
+    	return map;
 	};
 	
 	my.init = function() {
@@ -201,10 +226,8 @@ roomr.createOffer = (function() {
 			}
 		});
 		
-		var offerFormCanvas = $("#map_canvas");
-		if (offerFormCanvas.length == 1) {
-			initializeMap(offerFormCanvas.get(0));
-		}
+		streetMap = initializeMap($("#map_canvas").get(0));
+		streetViewMap = initializeMap($("#street_view_canvas").get(0));
 	};
 	
 	roomr.addModule('create_offer', my);

@@ -8,8 +8,16 @@
 	}
 }
 
-#map_canvas {
+#maps {
 	float: right;
+}
+
+#map_canvas {
+	width: 400px;
+	height: 400px;	
+}
+
+#street_view_canvas {
 	width: 400px;
 	height: 400px;	
 }
