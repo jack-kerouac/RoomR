@@ -1,16 +1,21 @@
 package controllers;
 
-import java.util.Arrays;
-import java.util.List;
-
 import play.mvc.Before;
 import play.mvc.Controller;
 import util.DevelopmentModelDataLoader;
 
+import com.google.appengine.api.users.User;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
+
 public class Application extends Controller {
 	
 	public static void start() {
-		render();
+        UserService userService = UserServiceFactory.getUserService();
+        String loginUrl = userService.createLoginURL("/");
+        String logoutUrl = userService.createLogoutURL("/");
+        User currentUser = userService.getCurrentUser();
+		render(loginUrl, logoutUrl, currentUser);
 	}
 
 	@Before
