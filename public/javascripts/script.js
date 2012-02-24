@@ -232,3 +232,16 @@ roomr.createOffer = (function() {
 	roomr.addModule('create_offer', my);
 	return my;
 }());
+
+
+roomr.createOffer = (function() {
+	var my = {};
+
+
+	my.init = function() {
+		$('#send_message_dialog').dialog();
+	};
+	
+	roomr.addModule('view_offer', my);
+	return my;
+}());

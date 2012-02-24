@@ -225,13 +225,17 @@ td { vertical-align: top; }
 
 
 /* DO NOT USE THE SHORT NOTATION '@import "layout";' here, since then, reloading does not work, see: http://groups.google.com/group/play-framework/browse_thread/thread/7779c863216ea08e */
+@import "_defaults.scss";
+
 @import "_layout.scss";
 @import "_general.scss";
 
 @import "_start.scss";
 
 @import "_offerForm.scss";
+
 @import "_viewAllOffers.scss";
+@import "_viewOffer.scss";
 
 @import "_createRequest.scss";
 @import "_search.scss";

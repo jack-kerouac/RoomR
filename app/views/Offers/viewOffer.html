@@ -1,5 +1,56 @@
 #{extends 'main.html' /}
-#{set title:'Angebot X' /}
+#{set title:'Angebot ' + offer.id /}
 #{set pageId:'view_offer' /}
 
-#{displayOffer offer:offer, as:'teaser' /}
+*{ Display an offer with a rank }*
+
+%{
+	roomDetails = offer.roomDetails;
+	flatshare = offer.flatshare;
+	criteria = offer.criteria;
+}%
+
+<div class="offer">
+	
+		
+	<div class="flatshare">
+		<h2>die WG</h2>
+		<div class="address">#{address flatshare.address /}</div>
+		<div class="street_map"></div>
+		<div class="street_view"></div>
+		
+		<div>&{'offer.flatshare.floor'}: ${flatshare.floor}</div>
+		<div>&{'offer.flatshare.smokingTolerance'}: ${flatshare.smokingTolerance}</div>
+	</div>
+	
+	<div class="total_rent">
+		<h2>der Preis</h2>
+		<p>
+			&{'offer.roomDetails.totalRentPerMonthInEuro'}:&nbsp;#{money roomDetails.totalRentPerMonth /}
+		</p>
+	</div>
+	
+	<div class="details">
+		<h2>das Zimmer</h2>
+		<p>
+			&{'offer.roomDetails.roomSize.squareMeters'}:&nbsp;${roomDetails.roomSize}
+		</p>
+	</div>
+
+
+	
+	<div class="criteria">
+		<h2>die Anforderungen</h2>
+		<div>&{'offer.criteria.ageRange'}: #{ageRange criteria.ageRange /}</div>
+		<div>&{'offer.criteria.genders'}: #{genders criteria.genders /}</div>
+	</div>
+	
+	<div class="criteria">
+		<button>Nachricht verfassen</button>
+	</div>
+	
+	<div id="send_message_dialog" title="Basic dialog" class="dialog">
+		<p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
+	</div>
+	
+</div>

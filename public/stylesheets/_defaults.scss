@@ -1,0 +1,32 @@
+/* This file is supposed to contain generic style definitions, without any concrete bindings to elements */
+
+@mixin light_shadow {
+	box-shadow: 3px 2px 3px 0px #777;
+}
+
+
+
+/* http://colorschemedesigner.com/#2x123X5QLLUKT */
+
+$primary_color: #81F700;
+
+$primary_color_gray: #6B993A;
+
+$primary_color_dark: #3C7300;
+
+$primary_color_light: #B1FD5F;
+
+$primary_color_lightest: #D5FDAA;
+
+
+
+
+
+
+$headline_color: $primary_color_dark;
+
+$inner_bg_color: $primary_color_lightest;
+
+
+$text_color: black;
+

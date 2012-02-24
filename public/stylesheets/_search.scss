@@ -1,5 +1,7 @@
 /* a tag that is attached to the left side of the box */
 @mixin box_tag {
+	@include light_shadow;
+
 	position: absolute;
 	left: -53px;
 
@@ -32,6 +34,8 @@
 .offers {
 	
 	li {
+		@include light_shadow;
+		
 		margin-left: 10px;
 		position: relative;
 		margin-bottom: 20px;
@@ -39,11 +43,10 @@
 
 		list-style: none;
 	
-		background-color: #EFF9FF;
+		background-color: $inner_bg_color;
 		border: 3px solid gray;
 		border-radius: 10px;
-	
-		
+
 		.score {
 			@include box_tag;
 		
@@ -97,10 +100,20 @@
 				background-color: green;
 			}
 		}
+		
+		a {
+			color: $text_color;
+			text-decoration: none;
+		}
+		
 	}
 	
 	li.offer:last-of-type {
 		margin-bottom: 0px;
+	}
+	
+	li:hover {
+		background-color: darken($inner_bg_color, 10%);
 	}
 }
 

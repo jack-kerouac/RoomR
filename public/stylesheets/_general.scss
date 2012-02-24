@@ -21,15 +21,15 @@ body, button, input, select, textarea {
 	font-size: 14px;
 	
 	font-family: Georgia, "Times New Roman", Times, serif;
+	
+	color: $text_color;
 }
 
 
 /* CONTENT */
 
-$headlineColor: #60a4ca;
-
 h1 {
-	color: $headlineColor;
+	color: $headline_color;
 	font-size: 25px;
 	margin-top: 0;
 }
