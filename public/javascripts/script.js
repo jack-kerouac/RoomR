@@ -138,77 +138,15 @@ roomr.createOffer = (function() {
 	var streetMap;
 	var geocoder;
 	var addressMarker;
+	var streetView;
 	
 	var street;
 	var streetNumber;
 	var zipCode;
 	var city;
-
-	geocodeAddress = function() {
-		var address = street.val() + ' ' + streetNumber.val() + ', ';
-		if (zipCode.val() != '' || city.val() != '') {
-			address = address + zipCode.val() + ' ' + city.val();
-		} else {
-			address = address + 'München';
-		}
-		
-		new google.maps.Geocoder().geocode({ 'address': address, 'region': 'de' }, function(results, status) {
-			var panoramaOptions;
-			
-			if (status == google.maps.GeocoderStatus.OK) {
-				// auto complete postal code
-				// super fragile
-				if(typeof results[0].address_components[7] != 'undefined')
-					$('.postal-code').val(results[0].address_components[7].long_name);
-				if(typeof results[0].address_components[3] != 'undefined')
-					$('.locality').val(results[0].address_components[3].long_name);
-				
-				// street map
-				streetMap.setCenter(results[0].geometry.location);
-				streetMap.panToBounds(results[0].geometry.viewport);
-				
-			    addressMarker = addressMarker || new google.maps.Marker({
-			        map: streetMap
-			    });
-			    addressMarker.setPosition(results[0].geometry.location);
-			    
-			    // street view
-				panoramaOptions = {
-					position : results[0].geometry.location,
-					pov : {
-						heading : 34,
-						pitch : 10,
-						zoom : 1
-					}
-				};
-			    new google.maps.StreetViewPanorama(document.getElementById("street_view_canvas"), panoramaOptions);
-			} else {
-				alert("Geocode was not successful for the following reason: " + status);
-			}
-		});
-	};
 	
-	initializeMap = function(mapCanvas) {
-		var map;
-		
-		geocoder = new google.maps.Geocoder();
-	    var latlng = new google.maps.LatLng(48.1505, 11.5586);
-	    var options = {
-	      zoom: 8,
-	      center: latlng,
-	      mapTypeId: google.maps.MapTypeId.ROADMAP
-	    };
-	    map = new google.maps.Map(mapCanvas, options);
-	    
-	    street = $('.adr .street');
-	    streetNumber = $('.adr .streetnumber');
-	    zipCode = $('.adr .postal-code');
-	    city = $('.adr .locality');
-	    
-    	roomr.addTypingFinishedCallback([street, streetNumber, zipCode, city], geocodeAddress, 1000);
-    	
-    	return map;
-	};
+	var lat;
+	var lng;
 	
 	my.init = function() {
 		var minAgeInput = $('#create_offer #ageRangeSelect input:eq(0)');
@@ -228,6 +166,97 @@ roomr.createOffer = (function() {
 		
 		streetMap = initializeMap($("#map_canvas").get(0));
 	};
+
+	function initializeMap(mapCanvas) {
+		var map;
+		
+		geocoder = new google.maps.Geocoder();
+	    var latlng = new google.maps.LatLng(48.1505, 11.5586);
+	    var options = {
+	      zoom: 8,
+	      center: latlng,
+	      mapTypeId: google.maps.MapTypeId.ROADMAP
+	    };
+	    map = new google.maps.Map(mapCanvas, options);
+	    
+	    street = $('.adr .street');
+	    streetNumber = $('.adr .streetnumber');
+	    zipCode = $('.adr .postal-code');
+	    city = $('.adr .locality');
+	    
+	    lat = $('#lat');
+	    lng = $('#lng');
+	    
+    	roomr.addTypingFinishedCallback([street, streetNumber, zipCode, city], geocodeAddress, 1000);
+    	
+    	prepareAutoCompleteField(zipCode);
+    	prepareAutoCompleteField(city);
+    	
+    	return map;
+	}
+
+	function prepareAutoCompleteField(field) {
+		$(field).bind('keypress', function() {
+			var manuallyEdited = false;
+			if ($.trim(field.val()) != '') {
+				manuallyEdited = true;
+			}
+			field.data('manuallyEdited', manuallyEdited);
+		});
+		field.data('manuallyEdited', false);
+	}
+	
+	function getManualFieldValue(field) {
+		if (field.data('manuallyEdited') === true) {
+			return $.trim(field.val());
+		}
+		return '';
+	}
+	
+	function geocodeAddress() {
+		var address = street.val() + ' ' + streetNumber.val() + ', ';
+		if (getManualFieldValue(zipCode) != '' || getManualFieldValue(city) != '') {
+			address = address + getManualFieldValue(zipCode) + ' ' + getManualFieldValue(city);
+		}
+		
+		new google.maps.Geocoder().geocode({ 'address': address, 'region': 'de' }, function(results, status) {
+			var panoramaOptions;
+			
+			if (status == google.maps.GeocoderStatus.OK) {
+				// save coordinates
+				lat.val(results[0].geometry.location.lat());
+				lng.val(results[0].geometry.location.lng());
+				
+				// auto complete postal code
+				$.each(results[0].address_components, function(index, value) {
+					if ($.inArray('postal_code', value.types) != -1 && getManualFieldValue(zipCode) == '') {
+						zipCode.val(value.long_name);
+					} else if ($.inArray('locality', value.types) != -1 && getManualFieldValue(city) == '') {
+						city.val(value.long_name);
+					}
+				});
+				
+				// street map
+				streetMap.fitBounds(results[0].geometry.viewport);
+				
+			    addressMarker = addressMarker || new google.maps.Marker({
+			        map: streetMap
+			    });
+			    addressMarker.setPosition(results[0].geometry.location);
+			    
+			    // street view
+			    
+			    if (typeof streetView === 'undefined') {
+			    	var streetViewCanvas = $("#street_view_canvas");
+			    	streetView = new google.maps.StreetViewPanorama(streetViewCanvas.get(0));
+			    	streetMap.setStreetView(streetView);
+			    	streetViewCanvas.fadeIn(1000);
+			    }
+			    
+			    streetView.setPosition(results[0].geometry.location);
+			}
+		});
+	}
 	
 	roomr.addModule('create_offer', my);
 	return my;

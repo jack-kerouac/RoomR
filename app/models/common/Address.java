@@ -13,8 +13,7 @@ public final class Address {
 	@Match("[0-9]{5}")
 	public String zipCode;
 	public String city;
-
-	@SuppressWarnings("unused")
+	
 	public Address() {}
 
 	public Address(String street, int streetNumber, String zipCode, String city) {
