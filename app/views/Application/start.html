@@ -2,12 +2,6 @@
 #{set title:'Start' /}
 #{set pageId:'main_page' /}
 
-#{if currentUser != null }
-	#{user currentUser /}
-#{/if}
-<p><a href="${loginUrl}">Login</a></p>
-<p><a href="${logoutUrl}">Logout</a></p>
-
 <div id="seeker_panel">
     <p>#{a @Search.searchForm()}Instant Search#{/a}</p>
 </div>

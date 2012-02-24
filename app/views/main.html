@@ -47,7 +47,10 @@
 	     chromium.org/developers/how-tos/chrome-frame-getting-started -->
 	<!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
 
-	<header>#{a @Application.start()}RoomR#{/a} - #{get 'title' /}</header>
+	<header>
+		<div id="login_status">#{loginStatus /}</div>	
+		<div>#{a @Application.start()}RoomR#{/a} - #{get 'title' /}</div>
+	</header>
 	<div id="content" role="main">
 		<div id="#{get 'pageId' /}">
         	#{doLayout /}
