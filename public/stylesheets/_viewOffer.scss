@@ -1,6 +1,5 @@
 #view_offer {
 
-
 	.offer {
 		padding: 10px;
 		
@@ -9,8 +8,12 @@
 	}
 	
 	
-	#send_message_dialog {
+	#apply_dialog {
 		display: none;
+		
+		textarea {
+			width: 500px;
+		}
 	}
 	
 }

@@ -263,12 +263,23 @@ roomr.createOffer = (function() {
 }());
 
 
-roomr.createOffer = (function() {
+roomr.viewOffer = (function() {
 	var my = {};
 
 
 	my.init = function() {
-		$('#send_message_dialog').dialog();
+		$('#apply_button').click(function() {
+			$('#apply_dialog').dialog({ modal: true, minHeight: 400, minWidth: 600,
+				buttons: [
+				          {
+							text: "Nachricht versenden!",
+							click: function() {
+								alert('TODO: send message');
+								$(this).dialog("close");
+							}
+				          }
+				          ]});			
+		});
 	};
 	
 	roomr.addModule('view_offer', my);

@@ -45,12 +45,16 @@
 		<div>&{'offer.criteria.genders'}: #{genders criteria.genders /}</div>
 	</div>
 	
-	<div class="criteria">
-		<button>Nachricht verfassen</button>
-	</div>
+	<button id="apply_button">Bewerben!</button>
 	
-	<div id="send_message_dialog" title="Basic dialog" class="dialog">
-		<p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
+	<div id="apply_dialog" title="Bewerbung verschicken" class="dialog">
+		<form id="application_form">
+				#{field 'application.message'}
+					<label for="${field.id}" class="caption">&{field.name}</label>
+					<textarea id="${field.id}" name="${field.name}" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}"></textarea>
+					<span class="error">${field.error}</span>
+				#{/}
+		</form>
 	</div>
 	
 </div>
