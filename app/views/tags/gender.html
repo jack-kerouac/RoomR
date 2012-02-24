@@ -1,0 +1,11 @@
+#{if _arg == models.common.Gender.male}
+	MALE
+#{/if}
+ 
+#{elseif _arg = models.common.Gender.female}
+	FEMALE
+#{/elseif}
+ 
+#{else}
+    %{throw new IllegalArgumentException() }%
+#{/else}

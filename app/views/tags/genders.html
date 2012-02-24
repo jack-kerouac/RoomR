@@ -1,0 +1,15 @@
+#{if _arg.contains(models.common.Gender.male) && _arg.contains(models.common.Gender.female)}
+	<img src="/public/images/icons/male_female.png" />
+#{/if}
+ 
+#{elseif _arg.contains(models.common.Gender.male)}
+	<img src="/public/images/icons/male.png" />
+#{/elseif}
+
+#{elseif _arg.contains(models.common.Gender.female)}
+	<img src="/public/images/icons/female.png" />
+#{/elseif}
+ 
+#{else}
+	<img src="/public/images/icons/attention.png" />
+#{/else}
