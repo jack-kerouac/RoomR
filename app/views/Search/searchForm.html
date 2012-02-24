@@ -7,7 +7,7 @@
 	<fieldset id="request" class="step">
 		<ul>
 			<li>
-			#{jqvalid.field 'request.city'}
+			#{field 'request.city'}
 				<label for="${field.id}" class="caption">&{field.name}</label>
 				<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
 				<span class="error">${field.error}</span>
@@ -15,7 +15,7 @@
 			</li>
 			
 						<li>
-			#{jqvalid.field 'request.minRoomSize.squareMeters'}
+			#{field 'request.minRoomSize.squareMeters'}
 				<label for="${field.id}" class="caption">&{field.name}</label>
 				<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
 				<span class="error">${field.error}</span>
@@ -23,7 +23,7 @@
 			</li>
 		
 			<li>
-			#{jqvalid.field 'request.maxRentPerMonthInEuro'}
+			#{field 'request.maxRentPerMonthInEuro'}
 				<label for="${field.id}" class="caption">&{field.name}</label>
 				<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
 				<span class="error">${field.error}</span>
@@ -35,7 +35,7 @@
 	<fieldset id="additionalParameters" class="step">
 		<ul>
 			<li>
-			#{jqvalid.field 'seekerAge.years'}
+			#{field 'seekerAge.years'}
 				<label class="caption">&{field.name}</label>
 				<input id="${field.id}" name="${field.name}" type="number" data-validate="${field.validationData}" value="${field.value}" class="age ${field.errorClass}">
 				<span class="error">${field.error}</span>
@@ -43,7 +43,7 @@
 			</li>
 			
 			<li id="gendersSelect">
-				#{jqvalid.field 'seekerGender'}
+				#{field 'seekerGender'}
 				<label for="${field.id}" class="caption">&{field.name}</label>
 				<ul>
 					<li>

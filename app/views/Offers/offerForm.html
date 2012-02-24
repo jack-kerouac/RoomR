@@ -2,20 +2,11 @@
 #{set title:'Anzeige anlegen' /}
 #{set pageId:'create_offer' /}
 
-#{set 'moreScripts'}
-    #{get 'moreScripts' /}
-    
-    *{TODO: remove the JQuery script again}*
-    #{script 'libs/jquery-1.6.2.min.js' /}
-    #{script 'libs/play-jqvalidate.min.js' /}
-#{/set}
-
-
 <h1>Create offer</h1>
 
 <div id="maps">
 <div id="map_canvas"></div>
-<div id="street_view_canvas"></div>
+<div id="street_view_canvas" style="display:none"></div>
 </div>
 
 #{form @Offers.createOffer(), id:'create_offer_form'}
@@ -79,11 +70,18 @@
 				#{/}
 				#{field 'offer.flatshare.address.city'}
 					<label for="${field.id}">&{field.name}</label>
-					<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass} locality">
+					<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value ? field.value : 'München'}" class="${field.errorClass} locality">
 					<span class="error">${field.error}</span>
 				#{/}
 				</li>
 			</ul>
+			
+			#{field 'lat'}
+				<input id="${field.id}" name="${field.name}" type="hidden">
+			#{/}
+			#{field 'lng'}
+				<input id="${field.id}" name="${field.name}" type="hidden">
+			#{/}
 		</fieldset>
 		
 		<ul>
