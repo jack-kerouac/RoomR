@@ -5,7 +5,7 @@ com.google.appengine.api.users.User currentUser = userService.getCurrentUser();
 
 
 #{if userService.isUserLoggedIn()}
-	Logged in as ${currentUser.getEmail()} <a href="${userService.createLogoutURL(request.path)}">Logout</</a>
+	Logged in as <span class="username">${currentUser.getEmail()}</span> <a href="${userService.createLogoutURL(request.path)}">(Logout)</a>
 #{/if}
 #{else}
 	<a href="${userService.createLoginURL(request.path)}">Login</</a>

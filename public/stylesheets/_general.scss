@@ -1,6 +1,19 @@
 header {
 	font-weight: bold;
 	font-size: 18px;
+	
+	#login_status {
+		font-size: 14px;	
+		
+		font-weight: normal;
+		
+		.username {
+			font-weight: bold;
+			margin-right: 10px;
+		}
+		
+	}
+	
 }
 
 body, button, input, select, textarea {
