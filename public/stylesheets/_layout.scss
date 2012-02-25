@@ -1,41 +1,40 @@
-
-$overall-width: 1000px;
-$content-padding: 20px;
-
 $content-width: $overall-width - 2 * $content-padding;
 
 html {  
-	background-color: #333;
+	/* force the scrollbar, so that content does not jump when changing pages */
+	overflow-y: scroll;
 }
 
 /* more info on using the body tag to change site width here: http://www.sitepoint.com/styling-the-html-and-body-elements/ */
 body {
-	position: relative;
-	background-color: #fff;
-	width: $overall-width;
-	margin: 20px auto;
+	background-color: $background;
+}
+
+header, footer {
+	width: $content-width;
+	margin: auto;
 	
-	box-shadow: 3px 2px 5px 0px #222;
+	padding: $content-padding;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	
+	background-color: $primary;
 }
 
 header {
-	color: white;
-	background-color: #60a4ca;
+	border-bottom: 1px solid #555555;
+}
 
-	padding: 10px;
+footer {
+	border-top: 1px solid #555555;
 }
 
 
 #content {
+	width: $content-width;
+	margin: auto;
 	min-height: 100%;
-	
 	padding: $content-padding;
-	height: 100%;
-}
-
-footer {
-	color: white;
-	background-color: #60a4ca;
 	
-	padding: 10px;
+	background-color: white;
 }

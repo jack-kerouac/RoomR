@@ -40,7 +40,7 @@
 
 		list-style: none;
 	
-		background-color: #EFF9FF;
+		background-color: $background;
 		border: 3px solid gray;
 		border-radius: 10px;
 	
@@ -98,6 +98,10 @@
 				background-color: green;
 			}
 		}
+	}
+	
+	li:hover {
+		background-color: white;
 	}
 	
 	li.offer:last-of-type {

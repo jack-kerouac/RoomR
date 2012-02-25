@@ -25,7 +25,7 @@
 	<!-- CSS concatenated and minified via ant build script-->
 	
 	#{stylesheet 'main.scss' /}
-	#{stylesheet 'ui-lightness/jquery-ui-1.8.17.custom.css' /}
+	#{stylesheet 'custom-theme/jquery-ui-1.8.18.custom.css' /}
 	#{get 'moreStyles' /}
 	<!-- end CSS-->
 	
@@ -42,16 +42,14 @@
 
 </head>
 
-<body>
+<body id="#{get 'pageId' /}">
 	<!-- Prompt IE 6 users to install Chrome Frame. Remove this if you support IE 6.
 	     chromium.org/developers/how-tos/chrome-frame-getting-started -->
 	<!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
 
 	<header>#{a @Application.start()}RoomR#{/a} - #{get 'title' /}</header>
 	<div id="content" role="main">
-		<div id="#{get 'pageId' /}">
-        	#{doLayout /}
-        </div>
+       	#{doLayout /}
 	</div>
 	<footer>A custom footer, ... copyright, blabla</footer>
 	
@@ -104,7 +102,7 @@
 // 				}
 // 			},
  			{
-				load: "@{'/public/javascripts/libs/jquery-ui-1.8.17.custom.min.js'}"
+				load: "@{'/public/javascripts/libs/jquery-ui-1.8.18.custom.min.js'}"
 			},
  			{
 				load: "//cdn.jquerytools.org/1.2.6/all/jquery.tools.min.js"
