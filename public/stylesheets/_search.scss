@@ -1,8 +1,9 @@
 /* a tag that is attached to the left side of the box */
-@mixin box_tag {
+@mixin box_tag($top_offset: 0px) {
 	float: left;
 	position: absolute;
 	left: -53px;
+	top: $top_offset;
 
 	width: 40px;
 	padding: 5px; 
@@ -46,13 +47,11 @@
 	
 		
 		.score {
-			@include box_tag;
+			@include box_tag(10px);
 		
 			color: white;
 			text-shadow: gray 1px 1px;
 			font-weight: bold;
-			
-			top: 10px;
 		}
 		.undefined {
 			background-color: rgb(150, 150, 255);
@@ -60,7 +59,7 @@
 		
 		
 		.total_rent {
-			@include box_tag;
+			@include box_tag(50px);
 			
 			color: white;
 			text-shadow: gray 1px 1px;
@@ -68,8 +67,6 @@
 	
 			
 			background-color: rgb(100, 100, 255);
-			
-			top: 50px;
 		}
 		
 		.location {
