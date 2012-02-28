@@ -11,28 +11,31 @@ body {
 }
 
 header, footer {
-	width: $content-width;
 	margin: auto;
 	
 	padding: $content-padding;
 	padding-top: 10px;
 	padding-bottom: 10px;
-	
-	background-color: $primary;
 }
 
 header {
 	border-bottom: 1px solid #555555;
+	position: relative;
+	z-index: 10;
 }
 
 footer {
 	border-top: 1px solid #555555;
+	z-index: 9;
+}
+
+.container {
+	width: $content-width;
+	margin: 0 auto;
 }
 
 
 #content {
-	width: $content-width;
-	margin: auto;
 	min-height: 100%;
 	padding: $content-padding;
 	

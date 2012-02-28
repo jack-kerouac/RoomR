@@ -14,8 +14,28 @@
 	border-bottom-left-radius: 10px;
 }
 
-#search_offer {
+#search_offers {
 
+#search_offers_form {
+	margin-left: 52px;
+
+	#request_city {
+		width: 140px;
+	}
+	
+	#request_minRoomSize_squareMeters {
+		width: 25px;
+	}
+	
+	#request_maxRentPerMonthInEuro {
+		width: 25px;
+	}
+	
+	.gendersSelect {
+		margin-left: 50px;
+	}
+}
+	
 #loading {
 	margin: 20px;
 	text-align: center;
@@ -32,6 +52,7 @@
 
 
 .offers {
+	padding-left: 40px;
 	
 	li {
 		margin-left: 10px;
@@ -66,7 +87,7 @@
 			font-weight: bold;
 	
 			
-			background-color: rgb(100, 100, 255);
+			background-color: $primary_variant2;
 		}
 		
 		.location {

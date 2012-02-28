@@ -87,7 +87,7 @@ roomr.instantSearch = (function() {
 		updateOfferResultList();
 	};
 	
-	roomr.addModule('search_offer', my);
+	roomr.addModule('search_offers', my);
 	return my;
 }());
 

@@ -1,36 +1,53 @@
+@import url(http://fonts.googleapis.com/css?family=Ubuntu:400,400italic,700,700italic);
 
-	
 /* Improve readability when focused and hovered in all browsers: h5bp.com/h */
 a:hover, a:active { outline: 0; }
 a:focus { outline: thin dotted; }
 
-footer, header {
+header, footer {
 	$text_color: $text_negative;
 	
 	color: $text-color;
+	font-family: 'Ubuntu', sans-serif;
 	
-	font-family: Arial,sans-serif;
-	
-	
-	a { color: mix($text_color, $primary, 90%); }
-	a:visited { color: mix($text_color, $primary, 70%); }
-	a:hover { color: mix($text_color, $primary, 50%); }
+	a {
+		color: mix($text_color, $primary, 90%);
+		text-decoration: none;
+	}
+	a:visited {
+		color: mix($text_color, $primary, 70%);
+	}
+	a:hover {
+		color: mix($text_color, $primary, 50%);
+	}
 }
 
 
 header {
 	font-weight: bold;
 	font-size: 18px;
+	
+	background-color: $primary;
+	background-image: -moz-linear-gradient($primary, darken($primary, 10%));
+	background-image: -webkit-linear-gradient($primary, darken($primary, 10%));
+	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4), 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+footer {
+	font-size: 12px;
+	
+	background-color: $primary;
+	background-image: -moz-linear-gradient(darken($primary, 10%), $primary);
+	background-image: -webkit-linear-gradient(darken($primary, 10%), $primary);
+}
 
 /* CONTENT */
 
 #content, button, input, select, textarea {
 	line-height: 130%;
-	font-size: 14px;
+	font-size: 12px;
 	
-	font-family: Georgia, "Times New Roman", Times, serif;
+	font-family: 'Ubuntu', sans-serif;
 }
 
 #content {
@@ -64,12 +81,17 @@ header {
 		-moz-border-radius: 5px;
 		-webkit-border-radius: 5px;
 		border-radius: 5px;
-		padding: 20px;
+		padding: 12px;
 		width: 500px;
 		
 		fieldset {
 			border : none;
 			margin-bottom: 10px;
+		}
+		
+				
+		fieldset:last-of-type {
+			margin-bottom: 0px;
 		}
 	
 		legend {
@@ -103,7 +125,7 @@ header {
 			border-radius: 5px;
 			line-height: 30px;
 			list-style: none;
-			padding: 5px 10px;
+			padding: 3px 6px;
 			margin-bottom: 2px;
 		}
 		
@@ -197,30 +219,27 @@ header {
 	
 	
 	
-	#gendersSelect {
-		ul {
-			list-style: none;
-			
-			/* the list should appear next to the label, not below it */
-			display: inline;
-			
-			li {
-				/* we want a horizontal list */			
-				display: inline;	
-				padding-right: 20px;
-			
-				/* the caption label for the checkboxes should have a default width, not the one from the normal caption labels */			
-				label  {
-					width: auto;
-				}
-	
-				/* drop the input elements down a little, so that they appear next to the text */
-				input {
-					position: relative;
-					top: 3px;
-				}
-			}
+	ul.gendersSelect {
+		list-style: none;
 		
+		/* the list should appear next to the label, not below it */
+		display: inline;
+		
+		li {
+			/* we want a horizontal list */			
+			display: inline;	
+			padding-right: 20px;
+		
+			/* the caption label for the checkboxes should have a default width, not the one from the normal caption labels */			
+			label  {
+				width: auto;
+			}
+
+			/* drop the input elements down a little, so that they appear next to the text */
+			input {
+				position: relative;
+				top: 3px;
+			}
 		}	
 	}
 

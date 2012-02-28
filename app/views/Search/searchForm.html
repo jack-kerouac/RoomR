@@ -1,51 +1,47 @@
 #{extends 'main.html' /}
 #{set title:'Anzeigen suchen' /}
-#{set pageId:'search_offer' /}
+#{set pageId:'search_offers' /}
 
-<h1>Anzeigen suchen</h1>
 <form id="search_offers_form">
-	<fieldset id="request" class="step">
+	<fieldset id="request">
 		<ul>
 			<li>
 			#{field 'request.city'}
-				<label for="${field.id}" class="caption">&{field.name}</label>
+				<label for="${field.id}">&{field.name}:&nbsp;</label>
 				<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
 				<span class="error">${field.error}</span>
 			#{/}
 			</li>
-			
-						<li>
-			#{field 'request.minRoomSize.squareMeters'}
-				<label for="${field.id}" class="caption">&{field.name}</label>
-				<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
-				<span class="error">${field.error}</span>
-			#{/}
-			</li>
-		
+
 			<li>
-			#{field 'request.maxRentPerMonthInEuro'}
-				<label for="${field.id}" class="caption">&{field.name}</label>
+			#{field 'request.minRoomSize.squareMeters'}
+				<label for="${field.id}">Mindestens&nbsp;</label>
 				<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
+				<label for="${field.id}">m² groß</label>
+				<span class="error">${field.error}</span>
+			#{/}
+			und
+			#{field 'request.maxRentPerMonthInEuro'}
+				<label for="${field.id}">maximal&nbsp;</label>
+				<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
+				<label for="${field.id}">€ Miete</label>
 				<span class="error">${field.error}</span>
 			#{/}
 			</li>
 		</ul>
 	</fieldset>
 			
-	<fieldset id="additionalParameters" class="step">
+	<fieldset id="additional_parameters">
 		<ul>
 			<li>
-			#{field 'seekerAge.years'}
-				<label class="caption">&{field.name}</label>
-				<input id="${field.id}" name="${field.name}" type="number" data-validate="${field.validationData}" value="${field.value}" class="age ${field.errorClass}">
-				<span class="error">${field.error}</span>
-			#{/}
-			</li>
-			
-			<li id="gendersSelect">
+				#{field 'seekerAge.years'}
+					<label for="${field.id}">&{field.name}</label>
+					<input id="${field.id}" name="${field.name}" type="number" data-validate="${field.validationData}" value="${field.value}" class="age ${field.errorClass}">
+					<span class="error">${field.error}</span>
+				#{/}
+				
 				#{field 'seekerGender'}
-				<label for="${field.id}" class="caption">&{field.name}</label>
-				<ul>
+				<ul class="gendersSelect">
 					<li>
 						<label for="${field.id}_male" class="caption">&{'genders.male'}</label>
 						<input id="${field.id}_male" name="${field.name}" type="radio" value="male" class="${field.errorClass}">
@@ -58,7 +54,6 @@
 				<span class="error">${field.error}</span>
 				#{/}
 			</li>
-
 		</ul>
 	</fieldset>
 </form>
