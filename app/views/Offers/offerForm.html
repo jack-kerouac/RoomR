@@ -13,10 +13,10 @@
 	<fieldset name="seeker criteria" class="step">
 		<legend>Wen suchst du?</legend>
 		<ul>
-			<li id="gendersSelect">
+			<li>
 				#{field 'offer.criteria.genders'}
 				<label for="${field.id}" class="caption">&{field.name}</label>
-				<ul>
+				<ul class="gendersSelect">
 					<li>
 						<label for="${field.id}_male" class="caption">&{'genders.male'}</label>
 						<input id="${field.id}_male" name="${field.name}" type="checkbox" value="male" class="${field.errorClass}" ${offer.criteria.genders.contains(models.common.Gender.male) ? 'checked' : ''}>

@@ -5,28 +5,32 @@
 }
 
 
+/* COLORS */
 
-/* http://colorschemedesigner.com/#2x123X5QLLUKT */
+/* color palette: http://colorschemedesigner.com/#2O21TnfrryKCy */
+$primary: #37B130;
 
-$primary_color: #81F700;
+$primary_variant1: #40813D;
+$primary_variant2: #136E0E;
+$primary_variant3: #76E170;
+$primary_variant4: #9CE199;
 
-$primary_color_gray: #6B993A;
+$secondary: #D93B3F;
 
-$primary_color_dark: #3C7300;
+$secondary_variant1: #9E4A4C;
+$secondary_variant2: #861114;
+$secondary_variant3: #F0787B;
+$secondary_variant4: #F0A3A5;
 
-$primary_color_light: #B1FD5F;
+$text: #111111;
+$text_negative: white;
 
-$primary_color_lightest: #D5FDAA;
-
-
-
-
-
-
-$headline_color: $primary_color_dark;
-
-$inner_bg_color: $primary_color_lightest;
+$background: #F5F5F5;
 
 
-$text_color: black;
 
+
+/* MEASURES */
+
+$overall-width: 1000px;
+$content-padding: 20px;
