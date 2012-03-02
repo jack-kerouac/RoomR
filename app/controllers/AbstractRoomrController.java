@@ -22,9 +22,9 @@ public abstract class AbstractRoomrController extends Controller {
 	@Before
 	public static void populateRenderArgs() {
 		UserService userService = UserServiceFactory.getUserService();
-		User currentGaeUser = userService.getCurrentUser();
-
 		if(userService.isUserLoggedIn()) {
+			User currentGaeUser = userService.getCurrentUser();
+			
 			// TODO: get user from datastore
 			RoomrUser currentUser = repository.findUser(currentGaeUser.getEmail());
 //			RoomrUser currentUser = new RoomrUser();

@@ -9,7 +9,7 @@ import com.google.code.twig.annotation.Id;
 
 public class RoomrUser {
 
-	// the user id from the extended by com.google.appengine.api.users.User object
+	// the user id from the com.google.appengine.api.users.User object
 	public String gaeUserId;
 
 	@Id
@@ -31,14 +31,6 @@ public class RoomrUser {
 	
 	public boolean isResident() {
 		return residentProfile != null;
-	}
-	
-	public ResidentProfile getResidentProfile() {
-		return residentProfile;
-	}
-	
-	public SeekerProfile getSeekerProfile() {
-		return seekerProfile;
 	}
 	
 }
