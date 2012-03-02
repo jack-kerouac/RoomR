@@ -26,8 +26,9 @@ public class TwigRoomOfferRepository implements RoomOfferRepository {
 
 	@Override
 	public void add(RoomOffer offer) {
+		offerIdCounter++;
 		if(offer.id == null)
-			offer.id = offerIdCounter++;
+			offer.id = offerIdCounter;
 		datastoreProvider.get().store(offer);
 	}
 
