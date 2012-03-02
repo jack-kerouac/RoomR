@@ -77,3 +77,18 @@ offer.RoomOffer(4):
     minAge.years: 20
     maxAge.years: 80
     genders: [female,male]
+
+
+user.RoomrUser(1):
+  gaeUserEmail: seeker@gmail.com
+  age.years: 25
+  gender: female
+  seekerProfile:
+    applications: []
+
+user.RoomrUser(2):
+  gaeUserEmail: resident@gmail.com
+  age.years: 26
+  gender: male
+  residentProfile:
+    flatshare:

@@ -13,14 +13,13 @@ import models.offer.RoomOfferRepository;
 import models.offer.SeekerCriteria;
 import play.data.validation.Valid;
 import play.modules.guice.InjectSupport;
-import play.mvc.Controller;
 
 import com.google.appengine.api.datastore.GeoPt;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 @InjectSupport
-public class Offers extends Controller {
+public class Offers extends AbstractRoomrController {
 
 	@Inject
 	private static RoomOfferRepository offerRepository;

@@ -11,12 +11,11 @@ import models.ranking.OfferRanker;
 import models.ranking.matching.ScoredRoomOffer;
 import models.request.RoomRequest;
 import play.modules.guice.InjectSupport;
-import play.mvc.Controller;
 
 import com.google.common.base.Optional;
 
 @InjectSupport
-public class Search extends Controller {
+public class Search extends AbstractRoomrController {
 
 	@Inject
 	private static OfferRanker ranker;

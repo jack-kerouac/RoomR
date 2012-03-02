@@ -1,11 +1,9 @@
 %{
 com.google.appengine.api.users.UserService userService = com.google.appengine.api.users.UserServiceFactory.getUserService();
-com.google.appengine.api.users.User currentUser = userService.getCurrentUser();
 %}
 
-
-#{if userService.isUserLoggedIn()}
-	Logged in as <span class="username">${currentUser.getEmail()}</span> <a href="${userService.createLogoutURL(request.path)}">(Logout)</a>
+#{if _arg != null}
+	Logged in as <span class="username">${_arg.getGaeUserEmail()}</span> <a href="${userService.createLogoutURL(request.path)}">(Logout)</a>
 #{/if}
 #{else}
 	<a href="${userService.createLoginURL(request.path)}">Login</</a>

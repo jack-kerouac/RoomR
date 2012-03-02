@@ -44,7 +44,8 @@
 		<div>&{'offer.criteria.ageRange'}: #{ageRange criteria.ageRange /}</div>
 		<div>&{'offer.criteria.genders'}: #{genders criteria.genders /}</div>
 	</div>
-	
+
+	#{if user?.isSeeker()}	
 	<button id="apply_button">Bewerben!</button>
 	
 	<div id="apply_dialog" title="Bewerbung verschicken" class="dialog">
@@ -56,5 +57,6 @@
 				#{/}
 		</form>
 	</div>
+	#{/if}
 	
 </div>
