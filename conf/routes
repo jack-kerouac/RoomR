@@ -22,5 +22,10 @@ GET		/offers/{id}							Offers.viewOffer
 GET		/search									Search.searchForm
 GET		/offers									Search.offers
 
+
+# users
+GET		/users									Users.viewAll
+
+
 # Catch all
 *       /{controller}/{action}                  {controller}.{action}

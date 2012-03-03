@@ -1,5 +1,6 @@
 package models.internal.reposImpl.twig;
 
+import java.util.Iterator;
 import java.util.Set;
 
 import models.user.RoomrUser;
@@ -28,6 +29,12 @@ public class TwigRoomrUserRepository implements RoomrUserRepository {
 		return datastoreProvider.get().load(RoomrUser.class, gaeEmailAddress);
 	}
 
+	@Override
+	public Set<RoomrUser> findAll() {
+		Iterator<RoomrUser> InQuarter = datastoreProvider.get().find(RoomrUser.class);
+		return ImmutableSet.copyOf(InQuarter);
+	}
+	
 	@Override
 	public void add(RoomrUser newUser) {
 		datastoreProvider.get().store(newUser);
