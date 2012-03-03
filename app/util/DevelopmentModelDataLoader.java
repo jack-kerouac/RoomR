@@ -4,6 +4,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import models.flatshare.Flatshare;
 import models.offer.RoomOffer;
 import models.offer.RoomOfferRepository;
 import models.user.RoomrUser;
@@ -47,6 +48,8 @@ public class DevelopmentModelDataLoader {
 			else if (o instanceof RoomrUser) {
 				userRepository.add((RoomrUser) o);
 			}
+			else if(o instanceof Flatshare)
+				throw new UnsupportedOperationException("flatshares are persisted through 'cascade' with room offers or users");
 		}
 	}
 }

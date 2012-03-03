@@ -3,16 +3,57 @@
 # For each entity type to get imported correctly, you have to adapt
 # DevelopmentModelDataLoader.
 
+# 1. the class needs to be specified from the models package on. (class: models.flatshare.Flatshare => key here: flatshare.Flatshare)
+# 2. every object that gets an ID in parentheses '()' (and only these objects!), appears in the resulting idCache map of Fixtures.
+# 3. if you want to reference objects, the Play! documentation says, that you can just use the ID of one object as property of another attribute (see http://www.playframework.org/documentation/1.2.4/yaml)
+#    But this does not work! Probably, it just works if you use JPA, your model class extend play.db.jpa.Model and you use JPA relationship annotations (@OneTo...).
+# 4. Thus, you can use the SnakeYaml syntax for aliasing and referencing objects: http://code.google.com/p/snakeyaml/wiki/Documentation#Aliases
+#    Use <CLASSPATH>(<Fixture-ID>): &<ALIAS> to create an alias and dereference it using *<ALIAS>. See below for examples 
+
+flatshare.Flatshare: &stuntzstr
+  id: 1
+  address:
+    street: Stuntzstraße
+    streetNumber: 23
+    zipCode: 81677
+    city: Munich
+  floor: basement
+  smokingTolerance: prohibited
+
+flatshare.Flatshare: &knoebelstr
+  id: 2
+  address:
+    street: Knöbelstraße
+    streetNumber: 14
+    zipCode: 80538
+    city: Munich
+  floor: first
+  smokingTolerance: allowedInRoom
+
+flatshare.Flatshare: &fraunhoferstr
+  id: 3
+  address:
+    street: Fraunhoferstraße
+    streetNumber: 33
+    zipCode: 80469
+    city: Munich
+  floor: third
+  smokingTolerance: allowedInFlat
+
+flatshare.Flatshare: &deisenhofenerstr
+  id: 4
+  address:
+    street: Deisenhofenerstraße
+    streetNumber: 10
+    zipCode: 81539
+    city: Munich
+  floor: forth
+  smokingTolerance: prohibited
+
+
 offer.RoomOffer(1):
   id: 1
-  flatshare:
-    address:
-      street: Stuntzstraße
-      streetNumber: 23
-      zipCode: 81677
-      city: Munich
-    floor: basement
-    smokingTolerance: prohibited
+  flatshare: *stuntzstr
   roomDetails:
     totalRentPerMonthInEuro: 350.0
     roomSize.squareMeters: 15.0
@@ -24,14 +65,7 @@ offer.RoomOffer(1):
     
 offer.RoomOffer(2):
   id: 2
-  flatshare:
-    address:
-      street: Knöbelstraße
-      streetNumber: 14
-      zipCode: 80538
-      city: Munich
-    floor: first
-    smokingTolerance: allowedInRoom
+  flatshare: *knoebelstr
   roomDetails:
     totalRentPerMonthInEuro: 500.0
     roomSize.squareMeters: 30.0
@@ -43,14 +77,7 @@ offer.RoomOffer(2):
     
 offer.RoomOffer(3):
   id: 3
-  flatshare:
-    address:
-      street: Fraunhoferstraße
-      streetNumber: 33
-      zipCode: 80469
-      city: Munich
-    floor: third
-    smokingTolerance: allowedInFlat
+  flatshare: *fraunhoferstr
   roomDetails:
     totalRentPerMonthInEuro: 400.0
     roomSize.squareMeters: 25.0
@@ -62,14 +89,7 @@ offer.RoomOffer(3):
     
 offer.RoomOffer(4):
   id: 4
-  flatshare:
-    address:
-      street: Deisenhofenerstraße
-      streetNumber: 10
-      zipCode: 81539
-      city: Munich
-    floor: forth
-    smokingTolerance: prohibited
+  flatshare: *deisenhofenerstr
   roomDetails:
     totalRentPerMonthInEuro: 250.0
     roomSize.squareMeters: 12.0
@@ -79,16 +99,17 @@ offer.RoomOffer(4):
     genders: [female,male]
 
 
-user.RoomrUser(1):
+
+user.RoomrUser(seeker1): &seeker1
   gaeUserEmail: seeker@gmail.com
   age.years: 25
   gender: female
   seekerProfile:
     applications: []
 
-user.RoomrUser(2):
+user.RoomrUser(resident1): &resident1
   gaeUserEmail: resident@gmail.com
   age.years: 26
   gender: male
   residentProfile:
-    flatshare:
+    currentFlatshare: *knoebelstr

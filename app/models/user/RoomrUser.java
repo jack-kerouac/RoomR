@@ -6,6 +6,8 @@ import models.user.resident.ResidentProfile;
 import models.user.seeker.SeekerProfile;
 
 import com.google.code.twig.annotation.Id;
+import com.google.common.base.Objects;
+import com.google.common.base.Objects.ToStringHelper;
 
 public class RoomrUser {
 
@@ -31,6 +33,23 @@ public class RoomrUser {
 	
 	public boolean isResident() {
 		return residentProfile != null;
+	}
+	
+	@Override
+	public String toString() {
+		ToStringHelper stringHelper = Objects.toStringHelper(this);
+		
+		stringHelper.add("email", gaeUserEmail);
+		stringHelper.add("age", age);
+		stringHelper.add("gender", gender);
+		
+		if(isSeeker())
+			stringHelper.add("seekerProfile", seekerProfile);
+		if(isResident())
+			stringHelper.add("residentProfile", residentProfile);
+		
+		return stringHelper.toString();
+
 	}
 	
 }
