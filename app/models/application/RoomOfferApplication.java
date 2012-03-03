@@ -1,6 +1,8 @@
 package models.application;
 
-public class FlatshareApplication {
+import models.offer.RoomOffer;
+
+public class RoomOfferApplication {
 	
 	public static enum State {
 		// TODO: define useful states
@@ -8,5 +10,9 @@ public class FlatshareApplication {
 	}
 	
 	public State currentState;
+		
+	public String message;
+	
+	public RoomOffer roomOffer;
 	
 }

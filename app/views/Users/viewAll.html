@@ -1,0 +1,9 @@
+#{extends 'main.html' /}
+#{set title:'Alle User' /}
+#{set pageId:'view_all_users' /}
+
+<ul class="all_users">
+#{list items:users, as:'user'}
+	<li class="user">#{roomrUser user /}</li>
+#{/list}
+</ul>

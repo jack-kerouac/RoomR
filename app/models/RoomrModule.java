@@ -15,22 +15,27 @@ import com.google.code.twig.ObjectDatastore;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 
-public class RoomrModule  extends AbstractModule {
+import facade.RoomOfferApplicationFacade;
+
+public class RoomrModule extends AbstractModule {
 
 	@Override
 	protected void configure() {
-		// binds the TwigOfferRepository implementation to the interface OfferRepository
+		// binds the TwigOfferRepository implementation to the interface
+		// OfferRepository
 		bind(RoomOfferRepository.class).to(TwigRoomOfferRepository.class);
 		bind(RoomrUserRepository.class).to(TwigRoomrUserRepository.class);
-		
+
 		bind(OfferRanker.class);
 		bind(OfferMatcher.class).to(InmemoryMatcher.class);
 		bind(OfferSorter.class).to(OfferSorterByScore.class);
+
+		bind(RoomOfferApplicationFacade.class);
 	}
-	
+
 	@Provides
 	protected ObjectDatastore providesDatastore() {
 		return Datastore.getInstance();
 	}
-	
+
 }

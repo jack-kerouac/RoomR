@@ -71,7 +71,7 @@
 		border-radius: 10px;
 
 		.score {
-			@include box_tag(10px);
+			@include box_tag(5px);
 		
 			color: white;
 			text-shadow: gray 1px 1px;
@@ -83,7 +83,7 @@
 		
 		
 		.total_rent {
-			@include box_tag(50px);
+			@include box_tag(35px);
 			
 			color: white;
 			text-shadow: gray 1px 1px;
@@ -91,6 +91,12 @@
 	
 			
 			background-color: $primary_variant2;
+		}
+		
+		.application_note {
+			@include box_tag(65px);
+			color: white;
+			background-color: rgb(150, 150, 255);
 		}
 		
 		.location {

@@ -25,7 +25,8 @@ GET		/offers									Search.offers
 
 # users
 GET		/users									Users.viewAll
+POST	/users/{gaeUserEmail}/applications/		Users.apply
 
 
 # Catch all
-*       /{controller}/{action}                  {controller}.{action}
+#*       /{controller}/{action}                  {controller}.{action}

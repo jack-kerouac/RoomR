@@ -40,4 +40,8 @@ public class TwigRoomrUserRepository implements RoomrUserRepository {
 		datastoreProvider.get().store(newUser);
 	}
 	
+	@Override
+	public void update(RoomrUser user) {
+		datastoreProvider.get().update(user);
+	}
 }
