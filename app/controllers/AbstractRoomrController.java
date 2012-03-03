@@ -12,30 +12,28 @@ import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
-
 @InjectSupport
 public abstract class AbstractRoomrController extends Controller {
-	
+
 	@Inject
 	private static RoomrUserRepository repository;
-	
+
 	@Before
 	public static void populateRenderArgs() {
 		UserService userService = UserServiceFactory.getUserService();
-		if(userService.isUserLoggedIn()) {
+		// user is logged into his Google Account
+
+		if (userService.isUserLoggedIn()) {
 			User currentGaeUser = userService.getCurrentUser();
-			
-			// TODO: get user from datastore
+
 			RoomrUser currentUser = repository.findUser(currentGaeUser.getEmail());
-//			RoomrUser currentUser = new RoomrUser();
-//			currentUser.age = new Age(25);
-//			currentUser.gaeUserId = currentGaeUser.getUserId();
-//			currentUser.gaeUserEmail = currentGaeUser.getEmail();
-//			currentUser.gender = Gender.male;
-//			currentUser.seekerProfile = new SeekerProfile();
-			
+			if (currentUser == null) {
+				// user has not registered for RoomR yet!
+				error("the user " + currentGaeUser.getEmail() + " has not registered for RoomR yet, logout again here: " + userService.createLogoutURL("/"));
+			}
+
 			renderArgs.put("user", currentUser);
 		}
 	}
-	
+
 }

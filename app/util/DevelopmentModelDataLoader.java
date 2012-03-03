@@ -9,8 +9,6 @@ import models.offer.RoomOffer;
 import models.offer.RoomOfferRepository;
 import models.user.RoomrUser;
 import models.user.RoomrUserRepository;
-import play.Play;
-import play.Play.Mode;
 import play.modules.guice.InjectSupport;
 import play.test.Fixtures;
 
@@ -24,11 +22,15 @@ public class DevelopmentModelDataLoader {
 	private static RoomrUserRepository userRepository;
 
 	/**
-	 * Loads all model entities in dev-models.yml if in dev mode. This method ensures that the model
-	 * is loaded only once (even after application restarts).
+	 * Loads all model entities in dev-models.yml if in dev mode. This method
+	 * ensures that the model is loaded only once (even after application
+	 * restarts).
 	 */
 	public static void ensureLoaded() {
-		if (Play.mode == Mode.DEV && !fixturesLoaded()) {
+		// TODO: check for DEV mode again, currently I want the data to be
+		// present in Appengine as well
+		// if (Play.mode == Mode.DEV && !fixturesLoaded()) {
+		if (!fixturesLoaded()) {
 			loadFixtures();
 		}
 	}
@@ -44,12 +46,11 @@ public class DevelopmentModelDataLoader {
 		for (Object o : idCache.values()) {
 			if (o instanceof RoomOffer) {
 				offerRepository.add((RoomOffer) o);
-			}
-			else if (o instanceof RoomrUser) {
+			} else if (o instanceof RoomrUser) {
 				userRepository.add((RoomrUser) o);
-			}
-			else if(o instanceof Flatshare)
-				throw new UnsupportedOperationException("flatshares are persisted through 'cascade' with room offers or users");
+			} else if (o instanceof Flatshare)
+				throw new UnsupportedOperationException(
+						"flatshares are persisted through 'cascade' with room offers or users");
 		}
 	}
 }
