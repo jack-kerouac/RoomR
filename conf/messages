@@ -26,3 +26,6 @@ request.minRoomSize.squareMeters=Min. Zimmergröße
 request.maxRentPerMonthInEuro=Max. Miete pro Monat
 seekerAge.years=Dein Alter
 seekerGender=Dein Geschlecht
+
+
+application.message=Deine Nachricht

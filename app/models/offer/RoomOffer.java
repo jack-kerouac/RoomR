@@ -21,6 +21,10 @@ public final class RoomOffer {
 	@Child
 	public RoomDetails roomDetails;
 
+	// a question that the flatshare can ask to applicants
+	// TODO: make question(s) configurable on UI
+	public String question = "Darth Vader oder Prinzessin Lea?";
+	
 	@Valid
 	@Child
 	public SeekerCriteria criteria;

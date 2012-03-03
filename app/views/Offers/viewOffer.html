@@ -45,16 +45,23 @@
 		<div>&{'offer.criteria.genders'}: #{genders criteria.genders /}</div>
 	</div>
 
-	#{if user?.isSeeker()}	
-	<button id="apply_button">Bewerben!</button>
+	#{if user == null || user.isSeeker()}	
+	<button id="apply_button">Bewerben?</button>
 	
 	<div id="apply_dialog" title="Bewerbung verschicken" class="dialog">
+		<div id="application_questions">
+			<p>Die WG bittet dich, folgende Fragen zu beantworten:</p>
+			<ol>
+				<li>${offer.question}</li>
+			</ol>
+		</div>
 		<form id="application_form">
-				#{field 'application.message'}
-					<label for="${field.id}" class="caption">&{field.name}</label>
-					<textarea id="${field.id}" name="${field.name}" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}"></textarea>
-					<span class="error">${field.error}</span>
-				#{/}
+			#{field 'application.message'}
+				<label for="${field.id}" class="caption">&{field.name}</label>
+				<textarea id="${field.id}" name="${field.name}" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}"></textarea>
+				<span class="error">${field.error}</span>
+			#{/}
+			<button>Bewerben!</button>
 		</form>
 	</div>
 	#{/if}

@@ -267,16 +267,19 @@ roomr.viewOffer = (function() {
 
 	my.init = function() {
 		$('#apply_button').click(function() {
-			$('#apply_dialog').dialog({ modal: true, minHeight: 400, minWidth: 600,
-				buttons: [
-				          {
-							text: "Nachricht versenden!",
-							click: function() {
-								alert('TODO: send message');
-								$(this).dialog("close");
-							}
-				          }
-				          ]});			
+			$('#apply_dialog').show('slide', { direction: 'up'});
+			$('#apply_button').hide();
+			
+//			$('#apply_dialog').dialog({ modal: true, minHeight: 400, minWidth: 600,
+//				buttons: [
+//				          {
+//							text: "Nachricht versenden!",
+//							click: function() {
+//								alert('TODO: send message');
+//								$(this).dialog("close");
+//							}
+//				          }
+//				          ]});			
 		});
 	};
 	
