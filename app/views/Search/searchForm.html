@@ -4,24 +4,19 @@
 
 <form id="search_offers_form">
 	<fieldset id="request">
+		#{field 'rr.city'}
+			<input id="${field.id}" name="${field.name}" type="hidden" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
+		#{/}
 		<ul>
 			<li>
-			#{field 'request.city'}
-				<label for="${field.id}">&{field.name}:&nbsp;</label>
-				<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
-				<span class="error">${field.error}</span>
-			#{/}
-			</li>
-
-			<li>
-			#{field 'request.minRoomSize.squareMeters'}
+			#{field 'rr.minRoomSize.squareMeters'}
 				<label for="${field.id}">Mindestens&nbsp;</label>
 				<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
 				<label for="${field.id}">m² groß</label>
 				<span class="error">${field.error}</span>
 			#{/}
 			und
-			#{field 'request.maxRentPerMonthInEuro'}
+			#{field 'rr.maxRentPerMonthInEuro'}
 				<label for="${field.id}">maximal&nbsp;</label>
 				<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
 				<label for="${field.id}">€ Miete</label>

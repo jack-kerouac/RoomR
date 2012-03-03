@@ -20,17 +20,21 @@ public class Search extends AbstractRoomrController {
 	@Inject
 	private static OfferRanker ranker;
 
-	public static void searchForm() {
+	public static void searchForm(String city) {
 		Floor[] floors = Floor.values();
-		render((Object) floors);
+		
+		RoomRequest rr = new RoomRequest();
+		rr.city = city;
+		
+		render((Object) floors, rr);
 	}
 
-	public static void offers(RoomRequest request, Age seekerAge, Gender seekerGender) {
+	public static void offers(RoomRequest rr, Age seekerAge, Gender seekerGender) {
 		// if no attribute of the request is set, the whole request is null. Thus, create one.
-		if(request == null)
-			request = new RoomRequest();
+		if(rr == null)
+			rr = new RoomRequest();
 		
-		List<ScoredRoomOffer> offers = ranker.search(request, Optional.fromNullable(seekerAge),
+		List<ScoredRoomOffer> offers = ranker.search(rr, Optional.fromNullable(seekerAge),
 				Optional.fromNullable(seekerGender));
 
 		render(offers);

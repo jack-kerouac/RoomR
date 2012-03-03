@@ -6,17 +6,12 @@ import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 
 import com.google.common.base.Optional;
-import com.google.common.base.Strings;
 
 public class RoomRequest {
 
 	public String city;
 	public FloorSpace minRoomSize;
 	public Double maxRentPerMonthInEuro;
-
-	public Optional<String> getCity() {
-		return Strings.isNullOrEmpty(city) ? Optional.<String> absent() : Optional.<String> of(city);
-	}
 
 	public Optional<FloorSpace> getMinRoomSize() {
 		if (minRoomSize == null || minRoomSize.squareMeters == null)

@@ -3,9 +3,12 @@
 #{set pageId:'main_page' /}
 
 <div id="seeker_panel">
-    <p>#{a @Search.searchForm()}Instant Search#{/a}</p>
+    <p>#{a @Search.searchForm('München')}Du suchst ein WG-Zimmer in München?#{/a}</p>
 </div>
 <div id="offerer_panel">
     <p>#{a @Offers.offerForm()}Du willst einen neuen Mitbewohner finden?#{/a}</p>
-    <p>#{a @Offers.viewAll()}Display all offers#{/a}</p>
 </div>
+<div style="margin-top: 100px;">
+	<p>#{a @Offers.viewAll()}Display all offers#{/a}</p>
+</div>
+

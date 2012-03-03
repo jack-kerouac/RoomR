@@ -16,7 +16,6 @@ import models.offer.RoomOffer;
 import models.ranking.matching.MatchingCriterion;
 import models.ranking.matching.ScoredRoomOffer;
 import models.ranking.matching.scoring.AgeScorer;
-import models.ranking.matching.scoring.CityScorer;
 import models.ranking.matching.scoring.GenderScorer;
 import models.ranking.matching.scoring.RentPerMonthScorer;
 import models.ranking.matching.scoring.RoomSizeScorer;
@@ -63,7 +62,8 @@ public class WeightedOfferScoringFunction implements OfferScoringFunction {
 		evaluateScore(new AgeScorer().score(offer, seekerAge), AGE);
 		evaluateScore(new GenderScorer().score(offer, seekerGender), GENDER);
 
-		evaluateScore(new CityScorer().score(offer, request.getCity()), CITY);
+		// TODO: remove city scorer and just load offers from one city!
+//		evaluateScore(new CityScorer().score(offer, request.getCity()), CITY);
 		evaluateScore(new RoomSizeScorer().score(offer, request.getMinRoomSize()), ROOM_SIZE);
 		evaluateScore(new RentPerMonthScorer().score(offer, request.getMaxRent()), RENT_PER_MONTH);
 

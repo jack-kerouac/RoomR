@@ -57,7 +57,6 @@ roomr.instantSearch = (function() {
 	
 	function updateOfferResultList() {
 		$('#loading').show();
-		$('.offer').hide();
 		
 		// omit empty input fields
 		$('.offers').load('/offers', $(':input[value]', $('#search_offers_form')).serialize(), function(responseText, textStatus, XMLHttpRequest) {
@@ -69,7 +68,6 @@ roomr.instantSearch = (function() {
 			});
 	  
 			$('#loading').hide();
-			$('.offer').fadeIn(500);
 		});
 	}
 	

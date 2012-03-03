@@ -25,11 +25,11 @@
 		width: 140px;
 	}
 	
-	#request_minRoomSize_squareMeters {
+	#rr_minRoomSize_squareMeters {
 		width: 25px;
 	}
 	
-	#request_maxRentPerMonthInEuro {
+	#rr_maxRentPerMonthInEuro {
 		width: 25px;
 	}
 	
@@ -39,9 +39,9 @@
 }
 	
 #loading {
-	margin: 20px;
-	text-align: center;
-	width: 100%;
+	position: absolute;
+	top: 100px;
+	left: 750px;
 }
 
 .criteria_tooltip {
