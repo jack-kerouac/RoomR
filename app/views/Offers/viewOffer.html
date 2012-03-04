@@ -10,8 +10,13 @@
 	criteria = offer.criteria;
 }%
 
-<div class="offer">
-	
+<div class="offer clearfix">
+
+	<div id="maps">
+		<div id="map_canvas" data-center-lat="${flatshare.geoLocation.getLatitude()}" data-center-lng="${flatshare.geoLocation.getLongitude()}"></div>
+		<div id="street_view_canvas"></div>
+	</div>
+
 		
 	<div class="flatshare">
 		<h2>die WG</h2>

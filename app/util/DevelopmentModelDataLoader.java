@@ -12,6 +12,8 @@ import models.user.RoomrUserRepository;
 import play.modules.guice.InjectSupport;
 import play.test.Fixtures;
 
+import com.google.appengine.api.datastore.GeoPt;
+
 @InjectSupport
 public class DevelopmentModelDataLoader {
 
@@ -45,7 +47,10 @@ public class DevelopmentModelDataLoader {
 
 		for (Object o : idCache.values()) {
 			if (o instanceof RoomOffer) {
-				offerRepository.add((RoomOffer) o);
+				RoomOffer offer = (RoomOffer)o;
+				// TODO: add geopoints to YAML file (see http://code.google.com/p/snakeyaml/wiki/Documentation#Immutable_instances)
+				offer.flatshare.geoLocation = new GeoPt(48.1505f, 11.5586f);
+				offerRepository.add(offer);
 			} else if (o instanceof RoomrUser) {
 				userRepository.add((RoomrUser) o);
 			} else if (o instanceof Flatshare)
