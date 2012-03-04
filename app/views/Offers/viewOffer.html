@@ -58,8 +58,9 @@
 				<li>${offer.question}</li>
 			</ol>
 		</div>
-		#{form @Users.apply(user.getGaeUserEmail()), id:'application_form'}
+		#{form @Applications.apply(), id:'application_form'}
 			<input name="roomOfferId" type="hidden" value="${offer.id}">
+			<input name="gaeUserEmail" type="hidden" value="${user.getGaeUserEmail()}">
 			
 			#{field 'application.message'}
 				<label for="${field.id}" class="caption">&{field.name}</label>

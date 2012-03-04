@@ -25,7 +25,10 @@ GET		/offers									Search.offers
 
 # users
 GET		/users									Users.viewAll
-POST	/users/{gaeUserEmail}/applications/		Users.apply
+
+
+# applications
+POST	/applications							Applications.apply
 
 
 # Catch all

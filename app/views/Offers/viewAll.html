@@ -4,6 +4,6 @@
 
 <ul class="all_offers">
 #{list items:offers, as:'offer'}
-	<li class="offer">#{displayOffer offer:offer, as:'teaser' /}</li>
+	<li class="offer">#{a @Offers.viewOffer(offer.id)}#{displayOffer offer:offer, as:'teaser' /}#{/a}</li>
 #{/list}
 </ul>
