@@ -1,13 +1,17 @@
 package models.flatshare;
 
+import java.util.Set;
+
 import models.common.Address;
 import models.common.Floor;
 import models.offer.RoomOffer;
+import models.user.resident.ResidentProfile;
 import play.data.validation.Valid;
 
 import com.google.appengine.api.datastore.GeoPt;
 import com.google.code.twig.annotation.Child;
 import com.google.code.twig.annotation.Id;
+import com.google.code.twig.annotation.Independent;
 import com.google.common.base.Objects;
 
 public class Flatshare {
@@ -20,6 +24,10 @@ public class Flatshare {
 
 	@Child
 	public RoomOffer roomOffer;
+
+	@Independent
+	public Set<ResidentProfile> residentProfiles;
+	
 	
 	public GeoPt geoLocation;
 
@@ -30,7 +38,7 @@ public class Flatshare {
 	@Override
 	public String toString() {
 		return Objects.toStringHelper(this).add("id", id).add("address", address).add("geoLocation", geoLocation)
-				.add("floor", floor).add("smoking tolerance", smokingTolerance).toString();
+				.add("floor", floor).add("smoking tolerance", smokingTolerance).add("resident profiles", residentProfiles).toString();
 	}
 
 	@Override
