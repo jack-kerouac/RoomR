@@ -2,9 +2,11 @@ package models.flatshare;
 
 import models.common.Address;
 import models.common.Floor;
+import models.offer.RoomOffer;
 import play.data.validation.Valid;
 
 import com.google.appengine.api.datastore.GeoPt;
+import com.google.code.twig.annotation.Child;
 import com.google.code.twig.annotation.Id;
 import com.google.common.base.Objects;
 
@@ -16,6 +18,9 @@ public class Flatshare {
 	@Valid
 	public Address address;
 
+	@Child
+	public RoomOffer roomOffer;
+	
 	public GeoPt geoLocation;
 
 	public Floor floor;
