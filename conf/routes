@@ -3,7 +3,7 @@
 # ~~~~
 
 # Home page
-GET     /                                       Application.start
+GET     /                                       Start.start
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
@@ -25,8 +25,11 @@ GET		/offers									Search.offers
 
 # users
 GET		/users									Users.viewAll
-POST	/users/{gaeUserEmail}/applications/		Users.apply
 
+
+# applications
+POST	/applications							Applications.apply
+GET		/applications							Applications.view
 
 # Catch all
 #*       /{controller}/{action}                  {controller}.{action}

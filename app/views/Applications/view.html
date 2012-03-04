@@ -1,0 +1,9 @@
+#{extends 'main.html' /}
+#{set title:'Alle Bewerbungen' /}
+#{set pageId:'view_applications' /}
+
+<ul>
+#{list items:applications, as:'application'}
+	<li>${application}</li>
+#{/list}
+</ul>

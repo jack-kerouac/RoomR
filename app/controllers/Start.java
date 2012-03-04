@@ -3,7 +3,7 @@ package controllers;
 import play.mvc.Before;
 import util.DevelopmentModelDataLoader;
 
-public class Application extends AbstractRoomrController {
+public class Start extends AbstractRoomrController {
 	
 	public static void start() {
 		render();

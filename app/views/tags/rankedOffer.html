@@ -45,7 +45,7 @@
 		<div>&{'offer.criteria.genders'}: #{genders criteria.genders /}</div>
 	</div>
 	
-	#{if _user?.seekerProfile.appliedFor(_offer.offer)}
+	#{if _user?.isSeeker() && _user?.seekerProfile.appliedFor(_offer.offer)}
 	<div class="application_note">Bew.</div>
 	#{/if}
 </div>
