@@ -14,7 +14,7 @@ public final class RoomOffer {
 	public Long id;
 
 	@Valid
-	@Independent
+	@Child
 	public Flatshare flatshare;
 
 	@Valid
