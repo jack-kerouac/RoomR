@@ -29,7 +29,7 @@ GET		/users									Users.viewAll
 
 # applications
 POST	/applications							Applications.apply
-
+GET		/applications							Applications.view
 
 # Catch all
 #*       /{controller}/{action}                  {controller}.{action}

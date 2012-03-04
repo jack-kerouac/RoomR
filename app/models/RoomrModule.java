@@ -15,7 +15,7 @@ import com.google.code.twig.ObjectDatastore;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 
-import facade.RoomOfferApplicationFacade;
+import facade.RoomOfferApplicationsFacade;
 
 public class RoomrModule extends AbstractModule {
 
@@ -30,7 +30,7 @@ public class RoomrModule extends AbstractModule {
 		bind(OfferMatcher.class).to(InmemoryMatcher.class);
 		bind(OfferSorter.class).to(OfferSorterByScore.class);
 
-		bind(RoomOfferApplicationFacade.class);
+		bind(RoomOfferApplicationsFacade.class);
 	}
 
 	@Provides

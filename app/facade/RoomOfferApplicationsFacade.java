@@ -10,7 +10,7 @@ import models.user.RoomrUser;
 import models.user.RoomrUserRepository;
 import controllers.Offers;
 
-public class RoomOfferApplicationFacade {
+public class RoomOfferApplicationsFacade {
 
 	@Inject
 	private RoomrUserRepository userRepository;
@@ -21,14 +21,15 @@ public class RoomOfferApplicationFacade {
 	public void apply(String gaeUserEmail, long roomOfferId, String message) {
 		RoomOffer offer = roomOfferRepository.find(roomOfferId);
 
-		RoomOfferApplication application = new RoomOfferApplication();
-		application.currentState = State.WAITING_FOR_INVITATION;
-		application.message = message;
-		application.roomOffer = offer;
-
 		RoomrUser applicant = userRepository.findUser(gaeUserEmail);
 		if (!applicant.isSeeker())
 			throw new IllegalStateException("applicant must be seeker");
+		
+		RoomOfferApplication application = new RoomOfferApplication();
+		application.currentState = State.WAITING_FOR_INVITATION;
+		application.message = message;
+		application.applicant = applicant;
+		application.roomOffer = offer;
 
 		applicant.seekerProfile.applications.add(application);
 
