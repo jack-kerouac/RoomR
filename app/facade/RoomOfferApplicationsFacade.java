@@ -1,7 +1,5 @@
 package facade;
 
-import java.util.Set;
-
 import javax.inject.Inject;
 
 import models.application.RoomOfferApplication;
@@ -40,11 +38,4 @@ public class RoomOfferApplicationsFacade {
 
 		return application;
 	}
-
-	public Set<RoomOfferApplication> viewAllApplicationsForUser(String gaeUserEmail) {
-		RoomrUser user = userRepository.findUser(gaeUserEmail);
-
-		return user.applications;
-	}
-
 }
