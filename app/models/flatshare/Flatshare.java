@@ -6,7 +6,6 @@ import models.common.Address;
 import models.common.Floor;
 import models.offer.RoomOffer;
 import models.user.RoomrUser;
-import play.data.validation.Valid;
 
 import com.google.appengine.api.datastore.GeoPt;
 import com.google.code.twig.annotation.Child;
@@ -19,7 +18,6 @@ public class Flatshare {
 	@Id
 	public long id;
 
-	@Valid
 	public Address address;
 
 	@Child
@@ -27,8 +25,7 @@ public class Flatshare {
 
 	@Independent
 	public Set<RoomrUser> residents;
-	
-	
+
 	public GeoPt geoLocation;
 
 	public Floor floor;

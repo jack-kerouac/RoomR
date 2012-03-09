@@ -1,23 +1,26 @@
 package models.common;
 
-import play.data.validation.Match;
-import play.data.validation.Required;
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
 
 import com.google.code.twig.annotation.Embedded;
+import com.google.common.base.Preconditions;
 
 @Embedded
 public final class Address {
-	@Required
 	public String street;
 	public int streetNumber;
-	@Match("[0-9]{5}")
 	public String zipCode;
 	public String city;
-	
+
 	public Address() {}
 
 	public Address(String street, int streetNumber, String zipCode, String city) {
-		super();
+		Preconditions.checkArgument(StringUtils.isNotBlank(street));
+		Preconditions.checkArgument(StringUtils.isNotBlank(zipCode) && NumberUtils.toInt(zipCode) > 0
+				&& NumberUtils.toInt(zipCode) < 100000);
+		Preconditions.checkArgument(StringUtils.isNotBlank(city));
+
 		this.street = street;
 		this.streetNumber = streetNumber;
 		this.zipCode = zipCode;

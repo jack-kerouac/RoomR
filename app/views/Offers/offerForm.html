@@ -14,16 +14,16 @@
 		<legend>Wen suchst du?</legend>
 		<ul>
 			<li>
-				#{field 'offer.criteria.genders'}
-				<label for="${field.id}" class="caption">&{field.name}</label>
+				#{field 'formData.genders'}
+				<label for="${field.id}" class="caption">&{'offer.criteria.genders'}</label>
 				<ul class="gendersSelect">
 					<li>
 						<label for="${field.id}_male" class="caption">&{'genders.male'}</label>
-						<input id="${field.id}_male" name="${field.name}" type="checkbox" value="male" class="${field.errorClass}" ${offer.criteria.genders.contains(models.common.Gender.male) ? 'checked' : ''}>
+						<input id="${field.id}_male" name="${field.name}" type="checkbox" value="male" class="${field.errorClass}" ${formData.genders.contains(models.common.Gender.male) ? 'checked' : ''}>
 					</li>
 					<li>
 						<label for="${field.id}_female" class="caption">&{'genders.female'}</label>
-						<input id="${field.id}_female" name="${field.name}" type="checkbox" value="female" class="${field.errorClass}" ${offer.criteria.genders.contains(models.common.Gender.female) ? 'checked' : ''}>
+						<input id="${field.id}_female" name="${field.name}" type="checkbox" value="female" class="${field.errorClass}" ${formData.genders.contains(models.common.Gender.female) ? 'checked' : ''}>
 					</li>
 				</ul>
 				<span class="error">${field.error}</span>
@@ -31,17 +31,15 @@
 			</li>
 		
 			<li id="ageRangeSelect">
-			#{field 'offer.criteria.ageRange'}
-				<label class="caption">&{field.name}</label>
-				#{field 'offer.criteria.minAge.years'}
+				<label class="caption">&{'offer.criteria.ageRange'}</label>
+				#{field 'formData.minAge'}
 				<input id="${field.id}" name="${field.name}" type="number" data-validate="${field.validationData}" value="${field.value}" class="age ${field.errorClass}">
 				#{/}
 				&nbsp;&#8210;&nbsp;
-				#{field 'offer.criteria.maxAge.years'}
+				#{field 'formData.maxAge'}
 				<input id="${field.id}" name="${field.name}" type="number" data-validate="${field.validationData}" value="${field.value}" class="age ${field.errorClass}">
 				#{/}
 				<span class="error">${field.error}</span>
-			#{/}
 			</li>
 		</ul>
 	</fieldset>
@@ -51,52 +49,52 @@
 		<fieldset name="address" class="adr">
 			<ul>
 				<li>
-				#{field 'offer.flatshare.address.street'}
-					<label for="${field.id}" class="caption">&{field.name}</label>
+				#{field 'formData.street'}
+					<label for="${field.id}" class="caption">&{'offer.flatshare.address.street'}</label>
 					<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass} street">
 					<span class="error">${field.error}</span>
 				#{/}
-				#{field 'offer.flatshare.address.streetNumber'}
-					<label for="${field.id}">&{field.name}</label>
+				#{field 'formData.streetNumber'}
+					<label for="${field.id}">&{'offer.flatshare.address.streetNumber'}</label>
 					<input id="${field.id}" name="${field.name}" type="number" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass} streetnumber">
 					<span class="error">${field.error}</span>
 				#{/}
 				</li>
 				<li>
-				#{field 'offer.flatshare.address.zipCode'}
-					<label for="${field.id}" class="caption">&{field.name}</label>
+				#{field 'formData.zipCode'}
+					<label for="${field.id}" class="caption">&{'offer.flatshare.address.zipCode'}</label>
 					<input id="${field.id}" name="${field.name}" type="number" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass} postal-code">
 					<span class="error">${field.error}</span>
 				#{/}
-				#{field 'offer.flatshare.address.city'}
-					<label for="${field.id}">&{field.name}</label>
+				#{field 'formData.city'}
+					<label for="${field.id}">&{'offer.flatshare.address.city'}</label>
 					<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value ? field.value : 'München'}" class="${field.errorClass} locality">
 					<span class="error">${field.error}</span>
 				#{/}
 				</li>
 			</ul>
 			
-			#{field 'lat'}
+			#{field 'formData.lat'}
 				<input id="${field.id}" name="${field.name}" type="hidden">
 			#{/}
-			#{field 'lng'}
+			#{field 'formData.lng'}
 				<input id="${field.id}" name="${field.name}" type="hidden">
 			#{/}
 		</fieldset>
 		
 		<ul>
 			<li>
-			#{field 'offer.flatshare.floor'}
-				<label for="${field.id}" class="caption">&{field.name}</label>
-				#{select 'offer.flatshare.floor', items:floors, value:2, id:'offer_flatshare_floor', class:'field' /}
+			#{field 'formData.floor'}
+				<label for="${field.id}" class="caption">&{'offer.flatshare.floor'}</label>
+				#{select 'formData.floor', items:floors, value:2, id:'offer_flatshare_floor', class:'field' /}
 				<span class="error">${field.error}</span>
 			#{/}
 			</li>
 			
 			<li>
-			#{field 'offer.flatshare.smokingTolerance'}
-				<label for="${field.id}" class="caption">&{field.name}</label>
-				#{select 'offer.flatshare.smokingTolerance', items:smokingTolerances, value:2, id:'offer_flatshare_smokingTolerance', class:'field' /}
+			#{field 'formData.smokingTolerance'}
+				<label for="${field.id}" class="caption">&{'offer.flatshare.smokingTolerance'}</label>
+				#{select 'formData.smokingTolerance', items:smokingTolerances, value:2, id:'offer_flatshare_smokingTolerance', class:'field' /}
 				<span class="error">${field.error}</span>
 			#{/}
 			</li>
@@ -107,15 +105,15 @@
 		<legend>Das Zimmer</legend>
 		<ul>
 			<li>
-			#{field 'offer.roomDetails.totalRentPerMonthInEuro'}
-				<label for="${field.id}" class="caption">&{field.name}</label>
+			#{field 'formData.totalRentPerMonthInEuro'}
+				<label for="${field.id}" class="caption">&{'offer.roomDetails.totalRentPerMonthInEuro'}</label>
 				<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
 				<span class="error">${field.error}</span>
 			#{/}
 			</li>
 			<li>
-			#{field 'offer.roomDetails.roomSize.squareMeters'}
-				<label for="${field.id}" class="caption">&{field.name}</label>
+			#{field 'formData.roomSize.squareMeters'}
+				<label for="${field.id}" class="caption">&{'offer.roomDetails.roomSize.squareMeters'}</label>
 				<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
 				<span class="error">${field.error}</span>
 			#{/}		

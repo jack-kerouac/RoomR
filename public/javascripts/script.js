@@ -218,8 +218,8 @@ roomr.createOffer = (function() {
 		zipCode = $('.adr .postal-code');
 		city = $('.adr .locality');
 		
-		lat = $('#lat');
-		lng = $('#lng');
+		lat = $('#formData_lat');
+		lng = $('#formData_lng');
 		
 		roomr.addTypingFinishedCallback([street, streetNumber, zipCode, city], geocodeAddress, 1000);
 		
