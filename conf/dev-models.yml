@@ -104,22 +104,19 @@ user.RoomrUser(seeker1):
   gaeUserEmail: seeker@gmail.com
   age.years: 25
   gender: female
-  seekerProfile:
-    applications: []
+  applications: []
 
 user.RoomrUser(resident1):
   gaeUserEmail: resident@gmail.com
   age.years: 26
   gender: male
-  residentProfile:
-    currentFlatshare: *knoebelstr
+  applications: []
+  currentFlatshare: *knoebelstr
     
 user.RoomrUser(florian):
   gaeUserEmail: Florian.Rampp@googlemail.com
   age.years: 28
   gender: male
-  residentProfile:
-    currentFlatshare: *knoebelstr
-  seekerProfile:
-    applications: []
-    
+  applications: []
+  currentFlatshare: *knoebelstr
+   
