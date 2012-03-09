@@ -23,12 +23,8 @@ public class RoomOfferApplicationsFacade {
 	@Inject
 	private RoomOfferApplicationRepository roomOfferApplicationRepository;
 
-	public RoomOfferApplication apply(RoomrUser applicant, long roomOfferId,
-			String message) {
+	public RoomOfferApplication apply(RoomrUser applicant, long roomOfferId, String message) {
 		RoomOffer offer = roomOfferRepository.find(roomOfferId);
-
-		if (!applicant.isSeeker())
-			throw new IllegalStateException("applicant must be seeker");
 
 		// CREATE APPLICATION
 		RoomOfferApplication application = new RoomOfferApplication();
@@ -38,21 +34,17 @@ public class RoomOfferApplicationsFacade {
 		application.roomOffer = offer;
 		roomOfferApplicationRepository.add(application);
 
-		// ADD IT TO THE USER's SEEKER PROFILE
-		applicant.seekerProfile.applications.add(application);
+		// ADD IT TO THE USER's APPLICATIONS
+		applicant.applications.add(application);
 		userRepository.update(applicant);
 
 		return application;
 	}
 
-	public Set<RoomOfferApplication> viewAllApplicationsForUser(
-			String gaeUserEmail) throws UserIsNotSeekerException {
+	public Set<RoomOfferApplication> viewAllApplicationsForUser(String gaeUserEmail) {
 		RoomrUser user = userRepository.findUser(gaeUserEmail);
 
-		if (!user.isSeeker())
-			throw new UserIsNotSeekerException(user);
-
-		return user.seekerProfile.applications;
+		return user.applications;
 	}
 
 }

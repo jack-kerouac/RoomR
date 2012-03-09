@@ -49,11 +49,11 @@
 	</div>
 
 
-
-
-	#{if user?.isSeeker()}
+	#{if user != null && user.appliedFor(offer)}
+		SCHON BEWORBEN
+	#{/if}
+	#{else}
 	
-	#{if !user.seekerProfile.appliedFor(offer)}
 	<button id="apply_button">Bewerben?</button>
 	
 	<div id="apply_dialog" title="Bewerbung verschicken" class="dialog">
@@ -74,10 +74,7 @@
 			<button>Bewerben!</button>
 		#{/form}
 	</div>
-	#{/if}
-	#{else}
-		SCHON BEWORBEN
+	
 	#{/else}
-	#{/if}
 	
 </div>

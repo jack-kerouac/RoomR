@@ -10,7 +10,6 @@ import models.application.RoomOfferApplication.State;
 import com.google.common.base.Strings;
 
 import facade.RoomOfferApplicationsFacade;
-import facade.UserIsNotSeekerException;
 
 public class Applications extends AbstractRoomrController {
 
@@ -30,14 +29,8 @@ public class Applications extends AbstractRoomrController {
 		if (Strings.isNullOrEmpty(gaeUserEmail))
 			notFound("no user logged in");
 
-		try {
-			Set<RoomOfferApplication> applications = applicationsFacade
-					.viewAllApplicationsForUser(gaeUserEmail);
-			render(applications);
-		} catch (UserIsNotSeekerException e) {
-			notFound("user " + e.getUser()
-					+ " is no seeker, thus has no applications");
-		}
+		Set<RoomOfferApplication> applications = applicationsFacade.viewAllApplicationsForUser(gaeUserEmail);
+		render(applications);
 	}
 
 }

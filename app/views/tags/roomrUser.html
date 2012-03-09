@@ -2,10 +2,6 @@
 	<div>gae email: ${_arg.getGaeUserEmail()}</div>
 	<div>age: ${_arg.getAge()}</div>
 	<div>gender: ${_arg.getGender()}</div>
-	#{if _arg.isSeeker()}
-		<div>seekerProfile: ${_arg.getSeekerProfile()}</div>
-	#{/if}
-	#{if _arg.isResident()}
-		<div>residentProfile: ${_arg.getResidentProfile()}</div>
-	#{/if}
+	<div>applications: ${_arg.applications}</div>
+	<div>current flatshare: ${_arg.currentFlatshare}</div>
 </div>
