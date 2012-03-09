@@ -1,0 +1,58 @@
+[notes on the google datastore]
+
+[general]
+[datastore modi]
+- HDR( High Replication Datastore ) : data is stored across multiple data centers
+- Master/Slave Datastore: one master with write access / written data is asynchronously pushed to the slave data centers
+
+[enities]
+
+- objects in the datastore: entities
+- entity can have named properties (properties can have different data types)
+- entites : schmemaless -> entitities of the same kind can have different properties
+
+ entity keys
+------------
+- each entity has an identifier (can be given as string or automatically created as a numeric id)
+Entity employee = new Entity("Employee")
+-> creates entity of kind employee with automatically generated numeric id
+Entity employee = new Entity("Employee","myID");
+-> creates entity of kind employee with id "myID"
+
+- key of an entity is created using the entity's kind and its identifer (e.g person:John)
+- if the entity is part of a hierarchy (child/parent) the keys of the parents are also taken into account:
+  (e.g. Grandpa:John / Father: Joe / Person: Max)
+ ( the part before the rightmost kind:id pair) is called the entity's ancestor path
+
+ rules for automatic id assignment
+------------------------------------
+- the datastore never assigns the same id for two entities with the same parent or two entities with no parent (root enitities)
+-> it is possible that different entities exist within the datastore that have the same ID but not the same KEY
+
+- it is possible to "reserve" numeric ids from the datastore by using the method DataService.allocateIds() so the application
+ itself can manage the automatic assignment of auto-incremented numerics ids  
+
+
+[queries]
+- a query operates on entities of ONE given kind 
+- specifcation of filters(for property values and ids)
+- specification of sort orders
+- indexes for queries are created automatically for standard data types and can be tuned manually
+
+[transactions and entity groups]
+- a single transaction can apply to multiple entities 
+ Master/Slave Datastore
+-----------------------
+all entities have to descend from a common ancestor  aka they have to belong to the same "entity group"
+    
+ HRD
+-----
+- entities can belong to different entity groups -> cross group transactions (XGT)
+- can be used across at most 5 entity groups
+- possibly throws a ConcurrentModificationException (if an entity group is already changed by another transaction)
+ 
+
+ 
+
+
+

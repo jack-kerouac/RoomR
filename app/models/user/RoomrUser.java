@@ -9,6 +9,7 @@ import models.common.Gender;
 import models.flatshare.Flatshare;
 import models.offer.RoomOffer;
 
+import com.google.appengine.api.users.User;
 import com.google.code.twig.annotation.Id;
 import com.google.common.base.Objects;
 import com.google.common.base.Objects.ToStringHelper;
@@ -17,12 +18,9 @@ import com.google.common.collect.Iterables;
 
 public class RoomrUser {
 
-	// the user id from the com.google.appengine.api.users.User object
-	public String gaeUserId;
-
 	@Id
 	public String gaeUserEmail;
-
+	public User gaeUser;
 
 	public Age age;
 
@@ -46,7 +44,7 @@ public class RoomrUser {
 	public String toString() {
 		ToStringHelper stringHelper = Objects.toStringHelper(this);
 
-		stringHelper.add("email", gaeUserEmail);
+		stringHelper.add("gaeUser", gaeUser);
 		stringHelper.add("age", age);
 		stringHelper.add("gender", gender);
 
@@ -54,7 +52,6 @@ public class RoomrUser {
 		stringHelper.add("currentFlatshare", currentFlatshare);
 
 		return stringHelper.toString();
-
 	}
 
 }

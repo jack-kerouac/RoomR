@@ -10,6 +10,8 @@ import models.offer.RoomOfferRepository;
 import models.user.RoomrUser;
 import models.user.RoomrUserRepository;
 
+import com.google.appengine.api.users.User;
+
 public class RoomOfferApplicationsFacade {
 
 	@Inject

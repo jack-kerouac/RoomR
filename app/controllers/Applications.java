@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import models.application.RoomOfferApplication;
 import models.application.RoomOfferApplication.State;
+import models.user.RoomrUser;
 import facade.RoomOfferApplicationsFacade;
 
 public class Applications extends AbstractRoomrController {
@@ -23,10 +24,11 @@ public class Applications extends AbstractRoomrController {
 	}
 
 	public static void view() {
-		if (getCurrentUser() == null)
+		RoomrUser currentUser = getCurrentUser();
+		if (currentUser == null)
 			notFound("no user logged in");
 
-		Set<RoomOfferApplication> applications = getCurrentUser().applications;
+		Set<RoomOfferApplication> applications = currentUser.applications;
 		render(applications);
 	}
 

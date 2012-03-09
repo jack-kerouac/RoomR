@@ -22,7 +22,7 @@ public class RoomOfferApplication {
 
 	@Override
 	public String toString() {
-		return Objects.toStringHelper(this).add("applicant", applicant.gaeUserEmail).add("roomOffer", roomOffer.id)
+		return Objects.toStringHelper(this).add("applicant", applicant.gaeUser.getEmail()).add("roomOffer", roomOffer.id)
 				.add("currentState", currentState).add("message", message).toString();
 	}
 
