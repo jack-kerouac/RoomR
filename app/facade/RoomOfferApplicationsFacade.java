@@ -12,6 +12,8 @@ import models.offer.RoomOfferRepository;
 import models.user.RoomrUser;
 import models.user.RoomrUserRepository;
 
+import com.google.appengine.api.users.User;
+
 public class RoomOfferApplicationsFacade {
 
 	@Inject
@@ -40,11 +42,12 @@ public class RoomOfferApplicationsFacade {
 
 		return application;
 	}
+	
 
-	public Set<RoomOfferApplication> viewAllApplicationsForUser(String gaeUserEmail) {
-		RoomrUser user = userRepository.findUser(gaeUserEmail);
+	public Set<RoomOfferApplication> viewAllApplicationsForUser(User user) {
+		RoomrUser roomrUser = userRepository.findUser(user);
 
-		return user.applications;
+		return roomrUser.applications;
 	}
 
 }

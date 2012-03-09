@@ -6,6 +6,7 @@ import java.util.Set;
 import models.user.RoomrUser;
 import models.user.RoomrUserRepository;
 
+import com.google.appengine.api.users.User;
 import com.google.code.twig.ObjectDatastore;
 import com.google.common.collect.ImmutableSet;
 import com.google.inject.Inject;
@@ -20,13 +21,9 @@ public class TwigRoomrUserRepository implements RoomrUserRepository {
 		this.datastoreProvider = datastoreProvider;
 	}
 
-	
 	@Override
-	public RoomrUser findUser(String gaeEmailAddress) {
-		// TODO: can we use a com.google.appengine.api.users.User as key???
-		Set<RoomrUser> copyOf = ImmutableSet.copyOf(datastoreProvider.get().find(RoomrUser.class));
-		
-		return datastoreProvider.get().load(RoomrUser.class, gaeEmailAddress);
+	public RoomrUser findUser(User gaeUser) {
+		return datastoreProvider.get().load(RoomrUser.class, gaeUser.getEmail());
 	}
 
 	@Override

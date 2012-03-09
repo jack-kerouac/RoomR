@@ -6,9 +6,7 @@ import javax.inject.Inject;
 
 import models.application.RoomOfferApplication;
 import models.application.RoomOfferApplication.State;
-
-import com.google.common.base.Strings;
-
+import models.user.RoomrUser;
 import facade.RoomOfferApplicationsFacade;
 
 public class Applications extends AbstractRoomrController {
@@ -25,11 +23,12 @@ public class Applications extends AbstractRoomrController {
 		Offers.viewOffer(roomOfferId);
 	}
 
-	public static void view(String gaeUserEmail) {
-		if (Strings.isNullOrEmpty(gaeUserEmail))
+	public static void view() {
+		RoomrUser currentUser = getCurrentUser();
+		if(currentUser == null)
 			notFound("no user logged in");
 
-		Set<RoomOfferApplication> applications = applicationsFacade.viewAllApplicationsForUser(gaeUserEmail);
+		Set<RoomOfferApplication> applications = applicationsFacade.viewAllApplicationsForUser(currentUser.gaeUser);
 		render(applications);
 	}
 

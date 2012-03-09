@@ -25,14 +25,11 @@ public abstract class AbstractRoomrController extends Controller {
 		if (userService.isUserLoggedIn()) {
 			User currentGaeUser = userService.getCurrentUser();
 
-			RoomrUser currentUser = repository.findUser(currentGaeUser
-					.getEmail());
+			RoomrUser currentUser = repository.findUser(currentGaeUser);
 			if (currentUser == null) {
 				// user has not registered for RoomR yet!
-				error("the user "
-						+ currentGaeUser.getEmail()
-						+ " has not registered for RoomR yet, logout again here: "
-						+ userService.createLogoutURL("/"));
+				error("the user " + currentGaeUser.getEmail()
+						+ " has not registered for RoomR yet, logout again here: " + userService.createLogoutURL("/"));
 			}
 			return currentUser;
 		}
