@@ -13,6 +13,7 @@ import play.modules.guice.InjectSupport;
 import play.test.Fixtures;
 
 import com.google.appengine.api.datastore.GeoPt;
+import com.google.appengine.api.users.User;
 
 @InjectSupport
 public class DevelopmentModelDataLoader {
@@ -24,9 +25,8 @@ public class DevelopmentModelDataLoader {
 	private static RoomrUserRepository userRepository;
 
 	/**
-	 * Loads all model entities in dev-models.yml if in dev mode. This method
-	 * ensures that the model is loaded only once (even after application
-	 * restarts).
+	 * Loads all model entities in dev-models.yml if in dev mode. This method ensures that the model
+	 * is loaded only once (even after application restarts).
 	 */
 	public static void ensureLoaded() {
 		// TODO: check for DEV mode again, currently I want the data to be
@@ -41,19 +41,25 @@ public class DevelopmentModelDataLoader {
 		return Fixtures.idCache.size() > 0 || offerRepository.findAll().size() > 0;
 	}
 
+
 	private static void loadFixtures() {
 		Fixtures.loadModels("dev-models.yml");
 		Map<String, Object> idCache = Fixtures.idCache;
 
 		for (Object o : idCache.values()) {
 			if (o instanceof RoomOffer) {
-				RoomOffer offer = (RoomOffer)o;
-				// TODO: add geopoints to YAML file (see http://code.google.com/p/snakeyaml/wiki/Documentation#Immutable_instances)
+				RoomOffer offer = (RoomOffer) o;
+				// TODO: remove
 				offer.flatshare.geoLocation = new GeoPt(48.1505f, 11.5586f);
 				offerRepository.add(offer);
-			} else if (o instanceof RoomrUser) {
-				userRepository.add((RoomrUser) o);
-			} else if (o instanceof Flatshare)
+			}
+			else if (o instanceof RoomrUser) {
+				RoomrUser user = (RoomrUser) o;
+				// TODO: remove
+				user.gaeUser = new User(user.gaeUserEmail, "gmail.com");
+				userRepository.add(user);
+			}
+			else if (o instanceof Flatshare)
 				throw new UnsupportedOperationException(
 						"flatshares are persisted through 'cascade' with room offers or users");
 		}

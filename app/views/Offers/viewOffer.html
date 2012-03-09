@@ -49,11 +49,11 @@
 	</div>
 
 
-
-
-	#{if user?.isSeeker()}
+	#{if user != null && user.appliedFor(offer)}
+		SCHON BEWORBEN
+	#{/if}
+	#{else}
 	
-	#{if !user.seekerProfile.appliedFor(offer)}
 	<button id="apply_button">Bewerben?</button>
 	
 	<div id="apply_dialog" title="Bewerbung verschicken" class="dialog">
@@ -65,7 +65,6 @@
 		</div>
 		#{form @Applications.apply(), id:'application_form'}
 			<input name="roomOfferId" type="hidden" value="${offer.id}">
-			<input name="gaeUserEmail" type="hidden" value="${user.getGaeUserEmail()}">
 			
 			#{field 'application.message'}
 				<label for="${field.id}" class="caption">&{field.name}</label>
@@ -75,10 +74,7 @@
 			<button>Bewerben!</button>
 		#{/form}
 	</div>
-	#{/if}
-	#{else}
-		SCHON BEWORBEN
+	
 	#{/else}
-	#{/if}
 	
 </div>

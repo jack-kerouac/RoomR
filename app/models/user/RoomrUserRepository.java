@@ -2,10 +2,12 @@ package models.user;
 
 import java.util.Set;
 
+import com.google.appengine.api.users.User;
+
 
 public interface RoomrUserRepository {
 
-	public RoomrUser findUser(String gaeEmailAddress);
+	public RoomrUser findUser(User gaeUser);
 
 	public void add(RoomrUser newUser);
 
