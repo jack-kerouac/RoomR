@@ -6,6 +6,10 @@ import util.DevelopmentModelDataLoader;
 public class Start extends AbstractRoomrController {
 	
 	public static void start() {
+//		Fixtures.deleteAllModels();
+//		Fixtures.loadModels("dev-models.yml");
+//		Map<String, Object> idCache = Fixtures.idCache;
+		
 		render();
 	}
 

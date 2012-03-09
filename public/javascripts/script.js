@@ -1,5 +1,6 @@
-/* Author: Florian Rampp */
-
+/*****************************************************************************************/
+/** ROOMR GLOBAL MODULE ******************************************************************/
+/*****************************************************************************************/
 var roomr = (function() {
 	var my = {};
 	
@@ -46,6 +47,48 @@ var roomr = (function() {
 	return my;
 }());
 
+
+
+/*****************************************************************************************/
+/** GLOBAL MAPS **************************************************************************/
+/*****************************************************************************************/
+roomr.maps = (function() {
+	var my = {};
+	
+	my.init = function() {
+	};
+
+	my.initializeMap = function(mapCanvas, latlng, zoom) {
+		var map;
+
+		var options = {
+	      zoom: zoom,
+	      center: latlng,
+	      mapTypeId: google.maps.MapTypeId.ROADMAP
+	    };
+	    map = new google.maps.Map($(mapCanvas)[0], options);
+	    
+    	return map;
+	}
+
+	my.geocodeAddress = function(address, callback) {
+		new google.maps.Geocoder().geocode({ 'address': address, 'region': 'de' }, function(results, status) {
+			if (status == google.maps.GeocoderStatus.OK) {
+				callback(results[0]);
+			}
+		});
+	}
+	
+	
+	
+	roomr.addModule('maps', my);
+	return my;
+}());
+
+
+/*****************************************************************************************/
+/** INSTANT SEARCH ***********************************************************************/
+/*****************************************************************************************/
 roomr.instantSearch = (function() {
 	var my = {};
 	
@@ -89,6 +132,10 @@ roomr.instantSearch = (function() {
 	return my;
 }());
 
+
+/*****************************************************************************************/
+/** REQUEST FORM (DEPRECATED) ************************************************************/
+/*****************************************************************************************/
 roomr.requestForm = (function() {
 	var my = {};
 
@@ -130,11 +177,13 @@ roomr.requestForm = (function() {
 }());
 
 
+/*****************************************************************************************/
+/** CREATE OFFER FORM ********************************************************************/
+/*****************************************************************************************/
 roomr.createOffer = (function() {
 	var my = {};
 	
 	var streetMap;
-	var geocoder;
 	var addressMarker;
 	var streetView;
 	
@@ -162,36 +211,21 @@ roomr.createOffer = (function() {
 			}
 		});
 		
-		streetMap = initializeMap($("#map_canvas").get(0));
-	};
-
-	function initializeMap(mapCanvas) {
-		var map;
+		streetMap = roomr.maps.initializeMap($("#map_canvas"), new google.maps.LatLng(48.1505, 11.5586), 8);
 		
-		geocoder = new google.maps.Geocoder();
-	    var latlng = new google.maps.LatLng(48.1505, 11.5586);
-	    var options = {
-	      zoom: 8,
-	      center: latlng,
-	      mapTypeId: google.maps.MapTypeId.ROADMAP
-	    };
-	    map = new google.maps.Map(mapCanvas, options);
-	    
-	    street = $('.adr .street');
-	    streetNumber = $('.adr .streetnumber');
-	    zipCode = $('.adr .postal-code');
-	    city = $('.adr .locality');
-	    
-	    lat = $('#lat');
-	    lng = $('#lng');
-	    
-    	roomr.addTypingFinishedCallback([street, streetNumber, zipCode, city], geocodeAddress, 1000);
-    	
-    	prepareAutoCompleteField(zipCode);
-    	prepareAutoCompleteField(city);
-    	
-    	return map;
-	}
+		street = $('.adr .street');
+		streetNumber = $('.adr .streetnumber');
+		zipCode = $('.adr .postal-code');
+		city = $('.adr .locality');
+		
+		lat = $('#lat');
+		lng = $('#lng');
+		
+		roomr.addTypingFinishedCallback([street, streetNumber, zipCode, city], geocodeAddress, 1000);
+		
+		prepareAutoCompleteField(zipCode);
+		prepareAutoCompleteField(city);
+	};
 
 	function prepareAutoCompleteField(field) {
 		$(field).bind('keypress', function() {
@@ -217,42 +251,39 @@ roomr.createOffer = (function() {
 			address = address + getManualFieldValue(zipCode) + ' ' + getManualFieldValue(city);
 		}
 		
-		new google.maps.Geocoder().geocode({ 'address': address, 'region': 'de' }, function(results, status) {
+		roomr.maps.geocodeAddress(address, function(bestResult) {
 			var panoramaOptions;
+			// save coordinates
+			lat.val(bestResult.geometry.location.lat());
+			lng.val(bestResult.geometry.location.lng());
 			
-			if (status == google.maps.GeocoderStatus.OK) {
-				// save coordinates
-				lat.val(results[0].geometry.location.lat());
-				lng.val(results[0].geometry.location.lng());
-				
-				// auto complete postal code
-				$.each(results[0].address_components, function(index, value) {
-					if ($.inArray('postal_code', value.types) != -1 && getManualFieldValue(zipCode) == '') {
-						zipCode.val(value.long_name);
-					} else if ($.inArray('locality', value.types) != -1 && getManualFieldValue(city) == '') {
-						city.val(value.long_name);
-					}
-				});
-				
-				// street map
-				streetMap.fitBounds(results[0].geometry.viewport);
-				
-			    addressMarker = addressMarker || new google.maps.Marker({
-			        map: streetMap
-			    });
-			    addressMarker.setPosition(results[0].geometry.location);
-			    
-			    // street view
-			    
-			    if (typeof streetView === 'undefined') {
-			    	var streetViewCanvas = $("#street_view_canvas");
-			    	streetView = new google.maps.StreetViewPanorama(streetViewCanvas.get(0));
-			    	streetMap.setStreetView(streetView);
-			    	streetViewCanvas.fadeIn(1000);
-			    }
-			    
-			    streetView.setPosition(results[0].geometry.location);
-			}
+			// auto complete postal code
+			$.each(bestResult.address_components, function(index, value) {
+				if ($.inArray('postal_code', value.types) != -1 && getManualFieldValue(zipCode) == '') {
+					zipCode.val(value.long_name);
+				} else if ($.inArray('locality', value.types) != -1 && getManualFieldValue(city) == '') {
+					city.val(value.long_name);
+				}
+			});
+			
+			// street map
+			streetMap.fitBounds(bestResult.geometry.viewport);
+			
+		    addressMarker = addressMarker || new google.maps.Marker({
+		        map: streetMap
+		    });
+		    addressMarker.setPosition(bestResult.geometry.location);
+		    
+		    // street view
+		    
+		    if (typeof streetView === 'undefined') {
+		    	var streetViewCanvas = $("#street_view_canvas");
+		    	streetView = new google.maps.StreetViewPanorama(streetViewCanvas.get(0));
+		    	streetMap.setStreetView(streetView);
+		    	streetViewCanvas.fadeIn(1000);
+		    }
+		    
+		    streetView.setPosition(bestResult.geometry.location);
 		});
 	}
 	
@@ -261,11 +292,18 @@ roomr.createOffer = (function() {
 }());
 
 
+/*****************************************************************************************/
+/** VIEW OFFER ***************************************************************************/
+/*****************************************************************************************/
 roomr.viewOffer = (function() {
 	var my = {};
 
+	var streetMap;
+	var addressMarker;
 
 	my.init = function() {
+		var flatshareLocation;
+		
 		$('#apply_button').click(function() {
 			$('#apply_dialog').show('slide', { direction: 'up'});
 			$('#apply_button').hide();
@@ -279,8 +317,16 @@ roomr.viewOffer = (function() {
 //								$(this).dialog("close");
 //							}
 //				          }
-//				          ]});			
+//				          ]});
 		});
+		
+		flatshareLocation = new google.maps.LatLng($("#map_canvas").attr('data-center-lat'), $("#map_canvas").attr('data-center-lng'));
+		
+		streetMap = roomr.maps.initializeMap($("#map_canvas"), flatshareLocation, 8);
+	    addressMarker = new google.maps.Marker({
+	        map: streetMap
+	    });
+	    addressMarker.setPosition(flatshareLocation);
 	};
 	
 	roomr.addModule('view_offer', my);

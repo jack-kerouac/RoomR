@@ -1,19 +1,35 @@
 #view_offer {
 
-	.offer {
-		padding: 10px;
-		
-		background-color: $primary_variant4;
-		border-radius: 10px;
-	}
+.offer {
+	padding: 10px;
 	
+	background-color: $primary_variant4;
+	border-radius: 10px;
+}
+
+
+#apply_dialog {
+	display: none;
 	
-	#apply_dialog {
-		display: none;
-		
-		textarea {
-			width: 500px;
-		}
+	textarea {
+		width: 500px;
 	}
+}
+
+#maps {
+	float: right;
+}
+
+#map_canvas {
+	width: 500px;
+	height: 500px;	
+}
+
+#street_view_canvas {
+	width: 500px;
+	height: 500px;	
+	
+	display: none;
+}
 	
 }
