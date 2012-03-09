@@ -113,7 +113,6 @@ user.RoomrUser(resident1):
   gender: male
   residentProfile:
     currentFlatshare: *knoebelstr
-
     
 user.RoomrUser(florian):
   gaeUserEmail: Florian.Rampp@googlemail.com

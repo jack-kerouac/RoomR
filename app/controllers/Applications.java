@@ -17,10 +17,11 @@ public class Applications extends AbstractRoomrController {
 	@Inject
 	private static RoomOfferApplicationsFacade applicationsFacade;
 
-	public static void apply(String gaeUserEmail, long roomOfferId, RoomOfferApplication application) {
+	public static void apply(long roomOfferId, RoomOfferApplication application) {
 		application.currentState = State.WAITING_FOR_INVITATION;
 
-		RoomOfferApplication newApplication = applicationsFacade.apply(gaeUserEmail, roomOfferId, application.message);
+		RoomOfferApplication newApplication = applicationsFacade.apply(
+				getCurrentUser(), roomOfferId, application.message);
 
 		Offers.viewOffer(roomOfferId);
 	}
@@ -30,10 +31,12 @@ public class Applications extends AbstractRoomrController {
 			notFound("no user logged in");
 
 		try {
-			Set<RoomOfferApplication> applications = applicationsFacade.viewAllApplicationsForUser(gaeUserEmail);
+			Set<RoomOfferApplication> applications = applicationsFacade
+					.viewAllApplicationsForUser(gaeUserEmail);
 			render(applications);
 		} catch (UserIsNotSeekerException e) {
-			notFound("user " + e.getUser() + " is no seeker, thus has no applications");
+			notFound("user " + e.getUser()
+					+ " is no seeker, thus has no applications");
 		}
 	}
 

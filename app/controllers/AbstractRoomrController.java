@@ -18,22 +18,31 @@ public abstract class AbstractRoomrController extends Controller {
 	@Inject
 	private static RoomrUserRepository repository;
 
-	@Before
-	public static void populateRenderArgs() {
+	protected static RoomrUser getCurrentUser() {
 		UserService userService = UserServiceFactory.getUserService();
 		// user is logged into his Google Account
 
 		if (userService.isUserLoggedIn()) {
 			User currentGaeUser = userService.getCurrentUser();
 
-			RoomrUser currentUser = repository.findUser(currentGaeUser.getEmail());
+			RoomrUser currentUser = repository.findUser(currentGaeUser
+					.getEmail());
 			if (currentUser == null) {
 				// user has not registered for RoomR yet!
-				error("the user " + currentGaeUser.getEmail() + " has not registered for RoomR yet, logout again here: " + userService.createLogoutURL("/"));
+				error("the user "
+						+ currentGaeUser.getEmail()
+						+ " has not registered for RoomR yet, logout again here: "
+						+ userService.createLogoutURL("/"));
 			}
-
-			renderArgs.put("user", currentUser);
+			return currentUser;
 		}
+
+		return null;
+	}
+
+	@Before
+	public static void populateRenderArgs() {
+		renderArgs.put("user", getCurrentUser());
 	}
 
 }
