@@ -5,7 +5,7 @@ import java.util.Set;
 import models.common.Address;
 import models.common.Floor;
 import models.offer.RoomOffer;
-import models.user.resident.ResidentProfile;
+import models.user.RoomrUser;
 import play.data.validation.Valid;
 
 import com.google.appengine.api.datastore.GeoPt;
@@ -26,7 +26,7 @@ public class Flatshare {
 	public RoomOffer roomOffer;
 
 	@Independent
-	public Set<ResidentProfile> residentProfiles;
+	public Set<RoomrUser> residents;
 	
 	
 	public GeoPt geoLocation;
@@ -38,7 +38,7 @@ public class Flatshare {
 	@Override
 	public String toString() {
 		return Objects.toStringHelper(this).add("id", id).add("address", address).add("geoLocation", geoLocation)
-				.add("floor", floor).add("smoking tolerance", smokingTolerance).add("resident profiles", residentProfiles).toString();
+				.add("floor", floor).add("smoking tolerance", smokingTolerance).add("residents", residents).toString();
 	}
 
 	@Override
