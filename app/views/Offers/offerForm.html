@@ -6,7 +6,9 @@
 
 <div id="maps">
 	<div id="map_canvas"></div>
-	<div id="street_view_canvas"></div>
+	<div id="street_view_canvas">
+		<div class="disabled_overlay"></div>
+	</div>
 </div>
 
 #{form @Offers.createOffer(), id:'create_offer_form'}
@@ -72,13 +74,28 @@
 					<span class="error">${field.error}</span>
 				#{/}
 				</li>
+				<li>
+				#{field 'formData.displayStreetView'}
+					<label for="${field.id}" class="caption">&{'offer.flatshare.mapParameters.displayStreetView'}</label>
+					<input id="${field.id}" name="${field.name}" type="checkbox" class="${field.errorClass}" ${formData.displayStreetView ? 'checked' : ''}>
+				#{/}
+				#{field 'formData.streetViewHeading'}
+					<input id="${field.id}" name="${field.name}" type="hidden" value="${field.value}">
+				#{/}
+				#{field 'formData.streetViewPitch'}
+					<input id="${field.id}" name="${field.name}" type="hidden" value="${field.value}">
+				#{/}
+				#{field 'formData.streetViewZoom'}
+					<input id="${field.id}" name="${field.name}" type="hidden" value="${field.value}">
+				#{/}
+				</li>
 			</ul>
 			
 			#{field 'formData.lat'}
-				<input id="${field.id}" name="${field.name}" type="hidden">
+				<input id="${field.id}" name="${field.name}" type="hidden" value="${field.value}">
 			#{/}
 			#{field 'formData.lng'}
-				<input id="${field.id}" name="${field.name}" type="hidden">
+				<input id="${field.id}" name="${field.name}" type="hidden" value="${field.value}">
 			#{/}
 		</fieldset>
 		

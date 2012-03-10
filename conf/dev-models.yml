@@ -17,6 +17,8 @@ flatshare.Flatshare: &stuntzstr
     streetNumber: 23
     zipCode: 81677
     city: Munich
+  mapParameters:
+    displayStreetView: false
   geoLocation: !!com.google.appengine.api.datastore.GeoPt [30.0, 30.0]
   floor: basement
   smokingTolerance: prohibited
@@ -28,6 +30,8 @@ flatshare.Flatshare: &knoebelstr
     streetNumber: 14
     zipCode: 80538
     city: Munich
+  mapParameters:
+    displayStreetView: false
   geoLocation: !!com.google.appengine.api.datastore.GeoPt [30.0, 30.0]
   floor: first
   smokingTolerance: allowedInRoom
@@ -39,6 +43,8 @@ flatshare.Flatshare: &fraunhoferstr
     streetNumber: 33
     zipCode: 80469
     city: Munich
+  mapParameters:
+    displayStreetView: false
   geoLocation: !!com.google.appengine.api.datastore.GeoPt [30.0, 30.0]
   floor: third
   smokingTolerance: allowedInFlat
@@ -50,6 +56,8 @@ flatshare.Flatshare: &deisenhofenerstr
     streetNumber: 10
     zipCode: 81539
     city: Munich
+  mapParameters:
+    displayStreetView: false
   geoLocation: !!com.google.appengine.api.datastore.GeoPt [30.0, 30.0]
   floor: forth
   smokingTolerance: prohibited

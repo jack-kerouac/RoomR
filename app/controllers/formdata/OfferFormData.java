@@ -24,11 +24,17 @@ public class OfferFormData {
 	@Required
 	public String city;
 
+	// initial position: Viktualienmarkt
 	@Range(max = 90.0, min = -90.0)
-	public float lat;
+	public float lat = 48.135848f;
 	@Range(max = 180.0, min = -180.0)
-	public float lng;
+	public float lng = 11.576132f;
 
+	public boolean displayStreetView = false;
+	public float streetViewHeading = 78f;
+	public float streetViewPitch = 7f;
+	public float streetViewZoom = 1f;
+	
 	public Floor floor = Floor.basement;
 	public SmokingTolerance smokingTolerance = SmokingTolerance.prohibited;
 

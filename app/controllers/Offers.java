@@ -10,6 +10,7 @@ import models.common.Floor;
 import models.common.FloorSpace;
 import models.common.Gender;
 import models.flatshare.Flatshare;
+import models.flatshare.MapParameters;
 import models.flatshare.SmokingTolerance;
 import models.offer.RoomDetails;
 import models.offer.RoomOffer;
@@ -64,6 +65,13 @@ public class Offers extends AbstractRoomrController {
 		offer.flatshare = new Flatshare();
 		offer.flatshare.address = new Address(formData.street, formData.streetNumber, formData.zipCode, formData.city);
 		offer.flatshare.geoLocation = new GeoPt(formData.lat, formData.lng);
+		
+		offer.flatshare.mapParameters = new MapParameters();
+		offer.flatshare.mapParameters.displayStreetView = formData.displayStreetView;
+		offer.flatshare.mapParameters.streetViewHeading = formData.streetViewHeading;
+		offer.flatshare.mapParameters.streetViewPitch = formData.streetViewPitch;
+		offer.flatshare.mapParameters.streetViewZoom = formData.streetViewZoom;
+		
 		offer.flatshare.floor = formData.floor;
 		offer.flatshare.smokingTolerance = formData.smokingTolerance;
 

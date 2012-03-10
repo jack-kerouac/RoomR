@@ -18,20 +18,28 @@ public class Flatshare {
 	@Id
 	public long id;
 
-	public Address address;
-
+	// ROOM OFFERS
 	@Child
 	public RoomOffer roomOffer;
 
+	
+	// RESIDENTS
 	@Independent
 	public Set<RoomrUser> residents;
 
+	// LOCATION
+	public Address address;
+
 	public GeoPt geoLocation;
 
+	public MapParameters mapParameters;
+	
 	public Floor floor;
 
+	
+	// ADDITIONAL ATTRIBUTES
 	public SmokingTolerance smokingTolerance;
-
+	
 	@Override
 	public String toString() {
 		return Objects.toStringHelper(this).add("id", id).add("address", address).add("geoLocation", geoLocation)

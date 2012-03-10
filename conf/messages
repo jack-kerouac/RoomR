@@ -16,6 +16,8 @@ offer.flatshare.address.city=Stadt
 offer.flatshare.floor=Stockwerk
 offer.flatshare.smokingTolerance=Rauchen
 
+offer.flatshare.mapParameters.displayStreetView=Street View
+
 offer.roomDetails.totalRentPerMonthInEuro=Miete pro Monat
 offer.roomDetails.roomSize.squareMeters=Zimmergröße
 

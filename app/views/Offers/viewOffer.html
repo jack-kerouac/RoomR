@@ -13,10 +13,20 @@
 <div class="offer clearfix">
 
 	<div id="maps">
-		<div id="map_canvas" data-center-lat="${flatshare.geoLocation.getLatitude()}" data-center-lng="${flatshare.geoLocation.getLongitude()}"></div>
-		<div id="street_view_canvas"></div>
+		<div id="map_canvas"
+			data-center-lat="${flatshare.geoLocation.getLatitude()}"
+			data-center-lng="${flatshare.geoLocation.getLongitude()}"></div>
+		
+		#{if offer.flatshare.mapParameters.displayStreetView}
+		<div id="street_view_canvas"
+			data-pov-heading="${flatshare.mapParameters.getStreetViewHeading()}"
+			data-pov-pitch="${flatshare.mapParameters.getStreetViewPitch()}"
+			data-pov-zoom="${flatshare.mapParameters.getStreetViewZoom()}"></div>
+		#{/if}
+		#{else}
+			Street View wurde fuer diese Anzeige deaktiviert.
+		#{/else}
 	</div>
-
 		
 	<div class="flatshare">
 		<h2>die WG</h2>
@@ -32,7 +42,7 @@
 		<h2>der Preis</h2>
 		<p>
 			&{'offer.roomDetails.totalRentPerMonthInEuro'}:&nbsp;#{money roomDetails.totalRentPerMonth /}
-		</p>
+		</p>Heading
 	</div>
 	
 	<div class="details">
