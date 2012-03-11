@@ -24,6 +24,15 @@ Entity employee = new Entity("Employee","myID");
   (e.g. Grandpa:John / Father: Joe / Person: Max)
  ( the part before the rightmost kind:id pair) is called the entity's ancestor path
 
+
+ entity properties
+--------------------
+- allowed datatypes for entities: http://code.google.com/appengine/docs/java/datastore/entities.html#Properties_and_Value_Types
+- how to save references to other entities: there is datatype for "key", which can be used to reference another entity within the datastore
+- enums data types have to be serialized manually
+
+
+
  rules for automatic id assignment
 ------------------------------------
 - the datastore never assigns the same id for two entities with the same parent or two entities with no parent (root enitities)
