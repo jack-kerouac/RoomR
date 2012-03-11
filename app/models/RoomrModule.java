@@ -1,6 +1,7 @@
 package models;
 
 import models.application.RoomOfferApplicationRepository;
+import models.internal.reposImpl.gdsnative.GdsNativeRoomrUserRepository;
 import models.internal.reposImpl.twig.TwigRoomOfferApplicationRepository;
 import models.internal.reposImpl.twig.TwigRoomOfferRepository;
 import models.internal.reposImpl.twig.TwigRoomrUserRepository;
@@ -26,7 +27,7 @@ public class RoomrModule extends AbstractModule {
 		// binds the TwigOfferRepository implementation to the interface
 		// OfferRepository
 		bind(RoomOfferRepository.class).to(TwigRoomOfferRepository.class);
-		bind(RoomrUserRepository.class).to(TwigRoomrUserRepository.class);
+		bind(RoomrUserRepository.class).to(GdsNativeRoomrUserRepository.class);
 		bind(RoomOfferApplicationRepository.class).to(TwigRoomOfferApplicationRepository.class);
 
 		bind(OfferRanker.class);
