@@ -275,7 +275,7 @@ roomr.createOffer = (function() {
 
 		
 		streetViewDisplayChangeListener = function() {
-			if(displayStreetView.prop('checked')) {
+			if($('input[value="true"]', displayStreetView).prop('checked')) {
 				displayStreetView.val('true');
 				enableStreetView();
 			}
@@ -284,7 +284,7 @@ roomr.createOffer = (function() {
 				disableStreetView();
 			}
 		};
-		displayStreetView.change(streetViewDisplayChangeListener);
+		$("input", displayStreetView).change(streetViewDisplayChangeListener);
 		streetViewDisplayChangeListener();
 
 		// GEOCODING
@@ -383,7 +383,27 @@ roomr.createOffer = (function() {
 		    addressMarker.setPosition(bestResult.geometry.location);
 		    
 		    // street view
-		    streetView.setPosition(bestResult.geometry.location);
+		    var streetViewService = new google.maps.StreetViewService();
+		    var STREETVIEW_MAX_DISTANCE = 100;
+		    streetViewService.getPanoramaByLocation(bestResult.geometry.location, STREETVIEW_MAX_DISTANCE, function (streetViewPanoramaData, status) {
+		    	switch(status) {
+		    	case google.maps.StreetViewStatus.OK:
+				    streetView.setPosition(bestResult.geometry.location);
+				    streetViewCanvas.show();
+				    $('#street_view_error').hide();
+		    		break;
+			    case google.maps.StreetViewStatus.ZERO_RESULTS:
+			    	streetViewCanvas.hide();
+					$('#street_view_error').text('Google Street View für diese Position nicht verfügbar!');
+			    	$('#street_view_error').show();
+		    		break;
+			    case google.maps.StreetViewStatus.UNKNOWN_ERROR:
+			    	streetViewCanvas.hide();
+			    	$('#street_view_error').text('Google Street View Fehler!');
+			    	$('#street_view_error').show();
+		    		break;
+		    	}
+		    });
 		});
 	}
 	

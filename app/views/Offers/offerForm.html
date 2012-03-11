@@ -9,6 +9,7 @@
 	<div id="street_view_canvas">
 		<div class="disabled_overlay"></div>
 	</div>
+	<div id="street_view_error"></div>
 </div>
 
 #{form @Offers.createOffer(), id:'create_offer_form'}
@@ -17,8 +18,8 @@
 		<ul>
 			<li>
 				#{field 'formData.genders'}
-				<label for="${field.id}" class="caption">&{'offer.criteria.genders'}</label>
-				<ul class="gendersSelect">
+				<label class="caption">&{'offer.criteria.genders'}</label>
+				<ul class="inline_buttons">
 					<li>
 						<label for="${field.id}_male" class="caption">&{'genders.male'}</label>
 						<input id="${field.id}_male" name="${field.name}" type="checkbox" value="male" class="${field.errorClass}" ${formData.genders.contains(models.common.Gender.male) ? 'checked' : ''}>
@@ -76,8 +77,18 @@
 				</li>
 				<li>
 				#{field 'formData.displayStreetView'}
-					<label for="${field.id}" class="caption">&{'offer.flatshare.mapParameters.displayStreetView'}</label>
-					<input id="${field.id}" name="${field.name}" type="checkbox" class="${field.errorClass}" ${formData.displayStreetView ? 'checked' : ''}>
+					<label class="caption">&{'offer.flatshare.mapParameters.displayStreetView'}</label>
+					<ul class="inline_buttons" id="${field.id}">
+						<li>
+							<label for="${field.id}_true" class="caption">Anzeigen</label>
+							<input id="${field.id}_true" name="${field.name}" type="radio" value="true" class="${field.errorClass}" ${formData.displayStreetView ? 'checked' : ''}>
+						</li>
+						<li>
+							<label for="${field.id}_false" class="caption">Verstecken</label>
+							<input id="${field.id}_false" name="${field.name}" type="radio" value="false" class="${field.errorClass}" ${formData.displayStreetView ? '' : 'checked'}>
+						</li>
+					</ul>
+					<span class="error">${field.error}</span>
 				#{/}
 				#{field 'formData.streetViewHeading'}
 					<input id="${field.id}" name="${field.name}" type="hidden" value="${field.value}">

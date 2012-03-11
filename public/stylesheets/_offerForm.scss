@@ -34,6 +34,14 @@
 	}
 }
 
+#street_view_error {
+	width: 400px;
+	margin: 10px 0 10px 0;
+
+	text-align: center;
+	color: $secondary_variant1;
+}
+
 .streetnumber {
 	width: 30px;
 }
@@ -45,5 +53,7 @@
 .locality {
 	width: 180px;
 }
+
+
 
 }

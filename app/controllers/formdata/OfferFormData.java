@@ -30,7 +30,7 @@ public class OfferFormData {
 	@Range(max = 180.0, min = -180.0)
 	public float lng = 11.576132f;
 
-	public boolean displayStreetView = false;
+	public boolean displayStreetView = true;
 	public float streetViewHeading = 78f;
 	public float streetViewPitch = 7f;
 	public float streetViewZoom = 1f;

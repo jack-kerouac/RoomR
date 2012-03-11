@@ -239,7 +239,7 @@ h1 {
 	
 	
 	
-	ul.gendersSelect {
+	ul.inline_buttons {
 		list-style: none;
 		
 		/* the list should appear next to the label, not below it */
@@ -256,7 +256,7 @@ h1 {
 			}
 
 			/* drop the input elements down a little, so that they appear next to the text */
-			input {
+			input[type='checkbox'], input[type='radio'] {
 				position: relative;
 				top: 3px;
 			}
