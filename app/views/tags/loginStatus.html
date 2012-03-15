@@ -3,6 +3,7 @@ com.google.appengine.api.users.UserService userService = com.google.appengine.ap
 %}
 
 #{if _arg != null}
+	#{a @Dashboard.view()}Dashboard#{/a}&nbsp;&nbsp;&nbsp;
 	Logged in as <span class="username">${_arg.getGaeUserEmail()}</span> <a href="${userService.createLogoutURL(request.path)}">(Logout)</a>
 #{/if}
 #{else}
