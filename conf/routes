@@ -29,7 +29,11 @@ GET		/users									Users.viewAll
 
 # applications
 POST	/applications							Applications.apply
+
+# dashboard
+GET		/dashboard								Dashboard.view
 GET		/applications							Applications.view
+
 
 # Catch all
 #*       /{controller}/{action}                  {controller}.{action}

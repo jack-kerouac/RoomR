@@ -1,0 +1,21 @@
+#{extends 'main.html' /}
+#{set title:'Dashboard' /}
+#{set pageId:'dashboard' /}
+
+#{if !myApplications.isEmpty()}
+<div class="my_applications">
+	<h1>Deine Bewerbungen bei anderen WGs</h1>
+	<ul>
+	#{list items:myApplications, as:'application'}
+		<li>#{application application /}</li>
+	#{/list}
+	</ul>
+</div>
+#{/}
+
+#{if myFlatshare != null}
+<div class="flatshare">
+	<h1>Deine WG</h1>
+	<p>${myFlatshare}</p>
+</div>
+#{/}
