@@ -10,6 +10,7 @@ import models.common.FloorSpace;
 import models.ranking.OfferRanker;
 import models.ranking.matching.ScoredRoomOffer;
 import models.request.RoomRequest;
+import play.cache.Cache;
 import play.modules.guice.InjectSupport;
 
 import com.google.common.base.Optional;
@@ -18,6 +19,7 @@ import controllers.formdata.InstantSearchFormData;
 
 @InjectSupport
 public class Search extends AbstractRoomrController {
+	public static final String INSTANT_SEARCH_DATA_CACHE_KEY = "-instantSearchData";
 
 	@Inject
 	private static OfferRanker ranker;
@@ -49,6 +51,8 @@ public class Search extends AbstractRoomrController {
 
 		List<ScoredRoomOffer> offers = ranker.search(rr, Optional.fromNullable(seekerAge),
 				Optional.fromNullable(formData.gender));
+
+		Cache.set(session.getId() + INSTANT_SEARCH_DATA_CACHE_KEY, formData, "30min");
 
 		render(offers);
 	}

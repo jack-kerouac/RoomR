@@ -22,6 +22,9 @@ GET		/offers/{id}							Offers.viewOffer
 GET		/search									Search.searchForm
 GET		/offers									Search.offers
 
+# registration
+GET		/register								Registration.registrationForm
+POST	/users									Registration.register
 
 # users
 GET		/users									Users.viewAll

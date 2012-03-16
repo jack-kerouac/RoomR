@@ -1,0 +1,28 @@
+#{extends 'main.html' /}
+#{set title:'Registrieren' /}
+#{set pageId:'register' /}
+
+<h1>Registrieren</h1>
+
+#{form @Registration.register(), id:'registration_form'}
+	#{field 'formData.age'}
+		<label for="${field.id}">&{'age'}</label>
+		<input id="${field.id}" name="${field.name}" type="number" data-validate="${field.validationData}" value="${field.value}" class="age ${field.errorClass}">
+		<span class="error">${field.error}</span>
+	#{/}
+	
+	#{field 'formData.gender'}
+		<ul class="inline_buttons">
+			<li>
+				<label for="${field.id}_male" class="caption">&{'genders.male'}</label>
+				<input id="${field.id}_male" name="${field.name}" type="radio" value="male" class="${field.errorClass}" ${formData.gender == models.common.Gender.male ? 'checked' : ''}>
+			</li>
+			<li>
+				<label for="${field.id}_female" class="caption">&{'genders.female'}</label>
+				<input id="${field.id}_female" name="${field.name}" type="radio" value="female" class="${field.errorClass}" ${formData.gender == models.common.Gender.female ? 'checked' : ''}>
+			</li>
+		</ul>
+		<span class="error">${field.error}</span>
+	#{/}
+	<button type="submit">Registrieren</button>
+#{/form}

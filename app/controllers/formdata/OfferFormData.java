@@ -1,5 +1,6 @@
 package controllers.formdata;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import models.common.Floor;
@@ -11,7 +12,7 @@ import play.data.validation.Required;
 
 import com.google.common.collect.Sets;
 
-public class OfferFormData {
+public class OfferFormData implements Serializable {
 	public Set<Gender> genders = Sets.newHashSet();
 	public Integer minAge;
 	public Integer maxAge;
@@ -34,7 +35,7 @@ public class OfferFormData {
 	public float streetViewHeading = 78f;
 	public float streetViewPitch = 7f;
 	public float streetViewZoom = 1f;
-	
+
 	public Floor floor = Floor.basement;
 	public SmokingTolerance smokingTolerance = SmokingTolerance.prohibited;
 

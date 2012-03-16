@@ -4,6 +4,8 @@
 genders.male=Mann
 genders.female=Frau
 
+age=Alter
+
 offer.criteria.genders=Geschlecht
 offer.criteria.ageRange=Alter
 offer.criteria.minAge=Mindestalter

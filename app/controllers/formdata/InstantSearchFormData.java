@@ -1,10 +1,10 @@
 package controllers.formdata;
 
-import models.common.Gender;
-import play.data.validation.Required;
+import java.io.Serializable;
 
-public class InstantSearchFormData {
-	@Required
+import models.common.Gender;
+
+public class InstantSearchFormData implements Serializable {
 	public String city;
 
 	public double minRoomSizeSquareMeters;
