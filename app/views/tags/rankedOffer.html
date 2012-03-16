@@ -25,7 +25,10 @@
 	
 	<div class="location">
 		<div class="address">#{address flatshare.address /}</div>
-		<div class="map"></div>
+		<div class="map">
+			<img src="http://maps.googleapis.com/maps/api/staticmap?center=${flatshare?.geoLocation?.latitude},${flatshare?.geoLocation?.longitude}&zoom=15&size=100x100&sensor=false"
+				alt="Das Angebot auf einer Karte" width="100" height="100" />
+		</div>
 	</div>
 	
 	<div class="total_rent">#{money roomDetails.totalRentPerMonth /}</div>
