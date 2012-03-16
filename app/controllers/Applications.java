@@ -7,8 +7,10 @@ import javax.inject.Inject;
 import models.application.RoomOfferApplication;
 import models.application.RoomOfferApplication.State;
 import models.user.RoomrUser;
+import play.modules.guice.InjectSupport;
 import facade.RoomOfferApplicationsFacade;
 
+@InjectSupport
 public class Applications extends AbstractRoomrController {
 
 	@Inject
