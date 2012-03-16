@@ -2,11 +2,19 @@ package controllers;
 
 import java.util.Set;
 
+import javax.inject.Inject;
+
 import models.application.RoomOfferApplication;
+import models.application.RoomOfferApplicationRepository;
 import models.flatshare.Flatshare;
 import models.user.RoomrUser;
+import play.modules.guice.InjectSupport;
 
+@InjectSupport
 public class Dashboard extends AbstractRoomrController {
+
+	@Inject
+	private static RoomOfferApplicationRepository repository;
 
 	public static void view() {
 		RoomrUser currentUser = getCurrentUser();
@@ -15,9 +23,10 @@ public class Dashboard extends AbstractRoomrController {
 
 		Set<RoomOfferApplication> myApplications = currentUser.applications;
 		Flatshare myFlatshare = currentUser.currentFlatshare;
-		// TODO: add all applications for the room offer of the flatshare the user's living in
-		// Set<RoomOfferApplication> flatshareApplications;
-		render(myApplications, myFlatshare);
+		Set<RoomOfferApplication> flatshareApplications = repository
+				.findAllApplicationsFor(currentUser.currentFlatshare.roomOffer);
+
+		render(myApplications, myFlatshare, flatshareApplications);
 	}
 
 }

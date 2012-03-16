@@ -19,3 +19,14 @@
 	<p>${myFlatshare}</p>
 </div>
 #{/}
+
+#{if !flatshareApplications.isEmpty()}
+<div class="my_applications">
+	<h1>Die Bewerbungen für deine WG</h1>
+	<ul>
+	#{list items:flatshareApplications, as:'application'}
+		<li>#{application application /}</li>
+	#{/list}
+	</ul>
+</div>
+#{/}
