@@ -51,12 +51,16 @@ public class DevelopmentModelDataLoader {
 				RoomOffer offer = (RoomOffer) o;
 				// TODO: remove
 				offer.flatshare.geoLocation = new GeoPt(48.1505f, 11.5586f);
+				// TODO: remove
+				offer.flatshare.roomOffer = offer;
+				
 				offerRepository.add(offer);
 			}
 			else if (o instanceof RoomrUser) {
 				RoomrUser user = (RoomrUser) o;
 				// TODO: remove
 				user.gaeUser = new User(user.gaeUserEmail, "gmail.com");
+
 				userRepository.add(user);
 			}
 			else if (o instanceof Flatshare)

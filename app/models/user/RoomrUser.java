@@ -49,9 +49,13 @@ public class RoomrUser {
 		stringHelper.add("gender", gender);
 
 		stringHelper.add("applications", applications);
-		stringHelper.add("currentFlatshare", currentFlatshare);
+		stringHelper.add("currentFlatshare", currentFlatshare.address);
 
 		return stringHelper.toString();
+	}
+
+	public boolean hasFlatshare() {
+		return currentFlatshare != null;
 	}
 
 }

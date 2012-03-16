@@ -22,11 +22,15 @@ public class Dashboard extends AbstractRoomrController {
 			notFound("no user logged in");
 
 		Set<RoomOfferApplication> myApplications = currentUser.applications;
-		Flatshare myFlatshare = currentUser.currentFlatshare;
-		Set<RoomOfferApplication> flatshareApplications = repository
-				.findAllApplicationsFor(currentUser.currentFlatshare.roomOffer);
 
-		render(myApplications, myFlatshare, flatshareApplications);
+		if (currentUser.hasFlatshare()) {
+			Flatshare myFlatshare = currentUser.currentFlatshare;
+			Set<RoomOfferApplication> flatshareApplications = repository
+					.findAllApplicationsFor(currentUser.currentFlatshare.roomOffer);
+			render(myApplications, myFlatshare, flatshareApplications);
+		}
+		else
+			render(myApplications);
 	}
 
 }

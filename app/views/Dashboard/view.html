@@ -13,12 +13,11 @@
 </div>
 #{/}
 
-#{if myFlatshare != null}
+#{if user.hasFlatshare()}
 <div class="flatshare">
 	<h1>Deine WG</h1>
 	<p>${myFlatshare}</p>
 </div>
-#{/}
 
 #{if !flatshareApplications.isEmpty()}
 <div class="my_applications">
@@ -30,3 +29,5 @@
 	</ul>
 </div>
 #{/}
+
+#{/} *{end user.hasFlatshare()}*
