@@ -4,19 +4,19 @@
 
 <form id="search_offers_form">
 	<fieldset id="request">
-		#{field 'rr.city'}
+		#{field 'formData.city'}
 			<input id="${field.id}" name="${field.name}" type="hidden" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
 		#{/}
 		<ul>
 			<li>
-			#{field 'rr.minRoomSize.squareMeters'}
+			#{field 'formData.minRoomSizeSquareMeters'}
 				<label for="${field.id}">Mindestens&nbsp;</label>
 				<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
 				<label for="${field.id}">m² groß</label>
 				<span class="error">${field.error}</span>
 			#{/}
 			und
-			#{field 'rr.maxRentPerMonthInEuro'}
+			#{field 'formData.maxRentPerMonthInEuro'}
 				<label for="${field.id}">maximal&nbsp;</label>
 				<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
 				<label for="${field.id}">€ Miete</label>
@@ -29,13 +29,13 @@
 	<fieldset id="additional_parameters">
 		<ul>
 			<li>
-				#{field 'seekerAge.years'}
-					<label for="${field.id}">&{field.name}</label>
+				#{field 'formData.age'}
+					<label for="${field.id}">&{'seekerAge'}</label>
 					<input id="${field.id}" name="${field.name}" type="number" data-validate="${field.validationData}" value="${field.value}" class="age ${field.errorClass}">
 					<span class="error">${field.error}</span>
 				#{/}
 				
-				#{field 'seekerGender'}
+				#{field 'formData.gender'}
 				<ul class="inline_buttons">
 					<li>
 						<label for="${field.id}_male" class="caption">&{'genders.male'}</label>
