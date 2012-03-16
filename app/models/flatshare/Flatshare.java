@@ -12,6 +12,7 @@ import com.google.code.twig.annotation.Child;
 import com.google.code.twig.annotation.Id;
 import com.google.code.twig.annotation.Independent;
 import com.google.common.base.Objects;
+import com.google.common.collect.Sets;
 
 public class Flatshare {
 
@@ -25,7 +26,7 @@ public class Flatshare {
 	
 	// RESIDENTS
 	@Independent
-	public Set<RoomrUser> residents;
+	public Set<RoomrUser> residents = Sets.newLinkedHashSet();
 
 	// LOCATION
 	public Address address;
