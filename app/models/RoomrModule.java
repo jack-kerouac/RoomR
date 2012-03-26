@@ -1,6 +1,7 @@
 package models;
 
 import models.application.RoomOfferApplicationRepository;
+import models.internal.reposImpl.objectify.ObjectifyRoomrUserRepository;
 import models.internal.reposImpl.twig.TwigRoomOfferApplicationRepository;
 import models.internal.reposImpl.twig.TwigRoomOfferRepository;
 import models.internal.reposImpl.twig.TwigRoomrUserRepository;
@@ -26,7 +27,7 @@ public class RoomrModule extends AbstractModule {
 		// binds the TwigOfferRepository implementation to the interface
 		// OfferRepository
 		bind(RoomOfferRepository.class).to(TwigRoomOfferRepository.class);
-		bind(RoomrUserRepository.class).to(TwigRoomrUserRepository.class);
+		bind(RoomrUserRepository.class).to(ObjectifyRoomrUserRepository.class);
 		bind(RoomOfferApplicationRepository.class).to(TwigRoomOfferApplicationRepository.class);
 
 		bind(OfferRanker.class);
