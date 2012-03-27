@@ -2,6 +2,11 @@ package models.flatshare;
 
 import java.util.Set;
 
+import javax.persistence.Embedded;
+import javax.persistence.Id;
+
+import play.modules.objectify.ObjectifyModel;
+
 import models.common.Address;
 import models.common.Floor;
 import models.offer.RoomOffer;
@@ -9,12 +14,11 @@ import models.user.RoomrUser;
 
 import com.google.appengine.api.datastore.GeoPt;
 import com.google.code.twig.annotation.Child;
-import com.google.code.twig.annotation.Id;
-import com.google.code.twig.annotation.Independent;
 import com.google.common.base.Objects;
 import com.google.common.collect.Sets;
+import com.googlecode.objectify.annotation.NotSaved;
 
-public class Flatshare {
+public class Flatshare extends ObjectifyModel{
 
 	@Id
 	public long id;
@@ -25,20 +29,24 @@ public class Flatshare {
 
 	
 	// RESIDENTS
-	@Independent
+	@NotSaved
 	public Set<RoomrUser> residents = Sets.newLinkedHashSet();
 
 	// LOCATION
+	@NotSaved
 	public Address address;
 
 	public GeoPt geoLocation;
 
+	@Embedded
 	public MapParameters mapParameters;
 	
+	@Embedded
 	public Floor floor;
 
 	
 	// ADDITIONAL ATTRIBUTES
+	@Embedded
 	public SmokingTolerance smokingTolerance;
 	
 	@Override
