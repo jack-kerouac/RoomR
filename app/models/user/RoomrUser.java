@@ -19,6 +19,8 @@ import com.google.common.base.Objects;
 import com.google.common.base.Objects.ToStringHelper;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
+import com.googlecode.objectify.Key;
+import com.googlecode.objectify.annotation.NotSaved;
 
 public class RoomrUser extends ObjectifyModel {
 
@@ -31,8 +33,10 @@ public class RoomrUser extends ObjectifyModel {
 	@Embedded
 	public Gender gender;
 
+	@NotSaved
 	public Set<RoomOfferApplication> applications = new LinkedHashSet<RoomOfferApplication>();
 
+	
 	public boolean appliedFor(final RoomOffer roomOffer) {
 		return Iterables.any(applications, new Predicate<RoomOfferApplication>() {
 			@Override
@@ -42,9 +46,14 @@ public class RoomrUser extends ObjectifyModel {
 		});
 	}
 
-
+	@NotSaved
 	public Flatshare currentFlatshare;
 
+	/**
+	 * TODO make key private, create getter(which loads flatshare on demand from repository? )
+	 */
+	public Key<Flatshare> flatshareKey;
+	
 	@Override
 	public String toString() {
 		ToStringHelper stringHelper = Objects.toStringHelper(this);
