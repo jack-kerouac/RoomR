@@ -19,6 +19,8 @@
 		
 		#{if offer.flatshare.mapParameters.displayStreetView}
 		<div id="street_view_canvas"
+			data-pos-lat="${flatshare.mapParameters.getStreetViewGeoLocation().getLatitude()}"
+			data-pos-lng="${flatshare.mapParameters.getStreetViewGeoLocation().getLongitude()}"
 			data-pov-heading="${flatshare.mapParameters.getStreetViewHeading()}"
 			data-pov-pitch="${flatshare.mapParameters.getStreetViewPitch()}"
 			data-pov-zoom="${flatshare.mapParameters.getStreetViewZoom()}"></div>

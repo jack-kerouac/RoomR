@@ -71,7 +71,7 @@ roomr.maps = (function() {
     	return map;
 	}
 	
-	my.initializeStreetView = function(streetViewCanvas, streetMap, position, pov, panoOptions, povChangeListener) {
+	my.initializeStreetView = function(streetViewCanvas, streetMap, position, pov, panoOptions, positionChangeListener, povChangeListener) {
 		var streetView;
 
     	streetView = new google.maps.StreetViewPanorama(streetViewCanvas.get(0), panoOptions);
@@ -79,10 +79,16 @@ roomr.maps = (function() {
     	streetView.setPov(pov);
     	
     	streetMap.setStreetView(streetView);
-    	google.maps.event.addListener(streetView, 'pov_changed', function() {
-    		if(typeof povChangeListener != 'undefined')
+    	if(typeof positionChangeListener != 'undefined') {
+	    	google.maps.event.addListener(streetView, 'position_changed', function() {
+    			positionChangeListener(streetView.getPosition());
+			});
+    	}
+    	if(typeof povChangeListener != 'undefined') {
+	    	google.maps.event.addListener(streetView, 'pov_changed', function() {
     			povChangeListener(streetView.getPov());
-		});
+			});
+    	}
 		
     	return streetView;
 	}
@@ -251,16 +257,16 @@ roomr.createOffer = (function() {
     	streetViewCanvas = $("#street_view_canvas");
 		displayStreetView = $('#formData_displayStreetView');
 
+		streetViewLat = $('#formData_streetViewLat');
+		streetViewLng = $('#formData_streetViewLng');
 		streetViewHeading = $('#formData_streetViewHeading');
 		streetViewPitch = $('#formData_streetViewPitch');
 		streetViewZoom = $('#formData_streetViewZoom');
     	
+		initialStreetViewPosition = getStreetViewPositionFromForm();
 		initialPov = getPovFromForm();
 		streetViewOptions = {
 			addressControl : false,
-			//addressControlOptions : {
-			//	position : google.maps.ControlPosition.BOTTOM
-			//},
 			linksControl : false,
 			panControl : true,
 			zoomControl : true,
@@ -271,8 +277,7 @@ roomr.createOffer = (function() {
 			visible : true
 		};
 		
-		streetView = roomr.maps.initializeStreetView(streetViewCanvas, streetMap, initialPosition, initialPov, streetViewOptions, setPovInForm);
-
+		streetView = roomr.maps.initializeStreetView(streetViewCanvas, streetMap, initialStreetViewPosition, initialPov, streetViewOptions, setStreetViewPositionInForm, setPovInForm);
 		
 		streetViewDisplayChangeListener = function() {
 			if($('input[value="true"]', displayStreetView).prop('checked')) {
@@ -299,14 +304,23 @@ roomr.createOffer = (function() {
 		prepareAutoCompleteField(city);
 	};
 	
-	function getPovFromForm() {
-		return {
-    		heading: parseFloat(streetViewHeading.val()),
-    		pitch: parseFloat(streetViewPitch.val()),
-    		zoom: parseFloat(streetViewZoom.val())
-		};
+	function getStreetViewPositionFromForm() {
+		return new google.maps.LatLng(parseFloat(streetViewLat.val()), parseFloat(streetViewLng.val()));
+	}
+
+	function setStreetViewPositionInForm(position) {
+		streetViewLat.val(position.lat);
+		streetViewLng.val(position.lng);
 	}
 	
+	function getPovFromForm() {
+		return {
+			heading: parseFloat(streetViewHeading.val()),
+			pitch: parseFloat(streetViewPitch.val()),
+			zoom: parseFloat(streetViewZoom.val())
+		};
+	}
+
 	function setPovInForm(pov) {
 		streetViewHeading.val(pov.heading);
 		streetViewPitch.val(pov.pitch);
@@ -454,12 +468,15 @@ roomr.viewOffer = (function() {
 	    // STREET VIEW
     	streetViewCanvas = $("#street_view_canvas");
     	if(streetViewCanvas.size() != 0) {
+    		var initialStreetViewPosition = new google.maps.LatLng(
+    				parseFloat($("#street_view_canvas").attr('data-pos-lat')),
+    				parseFloat($("#street_view_canvas").attr('data-pos-lng')));
 			pov = {
 				heading : parseFloat($("#street_view_canvas").attr('data-pov-heading')),
 				pitch : parseFloat($("#street_view_canvas").attr('data-pov-pitch')),
 				zoom : parseFloat($("#street_view_canvas").attr('data-pov-zoom'))
-			};		
-			streetView = roomr.maps.initializeStreetView(streetViewCanvas, streetMap, flatshareLocation, pov);
+			};
+			streetView = roomr.maps.initializeStreetView(streetViewCanvas, streetMap, initialStreetViewPosition, pov);
 		}
 	};
 	

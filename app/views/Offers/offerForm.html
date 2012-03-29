@@ -90,6 +90,12 @@
 					</ul>
 					<span class="error">${field.error}</span>
 				#{/}
+				#{field 'formData.streetViewLat'}
+					<input id="${field.id}" name="${field.name}" type="hidden" value="${field.value}">
+				#{/}
+				#{field 'formData.streetViewLng'}
+					<input id="${field.id}" name="${field.name}" type="hidden" value="${field.value}">
+				#{/}
 				#{field 'formData.streetViewHeading'}
 					<input id="${field.id}" name="${field.name}" type="hidden" value="${field.value}">
 				#{/}
