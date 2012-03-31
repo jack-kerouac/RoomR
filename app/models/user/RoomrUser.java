@@ -6,13 +6,13 @@ import java.util.Set;
 import javax.persistence.Embedded;
 import javax.persistence.Id;
 
-import play.modules.objectify.ObjectifyModel;
-
 import models.application.RoomOfferApplication;
 import models.common.Age;
 import models.common.Gender;
 import models.flatshare.Flatshare;
 import models.offer.RoomOffer;
+import play.modules.objectify.Datastore;
+import play.modules.objectify.ObjectifyModel;
 
 import com.google.appengine.api.users.User;
 import com.google.common.base.Objects;
@@ -20,8 +20,10 @@ import com.google.common.base.Objects.ToStringHelper;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.googlecode.objectify.Key;
+import com.googlecode.objectify.annotation.Cached;
 import com.googlecode.objectify.annotation.NotSaved;
 
+@Cached
 public class RoomrUser extends ObjectifyModel {
 
 	@Id	public String gaeUserEmail;
@@ -33,9 +35,17 @@ public class RoomrUser extends ObjectifyModel {
 	@Embedded
 	public Gender gender;
 
+	private Key<Flatshare> flatshareKey;
+
 	@NotSaved
 	public Set<RoomOfferApplication> applications = new LinkedHashSet<RoomOfferApplication>();
-
+	
+	public Flatshare getFlatshare(){
+		if(this.flatshareKey == null){
+			return null;
+		}
+		return Datastore.find(this.flatshareKey, false);
+	}
 	
 	public boolean appliedFor(final RoomOffer roomOffer) {
 		return Iterables.any(applications, new Predicate<RoomOfferApplication>() {
@@ -46,13 +56,9 @@ public class RoomrUser extends ObjectifyModel {
 		});
 	}
 
-	@NotSaved
-	public Flatshare currentFlatshare;
-
-	/**
-	 * TODO make key private, create getter(which loads flatshare on demand from repository? )
-	 */
-	public Key<Flatshare> flatshareKey;
+	public boolean hasFlatshare() {
+		return getFlatshare() != null;
+	}
 	
 	@Override
 	public String toString() {
@@ -63,13 +69,10 @@ public class RoomrUser extends ObjectifyModel {
 		stringHelper.add("gender", gender);
 
 		stringHelper.add("applications", applications);
-		stringHelper.add("currentFlatshare", currentFlatshare.address);
+		if(getFlatshare() != null ){
+			stringHelper.add("currentFlatshare", getFlatshare().address);
+		}
 
 		return stringHelper.toString();
 	}
-
-	public boolean hasFlatshare() {
-		return currentFlatshare != null;
-	}
-
 }

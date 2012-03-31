@@ -24,9 +24,9 @@ public class Dashboard extends AbstractRoomrController {
 		Set<RoomOfferApplication> myApplications = currentUser.applications;
 
 		if (currentUser.hasFlatshare()) {
-			Flatshare myFlatshare = currentUser.currentFlatshare;
+			Flatshare myFlatshare = currentUser.getFlatshare();
 			Set<RoomOfferApplication> flatshareApplications = repository
-					.findAllApplicationsFor(currentUser.currentFlatshare.roomOffer);
+					.findAllApplicationsFor(currentUser.getFlatshare().roomOffer);
 			render(myApplications, myFlatshare, flatshareApplications);
 		}
 		else

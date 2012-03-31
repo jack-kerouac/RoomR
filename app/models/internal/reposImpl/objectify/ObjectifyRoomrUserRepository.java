@@ -33,10 +33,6 @@ public class ObjectifyRoomrUserRepository implements RoomrUserRepository {
 		
 		// add user references
 		// TODO create own repo for flatshare?
-		if(newUser.currentFlatshare != null){
-			Key<Flatshare> flatshareKey = objectifyService.put(newUser.currentFlatshare);
-			newUser.flatshareKey = flatshareKey;
-		}
 		objectifyService.put(newUser);
 	}
 
@@ -46,7 +42,7 @@ public class ObjectifyRoomrUserRepository implements RoomrUserRepository {
 		Query<RoomrUser> q = objectifyService.query(RoomrUser.class);
 		HashSet<RoomrUser> result = new HashSet<RoomrUser>();
 		for (RoomrUser roomrUser: q) {
-			result.add(this.loadUserFields(roomrUser));
+			result.add(roomrUser);
 		}
 		return result;
 	}
@@ -55,23 +51,5 @@ public class ObjectifyRoomrUserRepository implements RoomrUserRepository {
 	public void update(RoomrUser user) {
 		// TODO Auto-generated method stub
 		
-	}
-	
-	/**
-	 * TODO load references in getter methods of entity?
-	 * does the entity then know its origin repository?
-	 * loads all references for this roomr user
-	 * @return the complete RoomrUser
-	 */
-	private RoomrUser loadUserFields(RoomrUser user){
-		Objectify objectifyService = ObjectifyService.begin();
-		if(user.flatshareKey != null){
-			try {
-				user.currentFlatshare = objectifyService.get(user.flatshareKey);
-			} catch (EntityNotFoundException e) {
-				// no flatshare present
-			}
-		}
-		return user;
 	}
 }

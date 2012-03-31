@@ -16,6 +16,7 @@ import com.google.appengine.api.datastore.GeoPt;
 import com.google.code.twig.annotation.Child;
 import com.google.common.base.Objects;
 import com.google.common.collect.Sets;
+import com.googlecode.objectify.annotation.Cached;
 import com.googlecode.objectify.annotation.NotSaved;
 
 public class Flatshare extends ObjectifyModel{
