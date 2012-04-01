@@ -32,7 +32,6 @@ public class RoomrUser extends ObjectifyModel {
 	@Embedded
 	public Age age;
 	
-	@Embedded
 	public Gender gender;
 
 	private Key<Flatshare> flatshareKey;
