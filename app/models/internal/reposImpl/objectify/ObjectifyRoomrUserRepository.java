@@ -30,9 +30,6 @@ public class ObjectifyRoomrUserRepository implements RoomrUserRepository {
 	@Override
 	public void add(RoomrUser newUser) {
 		Objectify objectifyService = ObjectifyService.begin();
-		
-		// add user references
-		// TODO create own repo for flatshare?
 		objectifyService.put(newUser);
 	}
 

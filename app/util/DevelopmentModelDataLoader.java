@@ -4,7 +4,10 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import models.common.Address;
+import models.common.Floor;
 import models.flatshare.Flatshare;
+import models.flatshare.SmokingTolerance;
 import models.offer.RoomOffer;
 import models.offer.RoomOfferRepository;
 import models.user.RoomrUser;
@@ -58,9 +61,15 @@ public class DevelopmentModelDataLoader {
 			}
 			else if (o instanceof RoomrUser) {
 				RoomrUser user = (RoomrUser) o;
-				// TODO: remove
+				// TODO remove
 				user.gaeUser = new User(user.gaeUserEmail, "gmail.com");
-
+				// TODO: use flatshare from config file and set it
+				Flatshare flatshare = new Flatshare();
+				flatshare.address = new Address("Strasse", 12, "232", "Muenchen");
+				flatshare.geoLocation = new GeoPt(48.1505f, 11.5586f);
+				flatshare.floor = Floor.fifth;
+				flatshare.smokingTolerance = SmokingTolerance.allowedInRoom;
+				user.setFlatshare(flatshare);
 				userRepository.add(user);
 			}
 			else if (o instanceof Flatshare)

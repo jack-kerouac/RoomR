@@ -13,6 +13,7 @@ import models.flatshare.Flatshare;
 import models.offer.RoomOffer;
 import play.modules.objectify.Datastore;
 import play.modules.objectify.ObjectifyModel;
+import play.modules.objectify.ObjectifyService;
 
 import com.google.appengine.api.users.User;
 import com.google.common.base.Objects;
@@ -39,12 +40,33 @@ public class RoomrUser extends ObjectifyModel {
 	@NotSaved
 	public Set<RoomOfferApplication> applications = new LinkedHashSet<RoomOfferApplication>();
 	
+	/**
+	 * loads the (cached) flatshare for this user from the datastore
+	 * @return the flatshare for this user
+	 */
 	public Flatshare getFlatshare(){
 		if(this.flatshareKey == null){
 			return null;
 		}
 		return Datastore.find(this.flatshareKey, false);
 	}
+	
+	/**
+	 * Sets the flatshare for this RoomrUser.
+	 * If the flatshare doesn't exist at all, is is created within the datastore.
+	 * @param flatshare the Flatshare which should be set for this user
+	 */
+	public void setFlatshare(Flatshare flatshare){
+		Key<Flatshare> keyOfNewFlatshare;
+		if(flatshare.id == null){
+			// flatshare has to be persisted first to obtain a valid key
+			keyOfNewFlatshare = Datastore.put(flatshare);
+		} else {
+			keyOfNewFlatshare = new Key<Flatshare>(Flatshare.class, flatshare.id);
+		}
+		this.flatshareKey = keyOfNewFlatshare;
+	}
+	
 	
 	public boolean appliedFor(final RoomOffer roomOffer) {
 		return Iterables.any(applications, new Predicate<RoomOfferApplication>() {

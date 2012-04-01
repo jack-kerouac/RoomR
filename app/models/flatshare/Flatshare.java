@@ -13,7 +13,6 @@ import models.offer.RoomOffer;
 import models.user.RoomrUser;
 
 import com.google.appengine.api.datastore.GeoPt;
-import com.google.code.twig.annotation.Child;
 import com.google.common.base.Objects;
 import com.google.common.collect.Sets;
 import com.googlecode.objectify.annotation.Cached;
@@ -22,10 +21,9 @@ import com.googlecode.objectify.annotation.NotSaved;
 public class Flatshare extends ObjectifyModel{
 
 	@Id
-	public long id;
+	public Long id;
 
 	// ROOM OFFERS
-	@Child
 	public RoomOffer roomOffer;
 
 	
@@ -34,7 +32,7 @@ public class Flatshare extends ObjectifyModel{
 	public Set<RoomrUser> residents = Sets.newLinkedHashSet();
 
 	// LOCATION
-	@NotSaved
+	@Embedded
 	public Address address;
 
 	public GeoPt geoLocation;
@@ -42,12 +40,10 @@ public class Flatshare extends ObjectifyModel{
 	@Embedded
 	public MapParameters mapParameters;
 	
-	@Embedded
 	public Floor floor;
 
 	
 	// ADDITIONAL ATTRIBUTES
-	@Embedded
 	public SmokingTolerance smokingTolerance;
 	
 	@Override
