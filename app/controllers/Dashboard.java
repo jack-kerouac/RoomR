@@ -21,7 +21,7 @@ public class Dashboard extends AbstractRoomrController {
 		if (currentUser == null)
 			notFound("no user logged in");
 
-		Set<RoomOfferApplication> myApplications = currentUser.applications;
+		Set<RoomOfferApplication> myApplications = currentUser.getApplications();
 
 		if (currentUser.hasFlatshare()) {
 			Flatshare myFlatshare = currentUser.getFlatshare();

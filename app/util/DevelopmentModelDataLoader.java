@@ -4,6 +4,9 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import models.application.RoomOfferApplication;
+import models.application.RoomOfferApplication.State;
+import models.application.RoomOfferApplicationRepository;
 import models.common.Address;
 import models.common.Floor;
 import models.flatshare.Flatshare;
@@ -16,7 +19,9 @@ import play.modules.guice.InjectSupport;
 import play.test.Fixtures;
 
 import com.google.appengine.api.datastore.GeoPt;
+import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.users.User;
+import com.googlecode.objectify.Key;
 
 @InjectSupport
 public class DevelopmentModelDataLoader {
@@ -27,6 +32,9 @@ public class DevelopmentModelDataLoader {
 	@Inject
 	private static RoomrUserRepository userRepository;
 
+	@Inject
+	private static RoomOfferApplicationRepository roomOfferApplicationRepository;
+	
 	/**
 	 * Loads all model entities in dev-models.yml if in dev mode. This method ensures that the model
 	 * is loaded only once (even after application restarts).
@@ -70,7 +78,16 @@ public class DevelopmentModelDataLoader {
 				flatshare.floor = Floor.fifth;
 				flatshare.smokingTolerance = SmokingTolerance.allowedInRoom;
 				user.setFlatshare(flatshare);
+				
 				userRepository.add(user);
+				
+				// TODO get applications from config file
+				RoomOfferApplication application = new RoomOfferApplication();
+				application.currentState = State.WAITING_FOR_INVITATION;
+				application.applicantKey = new Key<RoomrUser>(RoomrUser.class,user.gaeUserEmail); 
+				application.message ="Hope I get the flat!";
+				roomOfferApplicationRepository.add(application);
+				
 			}
 			else if (o instanceof Flatshare)
 				throw new UnsupportedOperationException(

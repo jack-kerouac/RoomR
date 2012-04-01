@@ -30,7 +30,7 @@ public class Applications extends AbstractRoomrController {
 		if (currentUser == null)
 			notFound("no user logged in");
 
-		Set<RoomOfferApplication> applications = currentUser.applications;
+		Set<RoomOfferApplication> applications = currentUser.getApplications();
 		render(applications);
 	}
 
