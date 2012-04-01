@@ -4,14 +4,19 @@ import javax.persistence.Id;
 
 import play.modules.objectify.Datastore;
 import play.modules.objectify.ObjectifyModel;
+import play.modules.objectify.ObjectifyService;
 import models.flatshare.Flatshare;
 import models.offer.RoomOffer;
 import models.user.RoomrUser;
 
+import com.google.appengine.api.datastore.EntityNotFoundException;
+import com.google.appengine.api.datastore.KeyFactory;
 import com.google.common.base.Objects;
 import com.googlecode.objectify.Key;
+import com.googlecode.objectify.annotation.Cached;
 import com.googlecode.objectify.annotation.NotSaved;
 
+@Cached
 public class RoomOfferApplication extends ObjectifyModel {
 
 	@Id
@@ -26,37 +31,38 @@ public class RoomOfferApplication extends ObjectifyModel {
 	public State currentState;
 
 	public String message;
-
-	public Key<RoomrUser> applicantKey;
+	
+	private Key<RoomrUser> applicantKey;
 
 	@NotSaved
 	public Key<RoomOffer> roomOfferKey;
 
 	
 	/**
-	 * loads the (cached) applicant for this user from the datastore
-	 * 
-	 * @return the applicant for this application
+	 * sets the given roomr user as applicant
+	 * @param applicant the applicant for this room offer
 	 */
-	public RoomrUser getApplicant() {
-		if (this.applicantKey == null) {
-			return null;
-		}
-		return Datastore.find(this.applicantKey, false);
+	public void setApplicant(RoomrUser applicant){
+		this.applicantKey = new Key<RoomrUser>(RoomrUser.class, applicant.gaeUserEmail);
 	}
-
-
+	
 	/**
 	 * loads the (cached) applicant for this user from the datastore
 	 * 
 	 * @return the applicant for this application
 	 */
-//	public Rooom getApplicant() {
-//		if (this.applicantKey == null) {
-//			return null;
-//		}
-//		return Datastore.find(this.applicantKey, false);
-//	}
+	public RoomrUser getApplicant(){
+		try {
+			return ObjectifyService.begin().get(this.applicantKey);
+		} catch (EntityNotFoundException e) {
+			return null;
+		}
+	}
+
+
+	public RoomOffer getRoomOffer() {
+		return Datastore.find(this.roomOfferKey, false);
+	}
 
 	
 	
@@ -66,7 +72,7 @@ public class RoomOfferApplication extends ObjectifyModel {
 		String applicant = getApplicant() != null ? getApplicant().gaeUserEmail : "none"; 
 		// TODO fetch room offer using the key
 		String roomOffer = "dummyRoomOffer";
-		return Objects.toStringHelper(this).add("applicant", applicant).add("roomOffer", "dummyRoomOffer")
+		return Objects.toStringHelper(this).add("id",id).add("applicant", applicant).add("roomOffer", "dummyRoomOffer")
 				.add("currentState", currentState).add("message", message).toString();
 	}
 

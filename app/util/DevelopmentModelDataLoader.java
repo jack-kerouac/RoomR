@@ -84,7 +84,7 @@ public class DevelopmentModelDataLoader {
 				// TODO get applications from config file
 				RoomOfferApplication application = new RoomOfferApplication();
 				application.currentState = State.WAITING_FOR_INVITATION;
-				application.applicantKey = new Key<RoomrUser>(RoomrUser.class,user.gaeUserEmail); 
+				application.setApplicant(user);
 				application.message ="Hope I get the flat!";
 				roomOfferApplicationRepository.add(application);
 				

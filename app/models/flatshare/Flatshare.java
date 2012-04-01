@@ -18,6 +18,7 @@ import com.google.common.collect.Sets;
 import com.googlecode.objectify.annotation.Cached;
 import com.googlecode.objectify.annotation.NotSaved;
 
+@Cached
 public class Flatshare extends ObjectifyModel{
 
 	@Id

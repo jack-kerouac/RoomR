@@ -6,6 +6,7 @@ import java.util.Set;
 import models.flatshare.Flatshare;
 import models.user.RoomrUser;
 import models.user.RoomrUserRepository;
+import play.modules.objectify.Datastore;
 import play.modules.objectify.ObjectifyService;
 
 import com.google.appengine.api.datastore.EntityNotFoundException;
@@ -29,8 +30,7 @@ public class ObjectifyRoomrUserRepository implements RoomrUserRepository {
 
 	@Override
 	public void add(RoomrUser newUser) {
-		Objectify objectifyService = ObjectifyService.begin();
-		objectifyService.put(newUser);
+		Key<RoomrUser> key = Datastore.put(newUser);
 	}
 
 	@Override

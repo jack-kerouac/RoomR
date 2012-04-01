@@ -85,7 +85,6 @@ public class RoomrUser extends ObjectifyModel {
 		for(RoomOfferApplication roomOfferApplication : query ){
 			result.add(roomOfferApplication);
 		}
-		
 		return result;
 	}
 	
@@ -95,7 +94,9 @@ public class RoomrUser extends ObjectifyModel {
 		return Iterables.any(getApplications(), new Predicate<RoomOfferApplication>() {
 			@Override
 			public boolean apply(RoomOfferApplication application) {
-				return application.roomOffer.equals(roomOffer);
+				// TODO use getter
+				return false;
+//				return application.roomOffer.equals(roomOffer);
 			}
 		});
 	}
