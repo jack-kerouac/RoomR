@@ -40,7 +40,7 @@ public class RoomrUser extends ObjectifyModel {
 	public Gender gender;
 
 	private Key<Flatshare> flatshareKey;
-
+	
 	/**
 	 * loads the (cached) flatshare for this user from the datastore
 	 * 
@@ -54,8 +54,8 @@ public class RoomrUser extends ObjectifyModel {
 	}
 
 	/**
-	 * Sets the flatshare for this RoomrUser. If the flatshare doesn't exist at
-	 * all, is is created within the datastore.
+	 * Sets the flatshare for this RoomrUser. If the flatshare hasn't been persisted yet,
+	 * this will be done first to obtain a valid key.
 	 * 
 	 * @param flatshare
 	 *            the Flatshare which should be set for this user

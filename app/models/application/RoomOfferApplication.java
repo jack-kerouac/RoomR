@@ -22,32 +22,19 @@ public class RoomOfferApplication extends ObjectifyModel {
 	@Id
 	Long id;
 	
-	
 	public static enum State {
 		// TODO: define useful states
 		WAITING_FOR_INVITATION;
 	}
 
 	public State currentState;
-
 	public String message;
-	
 	private Key<RoomrUser> applicantKey;
-
-	@NotSaved
 	public Key<RoomOffer> roomOfferKey;
-
+	
 	
 	/**
-	 * sets the given roomr user as applicant
-	 * @param applicant the applicant for this room offer
-	 */
-	public void setApplicant(RoomrUser applicant){
-		this.applicantKey = new Key<RoomrUser>(RoomrUser.class, applicant.gaeUserEmail);
-	}
-	
-	/**
-	 * loads the (cached) applicant for this user from the datastore
+	 * loads the (cached) applicant for this application from the datastore
 	 * 
 	 * @return the applicant for this application
 	 */
@@ -60,20 +47,53 @@ public class RoomOfferApplication extends ObjectifyModel {
 	}
 
 
-	public RoomOffer getRoomOffer() {
-		return Datastore.find(this.roomOfferKey, false);
+	/**
+	 * sets the given roomr user as applicant
+	 * @param applicant the applicant for this room offer
+	 */
+	public void setApplicant(RoomrUser applicant){
+		this.applicantKey = new Key<RoomrUser>(RoomrUser.class, applicant.gaeUserEmail);
+	}
+	
+	
+	/**
+	 * sets the room offer for this application
+	 * @param applicant the applicant for this room offer
+	 */
+	public void setRoomOffer(RoomOffer roomOffer){
+		Key<RoomOffer> keyOfNewRoomOffer;
+		if (roomOffer.id == null) {
+			// roomOffer has to be persisted first to obtain a valid key
+			keyOfNewRoomOffer = Datastore.put(roomOffer);
+		} else {
+			keyOfNewRoomOffer = new Key<RoomOffer>(RoomOffer.class, roomOffer.id);
+		}
+		this.roomOfferKey = keyOfNewRoomOffer;
 	}
 
 	
+	/**
+	 * loads the (cached) room offer for this application from the datastore
+	 * 
+	 * @return the applicant for this application
+	 */
+	public RoomOffer getRoomOffer(){
+		if(this.roomOfferKey == null){
+			return null;
+		}
+		try {
+			return ObjectifyService.begin().get(this.roomOfferKey);
+		} catch (EntityNotFoundException e) {
+			return null;
+		}
+	}
 	
 	
 	@Override
 	public String toString() {
 		String applicant = getApplicant() != null ? getApplicant().gaeUserEmail : "none"; 
-		// TODO fetch room offer using the key
-		String roomOffer = "dummyRoomOffer";
-		return Objects.toStringHelper(this).add("id",id).add("applicant", applicant).add("roomOffer", "dummyRoomOffer")
+		String roomOffer = getRoomOffer() != null ? getRoomOffer().toString() : "none";
+		return Objects.toStringHelper(this).add("id",id).add("applicant", applicant).add("roomOffer", roomOffer)
 				.add("currentState", currentState).add("message", message).toString();
 	}
-
 }

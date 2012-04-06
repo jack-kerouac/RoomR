@@ -23,10 +23,6 @@ public class Flatshare extends ObjectifyModel{
 
 	@Id
 	public Long id;
-
-	// ROOM OFFERS
-	public RoomOffer roomOffer;
-
 	
 	// RESIDENTS
 	@NotSaved

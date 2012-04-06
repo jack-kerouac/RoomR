@@ -59,9 +59,9 @@ public class SnakeYamlDevelopmentModelDataLoader {
 			if (o instanceof RoomOffer) {
 				RoomOffer offer = (RoomOffer) o;
 				// TODO: remove
-				offer.flatshare.geoLocation = new GeoPt(48.1505f, 11.5586f);
+//				offer.flatshare.geoLocation = new GeoPt(48.1505f, 11.5586f);
 				// TODO: remove
-				offer.flatshare.roomOffer = offer;
+//				offer.flatshare.roomOffer = offer;
 				
 				offerRepository.add(offer);
 			}

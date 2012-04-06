@@ -28,9 +28,8 @@ public class RoomOfferApplicationsFacade {
 		application.currentState = State.WAITING_FOR_INVITATION;
 		application.message = message;
 		application.setApplicant(applicant);
+		application.setRoomOffer(offer);
 		roomOfferApplicationRepository.add(application);
-		//TODO set room offer
-		
 		return application;
 	}
 }

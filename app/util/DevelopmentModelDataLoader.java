@@ -13,6 +13,7 @@ import models.flatshare.Flatshare;
 import models.flatshare.SmokingTolerance;
 import models.offer.RoomOffer;
 import models.offer.RoomOfferRepository;
+import models.offer.SeekerCriteria;
 import models.user.RoomrUser;
 import models.user.RoomrUserRepository;
 import play.modules.guice.InjectSupport;
@@ -60,11 +61,7 @@ public class DevelopmentModelDataLoader {
 		for (Object o : idCache.values()) {
 			if (o instanceof RoomOffer) {
 				RoomOffer offer = (RoomOffer) o;
-				// TODO: remove
-				offer.flatshare.geoLocation = new GeoPt(48.1505f, 11.5586f);
-				// TODO: remove
-				offer.flatshare.roomOffer = offer;
-				
+
 				offerRepository.add(offer);
 			}
 			else if (o instanceof RoomrUser) {
@@ -86,8 +83,10 @@ public class DevelopmentModelDataLoader {
 				application.currentState = State.WAITING_FOR_INVITATION;
 				application.setApplicant(user);
 				application.message ="Hope I get the flat!";
+				RoomOffer offer = new RoomOffer();
+				offer.setFlatshare(flatshare);
+				application.setRoomOffer(offer);
 				roomOfferApplicationRepository.add(application);
-				
 			}
 			else if (o instanceof Flatshare)
 				throw new UnsupportedOperationException(
