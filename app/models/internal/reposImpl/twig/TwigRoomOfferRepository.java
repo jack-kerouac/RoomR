@@ -42,5 +42,10 @@ public class TwigRoomOfferRepository implements RoomOfferRepository {
 	public RoomOffer find(long id) {
 		return datastoreProvider.get().load(RoomOffer.class, id);
 	}
+	
+	@Override
+	public void remove(RoomOffer offer) {
+		datastoreProvider.get().delete(offer);
+	}
 
 }

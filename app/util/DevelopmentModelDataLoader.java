@@ -1,20 +1,34 @@
 package util;
 
-import java.util.Map;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.List;
 
 import javax.inject.Inject;
 
+import models.application.RoomOfferApplication;
+import models.application.RoomOfferApplicationRepository;
 import models.flatshare.Flatshare;
 import models.offer.RoomOffer;
 import models.offer.RoomOfferRepository;
 import models.user.RoomrUser;
 import models.user.RoomrUserRepository;
+
+import org.yaml.snakeyaml.TypeDescription;
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
+
 import play.modules.guice.InjectSupport;
-import play.test.Fixtures;
 
-import com.google.appengine.api.datastore.GeoPt;
-import com.google.appengine.api.users.User;
-
+/**
+ * Loads dev models from specified YAML file using SnakeYAML and uses
+ * {@link RoomOfferRepository}, {@link RoomrUserRepository}, and
+ * {@link RoomOfferApplicationRepository} to store loaded objects into
+ * datastore.
+ * 
+ * @author "Florian Rampp (Florian.Rampp@web.de)"
+ */
 @InjectSupport
 public class DevelopmentModelDataLoader {
 
@@ -24,48 +38,37 @@ public class DevelopmentModelDataLoader {
 	@Inject
 	private static RoomrUserRepository userRepository;
 
-	/**
-	 * Loads all model entities in dev-models.yml if in dev mode. This method ensures that the model
-	 * is loaded only once (even after application restarts).
-	 */
-	public static void ensureLoaded() {
-		// TODO: check for DEV mode again, currently I want the data to be
-		// present in Appengine as well
-		// if (Play.mode == Mode.DEV && !fixturesLoaded()) {
-		if (!fixturesLoaded()) {
-			loadFixtures();
+	@Inject
+	private static RoomOfferApplicationRepository applicationRepository;
+
+	public static void loadFixtures(File file) {
+		Constructor constructor = new Constructor();
+		constructor.addTypeDescription(new TypeDescription(RoomrUser.class, "!user"));
+		constructor.addTypeDescription(new TypeDescription(Flatshare.class, "!flatshare"));
+		constructor.addTypeDescription(new TypeDescription(RoomOffer.class, "!offer"));
+		constructor.addTypeDescription(new TypeDescription(RoomOfferApplication.class, "!application"));
+		Yaml yaml = new Yaml(constructor);
+
+		List<Object> all;
+		try {
+			all = (List<Object>) yaml.load(new FileReader(file));
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
 		}
-	}
 
-	private static boolean fixturesLoaded() {
-		return Fixtures.idCache.size() > 0 || offerRepository.findAll().size() > 0;
-	}
-
-
-	private static void loadFixtures() {
-		Fixtures.loadModels("dev-models.yml");
-		Map<String, Object> idCache = Fixtures.idCache;
-
-		for (Object o : idCache.values()) {
-			if (o instanceof RoomOffer) {
-				RoomOffer offer = (RoomOffer) o;
-				// TODO: remove
-				offer.flatshare.geoLocation = new GeoPt(48.1505f, 11.5586f);
-				// TODO: remove
-				offer.flatshare.roomOffer = offer;
-				
-				offerRepository.add(offer);
-			}
-			else if (o instanceof RoomrUser) {
-				RoomrUser user = (RoomrUser) o;
-				// TODO: remove
-				user.gaeUser = new User(user.gaeUserEmail, "gmail.com");
-
-				userRepository.add(user);
-			}
-			else if (o instanceof Flatshare)
-				throw new UnsupportedOperationException(
-						"flatshares are persisted through 'cascade' with room offers or users");
+		for (Object o : all) {
+			if (o instanceof RoomrUser)
+				userRepository.add((RoomrUser) o);
+			else if (o instanceof RoomOffer)
+				offerRepository.add((RoomOffer) o);
+			else if (o instanceof RoomOfferApplication)
+				applicationRepository.add((RoomOfferApplication) o);
 		}
+
 	}
+
+	public static void main(String[] args) {
+		loadFixtures(new File("conf/dev-models/dev-models.yml"));
+	}
+
 }

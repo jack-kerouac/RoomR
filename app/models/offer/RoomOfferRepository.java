@@ -10,4 +10,6 @@ public interface RoomOfferRepository {
 
 	public RoomOffer find(long id);
 
+	public void remove(RoomOffer offer);
+
 }

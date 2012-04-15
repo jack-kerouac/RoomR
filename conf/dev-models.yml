@@ -1,16 +1,4 @@
-# Make sure to give each entity an id (via the "(<id>)" suffix), otherwise
-# it won't get imported!
-# For each entity type to get imported correctly, you have to adapt
-# DevelopmentModelDataLoader.
-
-# 1. the class needs to be specified from the models package on. (class: models.flatshare.Flatshare => key here: flatshare.Flatshare)
-# 2. every object that gets an ID in parentheses '()' (and only these objects!), appears in the resulting idCache map of Fixtures.
-# 3. if you want to reference objects, the Play! documentation says, that you can just use the ID of one object as property of another attribute (see http://www.playframework.org/documentation/1.2.4/yaml)
-#    But this does not work! Probably, it just works if you use JPA, your model class extend play.db.jpa.Model and you use JPA relationship annotations (@OneTo...).
-# 4. Thus, you can use the SnakeYaml syntax for aliasing and referencing objects: http://code.google.com/p/snakeyaml/wiki/Documentation#Aliases
-#    Use <CLASSPATH>(<Fixture-ID>): &<ALIAS> to create an alias and dereference it using *<ALIAS>. See below for examples 
-
-flatshare.Flatshare: &stuntzstr
+- !flatshare &stuntzstr
   id: 1
   address:
     street: Stuntzstraße
@@ -19,11 +7,11 @@ flatshare.Flatshare: &stuntzstr
     city: Munich
   mapParameters:
     displayStreetView: false
-  geoLocation: !!com.google.appengine.api.datastore.GeoPt [30.0, 30.0]
+  geoLocation: !!com.google.appengine.api.datastore.GeoPt [48.141836, 11.620228]
   floor: basement
   smokingTolerance: prohibited
 
-flatshare.Flatshare: &knoebelstr
+- !flatshare &knoebelstr
   id: 2
   address:
     street: Knöbelstraße
@@ -32,11 +20,11 @@ flatshare.Flatshare: &knoebelstr
     city: Munich
   mapParameters:
     displayStreetView: false
-  geoLocation: !!com.google.appengine.api.datastore.GeoPt [30.0, 30.0]
+  geoLocation: !!com.google.appengine.api.datastore.GeoPt [48.137053,11.584969]
   floor: first
   smokingTolerance: allowedInRoom
 
-flatshare.Flatshare: &fraunhoferstr
+- !flatshare &fraunhoferstr
   id: 3
   address:
     street: Fraunhoferstraße
@@ -45,11 +33,11 @@ flatshare.Flatshare: &fraunhoferstr
     city: Munich
   mapParameters:
     displayStreetView: false
-  geoLocation: !!com.google.appengine.api.datastore.GeoPt [30.0, 30.0]
+  geoLocation: !!com.google.appengine.api.datastore.GeoPt [48.128956,11.575011]
   floor: third
   smokingTolerance: allowedInFlat
 
-flatshare.Flatshare: &deisenhofenerstr
+- !flatshare &deisenhofenerstr
   id: 4
   address:
     street: Deisenhofenerstraße
@@ -58,82 +46,76 @@ flatshare.Flatshare: &deisenhofenerstr
     city: Munich
   mapParameters:
     displayStreetView: false
-  geoLocation: !!com.google.appengine.api.datastore.GeoPt [30.0, 30.0]
+  geoLocation: !!com.google.appengine.api.datastore.GeoPt [48.114648,11.580758]
   floor: forth
   smokingTolerance: prohibited
 
 
-
-
-offer.RoomOffer(1):
+- !offer
   id: 1
   flatshare: *stuntzstr
   roomDetails:
     totalRentPerMonthInEuro: 350.0
-    roomSize.squareMeters: 15.0
+    roomSize: 15.0
   criteria:
-    minAge.years: 10
-    maxAge.years: 20
+    minAge: 10
+    maxAge: 20
     genders: [male,female]
     
-    
-offer.RoomOffer(2):
+- !offer
   id: 2
   flatshare: *knoebelstr
   roomDetails:
     totalRentPerMonthInEuro: 500.0
-    roomSize.squareMeters: 30.0
+    roomSize: 30.0
   criteria:
-    minAge.years: 15
-    maxAge.years: 25
-    genders: male
-    
-    
-offer.RoomOffer(3):
+    minAge: 15
+    maxAge: 25
+    genders: [male]
+
+- !offer
   id: 3
   flatshare: *fraunhoferstr
   roomDetails:
     totalRentPerMonthInEuro: 400.0
-    roomSize.squareMeters: 25.0
+    roomSize: 25.0
   criteria:
-    minAge.years: 20
-    maxAge.years: 30
-    genders: female
+    minAge: 20
+    maxAge: 30
+    genders: [female]
     
-    
-offer.RoomOffer(4):
+- !offer
   id: 4
   flatshare: *deisenhofenerstr
   roomDetails:
     totalRentPerMonthInEuro: 250.0
-    roomSize.squareMeters: 12.0
+    roomSize: 12.0
   criteria:
-    minAge.years: 20
-    maxAge.years: 80
-    genders: [female,male]
-
-
-
-user.RoomrUser(seeker1):
+    minAge: 20
+    maxAge: 80
+    genders: [male,female]
+    
+    
+    
+- !user
   gaeUserEmail: seeker@gmail.com
   gaeUser: !!com.google.appengine.api.users.User [seeker@gmail.com, gmail.com]
-  age.years: 25
+  age: 25
   gender: female
   applications: []
 
-user.RoomrUser(resident1):
+- !user
   gaeUserEmail: resident@gmail.com
   gaeUser: !!com.google.appengine.api.users.User [resident@gmail.com, gmail.com]
-  age.years: 26
+  age: 26
   gender: male
   applications: []
   currentFlatshare: *knoebelstr
-    
-user.RoomrUser(florian):
+
+- !user
   gaeUserEmail: Florian.Rampp@googlemail.com
   gaeUser: !!com.google.appengine.api.users.User [Florian.Rampp@googlemail.com, gmail.com]
-  age.years: 28
+  age: 28
   gender: male
   applications: []
   currentFlatshare: *knoebelstr
-   
