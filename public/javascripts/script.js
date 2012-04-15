@@ -458,7 +458,7 @@ roomr.viewOffer = (function() {
 		flatshareLocation = new google.maps.LatLng($("#map_canvas").attr('data-center-lat'), $("#map_canvas").attr('data-center-lng'));
 		
 		// STREET MAP
-		streetMap = roomr.maps.initializeMap($("#map_canvas"), flatshareLocation, 8);
+		streetMap = roomr.maps.initializeMap($("#map_canvas"), flatshareLocation, 13);
 
 	    addressMarker = new google.maps.Marker({
 	        map: streetMap
