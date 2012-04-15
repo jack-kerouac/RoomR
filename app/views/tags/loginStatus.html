@@ -7,5 +7,6 @@ com.google.appengine.api.users.UserService userService = com.google.appengine.ap
 	Logged in as <span class="username">${_arg.getGaeUserEmail()}</span> <a href="${userService.createLogoutURL(request.path)}">(Logout)</a>
 #{/if}
 #{else}
-	<a href="${userService.createLoginURL(request.path)}">Login</</a>
+	<a href="${userService.createLoginURL(request.path)}">Login</a> oder #{a @Registration.registrationForm()}Registrieren#{/a}
+	
 #{/else}
