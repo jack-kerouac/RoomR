@@ -19,7 +19,11 @@
     zipCode: 80538
     city: Munich
   mapParameters:
-    displayStreetView: false
+    displayStreetView: true
+    streetViewGeoLocation: !!com.google.appengine.api.datastore.GeoPt [48.137053,11.584969]
+    streetViewHeading: 70.0
+    streetViewPitch: 20.0
+    streetViewZoom: 1.1    
   geoLocation: !!com.google.appengine.api.datastore.GeoPt [48.137053,11.584969]
   floor: first
   smokingTolerance: allowedInRoom
