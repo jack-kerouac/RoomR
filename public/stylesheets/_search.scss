@@ -21,19 +21,15 @@
 #search_offers_form {
 	margin-left: 52px;
 
-	#request_city {
-		width: 140px;
-	}
-	
-	#rr_minRoomSize_squareMeters {
+	#formData_minRoomSizeSquareMeters {
 		width: 25px;
 	}
 	
-	#rr_maxRentPerMonthInEuro {
+	#formData_maxRentPerMonthInEuro {
 		width: 25px;
 	}
 	
-	.gendersSelect {
+	#genders_select {
 		margin-left: 50px;
 	}
 }
