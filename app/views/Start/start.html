@@ -3,12 +3,45 @@
 #{set pageId:'main_page' /}
 
 <div id="seeker_panel">
+    <div id="search_box">
+    	<form action="/search">
+    		<fieldset>
+    		<input type="hidden" name="city" value="München">
+    		<ul>
+    			<li>
+		    		<label for="max_rent">Max (€)</label>
+					<input id="max_rent" name="max_rent">
+				</li>
+				<li>
+		    		<label for="age">Age</label>
+					<input id="age" name="age">
+				</li>
+				<li>
+					<ul id="genders_select" class="inline_buttons">
+						<li>
+							<label for="gender_male" class="caption">&{'genders.male'}</label>
+							<input id="gender_male" name="gender" type="radio" value="male">
+						</li>
+						<li>
+							<label for="gender_female" class="caption">&{'genders.female'}</label>
+							<input id="gender_female" name="gender" type="radio" value="female">
+						</li>
+					</ul>
+				</li>
+				<li>
+					<button>Suche</button>
+				</li>
+			</ul>
+			</fieldset>
+    	</form>
+    </div>
+    
     <p>#{a @Search.searchForm('München')}Du suchst ein WG-Zimmer in München?#{/a}</p>
 </div>
 <div id="offerer_panel">
     <p>#{a @Offers.offerForm()}Du willst einen neuen Mitbewohner finden?#{/a}</p>
 </div>
-<div style="margin-top: 100px;">
+<div style="margin-top: 300px;">
 	<p>#{a @Offers.viewAll()}Display all offers#{/a}</p>
 	<p>#{a @Users.viewAll()}Display all users#{/a}</p>
 </div>
