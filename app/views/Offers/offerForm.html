@@ -152,6 +152,18 @@
 				<span class="error">${field.error}</span>
 			#{/}		
 			</li>
+			<li>
+			#{field 'formData.freeFrom'}
+				<label for="${field.id}" class="caption">&{'offer.roomDetails.freeFrom'}</label>
+				<input id="${field.id}" name="${field.name}" type="date" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
+				<span class="error">${field.error}</span>
+			#{/}	
+			#{field 'formData.freeTo'}
+				<label for="${field.id}" class="caption">&{'offer.roomDetails.freeTo'}</label>
+				<input id="${field.id}" name="${field.name}" type="date" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
+				<span class="error">${field.error}</span>
+			#{/}		
+			</li>
 		</ul>
 	</fieldset>
 	<button type="submit">Anzeige einstellen!</button>

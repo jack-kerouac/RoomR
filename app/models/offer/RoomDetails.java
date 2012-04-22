@@ -1,5 +1,7 @@
 package models.offer;
 
+import java.util.Date;
+
 import models.common.FloorSpace;
 
 import org.joda.money.CurrencyUnit;
@@ -12,9 +14,12 @@ import com.google.common.base.Preconditions;
 public final class RoomDetails {
 
 	public final static CurrencyUnit DEFAULT_CURRENCY = CurrencyUnit.EUR;
-	
+
 	public double totalRentPerMonthInEuro;
-	
+
+	public Date freeFrom;
+	public Date freeTo;
+
 	public FloorSpace roomSize;
 
 	public RoomDetails() {}
@@ -30,9 +35,20 @@ public final class RoomDetails {
 		return Money.of(DEFAULT_CURRENCY, totalRentPerMonthInEuro);
 	}
 
+//	public DateTime getFreeFrom() {
+//		return new DateTime(freeFrom);
+//	}
+//
+//	public Optional<DateTime> getFreeTo() {
+//		if (freeTo == null)
+//			return Optional.absent();
+//		else
+//			return Optional.of(new DateTime(freeTo));
+//	}
+
 	@Override
 	public String toString() {
 		return Objects.toStringHelper(this).add("rent", getTotalRentPerMonth()).add("room size", roomSize).toString();
 	}
-	
+
 }

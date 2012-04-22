@@ -50,6 +50,10 @@ public class Offers extends AbstractRoomrController {
 			validation.addError("formData.maxAge", "offerFormData.maxAge.error.smallerThanMinAge");
 		}
 
+		if (formData.freeTo != null & formData.freeFrom.after(formData.freeTo)) {
+			validation.addError("formData.freeTo", "offerFormData.freeTo.error.beforeFreeFrom");
+		}
+		
 		if (validation.hasErrors()) {
 			// params.flash(); // add http parameters to the flash scope
 			validation.keep(); // keep the errors for the next request
@@ -79,7 +83,9 @@ public class Offers extends AbstractRoomrController {
 		offer.roomDetails = new RoomDetails();
 		offer.roomDetails.roomSize = new FloorSpace(formData.squareMeters);
 		offer.roomDetails.totalRentPerMonthInEuro = formData.totalRentPerMonthInEuro;
-
+		offer.roomDetails.freeFrom = formData.freeFrom;
+		offer.roomDetails.freeTo = formData.freeTo;
+		
 		offerRepository.add(offer);
 
 		viewOffer(offer.id);

@@ -1,6 +1,7 @@
 package controllers.formdata;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Set;
 
 import models.common.Floor;
@@ -45,4 +46,8 @@ public class OfferFormData implements Serializable {
 
 	public double totalRentPerMonthInEuro;
 	public double squareMeters;
+	
+	@Required
+	public Date freeFrom;
+	public Date freeTo;
 }

@@ -44,7 +44,14 @@
 		<h2>der Preis</h2>
 		<p>
 			&{'offer.roomDetails.totalRentPerMonthInEuro'}:&nbsp;#{money roomDetails.totalRentPerMonth /}
-		</p>Heading
+		</p>
+	</div>
+	
+	<div class="free_dates">
+		<h2>Der Zeitraum</h2>
+		<p>
+			Zeitraum: ${roomDetails.freeFrom.format('d. MMMM yyyy', 'de')}&nbsp;bis&nbsp;${roomDetails.freeTo.format('d. MMMM yyyy', 'de')}
+		</p>
 	</div>
 	
 	<div class="details">
