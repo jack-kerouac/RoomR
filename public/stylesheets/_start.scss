@@ -1,29 +1,97 @@
 #main_page {
 
-$column-width: $content-width / 2;
+$left-panel-width: 600px;
 
-$column-padding: 10px;
+$column-padding: 25px;
 
 
 #seeker_panel, #offerer_panel {
-	width: $column-width - 2 * $column-padding;
-	padding: $column-padding;
+	padding: 20px $column-padding;
 	
 	text-align: center;
 }
 
-
-
 #seeker_panel {
-	float: left;
-	
-	#search_box {
-		witdh: 300px;
-	}
+	width: $left-panel-width - 2 * $column-padding;
 }
 
 #offerer_panel {
-	margin-left: $column-width - 2 * $column-padding + $content-padding;
+	width: $content-width - 2 * $column-padding - $left-panel-width;
+}
+
+
+#page_info {
+	text-align: center;
+	
+	margin-bottom: 40px;
+	
+	h1 {
+		font-size: 2em;
+		font-weight: bold;
+
+		line-height: 1.5em;
+		margin: 0;
+		
+		color: #444;
+	}
+	
+	h2 {
+		font-size: 1.5em;
+		font-weight: normal;
+		
+		line-height: 1.5em;
+		margin: 0;
+		padding: 0 0 0 10px;
+		
+		color: $secondary;
+	}
+
+}
+
+#seeker_panel {
+	border-right: 1px solid #aaa;
+	
+	float: left;
+	
+	form {
+		height: 70px;
+	
+		fieldset > ul > li {
+			padding: 0 17px;
+		}
+	
+		li {
+			float: left;
+			
+			input[type=text] {
+				width: 35px;
+			}
+
+			label {
+				display: block;
+			}
+			
+		}
+		
+		button {
+			height: 60px;
+		}
+	
+	}
+	
+}
+
+#offerer_panel {
+	margin-left: $left-panel-width;
+	
+	form {
+		height: 70px;
+		
+		button {
+			height: 60px;
+		}
+		
+	}
 }
 
 }

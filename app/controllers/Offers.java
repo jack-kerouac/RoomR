@@ -50,7 +50,7 @@ public class Offers extends AbstractRoomrController {
 			validation.addError("formData.maxAge", "offerFormData.maxAge.error.smallerThanMinAge");
 		}
 
-		if (formData.freeTo != null & formData.freeFrom.after(formData.freeTo)) {
+		if (formData.freeTo != null && formData.freeFrom.after(formData.freeTo)) {
 			validation.addError("formData.freeTo", "offerFormData.freeTo.error.beforeFreeFrom");
 		}
 		

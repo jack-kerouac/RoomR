@@ -22,6 +22,7 @@ offer.flatshare.mapParameters.displayStreetView=Street View
 
 offer.roomDetails.totalRentPerMonthInEuro=Miete pro Monat
 offer.roomDetails.roomSize.squareMeters=Zimmergröße
+offer.roomDetails.rentPeriod=Zeitraum
 offer.roomDetails.freeFrom=Frei ab
 offer.roomDetails.freeTo=Frei bis
 

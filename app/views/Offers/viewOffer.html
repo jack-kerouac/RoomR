@@ -48,9 +48,13 @@
 	</div>
 	
 	<div class="free_dates">
-		<h2>Der Zeitraum</h2>
-		<p>
-			Zeitraum: ${roomDetails.freeFrom.format('d. MMMM yyyy', 'de')}&nbsp;bis&nbsp;${roomDetails.freeTo.format('d. MMMM yyyy', 'de')}
+		<h2>der Zeitraum</h2>
+		<p>#{if roomDetails.freeTo == null}
+			ab ${roomDetails.freeFrom.format('d. MMMM yyyy', 'de')}
+			#{/if}
+			#{else}
+			${roomDetails.freeFrom.format('d. MMMM yyyy', 'de')}&nbsp;bis&nbsp;${roomDetails.freeTo.format('d. MMMM yyyy', 'de')}
+			#{/else}
 		</p>
 	</div>
 	

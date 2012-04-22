@@ -256,6 +256,17 @@ roomr.createOffer = (function() {
 			slider.slider('values', 1, maxAgeInput.val());
 		}, 100);
 		
+		// RENT PERIOD PICK
+		// localized date picker by inserting the ge locale into plugins.js
+		var dates = $("#formData_freeFrom, #formData_freeTo").datepicker({
+			defaultDate : "+1w",
+			changeMonth : false,
+			numberOfMonths : 2,
+			onSelect : function (selectedDate) {
+				var option = this.id === "formData_freeFrom" ? "minDate" : "maxDate", instance = $(this).data("datepicker"), date = $.datepicker.parseDate(instance.settings.dateFormat || $.datepicker._defaults.dateFormat, selectedDate, instance.settings);
+				dates.not(this).datepicker("option", option, date);
+			}
+		});
 		
 		// STREET MAP
 		lat = $('#formData_lat');
