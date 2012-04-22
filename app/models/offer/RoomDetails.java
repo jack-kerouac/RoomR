@@ -35,20 +35,21 @@ public final class RoomDetails {
 		return Money.of(DEFAULT_CURRENCY, totalRentPerMonthInEuro);
 	}
 
-//	public DateTime getFreeFrom() {
-//		return new DateTime(freeFrom);
-//	}
-//
-//	public Optional<DateTime> getFreeTo() {
-//		if (freeTo == null)
-//			return Optional.absent();
-//		else
-//			return Optional.of(new DateTime(freeTo));
-//	}
+	// public DateTime getFreeFrom() {
+	// return new DateTime(freeFrom);
+	// }
+	//
+	// public Optional<DateTime> getFreeTo() {
+	// if (freeTo == null)
+	// return Optional.absent();
+	// else
+	// return Optional.of(new DateTime(freeTo));
+	// }
 
 	@Override
 	public String toString() {
-		return Objects.toStringHelper(this).add("rent", getTotalRentPerMonth()).add("room size", roomSize).toString();
+		return Objects.toStringHelper(this).add("rent", getTotalRentPerMonth()).add("room size", roomSize)
+				.add("rent period", freeFrom + " - " + (freeTo == null ? "unlimited" : freeTo)).toString();
 	}
 
 }
