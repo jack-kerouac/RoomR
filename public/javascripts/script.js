@@ -228,22 +228,33 @@ roomr.createOffer = (function() {
 	
 	
 	my.init = function() {
-		var initialPosition, initialPov, streetViewDisplayChangeListener;
+		var initialPosition, initialPov, streetViewDisplayChangeListener, slider;
 		
+		// AGE SLIDER
 		var minAgeInput = $('#create_offer #ageRangeSelect input:eq(0)');
 		var maxAgeInput = $('#create_offer #ageRangeSelect input:eq(1)');
 		$('#create_offer #ageRangeSelect').append('<div class="slider">');
 
-		$('#create_offer #ageRangeSelect div.slider').slider({
+		slider = $('#create_offer #ageRangeSelect div.slider');
+		
+		slider.slider({
 			range: true,
-			min: 0,
-			max: 99,
+			min: 16,
+			max: 66,
 			values: [ minAgeInput.val(), maxAgeInput.val()],
 			slide: function( event, ui ) {
 				minAgeInput.val(ui.values[0]);
 				maxAgeInput.val(ui.values[1]);
 			}
 		});
+		
+		roomr.addTypingFinishedCallback(minAgeInput, function() {
+			slider.slider('values', 0, minAgeInput.val());
+		}, 100);
+		
+		roomr.addTypingFinishedCallback(maxAgeInput, function() {
+			slider.slider('values', 1, maxAgeInput.val());
+		}, 100);
 		
 		
 		// STREET MAP
