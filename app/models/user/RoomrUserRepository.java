@@ -14,5 +14,7 @@ public interface RoomrUserRepository {
 	public Set<RoomrUser> findAll();
 	
 	public void update(RoomrUser user);
+
+	public void remove(RoomrUser user);
 	
 }

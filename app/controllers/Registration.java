@@ -46,7 +46,8 @@ public class Registration extends AbstractRoomrController {
 			}
 		}
 
-		render(formData);
+		String nickname = currentGaeUser.getNickname();
+		render(formData, nickname);
 	}
 
 	public static void register(@Valid RegistrationFormData formData) {
@@ -69,6 +70,8 @@ public class Registration extends AbstractRoomrController {
 		roomrUser.gaeUserEmail = currentGaeUser.getEmail();
 
 		userRepository.add(roomrUser);
+
+		Cache.delete(session.getId() + Search.INSTANT_SEARCH_DATA_CACHE_KEY);
 
 		// TODO: redirect to something sane
 		Start.start();

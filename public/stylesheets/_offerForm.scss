@@ -1,11 +1,19 @@
 #create_offer {
 
+#create_offer_form {
+	width: 500px;
+}
+	
 #ageRangeSelect {
 	.slider {
 		display: inline-block;
 		width: 200px;
 		margin-left: 30px;
 	}
+}
+
+#formData_freeFrom, #formData_freeTo {
+	width: 80px;
 }
 
 #maps {

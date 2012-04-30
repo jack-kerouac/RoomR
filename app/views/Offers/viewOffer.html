@@ -19,6 +19,8 @@
 		
 		#{if offer.flatshare.mapParameters.displayStreetView}
 		<div id="street_view_canvas"
+			data-pos-lat="${flatshare.mapParameters.getStreetViewGeoLocation().getLatitude()}"
+			data-pos-lng="${flatshare.mapParameters.getStreetViewGeoLocation().getLongitude()}"
 			data-pov-heading="${flatshare.mapParameters.getStreetViewHeading()}"
 			data-pov-pitch="${flatshare.mapParameters.getStreetViewPitch()}"
 			data-pov-zoom="${flatshare.mapParameters.getStreetViewZoom()}"></div>
@@ -42,7 +44,18 @@
 		<h2>der Preis</h2>
 		<p>
 			&{'offer.roomDetails.totalRentPerMonthInEuro'}:&nbsp;#{money roomDetails.totalRentPerMonth /}
-		</p>Heading
+		</p>
+	</div>
+	
+	<div class="free_dates">
+		<h2>der Zeitraum</h2>
+		<p>#{if roomDetails.freeTo == null}
+			ab ${roomDetails.freeFrom.format('d. MMMM yyyy', 'de')}
+			#{/if}
+			#{else}
+			${roomDetails.freeFrom.format('d. MMMM yyyy', 'de')}&nbsp;bis&nbsp;${roomDetails.freeTo.format('d. MMMM yyyy', 'de')}
+			#{/else}
+		</p>
 	</div>
 	
 	<div class="details">

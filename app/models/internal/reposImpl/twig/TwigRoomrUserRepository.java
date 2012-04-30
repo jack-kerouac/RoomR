@@ -41,4 +41,9 @@ public class TwigRoomrUserRepository implements RoomrUserRepository {
 	public void update(RoomrUser user) {
 		datastoreProvider.get().update(user);
 	}
+	
+	@Override
+	public void remove(RoomrUser user) {
+		datastoreProvider.get().delete(user);
+	}
 }

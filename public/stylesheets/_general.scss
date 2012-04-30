@@ -81,7 +81,6 @@ h1 {
 	
 	
 	h1 {
-		font-family: Arial;
 		color: $primary;
 		
 		font-size: 25px;
@@ -97,12 +96,14 @@ h1 {
 		
 		/* THE FORM AND ITS FIELDSETS */
 		
-		background: $primary_variant4;
+/* 		background: $primary_variant4; */
+		background: $background;
+		border: 1px solid #ddd;
 		-moz-border-radius: 5px;
 		-webkit-border-radius: 5px;
 		border-radius: 5px;
+		
 		padding: 12px;
-		width: 500px;
 		
 		fieldset {
 			border : none;
@@ -133,18 +134,20 @@ h1 {
 		fieldset ul {
 			margin: 0;
 			padding: 0;
+
+			list-style: none;
 		}
 		
 		fieldset > ul > li {
-			background: rgba(255, 255, 255, .3);
-			border-color: rgba(255, 255, 255, .6);
-			border-style: solid;
-			border-width: 2px;
-			-moz-border-radius: 5px;
-			-webkit-border-radius: 5px;
-			border-radius: 5px;
+/* 			background: rgba(255, 255, 255, .3); */
+/* 			border-color: rgba(255, 255, 255, .6); */
+/* 			border-style: solid; */
+/* 			border-width: 2px; */
+/* 			-moz-border-radius: 5px; */
+/* 			-webkit-border-radius: 5px; */
+/* 			border-radius: 5px; */
+			
 			line-height: 30px;
-			list-style: none;
 			padding: 3px 6px;
 			margin-bottom: 2px;
 		}
@@ -162,13 +165,27 @@ h1 {
 			
 		input, textarea {
 			background: #ffffff;
-			border: none;
-			-moz-border-radius: 3px;
-			-webkit-border-radius: 3px;
-			-khtml-border-radius: 3px;
-			border-radius: 3px;
+			border: 1px solid #888;
+			-moz-border-radius: 5px;
+			-webkit-border-radius: 5px;
+			-khtml-border-radius: 5px;
+			border-radius: 5px;
 			
-			font-style: italic;
+			background-image: linear-gradient(bottom, rgb(255,255,255) 44%, rgb(243,243,243) 100%);
+			background-image: -o-linear-gradient(bottom, rgb(255,255,255) 44%, rgb(243,243,243) 100%);
+			background-image: -moz-linear-gradient(bottom, rgb(255,255,255) 44%, rgb(243,243,243) 100%);
+			background-image: -webkit-linear-gradient(bottom, rgb(255,255,255) 44%, rgb(243,243,243) 100%);
+			background-image: -ms-linear-gradient(bottom, rgb(255,255,255) 44%, rgb(243,243,243) 100%);
+			
+			background-image: -webkit-gradient(
+				linear,
+				left bottom,
+				left top,
+				color-stop(0.44, rgb(255,255,255)),
+				color-stop(1, rgb(243,243,243))
+			);
+						
+			
 			outline: none;
 			padding: 5px;
 			width: 200px;
@@ -181,10 +198,10 @@ h1 {
 		button {
 			background: $primary_variant2;
 			border: none;
-			-moz-border-radius: 20px;
-			-webkit-border-radius: 20px;
-			-khtml-border-radius: 20px;
-			border-radius: 20px;
+			-moz-border-radius: 10px;
+			-webkit-border-radius: 10px;
+			-khtml-border-radius: 10px;
+			border-radius: 10px;
 			color: $text_negative;
 			display: block;
 			font-size: 14px;

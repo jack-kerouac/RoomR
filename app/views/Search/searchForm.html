@@ -36,14 +36,14 @@
 				#{/}
 				
 				#{field 'formData.gender'}
-				<ul class="inline_buttons">
+				<ul id="genders_select" class="inline_buttons">
 					<li>
 						<label for="${field.id}_male" class="caption">&{'genders.male'}</label>
-						<input id="${field.id}_male" name="${field.name}" type="radio" value="male" class="${field.errorClass}">
+						<input id="${field.id}_male" name="${field.name}" type="radio" value="male" class="${field.errorClass}" ${formData.gender == models.common.Gender.male ? 'checked' : ''}>
 					</li>
 					<li>
 						<label for="${field.id}_female" class="caption">&{'genders.female'}</label>
-						<input id="${field.id}_female" name="${field.name}" type="radio" value="female" class="${field.errorClass}">
+						<input id="${field.id}_female" name="${field.name}" type="radio" value="female" class="${field.errorClass}" ${formData.gender == models.common.Gender.female ? 'checked' : ''}>
 					</li>
 				</ul>
 				<span class="error">${field.error}</span>

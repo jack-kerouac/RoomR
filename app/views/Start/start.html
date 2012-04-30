@@ -2,13 +2,56 @@
 #{set title:'Start' /}
 #{set pageId:'main_page' /}
 
+<div id="page_info">
+	<h1>Finde noch heute ein WG-Zimmer!</h1>
+	<h2>RoomR findet eine zu dir passende WG, einfach und schnell.</h2>
+</div>
+
 <div id="seeker_panel">
-    <p>#{a @Search.searchForm('München')}Du suchst ein WG-Zimmer in München?#{/a}</p>
+   	<form action="@{Search.searchForm}">
+   		<fieldset>
+	   		<input type="hidden" name="city" value="München">
+	   		<ul>
+	   			<li>
+		    		<label for="max_rent">max. Miete</label>
+					<input id="max_rent" name="max_rent" type="text" />
+				</li>
+				<li>
+		    		<label for="age">Dein Alter</label>
+					<input id="age" name="age" type="text" />
+				</li>
+				<li>
+					<ul id="genders_select" class="inline_buttons">
+						<li>
+							<label for="gender_male" class="caption">&{'genders.male'}</label>
+							<input id="gender_male" name="gender" type="radio" value="male">
+						</li>
+						<li>
+							<label for="gender_female" class="caption">&{'genders.female'}</label>
+							<input id="gender_female" name="gender" type="radio" value="female">
+						</li>
+					</ul>
+				</li>
+				<li>
+					<button>Zimmer suchen</button>
+				</li>
+			</ul>
+		</fieldset>
+   	</form>
 </div>
 <div id="offerer_panel">
-    <p>#{a @Offers.offerForm()}Du willst einen neuen Mitbewohner finden?#{/a}</p>
+	<form action="@{Offers.offerForm}">
+   		<fieldset>
+	   		<ul>
+				<li>
+					<button>Zimmer anbieten</button>
+				</li>
+			</ul>
+		</fieldset>
+   	</form>
 </div>
-<div style="margin-top: 100px;">
+
+<div style="margin-top: 200px;">
 	<p>#{a @Offers.viewAll()}Display all offers#{/a}</p>
 	<p>#{a @Users.viewAll()}Display all users#{/a}</p>
 </div>

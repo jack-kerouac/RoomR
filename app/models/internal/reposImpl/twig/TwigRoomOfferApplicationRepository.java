@@ -41,4 +41,14 @@ public class TwigRoomOfferApplicationRepository implements RoomOfferApplicationR
 		}));
 	}
 
+	@Override
+	public Set<RoomOfferApplication> findAll() {
+		return ImmutableSet.copyOf(datastoreProvider.get().find(RoomOfferApplication.class));
+	}
+
+	@Override
+	public void remove(RoomOfferApplication application) {
+		datastoreProvider.get().delete(application);
+	}
+
 }

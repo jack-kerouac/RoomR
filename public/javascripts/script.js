@@ -71,7 +71,7 @@ roomr.maps = (function() {
     	return map;
 	}
 	
-	my.initializeStreetView = function(streetViewCanvas, streetMap, position, pov, panoOptions, povChangeListener) {
+	my.initializeStreetView = function(streetViewCanvas, streetMap, position, pov, panoOptions, positionChangeListener, povChangeListener) {
 		var streetView;
 
     	streetView = new google.maps.StreetViewPanorama(streetViewCanvas.get(0), panoOptions);
@@ -79,10 +79,16 @@ roomr.maps = (function() {
     	streetView.setPov(pov);
     	
     	streetMap.setStreetView(streetView);
-    	google.maps.event.addListener(streetView, 'pov_changed', function() {
-    		if(typeof povChangeListener != 'undefined')
+    	if(typeof positionChangeListener != 'undefined') {
+	    	google.maps.event.addListener(streetView, 'position_changed', function() {
+    			positionChangeListener(streetView.getPosition());
+			});
+    	}
+    	if(typeof povChangeListener != 'undefined') {
+	    	google.maps.event.addListener(streetView, 'pov_changed', function() {
     			povChangeListener(streetView.getPov());
-		});
+			});
+    	}
 		
     	return streetView;
 	}
@@ -222,16 +228,19 @@ roomr.createOffer = (function() {
 	
 	
 	my.init = function() {
-		var initialPosition, initialPov, streetViewDisplayChangeListener;
+		var initialPosition, initialPov, streetViewDisplayChangeListener, slider;
 		
+		// AGE SLIDER
 		var minAgeInput = $('#create_offer #ageRangeSelect input:eq(0)');
 		var maxAgeInput = $('#create_offer #ageRangeSelect input:eq(1)');
 		$('#create_offer #ageRangeSelect').append('<div class="slider">');
 
-		$('#create_offer #ageRangeSelect div.slider').slider({
+		slider = $('#create_offer #ageRangeSelect div.slider');
+		
+		slider.slider({
 			range: true,
-			min: 0,
-			max: 99,
+			min: 16,
+			max: 66,
 			values: [ minAgeInput.val(), maxAgeInput.val()],
 			slide: function( event, ui ) {
 				minAgeInput.val(ui.values[0]);
@@ -239,6 +248,25 @@ roomr.createOffer = (function() {
 			}
 		});
 		
+		roomr.addTypingFinishedCallback(minAgeInput, function() {
+			slider.slider('values', 0, minAgeInput.val());
+		}, 100);
+		
+		roomr.addTypingFinishedCallback(maxAgeInput, function() {
+			slider.slider('values', 1, maxAgeInput.val());
+		}, 100);
+		
+		// RENT PERIOD PICK
+		// localized date picker by inserting the ge locale into plugins.js
+		var dates = $("#formData_freeFrom, #formData_freeTo").datepicker({
+			defaultDate : "+1w",
+			changeMonth : false,
+			numberOfMonths : 2,
+			onSelect : function (selectedDate) {
+				var option = this.id === "formData_freeFrom" ? "minDate" : "maxDate", instance = $(this).data("datepicker"), date = $.datepicker.parseDate(instance.settings.dateFormat || $.datepicker._defaults.dateFormat, selectedDate, instance.settings);
+				dates.not(this).datepicker("option", option, date);
+			}
+		});
 		
 		// STREET MAP
 		lat = $('#formData_lat');
@@ -251,16 +279,16 @@ roomr.createOffer = (function() {
     	streetViewCanvas = $("#street_view_canvas");
 		displayStreetView = $('#formData_displayStreetView');
 
+		streetViewLat = $('#formData_streetViewLat');
+		streetViewLng = $('#formData_streetViewLng');
 		streetViewHeading = $('#formData_streetViewHeading');
 		streetViewPitch = $('#formData_streetViewPitch');
 		streetViewZoom = $('#formData_streetViewZoom');
     	
+		initialStreetViewPosition = getStreetViewPositionFromForm();
 		initialPov = getPovFromForm();
 		streetViewOptions = {
 			addressControl : false,
-			//addressControlOptions : {
-			//	position : google.maps.ControlPosition.BOTTOM
-			//},
 			linksControl : false,
 			panControl : true,
 			zoomControl : true,
@@ -271,8 +299,7 @@ roomr.createOffer = (function() {
 			visible : true
 		};
 		
-		streetView = roomr.maps.initializeStreetView(streetViewCanvas, streetMap, initialPosition, initialPov, streetViewOptions, setPovInForm);
-
+		streetView = roomr.maps.initializeStreetView(streetViewCanvas, streetMap, initialStreetViewPosition, initialPov, streetViewOptions, setStreetViewPositionInForm, setPovInForm);
 		
 		streetViewDisplayChangeListener = function() {
 			if($('input[value="true"]', displayStreetView).prop('checked')) {
@@ -299,14 +326,23 @@ roomr.createOffer = (function() {
 		prepareAutoCompleteField(city);
 	};
 	
-	function getPovFromForm() {
-		return {
-    		heading: parseFloat(streetViewHeading.val()),
-    		pitch: parseFloat(streetViewPitch.val()),
-    		zoom: parseFloat(streetViewZoom.val())
-		};
+	function getStreetViewPositionFromForm() {
+		return new google.maps.LatLng(parseFloat(streetViewLat.val()), parseFloat(streetViewLng.val()));
+	}
+
+	function setStreetViewPositionInForm(position) {
+		streetViewLat.val(position.lat);
+		streetViewLng.val(position.lng);
 	}
 	
+	function getPovFromForm() {
+		return {
+			heading: parseFloat(streetViewHeading.val()),
+			pitch: parseFloat(streetViewPitch.val()),
+			zoom: parseFloat(streetViewZoom.val())
+		};
+	}
+
 	function setPovInForm(pov) {
 		streetViewHeading.val(pov.heading);
 		streetViewPitch.val(pov.pitch);
@@ -444,7 +480,7 @@ roomr.viewOffer = (function() {
 		flatshareLocation = new google.maps.LatLng($("#map_canvas").attr('data-center-lat'), $("#map_canvas").attr('data-center-lng'));
 		
 		// STREET MAP
-		streetMap = roomr.maps.initializeMap($("#map_canvas"), flatshareLocation, 8);
+		streetMap = roomr.maps.initializeMap($("#map_canvas"), flatshareLocation, 13);
 
 	    addressMarker = new google.maps.Marker({
 	        map: streetMap
@@ -454,12 +490,15 @@ roomr.viewOffer = (function() {
 	    // STREET VIEW
     	streetViewCanvas = $("#street_view_canvas");
     	if(streetViewCanvas.size() != 0) {
+    		var initialStreetViewPosition = new google.maps.LatLng(
+    				parseFloat($("#street_view_canvas").attr('data-pos-lat')),
+    				parseFloat($("#street_view_canvas").attr('data-pos-lng')));
 			pov = {
 				heading : parseFloat($("#street_view_canvas").attr('data-pov-heading')),
 				pitch : parseFloat($("#street_view_canvas").attr('data-pov-pitch')),
 				zoom : parseFloat($("#street_view_canvas").attr('data-pov-zoom'))
-			};		
-			streetView = roomr.maps.initializeStreetView(streetViewCanvas, streetMap, flatshareLocation, pov);
+			};
+			streetView = roomr.maps.initializeStreetView(streetViewCanvas, streetMap, initialStreetViewPosition, pov);
 		}
 	};
 	

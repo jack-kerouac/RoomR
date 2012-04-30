@@ -50,6 +50,10 @@ public class Offers extends AbstractRoomrController {
 			validation.addError("formData.maxAge", "offerFormData.maxAge.error.smallerThanMinAge");
 		}
 
+		if (formData.freeTo != null && formData.freeFrom.after(formData.freeTo)) {
+			validation.addError("formData.freeTo", "offerFormData.freeTo.error.beforeFreeFrom");
+		}
+		
 		if (validation.hasErrors()) {
 			// params.flash(); // add http parameters to the flash scope
 			validation.keep(); // keep the errors for the next request
@@ -62,23 +66,28 @@ public class Offers extends AbstractRoomrController {
 		offer.criteria.minAge = new Age(formData.minAge);
 		offer.criteria.maxAge = new Age(formData.maxAge);
 
-//		offer.flatshare = new Flatshare();
-//		offer.flatshare.address = new Address(formData.street, formData.streetNumber, formData.zipCode, formData.city);
-//		offer.flatshare.geoLocation = new GeoPt(formData.lat, formData.lng);
-//		
-//		offer.flatshare.mapParameters = new MapParameters();
-//		offer.flatshare.mapParameters.displayStreetView = formData.displayStreetView;
-//		offer.flatshare.mapParameters.streetViewHeading = formData.streetViewHeading;
-//		offer.flatshare.mapParameters.streetViewPitch = formData.streetViewPitch;
-//		offer.flatshare.mapParameters.streetViewZoom = formData.streetViewZoom;
-//		
-//		offer.flatshare.floor = formData.floor;
-//		offer.flatshare.smokingTolerance = formData.smokingTolerance;
+
+		offer.flatshare = new Flatshare();
+		offer.flatshare.address = new Address(formData.street, formData.streetNumber, formData.zipCode, formData.city);
+		offer.flatshare.geoLocation = new GeoPt(formData.lat, formData.lng);
+
+		offer.flatshare.mapParameters = new MapParameters();
+		offer.flatshare.mapParameters.displayStreetView = formData.displayStreetView;
+		offer.flatshare.mapParameters.streetViewGeoLocation = new GeoPt(formData.streetViewLat, formData.streetViewLng);
+		offer.flatshare.mapParameters.streetViewHeading = formData.streetViewHeading;
+		offer.flatshare.mapParameters.streetViewPitch = formData.streetViewPitch;
+		offer.flatshare.mapParameters.streetViewZoom = formData.streetViewZoom;
+
+		offer.flatshare.floor = formData.floor;
+		offer.flatshare.smokingTolerance = formData.smokingTolerance;
+
 
 		offer.roomDetails = new RoomDetails();
 		offer.roomDetails.roomSize = new FloorSpace(formData.squareMeters);
 		offer.roomDetails.totalRentPerMonthInEuro = formData.totalRentPerMonthInEuro;
-
+		offer.roomDetails.freeFrom = formData.freeFrom;
+		offer.roomDetails.freeTo = formData.freeTo;
+		
 		offerRepository.add(offer);
 
 		viewOffer(offer.id);

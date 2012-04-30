@@ -113,11 +113,13 @@ public class RoomrUser extends ObjectifyModel {
 		stringHelper.add("age", age);
 		stringHelper.add("gender", gender);
 
-		stringHelper.add("applications", getApplications());
-		if (getFlatshare() != null) {
-			stringHelper.add("currentFlatshare", getFlatshare().address);
-		}
 
+		stringHelper.add("applications", applications);
+		if(currentFlatshare != null)
+			stringHelper.add("currentFlatshare", currentFlatshare.address);
+		else
+			stringHelper.add("currentFlatshare", "none");
+		
 		return stringHelper.toString();
 	}
 }
