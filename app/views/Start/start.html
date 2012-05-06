@@ -18,17 +18,17 @@
 				</li>
 				<li>
 		    		<label for="age">Dein Alter</label>
-					<input id="age" name="age" type="text" />
+					<input id="age" name="age" type="text" value="${age}"/>
 				</li>
 				<li>
 					<ul id="genders_select" class="inline_buttons">
 						<li>
 							<label for="gender_male" class="caption">Mann</label>
-							<input id="gender_male" name="gender" type="radio" value="male">
+							<input id="gender_male" name="gender" type="radio" value="male" ${gender == models.common.Gender.male ? 'checked' : ''} >
 						</li>
 						<li>
 							<label for="gender_female" class="caption">Frau</label>
-							<input id="gender_female" name="gender" type="radio" value="female">
+							<input id="gender_female" name="gender" type="radio" value="female" ${gender == models.common.Gender.female ? 'checked' : ''} >
 						</li>
 					</ul>
 				</li>

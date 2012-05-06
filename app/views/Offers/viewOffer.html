@@ -37,7 +37,11 @@
 		<div class="street_view"></div>
 		
 		<div>Stockwerk: #{enum flatshare.floor /}</div>
+		<div>Bewohnte Zimmer: ${flatshare.numberOfRooms}</div>
 		<div>Rauchen: #{enum flatshare.smokingTolerance /}</div>
+		<div>Haustyp: #{enum flatshare.typeOfHouse /}</div>
+		<div>Gadgets: #{enumJoin flatshare.appliances /}</div>
+		<div>Zusatzflächen: #{enumJoin flatshare.additionalSpaces /}</div>
 	</div>
 	
 	<div class="total_rent">
