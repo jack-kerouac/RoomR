@@ -5,12 +5,12 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import models.application.RoomOfferApplication;
-import models.application.RoomOfferApplicationRepository;
-import models.flatshare.Flatshare;
 import models.user.RoomrUser;
 import play.modules.guice.InjectSupport;
+
+import com.google.common.base.Optional;
+
 import facade.UserFacade;
-import facade.exception.NoUserLoggedInException;
 
 @InjectSupport
 public class Dashboard extends AbstractRoomrController {
@@ -18,26 +18,24 @@ public class Dashboard extends AbstractRoomrController {
 	@Inject
 	private static UserFacade userFacade;
 
-	@Inject
-	private static RoomOfferApplicationRepository repository;
-
 	public static void view() {
-		RoomrUser currentUser = null;
-		try {
-			currentUser = userFacade.getLoggedInUser();
-		} catch (NoUserLoggedInException e) {
+		Optional<RoomrUser> loggedInUser = userFacade.getLoggedInUser();;
+		if (loggedInUser.isPresent()) {
+			Set<RoomOfferApplication> myApplications = loggedInUser.get().getApplications();
+
+			if (loggedInUser.get().hasFlatshare()) {
+				// Flatshare myFlatshare = loggedInUser.get().getFlatshare();
+				// Set<RoomOfferApplication> flatshareApplications = repository
+				// .findAllApplicationsFor(currentUser.getFlatshare());
+				// render(myApplications, myFlatshare, flatshareApplications);
+				render(myApplications);
+			} else {
+				render(myApplications);
+			}
+
+		} else {
 			notFound("no user logged in");
 		}
-
-		Set<RoomOfferApplication> myApplications = currentUser.getApplications();
-
-		if (currentUser.hasFlatshare()) {
-			Flatshare myFlatshare = currentUser.getFlatshare();
-			// Set<RoomOfferApplication> flatshareApplications = repository
-			// .findAllApplicationsFor(currentUser.getFlatshare());
-			// render(myApplications, myFlatshare, flatshareApplications);
-		} else
-			render(myApplications);
 	}
 
 }

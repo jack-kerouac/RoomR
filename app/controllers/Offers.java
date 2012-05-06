@@ -15,10 +15,12 @@ import models.flatshare.StreetViewParameters;
 import models.offer.RoomDetails;
 import models.offer.RoomOffer;
 import models.offer.SeekerCriteria;
+import models.user.RoomrUser;
 import play.data.validation.Valid;
 import play.modules.guice.InjectSupport;
 
 import com.google.appengine.api.datastore.GeoPt;
+import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
@@ -26,12 +28,16 @@ import controllers.formdata.OfferFormData;
 import facade.AdministrationFacade;
 import facade.ResidentFacade;
 import facade.SeekerFacade;
+import facade.UserFacade;
 
 @InjectSupport
 public class Offers extends AbstractRoomrController {
 
 	@Inject
 	private static SeekerFacade seekerFacade;
+
+	@Inject
+	private static UserFacade userFacade;
 
 	@Inject
 	private static ResidentFacade residentFacade;
@@ -46,6 +52,10 @@ public class Offers extends AbstractRoomrController {
 			formData.minAge = 18;
 			formData.maxAge = 50;
 			formData.genders = Sets.newHashSet(Gender.male, Gender.female);
+			Optional<RoomrUser> loggedInUser = userFacade.getLoggedInUser();
+			if (loggedInUser.isPresent()) {
+				formData.email = userFacade.getLoggedInUser().get().gaeUserEmail;
+			}
 		}
 
 		Floor[] floors = Floor.values();
@@ -69,7 +79,7 @@ public class Offers extends AbstractRoomrController {
 		if (formData.freeFrom != null && formData.freeTo != null && formData.freeFrom.after(formData.freeTo)) {
 			validation.addError("formData.freeTo", "validation.offerFormData.freeToBeforeFreeFrom");
 		}
-		
+
 		if (validation.hasErrors()) {
 			// params.flash(); // add http parameters to the flash scope
 			validation.keep(); // keep the errors for the next request
@@ -110,7 +120,7 @@ public class Offers extends AbstractRoomrController {
 
 		// CONTACT DATA
 		offer.contactEmail = formData.email;
-		
+
 		residentFacade.createFlatshareAndOffer(flatshare, offer);
 
 		viewOffer(offer.id);
