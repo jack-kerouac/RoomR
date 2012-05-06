@@ -1,0 +1,9 @@
+*{
+A select for enum values, that uses the #enum tag in order to print the option label for each enum. The option value is the enum itself.
+}*
+
+#{select _arg, value:_value, id:_id, class:_class}
+	#{list items:_items}
+		#{option _}#{enum _ /}#{/option}
+	#{/list} 
+#{/select}

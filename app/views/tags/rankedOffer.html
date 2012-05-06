@@ -34,18 +34,18 @@
 	<div class="total_rent">#{money roomDetails.totalRentPerMonth /}</div>
 	
 	<div class="details">
-		&{'offer.roomDetails.roomSize.squareMeters'}:&nbsp;${roomDetails.roomSize}
+		Zimmergröße:&nbsp;${roomDetails.roomSize}
 	</div>
 	
 	<div class="flatshare">
-		<div>&{'offer.flatshare.floor'}: ${flatshare.floor}</div>
-		<div>&{'offer.flatshare.smokingTolerance'}: ${flatshare.smokingTolerance}</div>
+		<div>Stockwerk: ${flatshare.floor}</div>
+		<div>Rauchen: ${flatshare.smokingTolerance}</div>
 	</div>
 
 	
 	<div class="criteria">
-		<div>&{'offer.criteria.ageRange'}: #{ageRange criteria.ageRange /}</div>
-		<div>&{'offer.criteria.genders'}: #{genders criteria.genders /}</div>
+		<div>gewünschtes Alter: #{ageRange criteria.ageRange /}</div>
+		<div>gewünschtes Geschlecht: #{genders criteria.genders /}</div>
 	</div>
 	
 	#{if _user?.appliedFor(_offer.offer)}

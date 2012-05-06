@@ -119,7 +119,7 @@
 			<li>
 			#{field 'formData.floor'}
 				<label for="${field.id}" class="caption">Stockwerk</label>
-				#{select 'formData.floor', items:floors, value:2, id:'offer_flatshare_floor', class:'field' /}
+				#{enumSelect 'formData.floor', items:floors, value:'ground', id:'offer_flatshare_floor', class:'field' /}
 				<span class="error">${field.error}</span>
 			#{/}
 			</li>
@@ -127,7 +127,7 @@
 			<li>
 			#{field 'formData.smokingTolerance'}
 				<label for="${field.id}" class="caption">Rauchen</label>
-				#{select 'formData.smokingTolerance', items:smokingTolerances, value:2, id:'offer_flatshare_smokingTolerance', class:'field' /}
+				#{enumSelect 'formData.smokingTolerance', items:smokingTolerances, value:'prohibited', id:'offer_flatshare_smokingTolerance', class:'field' /}
 				<span class="error">${field.error}</span>
 			#{/}
 			</li>
