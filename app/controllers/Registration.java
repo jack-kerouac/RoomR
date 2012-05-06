@@ -2,7 +2,6 @@ package controllers;
 
 import javax.inject.Inject;
 
-import models.common.Age;
 import models.user.RoomrUser;
 import play.cache.Cache;
 import play.data.validation.Valid;
@@ -57,7 +56,6 @@ public class Registration extends AbstractRoomrController {
 			InstantSearchFormData searchData = (InstantSearchFormData) Cache.get(session.getId()
 					+ Search.INSTANT_SEARCH_DATA_CACHE_KEY);
 			if (searchData != null) {
-				formData.age = searchData.age;
 				formData.gender = searchData.gender;
 			}
 		}
@@ -73,7 +71,7 @@ public class Registration extends AbstractRoomrController {
 
 		RoomrUser roomrUser = new RoomrUser();
 		roomrUser.name = formData.name;
-		roomrUser.age = new Age(formData.age);
+		roomrUser.birthdate = formData.birthdate;
 		roomrUser.gender = formData.gender;
 
 		try {

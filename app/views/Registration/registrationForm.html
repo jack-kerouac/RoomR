@@ -20,9 +20,9 @@
 			</li>
 
 			<li>
-				#{field 'formData.age'}
-					<label class="caption" for="${field.id}">Alter</label>
-					<input id="${field.id}" name="${field.name}" type="number" data-validate="${field.validationData}" value="${field.value}" class="age ${field.errorClass}">
+				#{field 'formData.birthdate'}
+					<label class="caption" for="${field.id}">Geburtsdatum</label>
+					<input id="${field.id}" name="${field.name}" type="date" data-validate="${field.validationData}" value="${field.value?.format()}" class="${field.errorClass}">
 					<span class="error">${field.error}</span>
 				#{/}
 			</li>
