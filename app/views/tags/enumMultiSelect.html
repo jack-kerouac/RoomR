@@ -1,0 +1,11 @@
+*{
+A multi-select for enum values, that uses the #enum tag in order to print the option label for each enum. The option value is the enum itself.
+}*
+<ul class="inline_buttons">
+	#{list items:_items, as:'option'}
+	    <li>
+	    	<input id="${_id + '_' + option}" name="${_arg}" type="checkbox" value="${option}" ${_values.contains(option) ? 'checked' : ''}>
+			<label for="${_id + '_' + option}" class="caption">#{enum option /}</label>
+	    </li>
+	#{/list}
+</ul>

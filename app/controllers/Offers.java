@@ -9,9 +9,12 @@ import models.common.Age;
 import models.common.Floor;
 import models.common.FloorSpace;
 import models.common.Gender;
+import models.flatshare.AdditionalSpace;
+import models.flatshare.Appliance;
 import models.flatshare.Flatshare;
 import models.flatshare.SmokingTolerance;
 import models.flatshare.StreetViewParameters;
+import models.flatshare.TypeOfHouse;
 import models.offer.RoomDetails;
 import models.offer.RoomOffer;
 import models.offer.SeekerCriteria;
@@ -21,6 +24,7 @@ import play.modules.guice.InjectSupport;
 
 import com.google.appengine.api.datastore.GeoPt;
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
@@ -52,15 +56,20 @@ public class Offers extends AbstractRoomrController {
 			formData.minAge = 18;
 			formData.maxAge = 50;
 			formData.genders = Sets.newHashSet(Gender.male, Gender.female);
+			formData.appliances = ImmutableSet.of(Appliance.clothesWasher, Appliance.dishWasher);
 			Optional<RoomrUser> loggedInUser = userFacade.getLoggedInUser();
 			if (loggedInUser.isPresent()) {
 				formData.email = userFacade.getLoggedInUser().get().gaeUserEmail;
 			}
 		}
 
+		Gender[] genders = Gender.values();
 		Floor[] floors = Floor.values();
 		SmokingTolerance[] smokingTolerances = SmokingTolerance.values();
-		render(formData, floors, smokingTolerances);
+		TypeOfHouse[] typesOfHouse = TypeOfHouse.values();
+		Appliance[] appliances = Appliance.values();
+		AdditionalSpace[] additionalSpaces = AdditionalSpace.values();
+		render(formData, genders, floors, smokingTolerances, typesOfHouse, appliances, additionalSpaces);
 	}
 
 	public static void createOffer(@Valid OfferFormData formData) {
@@ -107,7 +116,11 @@ public class Offers extends AbstractRoomrController {
 		flatshare.streetViewParameters.streetViewZoom = formData.streetViewZoom;
 
 		flatshare.floor = formData.floor;
+		flatshare.numberOfRooms = formData.numberOfRooms;
 		flatshare.smokingTolerance = formData.smokingTolerance;
+		flatshare.typeOfHouse = formData.typeOfHouse;
+		flatshare.appliances = formData.appliances;
+		flatshare.additionalSpaces = formData.additionalSpaces;
 
 		// ROOM DETAILS
 		offer.roomDetails = new RoomDetails();

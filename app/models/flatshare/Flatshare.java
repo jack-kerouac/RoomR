@@ -24,16 +24,25 @@ public class Flatshare extends ObjectifyModel {
 	// LOCATION
 	@Embedded
 	public Address address;
+	public Floor floor;
 
 	public GeoPt geoLocation;
 
 	@Embedded
 	public StreetViewParameters streetViewParameters;
 
-	public Floor floor;
 
 	public SmokingTolerance smokingTolerance;
 
+	public TypeOfHouse typeOfHouse;
+	
+	public int numberOfRooms;
+	
+	public Set<Appliance> appliances;
+	
+	public Set<AdditionalSpace> additionalSpaces;
+	
+	
 	public Set<RoomrUser> getResidents() {
 		// TODO implement
 		return new HashSet<RoomrUser>();

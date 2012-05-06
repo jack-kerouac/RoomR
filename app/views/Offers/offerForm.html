@@ -17,16 +17,7 @@
 			<li>
 				#{field 'formData.genders'}
 				<label class="caption">Geschlecht</label>
-				<ul class="inline_buttons">
-					<li>
-						<input id="${field.id}_male" name="${field.name}" type="checkbox" value="male" class="${field.errorClass}" ${formData.genders.contains(models.common.Gender.male) ? 'checked' : ''}>
-						<label for="${field.id}_male" class="caption">Mann</label>
-					</li>
-					<li>
-						<input id="${field.id}_female" name="${field.name}" type="checkbox" value="female" class="${field.errorClass}" ${formData.genders.contains(models.common.Gender.female) ? 'checked' : ''}>
-						<label for="${field.id}_female" class="caption">Frau</label>
-					</li>
-				</ul>
+				#{enumMultiSelect field.name, id:field.id, items:genders, values:field.value, class:'field' /}
 				<span class="error">${field.error}</span>
 				#{/}
 			</li>
@@ -119,7 +110,15 @@
 			<li>
 			#{field 'formData.floor'}
 				<label for="${field.id}" class="caption">Stockwerk</label>
-				#{enumSelect 'formData.floor', items:floors, value:'ground', id:'offer_flatshare_floor', class:'field' /}
+				#{enumSelect field.name, id:field.id, items:floors, value:'ground', class:'field' /}
+				<span class="error">${field.error}</span>
+			#{/}
+			</li>
+			
+			<li>
+			#{field 'formData.numberOfRooms'}
+				<label for="${field.id}" class="caption">Bewohnte Zimmer</label>
+				<input id="${field.id}" name="${field.name}" type="number" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}" maxlength="2">
 				<span class="error">${field.error}</span>
 			#{/}
 			</li>
@@ -127,7 +126,31 @@
 			<li>
 			#{field 'formData.smokingTolerance'}
 				<label for="${field.id}" class="caption">Rauchen</label>
-				#{enumSelect 'formData.smokingTolerance', items:smokingTolerances, value:'prohibited', id:'offer_smokingTolerance', class:'field' /}
+				#{enumSelect field.name, id:field.id, items:smokingTolerances, value:'prohibited', class:'field' /}
+				<span class="error">${field.error}</span>
+			#{/}
+			</li>
+			
+			<li>
+			#{field 'formData.typeOfHouse'}
+				<label for="${field.id}" class="caption">Haustyp</label>
+				#{enumSelect field.name, id:field.id, items:typesOfHouse, value:field.value, class:'field' /}
+				<span class="error">${field.error}</span>
+			#{/}
+			</li>
+			
+			<li>
+			#{field 'formData.appliances'}
+				<label for="${field.id}" class="caption">Gadgets</label>
+				#{enumMultiSelect field.name, id:field.id, items:appliances, values:field.value, class:'field' /}
+				<span class="error">${field.error}</span>
+			#{/}
+			</li>
+			
+			<li>
+			#{field 'formData.additionalSpaces'}
+				<label for="${field.id}" class="caption">Zusatzflächen</label>
+				#{enumMultiSelect field.name, id:field.id, items:additionalSpaces, values:field.value, class:'field' /}
 				<span class="error">${field.error}</span>
 			#{/}
 			</li>

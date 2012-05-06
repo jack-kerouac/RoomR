@@ -6,7 +6,10 @@ import java.util.Set;
 
 import models.common.Floor;
 import models.common.Gender;
+import models.flatshare.AdditionalSpace;
+import models.flatshare.Appliance;
 import models.flatshare.SmokingTolerance;
+import models.flatshare.TypeOfHouse;
 import play.data.validation.Email;
 import play.data.validation.Match;
 import play.data.validation.Min;
@@ -67,8 +70,16 @@ public class OfferFormData implements Serializable {
 	public float streetViewPitch = 7f;
 	public float streetViewZoom = 1f;
 	
-	public SmokingTolerance smokingTolerance = SmokingTolerance.prohibited;
+	public SmokingTolerance smokingTolerance;
 	
+	public TypeOfHouse typeOfHouse;
+	
+	public Integer numberOfRooms;
+	
+	public Set<Appliance> appliances = Sets.newHashSet();
+
+	public Set<AdditionalSpace> additionalSpaces = Sets.newHashSet();
+
 	
 	// ROOM DETAILS
 

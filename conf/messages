@@ -9,6 +9,9 @@ seekerGender=Dein Geschlecht
 
 application.message=Deine Nachricht
 
+Gender.male=Mann
+Gender.female=Frau
+
 Floor.basement=Keller
 Floor.ground=Erdgeschoss
 Floor.first=1. OG
@@ -21,6 +24,20 @@ Floor.higher=wahnsinnig hoch
 SmokingTolerance.prohibited=verboten
 SmokingTolerance.allowedInFlat=erlaubt
 SmokingTolerance.allowedInRoom=im Zimmer erlaubt
+
+TypeOfHouse.old=Altbau
+TypeOfHouse.renovated=renovierter Altbau
+TypeOfHouse.neww=Neubau
+
+AdditionalSpace.patio=Terrasse
+AdditionalSpace.balcony=Balkon
+AdditionalSpace.garden=Garten
+AdditionalSpace.basementStorage=Kellerabteil
+
+Appliance.clothesWasher=Waschmaschine
+Appliance.dishWasher=Spülmaschine
+Appliance.tv=Fernseher
+Appliance.gameConsole=Spielkonsole
 
 # VALIDATION ERRORS
 validation.required=Benötigt
