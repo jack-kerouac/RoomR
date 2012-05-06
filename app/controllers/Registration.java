@@ -82,6 +82,7 @@ public class Registration extends AbstractRoomrController {
 		}
 
 		RoomrUser roomrUser = new RoomrUser();
+		roomrUser.name = formData.name;
 		roomrUser.age = new Age(formData.age);
 		roomrUser.gender = formData.gender;
 		roomrUser.gaeUser = currentGaeUser;
