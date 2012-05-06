@@ -8,13 +8,13 @@ import models.application.RoomOfferApplication;
 import models.application.RoomOfferApplication.State;
 import models.user.RoomrUser;
 import play.modules.guice.InjectSupport;
-import facade.RoomOfferApplicationsFacade;
+import facade.SeekerFacade;
 
 @InjectSupport
 public class Applications extends AbstractRoomrController {
 
 	@Inject
-	private static RoomOfferApplicationsFacade applicationsFacade;
+	private static SeekerFacade applicationsFacade;
 
 	public static void apply(long roomOfferId, RoomOfferApplication application) {
 		application.currentState = State.WAITING_FOR_INVITATION;

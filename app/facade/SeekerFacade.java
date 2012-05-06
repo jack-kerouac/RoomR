@@ -8,11 +8,8 @@ import models.application.RoomOfferApplicationRepository;
 import models.offer.RoomOffer;
 import models.offer.RoomOfferRepository;
 import models.user.RoomrUser;
-import models.user.RoomrUserRepository;
 
-import com.google.appengine.api.users.User;
-
-public class RoomOfferApplicationsFacade {
+public class SeekerFacade {
 
 	@Inject
 	private RoomOfferRepository roomOfferRepository;
@@ -32,4 +29,9 @@ public class RoomOfferApplicationsFacade {
 		roomOfferApplicationRepository.add(application);
 		return application;
 	}
+
+	public RoomOffer findOffer(long id) {
+		return roomOfferRepository.find(id);
+	}
+
 }

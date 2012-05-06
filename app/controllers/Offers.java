@@ -4,28 +4,40 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
+import models.common.Address;
 import models.common.Age;
 import models.common.Floor;
 import models.common.FloorSpace;
 import models.common.Gender;
+import models.flatshare.Flatshare;
 import models.flatshare.SmokingTolerance;
+import models.flatshare.StreetViewParameters;
 import models.offer.RoomDetails;
 import models.offer.RoomOffer;
-import models.offer.RoomOfferRepository;
 import models.offer.SeekerCriteria;
 import play.data.validation.Valid;
 import play.modules.guice.InjectSupport;
 
+import com.google.appengine.api.datastore.GeoPt;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 import controllers.formdata.OfferFormData;
+import facade.AdministrationFacade;
+import facade.ResidentFacade;
+import facade.SeekerFacade;
 
 @InjectSupport
 public class Offers extends AbstractRoomrController {
 
 	@Inject
-	private static RoomOfferRepository offerRepository;
+	private static SeekerFacade seekerFacade;
+
+	@Inject
+	private static ResidentFacade residentFacade;
+
+	@Inject
+	private static AdministrationFacade administrationFacade;
 
 	public static void offerForm(OfferFormData formData) {
 		if (formData == null) {
@@ -42,10 +54,10 @@ public class Offers extends AbstractRoomrController {
 	}
 
 	public static void createOffer(@Valid OfferFormData formData) {
-		if(formData.genders.isEmpty()) {
+		if (formData.genders.isEmpty()) {
 			validation.addError("formData.genders", "validation.offerFormData.gendersEmpty");
 		}
-		
+
 		// min/max age being null is handled by @Required annotations
 		if (formData.minAge != null && formData.maxAge != null) {
 			if (formData.minAge > formData.maxAge) {
@@ -65,29 +77,29 @@ public class Offers extends AbstractRoomrController {
 		}
 
 		RoomOffer offer = new RoomOffer();
-		
+
 		// CRITERIA
 		offer.criteria = new SeekerCriteria();
 		offer.criteria.genders = formData.genders;
 		offer.criteria.minAge = new Age(formData.minAge);
 		offer.criteria.maxAge = new Age(formData.maxAge);
 
-		
 		// FLATSHARE
-//		offer.flatshare = new Flatshare();
-//		offer.flatshare.address = new Address(formData.street, formData.streetNumber, formData.zipCode, formData.city);
-//		offer.flatshare.geoLocation = new GeoPt(formData.lat, formData.lng);
-//
-//		offer.flatshare.streetViewParameters = new StreetViewParameters();
-//		offer.flatshare.streetViewParameters.displayStreetView = formData.displayStreetView;
-//		offer.flatshare.streetViewParameters.streetViewGeoLocation = new GeoPt(formData.streetViewLat,
-//				formData.streetViewLng);
-//		offer.flatshare.streetViewParameters.streetViewHeading = formData.streetViewHeading;
-//		offer.flatshare.streetViewParameters.streetViewPitch = formData.streetViewPitch;
-//		offer.flatshare.streetViewParameters.streetViewZoom = formData.streetViewZoom;
-//
-//		offer.flatshare.floor = formData.floor;
-//		offer.flatshare.smokingTolerance = formData.smokingTolerance;
+		Flatshare flatshare = new Flatshare();
+		flatshare.address = new Address(formData.street, formData.streetNumber, formData.zipCode, formData.city);
+		flatshare.geoLocation = new GeoPt(formData.lat, formData.lng);
+
+		flatshare.streetViewParameters = new StreetViewParameters();
+		flatshare.streetViewParameters.displayStreetView = formData.displayStreetView;
+		flatshare.streetViewParameters.streetViewGeoLocation = new GeoPt(formData.streetViewLat, formData.streetViewLng);
+		flatshare.streetViewParameters.streetViewHeading = formData.streetViewHeading;
+		flatshare.streetViewParameters.streetViewPitch = formData.streetViewPitch;
+		flatshare.streetViewParameters.streetViewZoom = formData.streetViewZoom;
+
+		flatshare.floor = formData.floor;
+		flatshare.smokingTolerance = formData.smokingTolerance;
+		// TODO FR: when to do this?
+		// offer.flatshare = flatshare;
 
 		// ROOM DETAILS
 		offer.roomDetails = new RoomDetails();
@@ -98,19 +110,19 @@ public class Offers extends AbstractRoomrController {
 
 		// CONTACT DATA
 		// TODO: email
-		
-		offerRepository.add(offer);
+
+		residentFacade.createFlatshareAndOffer(flatshare, offer);
 
 		viewOffer(offer.id);
 	}
 
 	public static void viewAll() {
-		ArrayList<RoomOffer> offers = Lists.newArrayList(offerRepository.findAll());
+		ArrayList<RoomOffer> offers = Lists.newArrayList(administrationFacade.findAllOffers());
 		render(offers);
 	}
 
 	public static void viewOffer(long id) {
-		RoomOffer offer = offerRepository.find(id);
+		RoomOffer offer = seekerFacade.findOffer(id);
 		render(offer);
 	}
 

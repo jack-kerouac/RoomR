@@ -16,7 +16,9 @@ import models.user.RoomrUserRepository;
 
 import com.google.inject.AbstractModule;
 
-import facade.RoomOfferApplicationsFacade;
+import facade.AdministrationFacade;
+import facade.ResidentFacade;
+import facade.SeekerFacade;
 
 public class RoomrModule extends AbstractModule {
 
@@ -33,6 +35,8 @@ public class RoomrModule extends AbstractModule {
 		bind(OfferMatcher.class).to(InmemoryMatcher.class);
 		bind(OfferSorter.class).to(OfferSorterByScore.class);
 
-		bind(RoomOfferApplicationsFacade.class);
+		bind(SeekerFacade.class);
+		bind(ResidentFacade.class);
+		bind(AdministrationFacade.class);
 	}
 }
