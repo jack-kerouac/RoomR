@@ -43,8 +43,8 @@ public final class RoomOffer extends ObjectifyModel{
 	 * @param flatshare the Flatshare which should be set for this user.
 	 */
 	public void setFlatshare(Flatshare flatshare) {
-		Key<Flatshare> keyOfNewFlatshare;
 		Preconditions.checkState(flatshare.id != null, "flatshare must have been persisted before it can be set");
+		Key<Flatshare> keyOfNewFlatshare;
 		keyOfNewFlatshare = new Key<Flatshare>(Flatshare.class, flatshare.id);
 		this.flatshareKey = keyOfNewFlatshare;
 	}
