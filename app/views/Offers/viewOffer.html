@@ -11,7 +11,81 @@
 }%
 
 <div class="offer clearfix">
-
+	<div id="offer_info">
+		<div class="flatshare">
+			<h2>die WG</h2>
+			<div class="address">#{address flatshare.address /}</div>
+			<div class="street_map"></div>
+			<div class="street_view"></div>
+			
+			<div>Stockwerk: #{enum flatshare.floor /}</div>
+			<div>Bewohnte Zimmer: ${flatshare.numberOfRooms}</div>
+			<div>Rauchen: #{enum flatshare.smokingTolerance /}</div>
+			<div>Haustyp: #{enum flatshare.typeOfHouse /}</div>
+			<div>Gadgets: #{enumJoin flatshare.appliances /}</div>
+			<div>Zusatzflächen: #{enumJoin flatshare.additionalSpaces /}</div>
+		</div>
+		
+		<div class="total_rent">
+			<h2>der Preis</h2>
+			<p>
+				Gesamtmiete / Monat:&nbsp;#{money roomDetails.totalRentPerMonth /}
+			</p>
+		</div>
+		
+		<div class="free_dates">
+			<h2>der Zeitraum</h2>
+			<p>#{if roomDetails.freeTo == null}
+				ab ${roomDetails.freeFrom.format('d. MMMM yyyy', 'de')}
+				#{/if}
+				#{else}
+				${roomDetails.freeFrom.format('d. MMMM yyyy', 'de')}&nbsp;bis&nbsp;${roomDetails.freeTo.format('d. MMMM yyyy', 'de')}
+				#{/else}
+			</p>
+		</div>
+		
+		<div class="details">
+			<h2>das Zimmer</h2>
+			<p>
+				Zimmergröße:&nbsp;${roomDetails.roomSize}
+			</p>
+		</div>
+		
+		<div class="criteria">
+			<h2>die Anforderungen</h2>
+			<div>Alter: #{ageRange criteria.ageRange /}</div>
+			<div>Geschlecht: #{genders criteria.genders /}</div>
+		</div>
+	
+	
+		#{if user?.appliedFor(offer)}
+			SCHON BEWORBEN
+		#{/if}
+		#{else}
+			#{if user}
+			<div id="application_questions">
+				<p>Die WG bittet dich, folgende Fragen zu beantworten:</p>
+				<ol>
+					<li>${offer.question}</li>
+				</ol>
+			</div>
+			#{form @Applications.apply(offer.id), id:'application_form'}
+				#{field 'application.message'}
+					<label for="${field.id}" class="caption">Deine Nachricht an die WG:</label>
+					<br />
+					<textarea id="${field.id}" name="${field.name}" data-validate="${field.validationData}" class="${field.errorClass}">${field.value}</textarea>
+					<span class="error">${field.error}</span>
+				#{/}
+				<button>Bewerben!</button>
+			#{/form}
+			#{/if}
+			#{else}
+				<p>Du musst dich einloggen, um dich für die WG zu bewerben.</p>
+				<a href="#{loginUrl continue:request.path /}">Mit Google Account einloggen</a>
+			#{/else}
+		#{/else}
+	</div>
+	
 	<div id="maps">
 		<div id="map_canvas"
 			data-center-lat="${flatshare.geoLocation.getLatitude()}"
@@ -29,79 +103,4 @@
 			Street View wurde für diese Anzeige deaktiviert.
 		#{/else}
 	</div>
-		
-	<div class="flatshare">
-		<h2>die WG</h2>
-		<div class="address">#{address flatshare.address /}</div>
-		<div class="street_map"></div>
-		<div class="street_view"></div>
-		
-		<div>Stockwerk: #{enum flatshare.floor /}</div>
-		<div>Bewohnte Zimmer: ${flatshare.numberOfRooms}</div>
-		<div>Rauchen: #{enum flatshare.smokingTolerance /}</div>
-		<div>Haustyp: #{enum flatshare.typeOfHouse /}</div>
-		<div>Gadgets: #{enumJoin flatshare.appliances /}</div>
-		<div>Zusatzflächen: #{enumJoin flatshare.additionalSpaces /}</div>
-	</div>
-	
-	<div class="total_rent">
-		<h2>der Preis</h2>
-		<p>
-			Gesamtmiete / Monat:&nbsp;#{money roomDetails.totalRentPerMonth /}
-		</p>
-	</div>
-	
-	<div class="free_dates">
-		<h2>der Zeitraum</h2>
-		<p>#{if roomDetails.freeTo == null}
-			ab ${roomDetails.freeFrom.format('d. MMMM yyyy', 'de')}
-			#{/if}
-			#{else}
-			${roomDetails.freeFrom.format('d. MMMM yyyy', 'de')}&nbsp;bis&nbsp;${roomDetails.freeTo.format('d. MMMM yyyy', 'de')}
-			#{/else}
-		</p>
-	</div>
-	
-	<div class="details">
-		<h2>das Zimmer</h2>
-		<p>
-			Zimmergröße:&nbsp;${roomDetails.roomSize}
-		</p>
-	</div>
-	
-	<div class="criteria">
-		<h2>die Anforderungen</h2>
-		<div>Alter: #{ageRange criteria.ageRange /}</div>
-		<div>Geschlecht: #{genders criteria.genders /}</div>
-	</div>
-
-
-	#{if user != null && user.appliedFor(offer)}
-		SCHON BEWORBEN
-	#{/if}
-	#{else}
-	
-	<button id="apply_button">Bewerben?</button>
-	
-	<div id="apply_dialog" title="Bewerbung verschicken" class="dialog">
-		<div id="application_questions">
-			<p>Die WG bittet dich, folgende Fragen zu beantworten:</p>
-			<ol>
-				<li>${offer.question}</li>
-			</ol>
-		</div>
-		#{form @Applications.apply(), id:'application_form'}
-			<input name="roomOfferId" type="hidden" value="${offer.id}">
-			
-			#{field 'application.message'}
-				<label for="${field.id}" class="caption">&{field.name}</label>
-				<textarea id="${field.id}" name="${field.name}" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}"></textarea>
-				<span class="error">${field.error}</span>
-			#{/}
-			<button>Bewerben!</button>
-		#{/form}
-	</div>
-	
-	#{/else}
-	
 </div>

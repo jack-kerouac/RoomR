@@ -10,7 +10,6 @@ import play.mvc.Router.ActionDefinition;
 import controllers.formdata.InstantSearchFormData;
 import controllers.formdata.RegistrationFormData;
 import facade.UserFacade;
-import facade.exception.NoAuthenticationProviderUserLoggedInException;
 
 @InjectSupport
 public class Registration extends AbstractRoomrController {
@@ -74,11 +73,9 @@ public class Registration extends AbstractRoomrController {
 		roomrUser.birthdate = formData.birthdate;
 		roomrUser.gender = formData.gender;
 
-		try {
-			roomrUser = userFacade.createUser(roomrUser);
-		} catch (NoAuthenticationProviderUserLoggedInException e) {
-			unauthorized();
-		}
+		// might throw an exception if no authentication provider user is logged
+		// in, this exception is handled in parent class
+		roomrUser = userFacade.createUser(roomrUser);
 
 		Cache.delete(session.getId() + Search.INSTANT_SEARCH_DATA_CACHE_KEY);
 
