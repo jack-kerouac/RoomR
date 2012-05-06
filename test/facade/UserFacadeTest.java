@@ -5,11 +5,11 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
-import models.common.Age;
 import models.common.Gender;
 import models.user.RoomrUser;
 import models.user.RoomrUserRepository;
 
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -68,7 +68,7 @@ public class UserFacadeTest extends UnitTest {
 	private RoomrUser createRoomrUser() {
 		RoomrUser roomrUser = new RoomrUser();
 		roomrUser.name = "Test";
-		roomrUser.age = new Age(20);
+		roomrUser.birthdate = new DateTime(0).toDate();
 		roomrUser.gender = Gender.male;
 		return roomrUser;
 	}

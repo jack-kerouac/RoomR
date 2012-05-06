@@ -31,7 +31,7 @@ public class RegistrationTest extends FunctionalTest {
 
 		Response response = POST(getRegistrationPostUrl("/"), //
 				ImmutableMap.of("formData.name", "", //
-						"formData.age", "5", //
+						"formData.birthdate", "01.01.1970", //
 						"formData.gender", "male"));
 
 		assertStatus(HttpStatus.SC_MOVED_TEMPORARILY, response);
@@ -39,7 +39,7 @@ public class RegistrationTest extends FunctionalTest {
 		assertTrue(location.startsWith("/register"));
 		assertTrue(location.contains("redirectUrl=%2F"));
 		assertTrue(location.contains("formData.name="));
-		assertTrue(location.contains("formData.age=5"));
+		assertTrue(location.contains("formData.birthdate=01.01.1970"));
 		assertTrue(location.contains("formData.gender=male"));
 	}
 
@@ -49,7 +49,7 @@ public class RegistrationTest extends FunctionalTest {
 
 		Response response = POST(getRegistrationPostUrl("/"), //
 				ImmutableMap.of("formData.name", "Test", //
-						"formData.age", "5", //
+						"formData.birthdate", "01.01.1970", //
 						"formData.gender", "male"));
 
 		assertStatus(HttpStatus.SC_MOVED_TEMPORARILY, response);

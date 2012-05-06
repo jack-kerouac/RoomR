@@ -1,13 +1,12 @@
 package models.user;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Embedded;
 import javax.persistence.Id;
 
 import models.application.RoomOfferApplication;
-import models.common.Age;
 import models.common.Gender;
 import models.flatshare.Flatshare;
 import models.offer.RoomOffer;
@@ -32,8 +31,7 @@ public class RoomrUser extends ObjectifyModel {
 
 	public String name;
 
-	@Embedded
-	public Age age;
+	public Date birthdate;
 
 	public Gender gender;
 
@@ -107,7 +105,7 @@ public class RoomrUser extends ObjectifyModel {
 
 		stringHelper.add("gaeUser", gaeUser);
 		stringHelper.add("name", name);
-		stringHelper.add("age", age);
+		stringHelper.add("birthdate", birthdate);
 		stringHelper.add("gender", gender);
 
 		// TODO reactivate toString method
