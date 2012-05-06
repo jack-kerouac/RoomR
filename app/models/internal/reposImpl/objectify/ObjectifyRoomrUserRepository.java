@@ -49,4 +49,10 @@ public class ObjectifyRoomrUserRepository implements RoomrUserRepository {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void remove(RoomrUser user) {
+		// TODO Auto-generated method stub
+		
+	}
 }

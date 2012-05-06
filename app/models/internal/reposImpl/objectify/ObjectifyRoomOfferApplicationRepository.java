@@ -21,4 +21,16 @@ public class ObjectifyRoomOfferApplicationRepository implements RoomOfferApplica
 		return null;
 	}
 
+	@Override
+	public Set<RoomOfferApplication> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void remove(RoomOfferApplication application) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
