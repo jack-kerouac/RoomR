@@ -11,12 +11,14 @@ import models.common.Gender;
 import models.ranking.OfferRanker;
 import models.ranking.matching.ScoredRoomOffer;
 import models.request.RoomRequest;
+import models.user.RoomrUser;
 import play.cache.Cache;
 import play.modules.guice.InjectSupport;
 
 import com.google.common.base.Optional;
 
 import controllers.formdata.InstantSearchFormData;
+import facade.UserFacade;
 
 @InjectSupport
 public class Search extends AbstractRoomrController {
@@ -25,14 +27,26 @@ public class Search extends AbstractRoomrController {
 	@Inject
 	private static OfferRanker ranker;
 
+	@Inject
+	private static UserFacade userFacade;
+
 	public static void searchForm(String city, double max_rent, int age, Gender gender) {
 		Floor[] floors = Floor.values();
 
+		Optional<RoomrUser> loggedInUser = userFacade.getLoggedInUser();
+
 		InstantSearchFormData formData = new InstantSearchFormData();
-		formData.city = city;
+		if (age == 0 && loggedInUser.isPresent()) {
+			age = loggedInUser.get().getAge();
+		}
 		formData.age = age;
-		formData.maxRentPerMonthInEuro = max_rent;
+		if (gender == null && loggedInUser.isPresent()) {
+			gender = loggedInUser.get().gender;
+		}
 		formData.gender = gender;
+
+		formData.city = city;
+		formData.maxRentPerMonthInEuro = max_rent;
 
 		render((Object) floors, formData);
 	}
@@ -40,8 +54,9 @@ public class Search extends AbstractRoomrController {
 	public static void offers(InstantSearchFormData formData) {
 		// if no attribute of the request is set, the whole request is null.
 		// Thus, create one.
-		if (formData == null)
+		if (formData == null) {
 			formData = new InstantSearchFormData();
+		}
 
 		Age seekerAge = null;
 		if (formData.age != null) {

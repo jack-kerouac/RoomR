@@ -10,6 +10,10 @@ import models.application.RoomOfferApplication;
 import models.common.Gender;
 import models.flatshare.Flatshare;
 import models.offer.RoomOffer;
+
+import org.joda.time.DateTime;
+import org.joda.time.Period;
+
 import play.modules.objectify.Datastore;
 import play.modules.objectify.ObjectifyModel;
 
@@ -36,6 +40,11 @@ public class RoomrUser extends ObjectifyModel {
 	public Gender gender;
 
 	private Key<Flatshare> flatshareKey;
+
+	public int getAge() {
+		Period period = new Period(new DateTime(birthdate), new DateTime());
+		return period.getYears();
+	}
 
 	/**
 	 * loads the (cached) flatshare for this user from the datastore
