@@ -2,10 +2,12 @@ package models.internal.reposImpl.objectify;
 
 import java.util.Set;
 
-import play.modules.objectify.Datastore;
-
 import models.flatshare.Flatshare;
 import models.flatshare.FlatshareRepository;
+import play.modules.objectify.Datastore;
+
+import com.google.common.collect.ImmutableSet;
+import com.googlecode.objectify.Query;
 
 public class ObjectifyFlatshareRepository implements FlatshareRepository{
 
@@ -16,8 +18,8 @@ public class ObjectifyFlatshareRepository implements FlatshareRepository{
 
 	@Override
 	public Set<Flatshare> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		Query<Flatshare> query = Datastore.query(Flatshare.class);
+		return ImmutableSet.copyOf(query);
 	}
 
 	@Override
