@@ -9,6 +9,18 @@ seekerGender=Dein Geschlecht
 
 application.message=Deine Nachricht
 
+Floor.basement=Keller
+Floor.ground=Erdgeschoss
+Floor.first=1. OG
+Floor.second=2. OG
+Floor.third=3. OG
+Floor.forth=4. OG
+Floor.fifth=5. OG
+Floor.higher=wahnsinnig hoch
+
+SmokingTolerance.prohibited=verboten
+SmokingTolerance.allowedInFlat=erlaubt
+SmokingTolerance.allowedInRoom=im Zimmer erlaubt
 
 # VALIDATION ERRORS
 validation.required=Benötigt
