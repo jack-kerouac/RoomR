@@ -15,6 +15,7 @@ import models.common.Floor;
 
 import models.application.RoomOfferApplicationRepository;
 import models.flatshare.Flatshare;
+import models.flatshare.FlatshareRepository;
 import models.flatshare.SmokingTolerance;
 import models.offer.RoomOffer;
 import models.offer.RoomOfferRepository;
@@ -55,6 +56,9 @@ public class DevelopmentModelDataLoader {
 	@Inject
 	private static RoomOfferApplicationRepository applicationRepository;
 
+	@Inject
+	private static FlatshareRepository flatshareRepository;
+
 
 	public static void loadFixtures(File file) {
 		Constructor constructor = new Constructor();
@@ -78,6 +82,8 @@ public class DevelopmentModelDataLoader {
 				offerRepository.add((RoomOffer) o);
 			else if (o instanceof RoomOfferApplication)
 				applicationRepository.add((RoomOfferApplication) o);
+			else if (o instanceof Flatshare)
+				flatshareRepository.add((Flatshare) o);
 		}
 	}
 
