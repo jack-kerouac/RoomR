@@ -8,22 +8,16 @@ import play.cache.Cache;
 import play.data.validation.Valid;
 import play.modules.guice.InjectSupport;
 import play.mvc.Router.ActionDefinition;
-
-import com.google.appengine.api.users.User;
-import com.google.appengine.api.users.UserService;
-
 import controllers.formdata.InstantSearchFormData;
 import controllers.formdata.RegistrationFormData;
 import facade.UserFacade;
+import facade.exception.NoAuthenticationProviderUserLoggedInException;
 import facade.exception.NoUserLoggedInException;
 
 @InjectSupport
 public class Registration extends AbstractRoomrController {
 	@Inject
 	private static UserFacade userFacade;
-
-	@Inject
-	private static UserService userService;
 
 	/**
 	 * Creates an URL to the registration form which handles the (potential)
@@ -40,13 +34,12 @@ public class Registration extends AbstractRoomrController {
 	}
 
 	public static void registrationForm(String redirectUrl, RegistrationFormData formData) {
-		User currentGaeUser = userService.getCurrentUser();
-
-		if (currentGaeUser == null) {
-			// the user is not logged in with his google account, so redirect
-			// him back to the google login page
+		if (!userFacade.isAuthenticationProviderUserLoggedIn()) {
+			// the user is not logged in with an authentication provider
+			// account, so redirect him back to the authentication provider
+			// login page
 			String registrationFormURL = createRegistrationURL(redirectUrl);
-			String loginURL = userService.createLoginURL(registrationFormURL);
+			String loginURL = userFacade.getAuthenticationProviderLoginUrl(registrationFormURL);
 			redirect(loginURL);
 		}
 
@@ -69,8 +62,7 @@ public class Registration extends AbstractRoomrController {
 			}
 		}
 
-		String nickname = currentGaeUser.getNickname();
-		render(redirectUrl, formData, nickname);
+		render(redirectUrl, formData);
 	}
 
 	public static void register(String redirectUrl, @Valid RegistrationFormData formData) {
@@ -79,20 +71,16 @@ public class Registration extends AbstractRoomrController {
 			Registration.registrationForm(redirectUrl, formData);
 		}
 
-		User currentGaeUser = userService.getCurrentUser();
-
-		if (currentGaeUser == null) {
-			unauthorized();
-		}
-
 		RoomrUser roomrUser = new RoomrUser();
 		roomrUser.name = formData.name;
 		roomrUser.age = new Age(formData.age);
 		roomrUser.gender = formData.gender;
-		roomrUser.gaeUser = currentGaeUser;
-		roomrUser.gaeUserEmail = currentGaeUser.getEmail();
 
-		roomrUser = userFacade.createUser(roomrUser);
+		try {
+			roomrUser = userFacade.createUser(roomrUser);
+		} catch (NoAuthenticationProviderUserLoggedInException e) {
+			unauthorized();
+		}
 
 		Cache.delete(session.getId() + Search.INSTANT_SEARCH_DATA_CACHE_KEY);
 
