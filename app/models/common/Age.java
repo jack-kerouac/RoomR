@@ -7,7 +7,6 @@ import com.google.code.twig.annotation.Embedded;
 @Embedded
 public final class Age implements Comparable<Age> {
 
-	@Min(0)
 	public int years;
 
 	public Age() {}
