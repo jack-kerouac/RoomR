@@ -478,22 +478,6 @@ roomr.viewOffer = (function() {
 	my.init = function() {
 		var flatshareLocation, pov;
 		
-		$('#apply_button').click(function() {
-			$('#apply_dialog').show('slide', { direction: 'up'});
-			$('#apply_button').hide();
-			
-//			$('#apply_dialog').dialog({ modal: true, minHeight: 400, minWidth: 600,
-//				buttons: [
-//				          {
-//							text: "Nachricht versenden!",
-//							click: function() {
-//								alert('TODO: send message');
-//								$(this).dialog("close");
-//							}
-//				          }
-//				          ]});
-		});
-		
 		flatshareLocation = new google.maps.LatLng($("#map_canvas").attr('data-center-lat'), $("#map_canvas").attr('data-center-lng'));
 		
 		// STREET MAP
