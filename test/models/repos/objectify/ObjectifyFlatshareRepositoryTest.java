@@ -10,8 +10,8 @@ import models.*;
 import models.common.Address;
 import models.common.Floor;
 import models.flatshare.Flatshare;
-import models.flatshare.MapParameters;
 import models.flatshare.SmokingTolerance;
+import models.flatshare.StreetViewParameters;
 import models.internal.reposImpl.objectify.ObjectifyFlatshareRepository;
 
 
@@ -31,19 +31,19 @@ public class ObjectifyFlatshareRepositoryTest extends UnitTest {
 		}
 		
 		// initialize mocked Flatshare for testing
-		Address mockedAddress = new Address("street", 123, "82061", "city");
+		Address mockedAddress = new Address("street", "123", "82061", "city");
 		GeoPt mockedGeoPt = new GeoPt(22.98f, 31.412f);
-		MapParameters mockedMapParameters = new MapParameters();
-		mockedMapParameters.displayStreetView = false;
-		mockedMapParameters.streetViewGeoLocation = new GeoPt(1.98f, 8.412f);
-		mockedMapParameters.streetViewHeading = 32.3;
-		mockedMapParameters.streetViewPitch = 23.2;
-		mockedMapParameters.streetViewZoom = 34.2;
+		StreetViewParameters mockedStreetViewParameters = new StreetViewParameters();
+		mockedStreetViewParameters.displayStreetView = false;
+		mockedStreetViewParameters.streetViewGeoLocation = new GeoPt(1.98f, 8.412f);
+		mockedStreetViewParameters.streetViewHeading = 32.3;
+		mockedStreetViewParameters.streetViewPitch = 23.2;
+		mockedStreetViewParameters.streetViewZoom = 34.2;
 		
 		mockedFlatshare = new Flatshare();
 		mockedFlatshare.address = mockedAddress;
 		mockedFlatshare.geoLocation = mockedGeoPt;
-		mockedFlatshare.mapParameters = mockedMapParameters;
+		mockedFlatshare.streetViewParameters = mockedStreetViewParameters;
 		mockedFlatshare.floor = Floor.forth;
 		mockedFlatshare.smokingTolerance = SmokingTolerance.allowedInRoom;
 	}
@@ -82,26 +82,26 @@ public class ObjectifyFlatshareRepositoryTest extends UnitTest {
 		// check geo pt location
 		assertTrue("GeoPt of persisted flatshare is not consistent", 
 				persistedFlatshare.geoLocation.equals(mockedFlatshare.geoLocation));
-		// check map parameters
-		assertEquals("display street view flag of persisted map parameters is not consistent",
-				mockedFlatshare.mapParameters.displayStreetView,
-				persistedFlatshare.mapParameters.displayStreetView
+		// check street view parameters
+		assertEquals("display street view flag of persisted street view parameters is not consistent",
+				mockedFlatshare.streetViewParameters.displayStreetView,
+				persistedFlatshare.streetViewParameters.displayStreetView
 		);
-		assertTrue("street view geo location of persisted map parameters is not consistent",
-				mockedFlatshare.mapParameters.streetViewGeoLocation.equals(
-						persistedFlatshare.mapParameters.streetViewGeoLocation
+		assertTrue("street view geo location of persisted street view parameters is not consistent",
+				mockedFlatshare.streetViewParameters.streetViewGeoLocation.equals(
+						persistedFlatshare.streetViewParameters.streetViewGeoLocation
 		));
-		assertEquals("street view heading of persisted map parameters is not consistent",
-				mockedFlatshare.mapParameters.streetViewHeading,
-				persistedFlatshare.mapParameters.streetViewHeading, 0.0
+		assertEquals("street view heading of persisted street view parameters is not consistent",
+				mockedFlatshare.streetViewParameters.streetViewHeading,
+				persistedFlatshare.streetViewParameters.streetViewHeading, 0.0
 		);
-		assertEquals("street view pitch of persisted map parameters is not consistent",
-				mockedFlatshare.mapParameters.streetViewPitch,
-				persistedFlatshare.mapParameters.streetViewPitch, 0.0
+		assertEquals("street view pitch of persisted street view parameters is not consistent",
+				mockedFlatshare.streetViewParameters.streetViewPitch,
+				persistedFlatshare.streetViewParameters.streetViewPitch, 0.0
 		);
-		assertEquals("street view zoom of persisted map parameters is not consistent",
-				mockedFlatshare.mapParameters.streetViewZoom,
-				persistedFlatshare.mapParameters.streetViewZoom, 0.0
+		assertEquals("street view zoom of persisted street view parameters is not consistent",
+				mockedFlatshare.streetViewParameters.streetViewZoom,
+				persistedFlatshare.streetViewParameters.streetViewZoom, 0.0
 		);
 		// check floor
 		assertEquals("floor of persisted flatshare is not consistent",
