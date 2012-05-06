@@ -22,18 +22,36 @@ public class Registration extends AbstractRoomrController {
 	@Inject
 	private static RoomrUserRepository userRepository;
 
-	public static void registrationForm(RegistrationFormData formData) {
+	/**
+	 * Creates an URL to the registration form which handles the (potential)
+	 * registration of the user. The registration form will make sure to
+	 * redirect the user in all cases to redirectUrl.
+	 */
+	public static String createRegistrationURL(String redirectUrl) {
+		ActionDefinition registrationFormAction = reverse();
+		{
+			Registration.registrationForm(redirectUrl, null);
+		}
+		registrationFormAction.absolute();
+		return registrationFormAction.url;
+	}
+
+	public static void registrationForm(String redirectUrl, RegistrationFormData formData) {
 		UserService userService = UserServiceFactory.getUserService();
 		User currentGaeUser = userService.getCurrentUser();
 
 		if (currentGaeUser == null) {
-			ActionDefinition registrationFormAction = reverse();
-			{
-				Registration.registrationForm(formData);
-			}
-			registrationFormAction.absolute();
-			String loginURL = userService.createLoginURL(registrationFormAction.url);
+			// the user is not logged in with his google account, so redirect
+			// him back to the google login page
+			String registrationFormURL = createRegistrationURL(redirectUrl);
+			String loginURL = userService.createLoginURL(registrationFormURL);
 			redirect(loginURL);
+		}
+
+		if (userRepository.findUser(currentGaeUser) != null) {
+			// the user is already logged in and has an account in RoomR, so
+			// just redirect him to his final target
+			redirect(redirectUrl);
 		}
 
 		if (formData == null) {
@@ -47,13 +65,13 @@ public class Registration extends AbstractRoomrController {
 		}
 
 		String nickname = currentGaeUser.getNickname();
-		render(formData, nickname);
+		render(redirectUrl, formData, nickname);
 	}
 
-	public static void register(@Valid RegistrationFormData formData) {
+	public static void register(String redirectUrl, @Valid RegistrationFormData formData) {
 		if (validation.hasErrors()) {
 			validation.keep(); // keep the errors for the next request
-			Registration.registrationForm(formData);
+			Registration.registrationForm(redirectUrl, formData);
 		}
 
 		UserService userService = UserServiceFactory.getUserService();
@@ -64,6 +82,7 @@ public class Registration extends AbstractRoomrController {
 		}
 
 		RoomrUser roomrUser = new RoomrUser();
+		roomrUser.name = formData.name;
 		roomrUser.age = new Age(formData.age);
 		roomrUser.gender = formData.gender;
 		roomrUser.gaeUser = currentGaeUser;
@@ -73,7 +92,6 @@ public class Registration extends AbstractRoomrController {
 
 		Cache.delete(session.getId() + Search.INSTANT_SEARCH_DATA_CACHE_KEY);
 
-		// TODO: redirect to something sane
-		Start.start();
+		redirect(redirectUrl);
 	}
 }

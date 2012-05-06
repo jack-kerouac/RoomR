@@ -16,7 +16,7 @@ import com.google.common.base.Objects;
 import com.googlecode.objectify.annotation.Cached;
 
 @Cached
-public class Flatshare extends ObjectifyModel{
+public class Flatshare extends ObjectifyModel {
 
 	@Id
 	public Long id;
@@ -28,22 +28,22 @@ public class Flatshare extends ObjectifyModel{
 	public GeoPt geoLocation;
 
 	@Embedded
-	public MapParameters mapParameters;
-	
+	public StreetViewParameters streetViewParameters;
+
 	public Floor floor;
-	
+
 	public SmokingTolerance smokingTolerance;
-	
-	
-	public Set<RoomrUser> getResidents(){
+
+	public Set<RoomrUser> getResidents() {
 		// TODO implement
-		return new HashSet<RoomrUser> ();
+		return new HashSet<RoomrUser>();
 	}
-	
+
 	@Override
 	public String toString() {
 		return Objects.toStringHelper(this).add("id", id).add("address", address).add("geoLocation", geoLocation)
-				.add("floor", floor).add("smoking tolerance", smokingTolerance).add("residents", getResidents()).toString();
+				.add("floor", floor).add("smoking tolerance", smokingTolerance).add("residents", getResidents())
+				.toString();
 	}
 
 	@Override

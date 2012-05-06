@@ -1,7 +1,6 @@
 package models.user;
 
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.Set;
 
 import javax.persistence.Embedded;
@@ -14,7 +13,6 @@ import models.flatshare.Flatshare;
 import models.offer.RoomOffer;
 import play.modules.objectify.Datastore;
 import play.modules.objectify.ObjectifyModel;
-import play.modules.objectify.ObjectifyService;
 
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.users.User;
@@ -25,7 +23,6 @@ import com.google.common.collect.Iterables;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Query;
 import com.googlecode.objectify.annotation.Cached;
-import com.googlecode.objectify.annotation.NotSaved;
 
 @Cached
 public class RoomrUser extends ObjectifyModel {
@@ -34,13 +31,15 @@ public class RoomrUser extends ObjectifyModel {
 	public String gaeUserEmail;
 	public User gaeUser;
 
+	public String name;
+
 	@Embedded
 	public Age age;
 
 	public Gender gender;
 
 	private Key<Flatshare> flatshareKey;
-	
+
 	/**
 	 * loads the (cached) flatshare for this user from the datastore
 	 * 
@@ -54,8 +53,8 @@ public class RoomrUser extends ObjectifyModel {
 	}
 
 	/**
-	 * Sets the flatshare for this RoomrUser. If the flatshare hasn't been persisted yet,
-	 * this will be done first to obtain a valid key.
+	 * Sets the flatshare for this RoomrUser. If the flatshare hasn't been
+	 * persisted yet, this will be done first to obtain a valid key.
 	 * 
 	 * @param flatshare
 	 *            the Flatshare which should be set for this user
@@ -73,22 +72,20 @@ public class RoomrUser extends ObjectifyModel {
 
 	/**
 	 * fetches the applications from the datastore which belong to this user
+	 * 
 	 * @return this users's applications
 	 */
-	public Set<RoomOfferApplication> getApplications(){
+	public Set<RoomOfferApplication> getApplications() {
 		Set<RoomOfferApplication> result = new HashSet<RoomOfferApplication>();
-		Query<RoomOfferApplication> query = 
-				Datastore
-					.query(RoomOfferApplication.class)
-					.filter("applicantKey", KeyFactory.createKey("RoomrUser", this.gaeUserEmail));
+		Query<RoomOfferApplication> query = Datastore.query(RoomOfferApplication.class).filter("applicantKey",
+				KeyFactory.createKey("RoomrUser", this.gaeUserEmail));
 
-		for(RoomOfferApplication roomOfferApplication : query ){
+		for (RoomOfferApplication roomOfferApplication : query) {
 			result.add(roomOfferApplication);
 		}
 		return result;
 	}
-	
-	
+
 	public boolean appliedFor(final RoomOffer roomOffer) {
 		// TODO use query instead of in memory matching
 		return Iterables.any(getApplications(), new Predicate<RoomOfferApplication>() {
@@ -96,7 +93,7 @@ public class RoomrUser extends ObjectifyModel {
 			public boolean apply(RoomOfferApplication application) {
 				// TODO use getter
 				return false;
-//				return application.roomOffer.equals(roomOffer);
+				// return application.roomOffer.equals(roomOffer);
 			}
 		});
 	}
@@ -110,16 +107,17 @@ public class RoomrUser extends ObjectifyModel {
 		ToStringHelper stringHelper = Objects.toStringHelper(this);
 
 		stringHelper.add("gaeUser", gaeUser);
+		stringHelper.add("name", name);
 		stringHelper.add("age", age);
 		stringHelper.add("gender", gender);
 
-// TODO reactivate toString method
-//		stringHelper.add("applications", applications);
-//		if(currentFlatshare != null)
-//			stringHelper.add("currentFlatshare", currentFlatshare.address);
-//		else
-//			stringHelper.add("currentFlatshare", "none");
-		
+		// TODO reactivate toString method
+		// stringHelper.add("applications", applications);
+		// if(currentFlatshare != null)
+		// stringHelper.add("currentFlatshare", currentFlatshare.address);
+		// else
+		// stringHelper.add("currentFlatshare", "none");
+
 		return stringHelper.toString();
 	}
 }
