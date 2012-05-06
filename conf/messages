@@ -1,38 +1,21 @@
 # You can specialize this file for each language.
 # For example, for French create a messages.fr file
 
-genders.male=Mann
-genders.female=Frau
-
-age=Alter
-
-offer.criteria.genders=Geschlecht
-offer.criteria.ageRange=Alter
-offer.criteria.minAge=Mindestalter
-offer.criteria.maxAge=Maximalalter
-
-offer.flatshare.address.street=Straße
-offer.flatshare.address.streetNumber=Nr.
-offer.flatshare.address.zipCode=PLZ
-offer.flatshare.address.city=Stadt
-offer.flatshare.floor=Stockwerk
-offer.flatshare.smokingTolerance=Rauchen
-
-offer.flatshare.mapParameters.displayStreetView=Street View
-
-offer.roomDetails.totalRentPerMonthInEuro=Miete pro Monat
-offer.roomDetails.roomSize.squareMeters=Zimmergröße
-offer.roomDetails.rentPeriod=Zeitraum
-offer.roomDetails.freeFrom=Frei ab
-offer.roomDetails.freeTo=Frei bis
-
 request.city=Stadt
 request.minRoomSize.squareMeters=Min. Zimmergröße
 request.maxRentPerMonthInEuro=Max. Miete pro Monat
 seekerAge=Dein Alter
 seekerGender=Dein Geschlecht
 
-offerFormData.maxAge.error.smallerThanMinAge=Die Obergrenze muss größer als die Untergrenze sein.
-offerFormData.freeTo.error.beforeFreeFrom=Kein gültiges Zeitinterval
-
 application.message=Deine Nachricht
+
+
+# VALIDATION ERRORS
+validation.required=Benötigt
+validation.range=Nicht zwischen %2$d und %3$d 
+validation.invalid=Falscher Wert
+validation.email=Ungültige Email-Adresse
+
+validation.offerFormData.gendersEmpty=Du musst mindestens ein Geschlecht auswählen.
+validation.offerFormData.maxAgeSmallerThanMinAge=Die Obergrenze muss größer als die Untergrenze sein.
+validation.offerFormData.freeToBeforeFreeFrom=Kein gültiges Zeitintervall

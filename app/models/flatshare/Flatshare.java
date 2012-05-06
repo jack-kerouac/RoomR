@@ -33,7 +33,7 @@ public class Flatshare {
 
 	public GeoPt geoLocation;
 
-	public MapParameters mapParameters;
+	public StreetViewParameters streetViewParameters;
 	
 	public Floor floor;
 
