@@ -65,7 +65,7 @@
 				<li>
 				#{field 'formData.zipCode'}
 					<label for="${field.id}" class="caption">PLZ</label>
-					<input id="${field.id}" name="${field.name}" type="number" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass} postal-code">
+					<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass} postal-code">
 					<span class="error">${field.error}</span>
 				#{/}
 				#{field 'formData.city'}
