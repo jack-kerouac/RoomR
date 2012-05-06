@@ -29,8 +29,7 @@ public class ObjectifyRoomrUserRepository implements RoomrUserRepository {
 
 	@Override
 	public Set<RoomrUser> findAll() {
-		Query<RoomrUser> query = Datastore.query(RoomrUser.class);
-		return ImmutableSet.copyOf(query);
+		return ImmutableSet.copyOf(Datastore.query(RoomrUser.class));
 	}
 
 	@Override

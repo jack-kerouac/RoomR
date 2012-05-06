@@ -12,7 +12,6 @@ import controllers.formdata.InstantSearchFormData;
 import controllers.formdata.RegistrationFormData;
 import facade.UserFacade;
 import facade.exception.NoAuthenticationProviderUserLoggedInException;
-import facade.exception.NoUserLoggedInException;
 
 @InjectSupport
 public class Registration extends AbstractRoomrController {
@@ -41,15 +40,16 @@ public class Registration extends AbstractRoomrController {
 			String registrationFormURL = createRegistrationURL(redirectUrl);
 			String loginURL = userFacade.getAuthenticationProviderLoginUrl(registrationFormURL);
 			redirect(loginURL);
+			return;
 		}
 
-		try {
-			userFacade.getLoggedInUser();
+		if (userFacade.getLoggedInUser().isPresent()) {
 			// the user is already logged in and has an account in RoomR, so
 			// just redirect him to his final target
 			redirect(redirectUrl);
-		} catch (NoUserLoggedInException ignored) {
-			// Ok, go on an register the user
+			return;
+		} else {
+			// Ok, go on and register the user
 		}
 
 		if (formData == null) {

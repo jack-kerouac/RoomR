@@ -7,15 +7,13 @@ import models.user.RoomrUserRepository;
 
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
+import com.google.common.base.Optional;
 
 import facade.exception.NoAuthenticationProviderUserLoggedInException;
 import facade.exception.NoUserLoggedInException;
 
 public class UserFacade {
-	@Inject
 	private RoomrUserRepository userRepository;
-
-	@Inject
 	private UserService userService;
 
 	/**
@@ -47,18 +45,14 @@ public class UserFacade {
 	 *             If either no GAE user is logged in, or the logged in GAE user
 	 *             has no associated {@link RoomrUser}.
 	 */
-	public RoomrUser getLoggedInUser() throws NoUserLoggedInException {
+	public Optional<RoomrUser> getLoggedInUser() {
 		User currentGaeUser = userService.getCurrentUser();
 		if (currentGaeUser == null) {
-			throw new NoAuthenticationProviderUserLoggedInException("No GAE user is logged in!");
+			return Optional.absent();
 		}
 
 		RoomrUser roomrUser = userRepository.findUser(currentGaeUser);
-		if (roomrUser == null) {
-			throw new NoUserLoggedInException("The current GAE user has no associated RoomrUser!");
-		}
-
-		return roomrUser;
+		return Optional.fromNullable(roomrUser);
 	}
 
 	/**
@@ -83,5 +77,15 @@ public class UserFacade {
 	 */
 	public String getAuthenticationProviderLoginUrl(String continueUrl) {
 		return userService.createLoginURL(continueUrl);
+	}
+
+	@Inject
+	public void setUserRepository(RoomrUserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
+
+	@Inject
+	public void setUserService(UserService userService) {
+		this.userService = userService;
 	}
 }

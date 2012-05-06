@@ -38,6 +38,7 @@ public class RoomrModule extends AbstractModule {
 		bind(OfferMatcher.class).to(InmemoryMatcher.class);
 		bind(OfferSorter.class).to(OfferSorterByScore.class);
 
+		// bind facades
 		bind(SeekerFacade.class);
 		bind(ResidentFacade.class);
 		bind(AdministrationFacade.class);

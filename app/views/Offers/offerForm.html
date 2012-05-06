@@ -127,7 +127,7 @@
 			<li>
 			#{field 'formData.smokingTolerance'}
 				<label for="${field.id}" class="caption">Rauchen</label>
-				#{enumSelect 'formData.smokingTolerance', items:smokingTolerances, value:'prohibited', id:'offer_flatshare_smokingTolerance', class:'field' /}
+				#{enumSelect 'formData.smokingTolerance', items:smokingTolerances, value:'prohibited', id:'offer_smokingTolerance', class:'field' /}
 				<span class="error">${field.error}</span>
 			#{/}
 			</li>
@@ -146,7 +146,7 @@
 			#{/}
 			</li>
 			<li>
-			#{field 'formData.squareMeters'}
+			#{field 'formData.roomSize'}
 				<label for="${field.id}" class="caption">Zimmergröße</label>
 				<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
 				<label for="${field.id}">m²</label>

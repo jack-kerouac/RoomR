@@ -1,6 +1,6 @@
 package facade.exception;
 
-public class NoUserLoggedInException extends Exception {
+public class NoUserLoggedInException extends RuntimeException {
 	public NoUserLoggedInException() {
 		super();
 	}
