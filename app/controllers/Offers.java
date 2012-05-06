@@ -4,14 +4,11 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-import models.common.Address;
 import models.common.Age;
 import models.common.Floor;
 import models.common.FloorSpace;
 import models.common.Gender;
-import models.flatshare.Flatshare;
 import models.flatshare.SmokingTolerance;
-import models.flatshare.StreetViewParameters;
 import models.offer.RoomDetails;
 import models.offer.RoomOffer;
 import models.offer.RoomOfferRepository;
@@ -19,7 +16,6 @@ import models.offer.SeekerCriteria;
 import play.data.validation.Valid;
 import play.modules.guice.InjectSupport;
 
-import com.google.appengine.api.datastore.GeoPt;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
@@ -78,20 +74,20 @@ public class Offers extends AbstractRoomrController {
 
 		
 		// FLATSHARE
-		offer.flatshare = new Flatshare();
-		offer.flatshare.address = new Address(formData.street, formData.streetNumber, formData.zipCode, formData.city);
-		offer.flatshare.geoLocation = new GeoPt(formData.lat, formData.lng);
-
-		offer.flatshare.streetViewParameters = new StreetViewParameters();
-		offer.flatshare.streetViewParameters.displayStreetView = formData.displayStreetView;
-		offer.flatshare.streetViewParameters.streetViewGeoLocation = new GeoPt(formData.streetViewLat,
-				formData.streetViewLng);
-		offer.flatshare.streetViewParameters.streetViewHeading = formData.streetViewHeading;
-		offer.flatshare.streetViewParameters.streetViewPitch = formData.streetViewPitch;
-		offer.flatshare.streetViewParameters.streetViewZoom = formData.streetViewZoom;
-
-		offer.flatshare.floor = formData.floor;
-		offer.flatshare.smokingTolerance = formData.smokingTolerance;
+//		offer.flatshare = new Flatshare();
+//		offer.flatshare.address = new Address(formData.street, formData.streetNumber, formData.zipCode, formData.city);
+//		offer.flatshare.geoLocation = new GeoPt(formData.lat, formData.lng);
+//
+//		offer.flatshare.streetViewParameters = new StreetViewParameters();
+//		offer.flatshare.streetViewParameters.displayStreetView = formData.displayStreetView;
+//		offer.flatshare.streetViewParameters.streetViewGeoLocation = new GeoPt(formData.streetViewLat,
+//				formData.streetViewLng);
+//		offer.flatshare.streetViewParameters.streetViewHeading = formData.streetViewHeading;
+//		offer.flatshare.streetViewParameters.streetViewPitch = formData.streetViewPitch;
+//		offer.flatshare.streetViewParameters.streetViewZoom = formData.streetViewZoom;
+//
+//		offer.flatshare.floor = formData.floor;
+//		offer.flatshare.smokingTolerance = formData.smokingTolerance;
 
 		// ROOM DETAILS
 		offer.roomDetails = new RoomDetails();

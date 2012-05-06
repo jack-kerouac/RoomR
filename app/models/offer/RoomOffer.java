@@ -1,20 +1,28 @@
 package models.offer;
 
+import javax.persistence.Id;
+
+import play.modules.objectify.Datastore;
+import play.modules.objectify.ObjectifyModel;
+
 import models.flatshare.Flatshare;
 
 import com.google.code.twig.annotation.Child;
-import com.google.code.twig.annotation.Id;
 import com.google.common.base.Objects;
+import com.googlecode.objectify.Key;
+import com.googlecode.objectify.annotation.Cached;
+import com.googlecode.objectify.annotation.NotSaved;
 
-public final class RoomOffer {
+
+@Cached
+public final class RoomOffer extends ObjectifyModel{
 
 	@Id
 	public Long id;
 
-	@Child
-	public Flatshare flatshare;
+	private Key<Flatshare> flatshareKey;
 
-	@Child
+	@NotSaved
 	public RoomDetails roomDetails;
 
 	// a question that the flatshare can ask to applicants
@@ -22,13 +30,45 @@ public final class RoomOffer {
 	public String question = "Darth Vader oder Prinzessin Lea?";
 
 	@Child
+	@NotSaved
 	public SeekerCriteria criteria;
 
-	public RoomOffer() {}
 
+	
+	/**
+	 * Sets the flatshare for this RoomOffer. If the flatshare hasn't been persisted yet,
+	 * this will be done first to obtain a valid key.
+	 * @param flatshare the Flatshare which should be set for this user.
+	 */
+	public void setFlatshare(Flatshare flatshare) {
+		Key<Flatshare> keyOfNewFlatshare;
+		if (flatshare.id == null) {
+			// flatshare has to be persisted first to obtain a valid key
+			keyOfNewFlatshare = Datastore.put(flatshare);
+		} else {
+			keyOfNewFlatshare = new Key<Flatshare>(Flatshare.class, flatshare.id);
+		}
+		this.flatshareKey = keyOfNewFlatshare;
+	}
+
+	
+	/**
+	 * loads the (cached) flatshare for Room Offer from the datastore
+	 * 
+	 * @return the flatshare for this user
+	 */
+	public Flatshare getFlatshare() {
+		if (this.flatshareKey == null) {
+			return null;
+		}
+		return Datastore.find(this.flatshareKey, false);
+	}
+
+	
+	
 	@Override
 	public String toString() {
-		return Objects.toStringHelper(this).add("flatshare", flatshare).add("room details", roomDetails)
+		return Objects.toStringHelper(this).add("flatshare", getFlatshare()).add("room details", roomDetails)
 				.add("seeker criteria", criteria).toString();
 	}
 

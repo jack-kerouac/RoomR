@@ -35,7 +35,8 @@ public class TwigRoomOfferApplicationRepository implements RoomOfferApplicationR
 		return ImmutableSet.copyOf(Iterables.filter(allApplications, new Predicate<RoomOfferApplication>() {
 			@Override
 			public boolean apply(RoomOfferApplication application) {
-				return application.roomOffer.equals(roomOffer);
+				return false;
+//				return application.roomOffer.equals(roomOffer);
 			}
 		}));
 	}

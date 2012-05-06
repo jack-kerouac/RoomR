@@ -15,9 +15,6 @@ import com.google.appengine.api.users.User;
 public class RoomOfferApplicationsFacade {
 
 	@Inject
-	private RoomrUserRepository userRepository;
-
-	@Inject
 	private RoomOfferRepository roomOfferRepository;
 
 	@Inject
@@ -30,14 +27,9 @@ public class RoomOfferApplicationsFacade {
 		RoomOfferApplication application = new RoomOfferApplication();
 		application.currentState = State.WAITING_FOR_INVITATION;
 		application.message = message;
-		application.applicant = applicant;
-		application.roomOffer = offer;
+		application.setApplicant(applicant);
+		application.setRoomOffer(offer);
 		roomOfferApplicationRepository.add(application);
-
-		// ADD IT TO THE USER's APPLICATIONS
-		applicant.applications.add(application);
-		userRepository.update(applicant);
-
 		return application;
 	}
 }

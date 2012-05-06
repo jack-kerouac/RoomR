@@ -1,50 +1,49 @@
 package models.flatshare;
 
+import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.Embedded;
+import javax.persistence.Id;
 
 import models.common.Address;
 import models.common.Floor;
-import models.offer.RoomOffer;
 import models.user.RoomrUser;
+import play.modules.objectify.ObjectifyModel;
 
 import com.google.appengine.api.datastore.GeoPt;
-import com.google.code.twig.annotation.Child;
-import com.google.code.twig.annotation.Id;
-import com.google.code.twig.annotation.Independent;
 import com.google.common.base.Objects;
-import com.google.common.collect.Sets;
+import com.googlecode.objectify.annotation.Cached;
 
-public class Flatshare {
+@Cached
+public class Flatshare extends ObjectifyModel {
 
 	@Id
-	public long id;
-
-	// ROOM OFFERS
-	@Child
-	public RoomOffer roomOffer;
-
-	
-	// RESIDENTS
-	@Independent
-	public Set<RoomrUser> residents = Sets.newLinkedHashSet();
+	public Long id;
 
 	// LOCATION
+	@Embedded
 	public Address address;
 
 	public GeoPt geoLocation;
 
+	@Embedded
 	public StreetViewParameters streetViewParameters;
-	
+
 	public Floor floor;
 
-	
-	// ADDITIONAL ATTRIBUTES
 	public SmokingTolerance smokingTolerance;
-	
+
+	public Set<RoomrUser> getResidents() {
+		// TODO implement
+		return new HashSet<RoomrUser>();
+	}
+
 	@Override
 	public String toString() {
 		return Objects.toStringHelper(this).add("id", id).add("address", address).add("geoLocation", geoLocation)
-				.add("floor", floor).add("smoking tolerance", smokingTolerance).add("residents", residents).toString();
+				.add("floor", floor).add("smoking tolerance", smokingTolerance).add("residents", getResidents())
+				.toString();
 	}
 
 	@Override
