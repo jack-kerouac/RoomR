@@ -22,13 +22,11 @@ public final class RoomOffer extends ObjectifyModel {
 
 	@Embedded
 	public RoomDetails roomDetails;
-
-	// a question that the flatshare can ask to applicants
-	// TODO: make question(s) configurable on UI
-	public String question = "Darth Vader oder Prinzessin Lea?";
-
+	
 	@Embedded
 	public SeekerCriteria criteria;
+
+	public String description;
 
 	public String contactEmail;
 

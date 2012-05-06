@@ -83,6 +83,8 @@
     minAge: 10
     maxAge: 20
     genders: [male,female]
+  description: Hallo Leute, super WG, ole ole!
+  contactEmail: a@b.de
     
 - !offer
   id: 2
@@ -97,6 +99,8 @@
     minAge: 15
     maxAge: 25
     genders: [male]
+  description: Hallo Leute, super WG, ole ole!
+  contactEmail: c@d.de
 
 - !offer
   id: 3
@@ -110,6 +114,8 @@
     minAge: 20
     maxAge: 30
     genders: [female]
+  description: Hallo Leute, super WG, ole ole!
+  contactEmail: a@x.de
     
 - !offer
   id: 4
@@ -124,7 +130,8 @@
     minAge: 20
     maxAge: 80
     genders: [male,female]
-    
+  description: Hallo Leute, super WG, ole ole!
+  contactEmail: e@be.de
     
     
 - !user

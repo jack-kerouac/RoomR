@@ -133,6 +133,9 @@ public class Offers extends AbstractRoomrController {
 		offer.roomDetails.freeFrom = formData.freeFrom;
 		offer.roomDetails.freeTo = formData.freeTo;
 
+		// DESCRIPTION
+		offer.description = formData.description;
+		
 		// CONTACT DATA
 		offer.contactEmail = formData.email;
 

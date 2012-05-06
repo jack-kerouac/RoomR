@@ -78,6 +78,11 @@
 		<div>Geschlecht: #{genders criteria.genders /}</div>
 	</div>
 
+	<div class="description">
+		<h2>die Beschreibung</h2>
+		<div><pre>${offer.description}</pre></div>
+	</div>
+
 
 	#{if user != null && user.appliedFor(offer)}
 		SCHON BEWORBEN
@@ -87,12 +92,6 @@
 	<button id="apply_button">Bewerben?</button>
 	
 	<div id="apply_dialog" title="Bewerbung verschicken" class="dialog">
-		<div id="application_questions">
-			<p>Die WG bittet dich, folgende Fragen zu beantworten:</p>
-			<ol>
-				<li>${offer.question}</li>
-			</ol>
-		</div>
 		#{form @Applications.apply(), id:'application_form'}
 			<input name="roomOfferId" type="hidden" value="${offer.id}">
 			

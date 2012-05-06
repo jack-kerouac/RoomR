@@ -102,8 +102,12 @@ public class OfferFormData implements Serializable {
 	public Date freeTo;
 
 	
-	// CONTACT DATA
+	// DESCRIPTION
 	
+	public String description;
+	
+	
+	// CONTACT DATA
 	
 	@Required
 	@Email
