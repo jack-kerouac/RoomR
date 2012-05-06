@@ -27,7 +27,6 @@ public class TwigRoomOfferApplicationRepository implements RoomOfferApplicationR
 		datastoreProvider.get().store(newApplication);
 	}
 
-	@Override
 	public Set<RoomOfferApplication> findAllApplicationsFor(final RoomOffer roomOffer) {
 		ImmutableSet<RoomOfferApplication> allApplications = ImmutableSet.copyOf(datastoreProvider.get().find(
 				RoomOfferApplication.class));
@@ -36,7 +35,7 @@ public class TwigRoomOfferApplicationRepository implements RoomOfferApplicationR
 			@Override
 			public boolean apply(RoomOfferApplication application) {
 				return false;
-//				return application.roomOffer.equals(roomOffer);
+				// return application.roomOffer.equals(roomOffer);
 			}
 		}));
 	}
