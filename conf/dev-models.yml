@@ -113,20 +113,15 @@
   gaeUser: !!com.google.appengine.api.users.User [seeker@gmail.com, gmail.com]
   age: 25
   gender: female
-  applications: []
 
 - !user
   gaeUserEmail: resident@gmail.com
   gaeUser: !!com.google.appengine.api.users.User [resident@gmail.com, gmail.com]
   age: 26
   gender: male
-  applications: []
-  currentFlatshare: *knoebelstr
 
 - !user
   gaeUserEmail: Florian.Rampp@googlemail.com
   gaeUser: !!com.google.appengine.api.users.User [Florian.Rampp@googlemail.com, gmail.com]
   age: 28
   gender: male
-  applications: []
-  currentFlatshare: *knoebelstr
