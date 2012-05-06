@@ -1,16 +1,19 @@
 package models.user;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Embedded;
 import javax.persistence.Id;
 
 import models.application.RoomOfferApplication;
-import models.common.Age;
 import models.common.Gender;
 import models.flatshare.Flatshare;
 import models.offer.RoomOffer;
+
+import org.joda.time.DateTime;
+import org.joda.time.Period;
+
 import play.modules.objectify.Datastore;
 import play.modules.objectify.ObjectifyModel;
 
@@ -22,9 +25,8 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Query;
-import com.googlecode.objectify.annotation.Cached;
 
-@Cached
+//@Cached
 public class RoomrUser extends ObjectifyModel {
 
 	@Id
@@ -33,12 +35,16 @@ public class RoomrUser extends ObjectifyModel {
 
 	public String name;
 
-	@Embedded
-	public Age age;
+	public Date birthdate;
 
 	public Gender gender;
 
 	private Key<Flatshare> flatshareKey;
+
+	public int getAge() {
+		Period period = new Period(new DateTime(birthdate), new DateTime());
+		return period.getYears();
+	}
 
 	/**
 	 * loads the (cached) flatshare for this user from the datastore
@@ -108,7 +114,7 @@ public class RoomrUser extends ObjectifyModel {
 
 		stringHelper.add("gaeUser", gaeUser);
 		stringHelper.add("name", name);
-		stringHelper.add("age", age);
+		stringHelper.add("birthdate", birthdate);
 		stringHelper.add("gender", gender);
 
 		// TODO reactivate toString method

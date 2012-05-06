@@ -111,17 +111,17 @@
 - !user
   gaeUserEmail: seeker@gmail.com
   gaeUser: !!com.google.appengine.api.users.User [seeker@gmail.com, gmail.com]
-  age: 25
+  birthdate: 1982-01-25
   gender: female
 
 - !user
   gaeUserEmail: resident@gmail.com
   gaeUser: !!com.google.appengine.api.users.User [resident@gmail.com, gmail.com]
-  age: 26
+  birthdate: 1988-12-16
   gender: male
 
 - !user
   gaeUserEmail: Florian.Rampp@googlemail.com
   gaeUser: !!com.google.appengine.api.users.User [Florian.Rampp@googlemail.com, gmail.com]
-  age: 28
+  birthdate: 2001-04-30
   gender: male
