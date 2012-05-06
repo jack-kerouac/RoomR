@@ -72,14 +72,7 @@ public class ObjectifyFlatshareRepositoryTest extends UnitTest {
 		// check consistency of persisted flatshare
 		Flatshare persistedFlatshare = Iterables.getOnlyElement(persistedFlatshares);
 		// check address
-		assertEquals("street name of persisted address not consistent", mockedFlatshare.address.street,
-				persistedFlatshare.address.street);
-		assertEquals("street number of persisted address not consistent", mockedFlatshare.address.streetNumber,
-				persistedFlatshare.address.streetNumber);
-		assertEquals("zip Code of persisted address not consistent", mockedFlatshare.address.zipCode,
-				persistedFlatshare.address.zipCode);
-		assertEquals("city name of persisted address not consistent", mockedFlatshare.address.city,
-				persistedFlatshare.address.city);
+		assertTrue("address of persisted flatshare not consistent",mockedFlatshare.address.equals(persistedFlatshare.address));
 		// check geo pt location
 		assertTrue("GeoPt of persisted flatshare is not consistent",
 				persistedFlatshare.geoLocation.equals(mockedFlatshare.geoLocation));
