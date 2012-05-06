@@ -108,8 +108,6 @@ public class Offers extends AbstractRoomrController {
 
 		flatshare.floor = formData.floor;
 		flatshare.smokingTolerance = formData.smokingTolerance;
-		// TODO FR: when to do this?
-		// offer.flatshare = flatshare;
 
 		// ROOM DETAILS
 		offer.roomDetails = new RoomDetails();

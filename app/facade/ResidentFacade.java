@@ -18,9 +18,8 @@ public class ResidentFacade {
 
 	public void createFlatshareAndOffer(Flatshare newFlatshare, RoomOffer roomOffer) {
 		flatshareRepository.add(newFlatshare);
-
+		roomOffer.setFlatshare(newFlatshare);
 		roomOfferRepository.add(roomOffer);
-		
 		RoomrMailer.offerCreated(roomOffer);
 	}
 

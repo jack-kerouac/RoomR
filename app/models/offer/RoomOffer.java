@@ -7,16 +7,13 @@ import models.flatshare.Flatshare;
 import play.modules.objectify.Datastore;
 import play.modules.objectify.ObjectifyModel;
 
-import com.google.code.twig.annotation.Child;
 import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Cached;
-import com.googlecode.objectify.annotation.NotSaved;
-
 
 @Cached
-public final class RoomOffer extends ObjectifyModel{
+public final class RoomOffer extends ObjectifyModel {
 
 	@Id
 	public Long id;
@@ -30,17 +27,17 @@ public final class RoomOffer extends ObjectifyModel{
 	// TODO: make question(s) configurable on UI
 	public String question = "Darth Vader oder Prinzessin Lea?";
 
-
 	@Embedded
 	public SeekerCriteria criteria;
 
-
 	public String contactEmail;
-	
+
 	/**
-	 * Sets the flatshare for this RoomOffer. If the flatshare hasn't been persisted yet,
-	 * this will be done first to obtain a valid key.
-	 * @param flatshare the Flatshare which should be set for this user.
+	 * Sets the flatshare for this RoomOffer. If the flatshare hasn't been
+	 * persisted yet, this will be done first to obtain a valid key.
+	 * 
+	 * @param flatshare
+	 *            the Flatshare which should be set for this user.
 	 */
 	public void setFlatshare(Flatshare flatshare) {
 		Preconditions.checkState(flatshare.id != null, "flatshare must have been persisted before it can be set");
@@ -49,7 +46,6 @@ public final class RoomOffer extends ObjectifyModel{
 		this.flatshareKey = keyOfNewFlatshare;
 	}
 
-	
 	/**
 	 * loads the (cached) flatshare for Room Offer from the datastore
 	 * 
@@ -62,12 +58,10 @@ public final class RoomOffer extends ObjectifyModel{
 		return Datastore.find(this.flatshareKey, false);
 	}
 
-	
-	
 	@Override
 	public String toString() {
-		return Objects.toStringHelper(this).add("flatshare", getFlatshare()).add("room details", roomDetails)
-				.add("seeker criteria", criteria).toString();
+		return Objects.toStringHelper(this).add("id", id).add("flatshare", getFlatshare())
+				.add("room details", roomDetails).add("seeker criteria", criteria).toString();
 	}
 
 	@Override
