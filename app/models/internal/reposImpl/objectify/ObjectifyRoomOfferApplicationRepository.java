@@ -1,13 +1,13 @@
 package models.internal.reposImpl.objectify;
 
-import java.util.HashSet;
 import java.util.Set;
-
-import play.modules.objectify.Datastore;
 
 import models.application.RoomOfferApplication;
 import models.application.RoomOfferApplicationRepository;
-import models.offer.RoomOffer;
+import play.modules.objectify.Datastore;
+
+import com.google.common.collect.ImmutableSet;
+import com.googlecode.objectify.Query;
 
 public class ObjectifyRoomOfferApplicationRepository implements RoomOfferApplicationRepository {
 
@@ -17,20 +17,14 @@ public class ObjectifyRoomOfferApplicationRepository implements RoomOfferApplica
 	}
 
 	@Override
-	public Set<RoomOfferApplication> findAllApplicationsFor(RoomOffer roomOffer) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Set<RoomOfferApplication> findAll() {
-		return new HashSet<RoomOfferApplication> ();
+		Query<RoomOfferApplication> query = Datastore.query(RoomOfferApplication.class);
+		return ImmutableSet.copyOf(query);
 	}
 
 	@Override
 	public void remove(RoomOfferApplication application) {
-		// TODO Auto-generated method stub
-		
+		Datastore.delete(application);
 	}
 
 }
