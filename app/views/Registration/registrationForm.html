@@ -4,28 +4,47 @@
 
 <h1>Registrieren</h1>
 
-#{form @Registration.register(), id:'registration_form'}
-	<p>Wir brauchen noch zusätzliche Daten, damit sie sich registrieren können.</p>
-	<p>Ihre Referenzdaten, unter der wir diese Daten speichern, ist ${nickname}</p>
+#{form @Registration.register(redirectUrl), id:'registration_form', enctype:'multipart/form-data'}
+	<p>Wir brauchen noch zusätzliche Daten, damit du dich bei RoomR registrieren kannst.</p>
 
-	#{field 'formData.age'}
-		<label for="${field.id}">&{'age'}</label>
-		<input id="${field.id}" name="${field.name}" type="number" data-validate="${field.validationData}" value="${field.value}" class="age ${field.errorClass}">
-		<span class="error">${field.error}</span>
-	#{/}
-	
-	#{field 'formData.gender'}
-		<ul class="inline_buttons">
+	<fieldset name="user">
+		<legend>Benutzerdaten</legend>
+		
+		<ul>
 			<li>
-				<label for="${field.id}_male" class="caption">&{'genders.male'}</label>
-				<input id="${field.id}_male" name="${field.name}" type="radio" value="male" class="${field.errorClass}" ${formData.gender == models.common.Gender.male ? 'checked' : ''}>
+				#{field 'formData.name'}
+					<label class="caption" for="${field.id}">Name</label>
+					<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
+					<span class="error">${field.error}</span>
+				#{/}
 			</li>
+
 			<li>
-				<label for="${field.id}_female" class="caption">&{'genders.female'}</label>
-				<input id="${field.id}_female" name="${field.name}" type="radio" value="female" class="${field.errorClass}" ${formData.gender == models.common.Gender.female ? 'checked' : ''}>
+				#{field 'formData.age'}
+					<label class="caption" for="${field.id}">Alter</label>
+					<input id="${field.id}" name="${field.name}" type="number" data-validate="${field.validationData}" value="${field.value}" class="age ${field.errorClass}">
+					<span class="error">${field.error}</span>
+				#{/}
+			</li>
+	
+			<li>
+				#{field 'formData.gender'}
+					<label class="caption">Geschlecht</label>
+					<ul class="inline_buttons">
+						<li>
+							<input id="${field.id}_male" name="${field.name}" type="radio" value="male" class="${field.errorClass}" ${formData.gender == models.common.Gender.male ? 'checked' : ''}>
+							<label for="${field.id}_male" class="caption">Mann</label>
+						</li>
+						<li>
+							<input id="${field.id}_female" name="${field.name}" type="radio" value="female" class="${field.errorClass}" ${formData.gender == models.common.Gender.female ? 'checked' : ''}>
+							<label for="${field.id}_female" class="caption">Frau</label>
+						</li>
+					</ul>
+					<span class="error">${field.error}</span>
+				#{/}
 			</li>
 		</ul>
-		<span class="error">${field.error}</span>
-	#{/}
-	<button type="submit">Registrieren</button>
+	</fieldset>
+	
+	<button type="submit">Registrieren!</button>
 #{/form}
