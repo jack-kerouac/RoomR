@@ -79,7 +79,7 @@ public class OfferFormData implements Serializable {
 	
 	@Required
 	@Min(0.0)
-	public Double squareMeters;
+	public Double roomSize;
 	
 	@Required
 	public Date freeFrom;

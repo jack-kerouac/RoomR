@@ -111,7 +111,7 @@ public class Offers extends AbstractRoomrController {
 
 		// ROOM DETAILS
 		offer.roomDetails = new RoomDetails();
-		offer.roomDetails.roomSize = new FloorSpace(formData.squareMeters);
+		offer.roomDetails.roomSize = new FloorSpace(formData.roomSize);
 		offer.roomDetails.totalRentPerMonthInEuro = formData.totalRentPerMonthInEuro;
 		offer.roomDetails.freeFrom = formData.freeFrom;
 		offer.roomDetails.freeTo = formData.freeTo;
