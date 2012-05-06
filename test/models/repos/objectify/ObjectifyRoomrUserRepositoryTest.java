@@ -1,8 +1,8 @@
 package models.repos.objectify;
 
+import java.util.Date;
 import java.util.Set;
 
-import models.common.Age;
 import models.common.Gender;
 import models.internal.reposImpl.objectify.ObjectifyRoomrUserRepository;
 import models.user.RoomrUser;
@@ -35,7 +35,7 @@ public class ObjectifyRoomrUserRepositoryTest extends UnitTest {
 		mockedUser.gaeUserEmail = "user@roomr.com";
 		mockedUser.gaeUser = new User("user@roomr.com", "google.com");
 		mockedUser.name = "John Doe";
-		mockedUser.age = new Age(31);
+		mockedUser.birthdate = new Date(871908237123l);
 		mockedUser.gender = Gender.male;
 		// TODO set flatshare key
 	}
@@ -65,7 +65,8 @@ public class ObjectifyRoomrUserRepositoryTest extends UnitTest {
 		assertEquals("Google User is not consistent for previously persisted user", mockedUser.gaeUser,
 				persistedUser.gaeUser);
 		assertEquals("User name is not consistent for previously persisted user", mockedUser.name, persistedUser.name);
-		assertEquals("User age is not consistent for previously persisted user", mockedUser.age, persistedUser.age);
+		assertEquals("User age is not consistent for previously persisted user", mockedUser.birthdate,
+				persistedUser.birthdate);
 		assertEquals("User gender is not consistent for previously persisted user", mockedUser.gender,
 				persistedUser.gender);
 
