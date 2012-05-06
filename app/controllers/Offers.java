@@ -69,7 +69,7 @@ public class Offers extends AbstractRoomrController {
 		if (formData.freeFrom != null && formData.freeTo != null && formData.freeFrom.after(formData.freeTo)) {
 			validation.addError("formData.freeTo", "validation.offerFormData.freeToBeforeFreeFrom");
 		}
-
+		
 		if (validation.hasErrors()) {
 			// params.flash(); // add http parameters to the flash scope
 			validation.keep(); // keep the errors for the next request
@@ -109,8 +109,8 @@ public class Offers extends AbstractRoomrController {
 		offer.roomDetails.freeTo = formData.freeTo;
 
 		// CONTACT DATA
-		// TODO: email
-
+		offer.contactEmail = formData.email;
+		
 		residentFacade.createFlatshareAndOffer(flatshare, offer);
 
 		viewOffer(offer.id);

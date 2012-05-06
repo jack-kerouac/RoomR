@@ -1,0 +1,8 @@
+Hallo,
+
+deine Anzeige bei @@{Start.start} wurde angelegt.
+
+Unter folgender URL kannst du deine Anzeige bearbeiten oder löschen: @@{Offers.offerForm} (TODO)
+
+
+Dein RoomR Team

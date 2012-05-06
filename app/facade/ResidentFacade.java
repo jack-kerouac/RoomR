@@ -6,6 +6,7 @@ import models.flatshare.Flatshare;
 import models.flatshare.FlatshareRepository;
 import models.offer.RoomOffer;
 import models.offer.RoomOfferRepository;
+import notifiers.RoomrMailer;
 
 public class ResidentFacade {
 
@@ -19,6 +20,8 @@ public class ResidentFacade {
 		flatshareRepository.add(newFlatshare);
 
 		roomOfferRepository.add(roomOffer);
+		
+		RoomrMailer.offerCreated(roomOffer);
 	}
 
 }

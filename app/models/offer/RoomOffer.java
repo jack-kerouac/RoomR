@@ -2,10 +2,9 @@ package models.offer;
 
 import javax.persistence.Id;
 
+import models.flatshare.Flatshare;
 import play.modules.objectify.Datastore;
 import play.modules.objectify.ObjectifyModel;
-
-import models.flatshare.Flatshare;
 
 import com.google.code.twig.annotation.Child;
 import com.google.common.base.Objects;
@@ -34,6 +33,7 @@ public final class RoomOffer extends ObjectifyModel{
 	public SeekerCriteria criteria;
 
 
+	public String contactEmail;
 	
 	/**
 	 * Sets the flatshare for this RoomOffer. If the flatshare hasn't been persisted yet,
