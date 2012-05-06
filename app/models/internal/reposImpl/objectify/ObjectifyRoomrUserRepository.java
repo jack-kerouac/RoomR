@@ -1,58 +1,45 @@
 package models.internal.reposImpl.objectify;
 
-import java.util.HashSet;
 import java.util.Set;
 
-import models.flatshare.Flatshare;
 import models.user.RoomrUser;
 import models.user.RoomrUserRepository;
 import play.modules.objectify.Datastore;
-import play.modules.objectify.ObjectifyService;
 
-import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.appengine.api.users.User;
 import com.google.common.collect.ImmutableSet;
-import com.googlecode.objectify.Key;
-import com.googlecode.objectify.Objectify;
+import com.google.common.collect.Iterables;
 import com.googlecode.objectify.Query;
 
 public class ObjectifyRoomrUserRepository implements RoomrUserRepository {
 
 	@Override
 	public RoomrUser findUser(User gaeUser) {
-		Objectify objectifyService = ObjectifyService.begin(); 
-		try {
-			return objectifyService.get(RoomrUser.class, gaeUser.getEmail());
-		} catch (EntityNotFoundException e) {
+		Query q = Datastore.query(RoomrUser.class).filter("gaeUserEmail", gaeUser.getEmail());
+		if (q.countAll() == 0) {
 			return null;
 		}
+		return Iterables.getOnlyElement(q);
 	}
 
 	@Override
 	public void add(RoomrUser newUser) {
-		Key<RoomrUser> key = Datastore.put(newUser);
+		Datastore.put(newUser);
 	}
 
 	@Override
 	public Set<RoomrUser> findAll() {
-		Objectify objectifyService = ObjectifyService.begin();
-		Query<RoomrUser> q = objectifyService.query(RoomrUser.class);
-		HashSet<RoomrUser> result = new HashSet<RoomrUser>();
-		for (RoomrUser roomrUser: q) {
-			result.add(roomrUser);
-		}
-		return result;
+		Query<RoomrUser> query = Datastore.query(RoomrUser.class);
+		return ImmutableSet.copyOf(query);
 	}
 
 	@Override
 	public void update(RoomrUser user) {
-		// TODO Auto-generated method stub
-		
+		Datastore.put(user);
 	}
 
 	@Override
 	public void remove(RoomrUser user) {
-		// TODO Auto-generated method stub
-		
+		Datastore.delete(user);
 	}
 }
