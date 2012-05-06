@@ -3,38 +3,28 @@ package controllers;
 import javax.inject.Inject;
 
 import models.user.RoomrUser;
-import models.user.RoomrUserRepository;
 import play.modules.guice.InjectSupport;
 import play.mvc.Before;
 import play.mvc.Controller;
-
-import com.google.appengine.api.users.User;
-import com.google.appengine.api.users.UserService;
-import com.google.appengine.api.users.UserServiceFactory;
+import facade.UserFacade;
+import facade.exception.NoUserLoggedInException;
 
 @InjectSupport
 public abstract class AbstractRoomrController extends Controller {
 
 	@Inject
-	private static RoomrUserRepository repository;
-
-	protected static RoomrUser getCurrentUser() {
-		UserService userService = UserServiceFactory.getUserService();
-		// user is logged into his Google Account
-
-		if (userService.isUserLoggedIn()) {
-			User currentGaeUser = userService.getCurrentUser();
-
-			RoomrUser currentUser = repository.findUser(currentGaeUser);
-			return currentUser;
-		}
-
-		return null;
-	}
+	private static UserFacade userFacade;
 
 	@Before
 	public static void populateRenderArgs() {
-		renderArgs.put("user", getCurrentUser());
+		RoomrUser roomrUser = null;
+		try {
+			roomrUser = userFacade.getLoggedInUser();
+		} catch (NoUserLoggedInException ignored) {
+			// ok, no logged in user then...
+		}
+
+		renderArgs.put("user", roomrUser);
 	}
 
 }

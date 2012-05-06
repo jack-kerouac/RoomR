@@ -9,6 +9,8 @@ import models.application.RoomOfferApplication.State;
 import models.user.RoomrUser;
 import play.modules.guice.InjectSupport;
 import facade.RoomOfferApplicationsFacade;
+import facade.UserFacade;
+import facade.exception.NoUserLoggedInException;
 
 @InjectSupport
 public class Applications extends AbstractRoomrController {
@@ -16,22 +18,26 @@ public class Applications extends AbstractRoomrController {
 	@Inject
 	private static RoomOfferApplicationsFacade applicationsFacade;
 
-	public static void apply(long roomOfferId, RoomOfferApplication application) {
+	@Inject
+	private static UserFacade userFacade;
+
+	public static void apply(long roomOfferId, RoomOfferApplication application) throws NoUserLoggedInException {
 		application.currentState = State.WAITING_FOR_INVITATION;
 
-		RoomOfferApplication newApplication = applicationsFacade.apply(getCurrentUser(), roomOfferId,
-				application.message);
+		applicationsFacade.apply(userFacade.getLoggedInUser(), roomOfferId, application.message);
 
 		Offers.viewOffer(roomOfferId);
 	}
 
 	public static void view() {
-		RoomrUser currentUser = getCurrentUser();
-		if (currentUser == null)
-			notFound("no user logged in");
+		try {
+			RoomrUser currentUser = userFacade.getLoggedInUser();
 
-		Set<RoomOfferApplication> applications = currentUser.getApplications();
-		render(applications);
+			Set<RoomOfferApplication> applications = currentUser.getApplications();
+			render(applications);
+		} catch (NoUserLoggedInException e) {
+			notFound("no user logged in");
+		}
 	}
 
 }

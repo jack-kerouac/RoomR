@@ -14,9 +14,13 @@ import models.ranking.sorting.OfferSorter;
 import models.ranking.sorting.OfferSorterByScore;
 import models.user.RoomrUserRepository;
 
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.inject.AbstractModule;
+import com.google.inject.Provides;
 
 import facade.RoomOfferApplicationsFacade;
+import facade.UserFacade;
 
 public class RoomrModule extends AbstractModule {
 
@@ -27,12 +31,17 @@ public class RoomrModule extends AbstractModule {
 		bind(RoomrUserRepository.class).to(ObjectifyRoomrUserRepository.class);
 		bind(RoomOfferApplicationRepository.class).to(ObjectifyRoomOfferApplicationRepository.class);
 		bind(FlatshareRepository.class).to(ObjectifyFlatshareRepository.class);
-		
-		
+
 		bind(OfferRanker.class);
 		bind(OfferMatcher.class).to(InmemoryMatcher.class);
 		bind(OfferSorter.class).to(OfferSorterByScore.class);
 
 		bind(RoomOfferApplicationsFacade.class);
+		bind(UserFacade.class);
+	}
+
+	@Provides
+	UserService provideUserService() {
+		return UserServiceFactory.getUserService();
 	}
 }
