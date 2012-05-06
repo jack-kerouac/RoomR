@@ -54,5 +54,49 @@ public final class RoomDetails {
 		return Objects.toStringHelper(this).add("rent", getTotalRentPerMonth()).add("room size", roomSize)
 				.add("rent period", freeFrom + " - " + (freeTo == null ? "unlimited" : freeTo)).toString();
 	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((freeFrom == null) ? 0 : freeFrom.hashCode());
+		result = prime * result + ((freeTo == null) ? 0 : freeTo.hashCode());
+		result = prime * result + ((roomSize == null) ? 0 : roomSize.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(totalRentPerMonthInEuro);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RoomDetails other = (RoomDetails) obj;
+		if (freeFrom == null) {
+			if (other.freeFrom != null)
+				return false;
+		} else if (!freeFrom.equals(other.freeFrom))
+			return false;
+		if (freeTo == null) {
+			if (other.freeTo != null)
+				return false;
+		} else if (!freeTo.equals(other.freeTo))
+			return false;
+		if (roomSize == null) {
+			if (other.roomSize != null)
+				return false;
+		} else if (!roomSize.equals(other.roomSize))
+			return false;
+		if (Double.doubleToLongBits(totalRentPerMonthInEuro) != Double.doubleToLongBits(other.totalRentPerMonthInEuro))
+			return false;
+		return true;
+	}
+
+	
 
 }
