@@ -13,7 +13,7 @@
 <div class="offer clearfix">
 	<div id="offer_info">
 		<div class="flatshare">
-			<h2>die WG</h2>
+			<h2>Die WG</h2>
 			<div class="address">#{address flatshare.address /}</div>
 			<div class="street_map"></div>
 			<div class="street_view"></div>
@@ -27,14 +27,14 @@
 		</div>
 		
 		<div class="total_rent">
-			<h2>der Preis</h2>
+			<h2>Der Preis</h2>
 			<p>
 				Gesamtmiete / Monat:&nbsp;#{money roomDetails.totalRentPerMonth /}
 			</p>
 		</div>
 		
 		<div class="free_dates">
-			<h2>der Zeitraum</h2>
+			<h2>Der Zeitraum</h2>
 			<p>#{if roomDetails.freeTo == null}
 				ab ${roomDetails.freeFrom.format('d. MMMM yyyy', 'de')}
 				#{/if}
@@ -45,14 +45,14 @@
 		</div>
 		
 		<div class="details">
-			<h2>das Zimmer</h2>
+			<h2>Das Zimmer</h2>
 			<p>
 				Zimmergröße:&nbsp;${roomDetails.roomSize}
 			</p>
 		</div>
 		
 		<div class="criteria">
-			<h2>die Anforderungen</h2>
+			<h2>Die Anforderungen</h2>
 			<div>Alter: #{ageRange criteria.ageRange /}</div>
 			<div>Geschlecht: #{genders criteria.genders /}</div>
 		</div>
