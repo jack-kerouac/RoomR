@@ -77,21 +77,8 @@ public class ObjectifyFlatshareRepositoryTest extends UnitTest {
 		assertTrue("GeoPt of persisted flatshare is not consistent",
 				persistedFlatshare.geoLocation.equals(mockedFlatshare.geoLocation));
 		// check street view parameters
-		assertEquals("display street view flag of persisted street view parameters is not consistent",
-				mockedFlatshare.streetViewParameters.displayStreetView,
-				persistedFlatshare.streetViewParameters.displayStreetView);
-		assertTrue("street view geo location of persisted street view parameters is not consistent",
-				mockedFlatshare.streetViewParameters.streetViewGeoLocation
-						.equals(persistedFlatshare.streetViewParameters.streetViewGeoLocation));
-		assertEquals("street view heading of persisted street view parameters is not consistent",
-				mockedFlatshare.streetViewParameters.streetViewHeading,
-				persistedFlatshare.streetViewParameters.streetViewHeading, 0.0);
-		assertEquals("street view pitch of persisted street view parameters is not consistent",
-				mockedFlatshare.streetViewParameters.streetViewPitch,
-				persistedFlatshare.streetViewParameters.streetViewPitch, 0.0);
-		assertEquals("street view zoom of persisted street view parameters is not consistent",
-				mockedFlatshare.streetViewParameters.streetViewZoom,
-				persistedFlatshare.streetViewParameters.streetViewZoom, 0.0);
+		assertTrue("street view parameters are not consistent for the persisted flatshare",
+				mockedFlatshare.streetViewParameters.equals(persistedFlatshare.streetViewParameters));
 		// check floor
 		assertEquals("floor of persisted flatshare is not consistent", mockedFlatshare.floor, persistedFlatshare.floor);
 		// check smoking tolerance
