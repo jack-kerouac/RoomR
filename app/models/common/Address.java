@@ -9,16 +9,17 @@ import com.google.common.base.Preconditions;
 @Embedded
 public final class Address {
 	public String street;
-	public int streetNumber;
+	public String streetNumber;
 	public String zipCode;
 	public String city;
 
 	public Address() {}
 
-	public Address(String street, int streetNumber, String zipCode, String city) {
+	public Address(String street, String streetNumber, String zipCode, String city) {
 		Preconditions.checkArgument(StringUtils.isNotBlank(street));
 		Preconditions.checkArgument(StringUtils.isNotBlank(zipCode) && NumberUtils.toInt(zipCode) > 0
 				&& NumberUtils.toInt(zipCode) < 100000);
+		Preconditions.checkArgument(StringUtils.isNotBlank(streetNumber));
 		Preconditions.checkArgument(StringUtils.isNotBlank(city));
 
 		this.street = street;
@@ -35,11 +36,11 @@ public final class Address {
 		this.street = street;
 	}
 
-	public int getStreetNumber() {
+	public String getStreetNumber() {
 		return streetNumber;
 	}
 
-	public void setStreetNumber(int streetNumber) {
+	public void setStreetNumber(String streetNumber) {
 		this.streetNumber = streetNumber;
 	}
 
