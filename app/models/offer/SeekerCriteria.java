@@ -2,6 +2,8 @@ package models.offer;
 
 import java.util.Set;
 
+import javax.persistence.Embedded;
+
 import models.common.Age;
 import models.common.Gender;
 
@@ -11,7 +13,9 @@ import com.google.common.collect.Ranges;
 
 public class SeekerCriteria {
 
+	@Embedded
 	public Age minAge;
+	@Embedded
 	public Age maxAge;
 
 	public Set<Gender> genders;

@@ -1,5 +1,6 @@
 package models.offer;
 
+import javax.persistence.Embedded;
 import javax.persistence.Id;
 
 import models.flatshare.Flatshare;
@@ -21,15 +22,15 @@ public final class RoomOffer extends ObjectifyModel{
 
 	private Key<Flatshare> flatshareKey;
 
-	@NotSaved
+	@Embedded
 	public RoomDetails roomDetails;
 
 	// a question that the flatshare can ask to applicants
 	// TODO: make question(s) configurable on UI
 	public String question = "Darth Vader oder Prinzessin Lea?";
 
-	@Child
-	@NotSaved
+
+	@Embedded
 	public SeekerCriteria criteria;
 
 

@@ -2,6 +2,8 @@ package models.offer;
 
 import java.util.Date;
 
+import javax.persistence.Embedded;
+
 import models.common.FloorSpace;
 
 import org.joda.money.CurrencyUnit;
@@ -20,6 +22,7 @@ public final class RoomDetails {
 	public Date freeFrom;
 	public Date freeTo;
 
+	@Embedded
 	public FloorSpace roomSize;
 
 	public RoomDetails() {}

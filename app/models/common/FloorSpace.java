@@ -10,7 +10,6 @@ import com.google.code.twig.annotation.Embedded;
  * @author "Florian Rampp (Florian.Rampp@web.de)"
  * 
  */
-@Embedded
 public final class FloorSpace {
 
 	public Double squareMeters;
