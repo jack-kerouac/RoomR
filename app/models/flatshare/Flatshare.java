@@ -1,32 +1,25 @@
 package models.flatshare;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Embedded;
 import javax.persistence.Id;
 
-import play.modules.objectify.ObjectifyModel;
-
 import models.common.Address;
 import models.common.Floor;
-import models.offer.RoomOffer;
 import models.user.RoomrUser;
+import play.modules.objectify.ObjectifyModel;
 
 import com.google.appengine.api.datastore.GeoPt;
 import com.google.common.base.Objects;
-import com.google.common.collect.Sets;
 import com.googlecode.objectify.annotation.Cached;
-import com.googlecode.objectify.annotation.NotSaved;
 
 @Cached
 public class Flatshare extends ObjectifyModel{
 
 	@Id
 	public Long id;
-	
-	// RESIDENTS
-	@NotSaved
-	public Set<RoomrUser> residents = Sets.newLinkedHashSet();
 
 	// LOCATION
 	@Embedded
@@ -38,15 +31,19 @@ public class Flatshare extends ObjectifyModel{
 	public MapParameters mapParameters;
 	
 	public Floor floor;
-
 	
-	// ADDITIONAL ATTRIBUTES
 	public SmokingTolerance smokingTolerance;
+	
+	
+	public Set<RoomrUser> getResidents(){
+		// TODO implement
+		return new HashSet<RoomrUser> ();
+	}
 	
 	@Override
 	public String toString() {
 		return Objects.toStringHelper(this).add("id", id).add("address", address).add("geoLocation", geoLocation)
-				.add("floor", floor).add("smoking tolerance", smokingTolerance).add("residents", residents).toString();
+				.add("floor", floor).add("smoking tolerance", smokingTolerance).add("residents", getResidents()).toString();
 	}
 
 	@Override
