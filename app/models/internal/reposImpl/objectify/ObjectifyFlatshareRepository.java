@@ -24,14 +24,11 @@ public class ObjectifyFlatshareRepository implements FlatshareRepository{
 
 	@Override
 	public void update(Flatshare flatshare) {
-		// TODO Auto-generated method stub
-		
+		Datastore.put(flatshare);		
 	}
 
 	@Override
 	public void remove(Flatshare flatshare) {
-		// TODO Auto-generated method stub
-		
+		Datastore.delete(flatshare);
 	}
-
 }
