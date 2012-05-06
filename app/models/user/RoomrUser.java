@@ -119,7 +119,7 @@ public class RoomrUser extends ObjectifyModel {
 //			stringHelper.add("currentFlatshare", currentFlatshare.address);
 //		else
 //			stringHelper.add("currentFlatshare", "none");
-		
+
 		return stringHelper.toString();
 	}
 }

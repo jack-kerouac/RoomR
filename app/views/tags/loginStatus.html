@@ -1,12 +1,7 @@
-%{
-com.google.appengine.api.users.UserService userService = com.google.appengine.api.users.UserServiceFactory.getUserService();
-%}
-
-#{if _arg != null}
+#{if _user != null}
 	#{a @Dashboard.view()}Dashboard#{/a}&nbsp;&nbsp;&nbsp;
-	Logged in as <span class="username">${_arg.getGaeUserEmail()}</span> <a href="${userService.createLogoutURL(request.path)}">(Logout)</a>
+	Eingeloggt als <span class="username">${_user.getGaeUserEmail()}</span> <a href="#{logoutUrl continue:request.path /}">(Ausloggen)</a>
 #{/if}
 #{else}
-	<a href="${userService.createLoginURL(request.path)}">Login</a> oder #{a @Registration.registrationForm()}Registrieren#{/a}
-	
+	<a href="#{loginUrl continue:request.path /}">Mit Google Account einloggen</a>
 #{/else}

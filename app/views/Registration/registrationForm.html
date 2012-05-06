@@ -4,17 +4,21 @@
 
 <h1>Registrieren</h1>
 
-#{form @Registration.register(), id:'registration_form'}
-	<p>Wir brauchen noch zusätzliche Daten, damit sie sich registrieren können.</p>
-	<p>Ihre Referenzdaten, unter der wir diese Daten speichern, ist ${nickname}</p>
+#{form @Registration.register(redirectUrl), id:'registration_form', enctype:'multipart/form-data'}
+	<p>Wir brauchen noch zusätzliche Daten, damit du dich bei RoomR registrieren kannst.</p>
+	<p>Diese Daten speichern wir für das Google Konto von ${nickname}</p>
 
+	<div>
 	#{field 'formData.age'}
 		<label for="${field.id}">&{'age'}</label>
 		<input id="${field.id}" name="${field.name}" type="number" data-validate="${field.validationData}" value="${field.value}" class="age ${field.errorClass}">
 		<span class="error">${field.error}</span>
 	#{/}
+	</div>
 	
+	<div>
 	#{field 'formData.gender'}
+		<label class="caption">&{'offer.criteria.genders'}</label>
 		<ul class="inline_buttons">
 			<li>
 				<label for="${field.id}_male" class="caption">&{'genders.male'}</label>
@@ -27,5 +31,6 @@
 		</ul>
 		<span class="error">${field.error}</span>
 	#{/}
+	</div>
 	<button type="submit">Registrieren</button>
 #{/form}
