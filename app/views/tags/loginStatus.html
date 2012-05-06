@@ -1,6 +1,6 @@
 #{if _user != null}
 	#{a @Dashboard.view()}Dashboard#{/a}&nbsp;&nbsp;&nbsp;
-	Eingeloggt als <span class="username">${_user.getGaeUserEmail()}</span> <a href="#{logoutUrl continue:request.path /}">(Ausloggen)</a>
+	Eingeloggt als <span class="username">${_user.name}</span> <a href="#{logoutUrl continue:request.path /}">(Ausloggen)</a>
 #{/if}
 #{else}
 	<a href="#{loginUrl continue:request.path /}">Mit Google Account einloggen</a>

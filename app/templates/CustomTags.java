@@ -5,16 +5,22 @@ import groovy.lang.Closure;
 import java.io.PrintWriter;
 import java.util.Map;
 
+import play.Play;
 import play.exceptions.TagInternalException;
 import play.exceptions.TemplateExecutionException;
+import play.modules.guice.GuicePlugin;
 import play.mvc.Router.ActionDefinition;
 import play.templates.FastTags;
 import play.templates.GroovyTemplate.ExecutableTemplate;
 
 import com.google.appengine.api.users.UserService;
-import com.google.appengine.api.users.UserServiceFactory;
 
 public class CustomTags extends FastTags {
+	private static UserService getUserService() {
+		GuicePlugin plugin = (GuicePlugin) Play.pluginCollection.getPluginInstance(GuicePlugin.class);
+		return plugin.getBeanOfType(UserService.class);
+	}
+
 	public static void _loginUrl(Map<?, ?> args, Closure body, PrintWriter out, ExecutableTemplate template,
 			int fromLine) {
 		final Object continueParam = args.get("continue");
@@ -30,9 +36,7 @@ public class CustomTags extends FastTags {
 							"Wrong parameter type"));
 		}
 
-		UserService userService = UserServiceFactory.getUserService();
-
-		out.print(userService.createLoginURL(controllers.Registration.createRegistrationURL(continueUrl)));
+		out.print(getUserService().createLoginURL(controllers.Registration.createRegistrationURL(continueUrl)));
 	}
 
 	public static void _logoutUrl(Map<?, ?> args, Closure body, PrintWriter out, ExecutableTemplate template,
@@ -50,8 +54,6 @@ public class CustomTags extends FastTags {
 							"Wrong parameter type"));
 		}
 
-		UserService userService = UserServiceFactory.getUserService();
-
-		out.print(userService.createLogoutURL(continueUrl));
+		out.print(getUserService().createLogoutURL(continueUrl));
 	}
 }

@@ -4,7 +4,6 @@ import javax.inject.Inject;
 
 import models.common.Age;
 import models.user.RoomrUser;
-import models.user.RoomrUserRepository;
 import play.cache.Cache;
 import play.data.validation.Valid;
 import play.modules.guice.InjectSupport;
@@ -12,15 +11,19 @@ import play.mvc.Router.ActionDefinition;
 
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
-import com.google.appengine.api.users.UserServiceFactory;
 
 import controllers.formdata.InstantSearchFormData;
 import controllers.formdata.RegistrationFormData;
+import facade.UserFacade;
+import facade.exception.NoUserLoggedInException;
 
 @InjectSupport
 public class Registration extends AbstractRoomrController {
 	@Inject
-	private static RoomrUserRepository userRepository;
+	private static UserFacade userFacade;
+
+	@Inject
+	private static UserService userService;
 
 	/**
 	 * Creates an URL to the registration form which handles the (potential)
@@ -37,7 +40,6 @@ public class Registration extends AbstractRoomrController {
 	}
 
 	public static void registrationForm(String redirectUrl, RegistrationFormData formData) {
-		UserService userService = UserServiceFactory.getUserService();
 		User currentGaeUser = userService.getCurrentUser();
 
 		if (currentGaeUser == null) {
@@ -48,10 +50,13 @@ public class Registration extends AbstractRoomrController {
 			redirect(loginURL);
 		}
 
-		if (userRepository.findUser(currentGaeUser) != null) {
+		try {
+			userFacade.getLoggedInUser();
 			// the user is already logged in and has an account in RoomR, so
 			// just redirect him to his final target
 			redirect(redirectUrl);
+		} catch (NoUserLoggedInException ignored) {
+			// Ok, go on an register the user
 		}
 
 		if (formData == null) {
@@ -74,7 +79,6 @@ public class Registration extends AbstractRoomrController {
 			Registration.registrationForm(redirectUrl, formData);
 		}
 
-		UserService userService = UserServiceFactory.getUserService();
 		User currentGaeUser = userService.getCurrentUser();
 
 		if (currentGaeUser == null) {
@@ -88,7 +92,7 @@ public class Registration extends AbstractRoomrController {
 		roomrUser.gaeUser = currentGaeUser;
 		roomrUser.gaeUserEmail = currentGaeUser.getEmail();
 
-		userRepository.add(roomrUser);
+		roomrUser = userFacade.createUser(roomrUser);
 
 		Cache.delete(session.getId() + Search.INSTANT_SEARCH_DATA_CACHE_KEY);
 
