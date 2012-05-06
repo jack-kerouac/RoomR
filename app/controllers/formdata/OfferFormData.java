@@ -90,6 +90,10 @@ public class OfferFormData implements Serializable {
 	
 	@Required
 	@Min(0.0)
+	public Double depositInEuro;
+	
+	@Required
+	@Min(0.0)
 	public Double roomSize;
 	
 	@Required

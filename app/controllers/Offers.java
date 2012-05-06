@@ -116,7 +116,10 @@ public class Offers extends AbstractRoomrController {
 		flatshare.streetViewParameters.streetViewZoom = formData.streetViewZoom;
 
 		flatshare.floor = formData.floor;
-		flatshare.numberOfRooms = formData.numberOfRooms;
+		// TODO: remove this check (might be related to this issue:
+		// https://play.lighthouseapp.com/projects/57987/tickets/1291-play-124-has-npe-when-creatingediting-morphia-entities-with-the-crud-module)
+		if (formData.numberOfRooms != null)
+			flatshare.numberOfRooms = formData.numberOfRooms;
 		flatshare.smokingTolerance = formData.smokingTolerance;
 		flatshare.typeOfHouse = formData.typeOfHouse;
 		flatshare.appliances = formData.appliances;
@@ -126,6 +129,7 @@ public class Offers extends AbstractRoomrController {
 		offer.roomDetails = new RoomDetails();
 		offer.roomDetails.roomSize = new FloorSpace(formData.roomSize);
 		offer.roomDetails.totalRentPerMonthInEuro = formData.totalRentPerMonthInEuro;
+		offer.roomDetails.depositInEuro = formData.depositInEuro;
 		offer.roomDetails.freeFrom = formData.freeFrom;
 		offer.roomDetails.freeTo = formData.freeTo;
 

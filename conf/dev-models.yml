@@ -75,6 +75,7 @@
   flatshare: *stuntzstr
   roomDetails:
     totalRentPerMonthInEuro: 350.0
+    depositInEuro: 700.0
     roomSize: 15.0
     freeFrom: 2012-01-01
     freeTo: 2012-03-31
@@ -88,6 +89,7 @@
   flatshare: *knoebelstr
   roomDetails:
     totalRentPerMonthInEuro: 500.0
+    depositInEuro: 900.0
     roomSize: 30.0
     freeFrom: 2012-03-01
     freeTo: 2012-03-31
@@ -101,6 +103,7 @@
   flatshare: *fraunhoferstr
   roomDetails:
     totalRentPerMonthInEuro: 400.0
+    depositInEuro: 800.0
     roomSize: 25.0
     freeFrom: 2012-05-01
   criteria:
@@ -113,6 +116,7 @@
   flatshare: *deisenhofenerstr
   roomDetails:
     totalRentPerMonthInEuro: 250.0
+    depositInEuro: 600.0
     roomSize: 12.0
     freeFrom: 2012-05-15
     freeTo: 2012-07-31

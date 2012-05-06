@@ -169,6 +169,14 @@
 			#{/}
 			</li>
 			<li>
+			#{field 'formData.depositInEuro'}
+				<label for="${field.id}" class="caption">Kaution</label>
+				<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
+				<label for="${field.id}">€</label>
+				<span class="error">${field.error}</span>
+			#{/}
+			</li>
+			<li>
 			#{field 'formData.roomSize'}
 				<label for="${field.id}" class="caption">Zimmergröße</label>
 				<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">

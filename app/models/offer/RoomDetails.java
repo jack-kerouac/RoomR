@@ -18,6 +18,7 @@ public final class RoomDetails {
 	public final static CurrencyUnit DEFAULT_CURRENCY = CurrencyUnit.EUR;
 
 	public double totalRentPerMonthInEuro;
+	public double depositInEuro;
 
 	public Date freeFrom;
 	public Date freeTo;
@@ -36,6 +37,10 @@ public final class RoomDetails {
 
 	public Money getTotalRentPerMonth() {
 		return Money.of(DEFAULT_CURRENCY, totalRentPerMonthInEuro);
+	}
+	
+	public Money getDeposit() {
+		return Money.of(DEFAULT_CURRENCY, depositInEuro);
 	}
 
 	// public DateTime getFreeFrom() {

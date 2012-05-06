@@ -36,7 +36,7 @@ public class Flatshare extends ObjectifyModel {
 
 	public TypeOfHouse typeOfHouse;
 	
-	public int numberOfRooms;
+	public Integer numberOfRooms;
 	
 	public Set<Appliance> appliances;
 	
