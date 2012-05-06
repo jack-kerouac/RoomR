@@ -70,12 +70,6 @@
 		#{/if}
 		#{else}
 			#{if user}
-			<div id="application_questions">
-				<p>Die WG bittet dich, folgende Fragen zu beantworten:</p>
-				<ol>
-					<li>${offer.question}</li>
-				</ol>
-			</div>
 			#{form @Applications.apply(offer.id), id:'application_form'}
 				#{field 'application.message'}
 					<label for="${field.id}" class="caption">Deine Nachricht an die WG:</label>
