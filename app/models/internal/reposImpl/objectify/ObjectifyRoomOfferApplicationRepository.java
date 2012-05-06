@@ -1,5 +1,6 @@
 package models.internal.reposImpl.objectify;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import play.modules.objectify.Datastore;
@@ -23,8 +24,7 @@ public class ObjectifyRoomOfferApplicationRepository implements RoomOfferApplica
 
 	@Override
 	public Set<RoomOfferApplication> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return new HashSet<RoomOfferApplication> ();
 	}
 
 	@Override
