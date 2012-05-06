@@ -9,6 +9,7 @@ import play.modules.objectify.ObjectifyModel;
 
 import com.google.code.twig.annotation.Child;
 import com.google.common.base.Objects;
+import com.google.common.base.Preconditions;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Cached;
 import com.googlecode.objectify.annotation.NotSaved;
@@ -43,12 +44,8 @@ public final class RoomOffer extends ObjectifyModel{
 	 */
 	public void setFlatshare(Flatshare flatshare) {
 		Key<Flatshare> keyOfNewFlatshare;
-		if (flatshare.id == null) {
-			// flatshare has to be persisted first to obtain a valid key
-			keyOfNewFlatshare = Datastore.put(flatshare);
-		} else {
-			keyOfNewFlatshare = new Key<Flatshare>(Flatshare.class, flatshare.id);
-		}
+		Preconditions.checkState(flatshare.id != null, "flatshare must have been persisted before it can be set");
+		keyOfNewFlatshare = new Key<Flatshare>(Flatshare.class, flatshare.id);
 		this.flatshareKey = keyOfNewFlatshare;
 	}
 
