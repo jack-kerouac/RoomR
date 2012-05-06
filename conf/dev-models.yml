@@ -9,7 +9,11 @@
     displayStreetView: false
   geoLocation: !!com.google.appengine.api.datastore.GeoPt [48.141836, 11.620228]
   floor: basement
+  numberOfRooms: 3
   smokingTolerance: prohibited
+  typeOfHouse: neww
+  appliances: [tv, clothesWasher]
+  additionalSpaces: [patio, balcony]
 
 - !flatshare &knoebelstr
   id: 2
@@ -26,8 +30,12 @@
     streetViewZoom: 1.1    
   geoLocation: !!com.google.appengine.api.datastore.GeoPt [48.137053,11.584969]
   floor: first
+  numberOfRooms: 2
   smokingTolerance: allowedInRoom
-
+  typeOfHouse: old
+  appliances: [tv, clothesWasher, dishWasher]
+  additionalSpaces: [patio, balcony, basementStorage]
+  
 - !flatshare &fraunhoferstr
   id: 3
   address:
@@ -39,7 +47,11 @@
     displayStreetView: false
   geoLocation: !!com.google.appengine.api.datastore.GeoPt [48.128956,11.575011]
   floor: third
+  numberOfRooms: 5
   smokingTolerance: allowedInFlat
+  typeOfHouse: old
+  appliances: [tv, gameConsole]
+  additionalSpaces: [basementStorage, garden]
 
 - !flatshare &deisenhofenerstr
   id: 4
@@ -52,8 +64,11 @@
     displayStreetView: false
   geoLocation: !!com.google.appengine.api.datastore.GeoPt [48.114648,11.580758]
   floor: forth
+  numberOfRooms: 4
   smokingTolerance: prohibited
-
+  typeOfHouse: renovated
+  appliances: [tv, gameConsole, clothesWasher]
+  additionalSpaces: [basementStorage, garden, patio]
 
 - !offer
   id: 1
