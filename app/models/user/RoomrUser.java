@@ -22,9 +22,8 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Query;
-import com.googlecode.objectify.annotation.Cached;
 
-@Cached
+//@Cached
 public class RoomrUser extends ObjectifyModel {
 
 	@Id

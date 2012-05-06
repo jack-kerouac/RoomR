@@ -13,10 +13,7 @@ import facade.exception.NoAuthenticationProviderUserLoggedInException;
 import facade.exception.NoUserLoggedInException;
 
 public class UserFacade {
-	@Inject
 	private RoomrUserRepository userRepository;
-
-	@Inject
 	private UserService userService;
 
 	/**
@@ -80,5 +77,15 @@ public class UserFacade {
 	 */
 	public String getAuthenticationProviderLoginUrl(String continueUrl) {
 		return userService.createLoginURL(continueUrl);
+	}
+
+	@Inject
+	public void setUserRepository(RoomrUserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
+
+	@Inject
+	public void setUserService(UserService userService) {
+		this.userService = userService;
 	}
 }

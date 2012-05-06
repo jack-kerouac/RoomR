@@ -40,15 +40,17 @@ public class Registration extends AbstractRoomrController {
 			String registrationFormURL = createRegistrationURL(redirectUrl);
 			String loginURL = userFacade.getAuthenticationProviderLoginUrl(registrationFormURL);
 			redirect(loginURL);
+			return;
 		}
 
-		if (userFacade.getLoggedInUser().isPresent())
+		if (userFacade.getLoggedInUser().isPresent()) {
 			// the user is already logged in and has an account in RoomR, so
 			// just redirect him to his final target
 			redirect(redirectUrl);
-		else
+			return;
+		} else {
 			// Ok, go on and register the user
-			;
+		}
 
 		if (formData == null) {
 			formData = new RegistrationFormData();
