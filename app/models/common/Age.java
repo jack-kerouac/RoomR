@@ -1,16 +1,12 @@
 package models.common;
 
-import play.data.validation.Min;
 
-import com.google.code.twig.annotation.Embedded;
-
-@Embedded
 public final class Age implements Comparable<Age> {
 
 	public int years;
 
 	public Age() {}
-	
+
 	public Age(int years) {
 		this.years = years;
 	}
@@ -23,11 +19,11 @@ public final class Age implements Comparable<Age> {
 	public boolean isLessThan(Age age) {
 		return this.years < age.years;
 	}
-	
+
 	public boolean isMoreThan(Age age) {
 		return this.years > age.years;
 	}
-	
+
 	@Override
 	public String toString() {
 		return years + " years";
