@@ -3,10 +3,8 @@ package models.common;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 
-import com.google.code.twig.annotation.Embedded;
 import com.google.common.base.Preconditions;
 
-@Embedded
 public final class Address {
 	public String street;
 	public String streetNumber;
@@ -88,22 +86,26 @@ public final class Address {
 		if (city == null) {
 			if (other.city != null)
 				return false;
-		} else if (!city.equals(other.city))
+		}
+		else if (!city.equals(other.city))
 			return false;
 		if (street == null) {
 			if (other.street != null)
 				return false;
-		} else if (!street.equals(other.street))
+		}
+		else if (!street.equals(other.street))
 			return false;
 		if (streetNumber == null) {
 			if (other.streetNumber != null)
 				return false;
-		} else if (!streetNumber.equals(other.streetNumber))
+		}
+		else if (!streetNumber.equals(other.streetNumber))
 			return false;
 		if (zipCode == null) {
 			if (other.zipCode != null)
 				return false;
-		} else if (!zipCode.equals(other.zipCode))
+		}
+		else if (!zipCode.equals(other.zipCode))
 			return false;
 		return true;
 	}
