@@ -7,7 +7,6 @@ import java.util.Set;
 import models.common.Age;
 import models.common.FloorSpace;
 import models.common.Gender;
-import models.flatshare.Flatshare;
 import models.internal.reposImpl.objectify.ObjectifyRoomOfferRepository;
 import models.offer.RoomDetails;
 import models.offer.RoomOffer;
@@ -17,15 +16,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.google.appengine.api.datastore.GeoPt;
-
 import play.test.UnitTest;
 
 public class ObjectifyRoomOfferRepositoryTest extends UnitTest {
 
 	private ObjectifyRoomOfferRepository repositoryUnderTest;
 	private RoomOffer mockedRoomOffer;
-	
+
 	@Before
 	public void setUp() {
 		repositoryUnderTest = new ObjectifyRoomOfferRepository();
@@ -34,7 +31,7 @@ public class ObjectifyRoomOfferRepositoryTest extends UnitTest {
 		for (RoomOffer roomOffer : existingRoomOffers) {
 			repositoryUnderTest.remove(roomOffer);
 		}
-		
+
 		// set up mocked room offer
 		RoomDetails mockedRoomDetails = new RoomDetails();
 		mockedRoomDetails.freeFrom = new Date(10982733);
@@ -51,7 +48,6 @@ public class ObjectifyRoomOfferRepositoryTest extends UnitTest {
 		mockedRoomOffer.id = 42l;
 		mockedRoomOffer.roomDetails = mockedRoomDetails;
 		mockedRoomOffer.criteria = mockedSeekerCriteria;
-		mockedRoomOffer.question = "What's up?";
 		mockedRoomOffer.contactEmail = "example@roomr.org";
 	}
 
@@ -62,7 +58,7 @@ public class ObjectifyRoomOfferRepositoryTest extends UnitTest {
 
 	@Test
 	public void testStorageAndRetrieval() {
-		
+
 		repositoryUnderTest.add(mockedRoomOffer);
 
 		// check total number of persisted room offers
@@ -75,17 +71,14 @@ public class ObjectifyRoomOfferRepositoryTest extends UnitTest {
 
 		// check consistency of persisted offer
 		// TODO check associated flatshare
-		assertEquals("Room Details are not consistent for the persisted flatshare entity",
-				persistedOffer.roomDetails,mockedRoomOffer.roomDetails);
-		assertEquals("The question is not consistent for the persisted flatshare entity", mockedRoomOffer.question,
-				persistedOffer.question);
+		assertEquals("Room Details are not consistent for the persisted flatshare entity", persistedOffer.roomDetails,
+				mockedRoomOffer.roomDetails);
 		assertEquals("Seeker Criteria are not consistent for the persisted flatshare entity", mockedRoomOffer.criteria,
 				persistedOffer.criteria);
-		assertEquals("Contact Email is not consistent for the persisted flatshare entity", mockedRoomOffer.contactEmail,
-				persistedOffer.contactEmail);
+		assertEquals("Contact Email is not consistent for the persisted flatshare entity",
+				mockedRoomOffer.contactEmail, persistedOffer.contactEmail);
 	}
-	
-	
+
 	@Test
 	public void testRemoval() {
 		// persist mocked room offer
