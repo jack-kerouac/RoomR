@@ -17,6 +17,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import play.test.UnitTest;
+import utils.RoomrTestUtils;
 
 public class ObjectifyRoomOfferRepositoryTest extends UnitTest {
 
@@ -26,11 +27,7 @@ public class ObjectifyRoomOfferRepositoryTest extends UnitTest {
 	@Before
 	public void setUp() {
 		repositoryUnderTest = new ObjectifyRoomOfferRepository();
-		// clear repository
-		Set<RoomOffer> existingRoomOffers = repositoryUnderTest.findAll();
-		for (RoomOffer roomOffer : existingRoomOffers) {
-			repositoryUnderTest.remove(roomOffer);
-		}
+		RoomrTestUtils.clearAllObjectifyRepositories();
 
 		// set up mocked room offer
 		RoomDetails mockedRoomDetails = new RoomDetails();

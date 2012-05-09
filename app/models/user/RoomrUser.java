@@ -19,10 +19,10 @@ import play.modules.objectify.ObjectifyModel;
 
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.users.User;
+import com.google.appengine.repackaged.com.google.common.base.Predicate;
+import com.google.appengine.repackaged.com.google.common.collect.Iterables;
 import com.google.common.base.Objects;
 import com.google.common.base.Objects.ToStringHelper;
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Query;
 
@@ -93,13 +93,10 @@ public class RoomrUser extends ObjectifyModel {
 	}
 
 	public boolean appliedFor(final RoomOffer roomOffer) {
-		// TODO use query instead of in memory matching
 		return Iterables.any(getApplications(), new Predicate<RoomOfferApplication>() {
 			@Override
 			public boolean apply(RoomOfferApplication application) {
-				// TODO use getter
-				return false;
-				// return application.roomOffer.equals(roomOffer);
+				return application.getRoomOffer().equals(roomOffer);
 			}
 		});
 	}
