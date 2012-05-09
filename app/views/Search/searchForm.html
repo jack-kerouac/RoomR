@@ -22,6 +22,13 @@
 				<label for="${field.id}">€ Miete</label>
 				<span class="error">${field.error}</span>
 			#{/}
+			und
+			<!-- TODO (Flo): add radio buttons for now vs. fixed date logic -->
+			#{field 'formData.startDate'}
+				<label for="${field.id}">ab</label>
+				<input id="${field.id}" name="${field.name}" type="date" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
+				<span class="error">${field.error}</span>
+			#{/}
 			</li>
 		</ul>
 	</fieldset>

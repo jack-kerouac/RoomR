@@ -5,6 +5,7 @@ import static models.ranking.matching.MatchingCriterion.CITY;
 import static models.ranking.matching.MatchingCriterion.GENDER;
 import static models.ranking.matching.MatchingCriterion.RENT_PER_MONTH;
 import static models.ranking.matching.MatchingCriterion.ROOM_SIZE;
+import static models.ranking.matching.MatchingCriterion.START_DATE;
 
 import java.util.Map;
 import java.util.Set;
@@ -19,6 +20,7 @@ import models.ranking.matching.scoring.AgeScorer;
 import models.ranking.matching.scoring.GenderScorer;
 import models.ranking.matching.scoring.RentPerMonthScorer;
 import models.ranking.matching.scoring.RoomSizeScorer;
+import models.ranking.matching.scoring.StartDateScorer;
 import models.request.RoomRequest;
 
 import com.google.common.base.Optional;
@@ -44,6 +46,7 @@ public class WeightedOfferScoringFunction implements OfferScoringFunction {
 			put(CITY, 2.0).
 			put(ROOM_SIZE, 0.5).
 			put(RENT_PER_MONTH, 1.0).
+			put(START_DATE, 1.0).
 		build();
 
 	// @formatter:on
@@ -63,9 +66,10 @@ public class WeightedOfferScoringFunction implements OfferScoringFunction {
 		evaluateScore(new GenderScorer().score(offer, seekerGender), GENDER);
 
 		// TODO: remove city scorer and just load offers from one city!
-//		evaluateScore(new CityScorer().score(offer, request.getCity()), CITY);
+		// evaluateScore(new CityScorer().score(offer, request.getCity()), CITY);
 		evaluateScore(new RoomSizeScorer().score(offer, request.getMinRoomSize()), ROOM_SIZE);
 		evaluateScore(new RentPerMonthScorer().score(offer, request.getMaxRent()), RENT_PER_MONTH);
+		evaluateScore(new StartDateScorer().score(offer, request.getStartDateQuery()), START_DATE);
 
 		ScoredRoomOffer scoredRoomOffer;
 		if (totalWeight != 0.0)
@@ -80,7 +84,7 @@ public class WeightedOfferScoringFunction implements OfferScoringFunction {
 		metCriteria = Sets.newLinkedHashSet();
 		unmetCriteria = Sets.newLinkedHashSet();
 		undefinedCriteria = Sets.newLinkedHashSet();
-		
+
 		return scoredRoomOffer;
 	}
 
@@ -92,7 +96,8 @@ public class WeightedOfferScoringFunction implements OfferScoringFunction {
 				unmetCriteria.add(criterion);
 			totalWeight += weights.get(criterion);
 			totalScore += weights.get(criterion) * score.getValue();
-		} else {
+		}
+		else {
 			undefinedCriteria.add(criterion);
 		}
 	}
