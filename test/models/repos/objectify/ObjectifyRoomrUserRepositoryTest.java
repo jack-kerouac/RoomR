@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import play.test.UnitTest;
+import utils.RoomrTestUtils;
 
 import com.google.appengine.api.users.User;
 
@@ -22,14 +23,8 @@ public class ObjectifyRoomrUserRepositoryTest extends UnitTest {
 
 	@Before
 	public void setUp() {
+		RoomrTestUtils.clearAllObjectifyRepositories();
 		repositoryUnderTest = new ObjectifyRoomrUserRepository();
-
-		// clear repository
-		Set<RoomrUser> existingUsers = repositoryUnderTest.findAll();
-		for (RoomrUser roomrUser : existingUsers) {
-			repositoryUnderTest.remove(roomrUser);
-		}
-
 		// set up mocked user
 		mockedUser = new RoomrUser();
 		mockedUser.gaeUserEmail = "user@roomr.com";

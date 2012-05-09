@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import play.test.UnitTest;
+import utils.RoomrTestUtils;
 
 import com.google.common.collect.Iterables;
 
@@ -20,11 +21,9 @@ public class ObjectifyRoomOfferApplicationRepoTest extends UnitTest {
 
 	@Before
 	public void setUp() {
+		RoomrTestUtils.clearAllObjectifyRepositories();
 		repositoryUnderTest = new ObjectifyRoomOfferApplicationRepository();
-		// clean repository
-		for (RoomOfferApplication application : repositoryUnderTest.findAll()) {
-			repositoryUnderTest.remove(application);
-		}
+
 		// create mocked Application
 		mockedApplication = new RoomOfferApplication();
 		mockedApplication.currentState = RoomOfferApplication.State.WAITING_FOR_INVITATION;

@@ -14,6 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import play.test.UnitTest;
+import utils.RoomrTestUtils;
 
 import com.google.appengine.api.datastore.GeoPt;
 import com.google.common.collect.Iterables;
@@ -27,11 +28,7 @@ public class ObjectifyFlatshareRepositoryTest extends UnitTest {
 	public void setUp() {
 		repositoryUnderTest = new ObjectifyFlatshareRepository();
 
-		// clear repository
-		Set<Flatshare> exisitingFlatshares = repositoryUnderTest.findAll();
-		for (Flatshare flatshare : exisitingFlatshares) {
-			repositoryUnderTest.remove(flatshare);
-		}
+		RoomrTestUtils.clearAllObjectifyRepositories();
 
 		// initialize mocked Flatshare for testing
 		Address mockedAddress = new Address("street", "123", "82061", "city");
@@ -72,7 +69,8 @@ public class ObjectifyFlatshareRepositoryTest extends UnitTest {
 		// check consistency of persisted flatshare
 		Flatshare persistedFlatshare = Iterables.getOnlyElement(persistedFlatshares);
 		// check address
-		assertTrue("address of persisted flatshare not consistent",mockedFlatshare.address.equals(persistedFlatshare.address));
+		assertTrue("address of persisted flatshare not consistent",
+				mockedFlatshare.address.equals(persistedFlatshare.address));
 		// check geo pt location
 		assertTrue("GeoPt of persisted flatshare is not consistent",
 				persistedFlatshare.geoLocation.equals(mockedFlatshare.geoLocation));
