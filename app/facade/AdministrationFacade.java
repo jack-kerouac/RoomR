@@ -2,18 +2,14 @@ package facade;
 
 import java.util.Set;
 
-import javax.inject.Inject;
-
 import models.offer.RoomOffer;
-import models.offer.RoomOfferRepository;
+
+import com.google.common.collect.Sets;
 
 public class AdministrationFacade {
 
-	@Inject
-	private RoomOfferRepository offerRepository;
-
 	public Set<RoomOffer> findAllOffers() {
-		return offerRepository.findAll();
+		return Sets.newHashSet(RoomOffer.all());
 	}
 
 }

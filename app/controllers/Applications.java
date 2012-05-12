@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import models.application.RoomOfferApplication;
 import models.application.RoomOfferApplication.State;
 import models.user.RoomrUser;
-import play.modules.guice.InjectSupport;
+import play.mvc.Result;
 
 import com.google.common.base.Optional;
 
@@ -15,7 +15,6 @@ import facade.SeekerFacade;
 import facade.UserFacade;
 import facade.exception.NoUserLoggedInException;
 
-@InjectSupport
 public class Applications extends AbstractRoomrController {
 
 	@Inject
@@ -31,20 +30,22 @@ public class Applications extends AbstractRoomrController {
 		if (!loggedInUser.isPresent())
 			throw new NoUserLoggedInException();
 
-		seekerFacade.apply(loggedInUser.get(), roomOfferId, application.message);
+		seekerFacade
+				.apply(loggedInUser.get(), roomOfferId, application.message);
 
-		Offers.viewOffer(roomOfferId);
+		// Offers.viewOffer(roomOfferId);
 	}
 
-	public static void view() {
+	public static Result view() {
 		Optional<RoomrUser> loggedInUser = userFacade.getLoggedInUser();
 
 		if (loggedInUser.isPresent()) {
-			Set<RoomOfferApplication> applications = loggedInUser.get().getApplications();
-			render(applications);
+			Set<RoomOfferApplication> applications = loggedInUser.get().applications;
 
+			// TODO:
+			return ok("");
 		} else {
-			notFound("no user logged in");
+			return notFound("no user logged in");
 		}
 	}
 

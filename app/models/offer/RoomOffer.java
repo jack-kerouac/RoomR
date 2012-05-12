@@ -1,28 +1,27 @@
 package models.offer;
 
+import java.util.List;
+
 import javax.persistence.Embedded;
+import javax.persistence.Entity;
 import javax.persistence.Id;
 
 import models.flatshare.Flatshare;
-import play.modules.objectify.Datastore;
-import play.modules.objectify.ObjectifyModel;
+import play.db.ebean.Model;
 
 import com.google.common.base.Objects;
-import com.google.common.base.Preconditions;
-import com.googlecode.objectify.Key;
-import com.googlecode.objectify.annotation.Cached;
 
-@Cached
-public final class RoomOffer extends ObjectifyModel {
+@Entity
+public final class RoomOffer extends Model {
 
 	@Id
 	public Long id;
 
-	private Key<Flatshare> flatshareKey;
+	public Flatshare flatshare;
 
 	@Embedded
 	public RoomDetails roomDetails;
-	
+
 	@Embedded
 	public SeekerCriteria criteria;
 
@@ -30,36 +29,26 @@ public final class RoomOffer extends ObjectifyModel {
 
 	public String contactEmail;
 
-	/**
-	 * Sets the flatshare for this RoomOffer. If the flatshare hasn't been
-	 * persisted yet, this will be done first to obtain a valid key.
-	 * 
-	 * @param flatshare
-	 *            the Flatshare which should be set for this user.
-	 */
-	public void setFlatshare(Flatshare flatshare) {
-		Preconditions.checkState(flatshare.id != null, "flatshare must have been persisted before it can be set");
-		Key<Flatshare> keyOfNewFlatshare;
-		keyOfNewFlatshare = new Key<Flatshare>(Flatshare.class, flatshare.id);
-		this.flatshareKey = keyOfNewFlatshare;
+	public static Finder<Long, RoomOffer> find = new Finder<Long, RoomOffer>(
+			Long.class, RoomOffer.class);
+
+	public static List<RoomOffer> all() {
+		return find.all();
 	}
 
-	/**
-	 * loads the (cached) flatshare for Room Offer from the datastore
-	 * 
-	 * @return the flatshare for this user
-	 */
-	public Flatshare getFlatshare() {
-		if (this.flatshareKey == null) {
-			return null;
-		}
-		return Datastore.find(this.flatshareKey, false);
+	public static void create(RoomOffer roomOffer) {
+		roomOffer.save();
+	}
+
+	public static void delete(Long id) {
+		find.ref(id).delete();
 	}
 
 	@Override
 	public String toString() {
-		return Objects.toStringHelper(this).add("id", id).add("flatshare", getFlatshare())
-				.add("room details", roomDetails).add("seeker criteria", criteria).toString();
+		return Objects.toStringHelper(this).add("id", id)
+				.add("flatshare", flatshare).add("room details", roomDetails)
+				.add("seeker criteria", criteria).toString();
 	}
 
 	@Override

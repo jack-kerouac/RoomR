@@ -12,15 +12,14 @@ import models.ranking.matching.ScoredRoomOffer;
 import models.request.RoomRequest;
 import models.request.RoomRequest.DateQuery;
 import models.user.RoomrUser;
-import play.cache.Cache;
-import play.modules.guice.InjectSupport;
+import play.libs.Json;
+import play.mvc.Result;
 
 import com.google.common.base.Optional;
 
 import controllers.formdata.InstantSearchFormData;
 import facade.UserFacade;
 
-@InjectSupport
 public class Search extends AbstractRoomrController {
 	public static final String INSTANT_SEARCH_DATA_CACHE_KEY = "-instantSearchData";
 
@@ -30,7 +29,8 @@ public class Search extends AbstractRoomrController {
 	@Inject
 	private static UserFacade userFacade;
 
-	public static void searchForm(String city, Double max_rent, Integer age, Gender gender) {
+	public static Result searchForm(String city, Double max_rent, Integer age,
+			Gender gender) {
 
 		Optional<RoomrUser> loggedInUser = userFacade.getLoggedInUser();
 
@@ -38,24 +38,23 @@ public class Search extends AbstractRoomrController {
 
 		if (age == null && loggedInUser.isPresent()) {
 			formData.age = loggedInUser.get().getAge();
-		}
-		else {
+		} else {
 			formData.age = age;
 		}
 		if (gender == null && loggedInUser.isPresent()) {
 			gender = loggedInUser.get().gender;
-		}
-		else {
+		} else {
 			formData.gender = gender;
 		}
 
 		formData.city = city;
 		formData.maxRentPerMonthInEuro = max_rent;
 
-		render(formData);
+		// render(formData);
+		return ok("");
 	}
 
-	public static void offers(InstantSearchFormData formData) {
+	public static Result offers(InstantSearchFormData formData) {
 		// if no attribute of the request is set, the whole request is null.
 		// Thus, create one.
 		if (formData == null) {
@@ -80,11 +79,13 @@ public class Search extends AbstractRoomrController {
 		if (formData.minRoomSizeSquareMeters != null)
 			rr.minRoomSize = new FloorSpace(formData.minRoomSizeSquareMeters);
 
-		List<ScoredRoomOffer> offers = ranker.search(rr, Optional.fromNullable(seekerAge),
+		List<ScoredRoomOffer> offers = ranker.search(rr,
+				Optional.fromNullable(seekerAge),
 				Optional.fromNullable(formData.gender));
 
-		Cache.set(session.getId() + INSTANT_SEARCH_DATA_CACHE_KEY, formData, "30min");
+		// Cache.set(session.getId() + INSTANT_SEARCH_DATA_CACHE_KEY, formData,
+		// "30min");
 
-		render(offers);
+		return ok(Json.toJson(offers));
 	}
 }

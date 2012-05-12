@@ -1,0 +1,63 @@
+#{extends 'main.html' /}
+#{set title:'Anzeigen suchen' /}
+#{set pageId:'search_offers' /}
+
+<form id="search_offers_form">
+	<fieldset id="request">
+		#{field 'formData.city'}
+			<input id="${field.id}" name="${field.name}" type="hidden" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
+		#{/}
+		<ul>
+			<li>
+			#{field 'formData.minRoomSizeSquareMeters'}
+				<label for="${field.id}">Mindestens&nbsp;</label>
+				<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
+				<label for="${field.id}">m² groß</label>
+				<span class="error">${field.error}</span>
+			#{/}
+			und
+			#{field 'formData.maxRentPerMonthInEuro'}
+				<label for="${field.id}">maximal&nbsp;</label>
+				<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
+				<label for="${field.id}">€ Miete</label>
+				<span class="error">${field.error}</span>
+			#{/}
+			und
+			<!-- TODO (Flo): add radio buttons for now vs. fixed date logic -->
+			#{field 'formData.startDate'}
+				<label for="${field.id}">ab</label>
+				<input id="${field.id}" name="${field.name}" type="date" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
+				<span class="error">${field.error}</span>
+			#{/}
+			</li>
+		</ul>
+	</fieldset>
+			
+	<fieldset id="additional_parameters">
+		<ul>
+			<li>
+				#{field 'formData.age'}
+					<label for="${field.id}">&{'seekerAge'}</label>
+					<input id="${field.id}" name="${field.name}" type="number" data-validate="${field.validationData}" value="${field.value}" class="age ${field.errorClass}">
+					<span class="error">${field.error}</span>
+				#{/}
+				
+				#{field 'formData.gender'}
+				<ul id="genders_select" class="inline_buttons">
+					<li>
+						<label for="${field.id}_male" class="caption">Mann</label>
+						<input id="${field.id}_male" name="${field.name}" type="radio" value="male" class="${field.errorClass}" ${formData.gender == models.common.Gender.male ? 'checked' : ''}>
+					</li>
+					<li>
+						<label for="${field.id}_female" class="caption">Frau</label>
+						<input id="${field.id}_female" name="${field.name}" type="radio" value="female" class="${field.errorClass}" ${formData.gender == models.common.Gender.female ? 'checked' : ''}>
+					</li>
+				</ul>
+				<span class="error">${field.error}</span>
+				#{/}
+			</li>
+		</ul>
+	</fieldset>
+</form>
+<div id="loading"><img src="@routes.Assets.at("images/ajax-loader.gif")" /></div>
+<ul class="offers"></ul>

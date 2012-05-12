@@ -4,19 +4,18 @@ import javax.inject.Inject;
 
 import models.common.Gender;
 import models.user.RoomrUser;
-import play.modules.guice.InjectSupport;
+import play.mvc.Result;
 
 import com.google.common.base.Optional;
 
 import facade.UserFacade;
 
-@InjectSupport
 public class Start extends AbstractRoomrController {
 
 	@Inject
 	private static UserFacade userFacade;
 
-	public static void start() {
+	public static Result start() {
 		Optional<RoomrUser> loggedInUser = userFacade.getLoggedInUser();
 
 		Integer age = null;
@@ -27,7 +26,7 @@ public class Start extends AbstractRoomrController {
 			gender = loggedInUser.get().gender;
 		}
 
-		render(age, gender);
+		return ok(views.html.Start.start.render(age, gender));
 	}
 
 }

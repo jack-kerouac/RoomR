@@ -1,7 +1,10 @@
 package models.flatshare;
 
-import com.google.appengine.api.datastore.GeoPt;
+import javax.persistence.Embeddable;
 
+import models.common.GeoPt;
+
+@Embeddable
 public class StreetViewParameters {
 	// STREET VIEW
 	public boolean displayStreetView;
@@ -15,7 +18,10 @@ public class StreetViewParameters {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + (displayStreetView ? 1231 : 1237);
-		result = prime * result + ((streetViewGeoLocation == null) ? 0 : streetViewGeoLocation.hashCode());
+		result = prime
+				* result
+				+ ((streetViewGeoLocation == null) ? 0 : streetViewGeoLocation
+						.hashCode());
 		long temp;
 		temp = Double.doubleToLongBits(streetViewHeading);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
@@ -25,6 +31,7 @@ public class StreetViewParameters {
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -41,11 +48,14 @@ public class StreetViewParameters {
 				return false;
 		} else if (!streetViewGeoLocation.equals(other.streetViewGeoLocation))
 			return false;
-		if (Double.doubleToLongBits(streetViewHeading) != Double.doubleToLongBits(other.streetViewHeading))
+		if (Double.doubleToLongBits(streetViewHeading) != Double
+				.doubleToLongBits(other.streetViewHeading))
 			return false;
-		if (Double.doubleToLongBits(streetViewPitch) != Double.doubleToLongBits(other.streetViewPitch))
+		if (Double.doubleToLongBits(streetViewPitch) != Double
+				.doubleToLongBits(other.streetViewPitch))
 			return false;
-		if (Double.doubleToLongBits(streetViewZoom) != Double.doubleToLongBits(other.streetViewZoom))
+		if (Double.doubleToLongBits(streetViewZoom) != Double
+				.doubleToLongBits(other.streetViewZoom))
 			return false;
 		return true;
 	}

@@ -1,0 +1,45 @@
+#view_offer {
+
+@offer-padding: 10px;
+@column-width: @content-width / 2 - 2 * @offer-padding - @offer-padding;
+	
+.offer {
+	padding: @offer-padding;
+	
+	background-color: @primary_variant4;
+	border-radius: @offer-padding;
+}
+
+#offer_info {
+	float: left;
+	width: @column-width;
+}
+
+#application_form {
+	label.caption {
+		width: @column-width - 36px;
+	}
+	
+	textarea {
+		width: @column-width - 36px;
+		height: 60px;
+		margin: 5px 0px;
+	}
+}
+
+#maps {
+	float: right;
+	width: @column-width;
+}
+
+#map_canvas {
+	width: @column-width;
+	height: @column-width;	
+}
+
+#street_view_canvas {
+	width: @column-width;
+	height: @column-width;	
+}
+	
+}

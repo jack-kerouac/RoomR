@@ -1,0 +1,21 @@
+@(ex: Throwable)
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Application error</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=${_response_encoding}"/>	
+    </head>
+    <body>
+    	@if(play.Play.isDev) {
+    		@ex
+    	} else {
+            <h1>Oops, an error occured</h1>
+            @if(ex.isInstanceOf[play.api.PlayException]) {
+                <p>
+                    This exception has been logged with id <strong>${ex.id}</strong>.
+                </p>
+            }
+        }
+    </body>
+</html>

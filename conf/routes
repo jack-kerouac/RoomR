@@ -3,43 +3,33 @@
 # ~~~~
 
 # Home page
-GET     /                                       Start.start
-
-# Ignore favicon requests
-GET     /favicon.ico                            404
-
-# Map static resources from the /app/public folder to the /public path
-GET     /public/                                staticDir:public
+GET     /                                       	controllers.Start.start()
 
 # create room offers
-GET		/createOffer							Offers.offerForm
-POST	/offers/								Offers.createOffer
+# GET		/createOffer							controllers.Offers.offerForm()
+# POST	/offers/								controllers.Offers.createOffer()
 
-GET		/offers/								Offers.viewAll
-GET		/offers/{id}							Offers.viewOffer
+# GET		/offers/								controllers.Offers.viewAll()
+# GET		/offers/:id								controllers.Offers.viewOffer(id: Long)
 
 # search
-GET		/search									Search.searchForm
-GET		/offers									Search.offers
+# GET		/search									controllers.Search.searchForm()
+# GET		/offers									controllers.Search.offers()
 
 # registration
-GET		/register								Registration.registrationForm
-POST	/users									Registration.register
+# GET		/register								controllers.Registration.registrationForm()
+# POST	/users									controllers.Registration.register()
 
 # users
-GET		/users									Users.viewAll
-
+# GET		/users									controllers.Users.viewAll()
 
 # applications
-POST	/applications							Applications.apply
+# POST	/applications							controllers.Applications.apply()
 
 # dashboard
-GET		/dashboard								Dashboard.view
-GET		/applications							Applications.view
+# GET		/dashboard								controllers.Dashboard.view()
+# GET		/applications							controllers.Applications.view()
 
 
-# DEV MODELS
-GET		/reset									DevModels.reset
-
-# Catch all
-#*       /{controller}/{action}                  {controller}.{action}
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               			controllers.Assets.at(path="/public", file)

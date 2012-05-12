@@ -1,0 +1,11 @@
+@(applications: List[models.application.RoomOfferApplication])
+
+@main(title = "Alle Bewerbungen", pageId= "view_applications"){
+
+<ul>
+@for(a <- applications) {
+	<li>@a</li>
+}
+</ul>
+
+}

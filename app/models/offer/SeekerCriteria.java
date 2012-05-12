@@ -2,7 +2,7 @@ package models.offer;
 
 import java.util.Set;
 
-import javax.persistence.Embedded;
+import javax.persistence.Embeddable;
 
 import models.common.Age;
 import models.common.Gender;
@@ -11,11 +11,12 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Range;
 import com.google.common.collect.Ranges;
 
+@Embeddable
 public class SeekerCriteria {
 
-	@Embedded
+	// @Embedded
 	public Age minAge;
-	@Embedded
+	// @Embedded
 	public Age maxAge;
 
 	public Set<Gender> genders;
@@ -40,7 +41,8 @@ public class SeekerCriteria {
 
 	@Override
 	public String toString() {
-		return Objects.toStringHelper(this).add("genders", genders).add("age range", getAgeRange()).toString();
+		return Objects.toStringHelper(this).add("genders", genders)
+				.add("age range", getAgeRange()).toString();
 	}
 
 	@Override

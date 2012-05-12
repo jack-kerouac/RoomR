@@ -1,0 +1,143 @@
+/* a tag that is attached to the left side of the box */
+.box_tag(@top_offset: 0px) {
+	.light_shadow;
+	
+	float: left;
+	position: absolute;
+	left: -53px;
+	top: @top_offset;
+
+	width: 40px;
+	padding: 5px; 
+		
+	text-align: right;
+		
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+}
+
+#search_offers {
+
+#search_offers_form {
+	margin-left: 52px;
+
+	#formData_minRoomSizeSquareMeters {
+		width: 25px;
+	}
+	
+	#formData_maxRentPerMonthInEuro {
+		width: 25px;
+	}
+	
+	#genders_select {
+		margin-left: 50px;
+	}
+}
+	
+#loading {
+	position: absolute;
+	top: 100px;
+	left: 750px;
+}
+
+.criteria_tooltip {
+	display: none;
+	width: 300px;
+	padding: 10px;
+	background-color: white;
+	border: 1px solid black;
+}
+
+
+.offers {
+	padding-left: 40px;
+	
+	li {
+		.light_shadow;
+		
+		margin-left: 10px;
+		position: relative;
+		margin-bottom: 20px;
+		padding: 10px;
+
+		list-style: none;
+	
+		background-color: @background;
+		border: 3px solid gray;
+		border-radius: 10px;
+
+		.score {
+			.box_tag(5px);
+		
+			color: white;
+			text-shadow: gray 1px 1px;
+			font-weight: bold;
+		}
+		.undefined {
+			background-color: rgb(150, 150, 255);
+		}
+		
+		
+		.total_rent {
+			.box_tag(35px);
+			
+			color: white;
+			text-shadow: gray 1px 1px;
+			font-weight: bold;
+	
+			
+			background-color: @primary_variant2;
+		}
+		
+		.application_note {
+			.box_tag(65px);
+			color: white;
+			background-color: rgb(150, 150, 255);
+		}
+		
+		.location {
+			width: 300px;
+			margin: 10px;
+		
+			position: absolute;
+			right: 0;
+			top: 0;
+						
+			.address {
+				display: inline-block;
+			
+				text-align: right;
+				padding: 10px;
+			}
+			
+			.map {
+				position: absolute;
+				right: 0px;
+				top: -7px;
+			
+				display: inline-block;
+						
+				width: 100px;
+				height: 100px;
+				background-color: green;
+			}
+		}
+		
+		a {
+			color: @text;
+			text-decoration: none;
+		}
+		
+	}
+	
+	li:hover {
+		background-color: white;
+	}
+	
+	li.offer:last-of-type {
+		margin-bottom: 0px;
+	}
+	
+}
+
+}

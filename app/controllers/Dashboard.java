@@ -6,35 +6,38 @@ import javax.inject.Inject;
 
 import models.application.RoomOfferApplication;
 import models.user.RoomrUser;
-import play.modules.guice.InjectSupport;
+import play.mvc.Result;
 
 import com.google.common.base.Optional;
 
 import facade.UserFacade;
 
-@InjectSupport
 public class Dashboard extends AbstractRoomrController {
 
 	@Inject
 	private static UserFacade userFacade;
 
-	public static void view() {
-		Optional<RoomrUser> loggedInUser = userFacade.getLoggedInUser();;
+	public static Result view() {
+		Optional<RoomrUser> loggedInUser = userFacade.getLoggedInUser();
+		;
 		if (loggedInUser.isPresent()) {
-			Set<RoomOfferApplication> myApplications = loggedInUser.get().getApplications();
+			Set<RoomOfferApplication> myApplications = loggedInUser.get().applications;
 
 			if (loggedInUser.get().hasFlatshare()) {
 				// Flatshare myFlatshare = loggedInUser.get().getFlatshare();
 				// Set<RoomOfferApplication> flatshareApplications = repository
 				// .findAllApplicationsFor(currentUser.getFlatshare());
 				// render(myApplications, myFlatshare, flatshareApplications);
-				render(myApplications);
+
+				// TODO: render(myApplications);
+				return ok("");
 			} else {
-				render(myApplications);
+				// TODO: render(myApplications);
+				return ok("");
 			}
 
 		} else {
-			notFound("no user logged in");
+			return notFound("no user logged in");
 		}
 	}
 

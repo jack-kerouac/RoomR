@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import models.common.Gender;
-import play.data.validation.Required;
+import play.data.validation.Constraints.Required;
 
 public class RegistrationFormData implements Serializable {
 	@Required

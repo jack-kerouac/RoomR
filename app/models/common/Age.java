@@ -1,13 +1,24 @@
 package models.common;
 
+import javax.persistence.Embeddable;
 
+@Embeddable
 public final class Age implements Comparable<Age> {
 
 	public int years;
 
-	public Age() {}
+	public Age() {
+	}
 
 	public Age(int years) {
+		this.years = years;
+	}
+
+	public int getYears() {
+		return years;
+	}
+
+	public void setYears(int years) {
 		this.years = years;
 	}
 

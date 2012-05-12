@@ -1,22 +1,22 @@
 package models.flatshare;
 
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Embedded;
+import javax.persistence.Entity;
 import javax.persistence.Id;
 
 import models.common.Address;
 import models.common.Floor;
+import models.common.GeoPt;
 import models.user.RoomrUser;
-import play.modules.objectify.ObjectifyModel;
+import play.db.ebean.Model;
 
-import com.google.appengine.api.datastore.GeoPt;
 import com.google.common.base.Objects;
-import com.googlecode.objectify.annotation.Cached;
 
-@Cached
-public class Flatshare extends ObjectifyModel {
+@Entity
+public class Flatshare extends Model {
 
 	@Id
 	public Long id;
@@ -31,28 +31,39 @@ public class Flatshare extends ObjectifyModel {
 	@Embedded
 	public StreetViewParameters streetViewParameters;
 
-
 	public SmokingTolerance smokingTolerance;
 
 	public TypeOfHouse typeOfHouse;
-	
+
 	public Integer numberOfRooms;
-	
+
 	public Set<Appliance> appliances;
-	
+
 	public Set<AdditionalSpace> additionalSpaces;
-	
-	
-	public Set<RoomrUser> getResidents() {
-		// TODO implement
-		return new HashSet<RoomrUser>();
+
+	public Set<RoomrUser> residents;
+
+	public static Finder<Long, Flatshare> find = new Finder<Long, Flatshare>(
+			Long.class, Flatshare.class);
+
+	public static List<Flatshare> all() {
+		return find.all();
+	}
+
+	public static void create(Flatshare flatshare) {
+		flatshare.save();
+	}
+
+	public static void delete(Long id) {
+		find.ref(id).delete();
 	}
 
 	@Override
 	public String toString() {
-		return Objects.toStringHelper(this).add("id", id).add("address", address).add("geoLocation", geoLocation)
-				.add("floor", floor).add("smoking tolerance", smokingTolerance).add("residents", getResidents())
-				.toString();
+		return Objects.toStringHelper(this).add("id", id)
+				.add("address", address).add("geoLocation", geoLocation)
+				.add("floor", floor).add("smoking tolerance", smokingTolerance)
+				.add("residents", residents).toString();
 	}
 
 	@Override

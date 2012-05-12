@@ -2,16 +2,9 @@ package controllers;
 
 import javax.inject.Inject;
 
-import models.user.RoomrUser;
-import play.cache.Cache;
-import play.data.validation.Valid;
-import play.modules.guice.InjectSupport;
-import play.mvc.Router.ActionDefinition;
-import controllers.formdata.InstantSearchFormData;
 import controllers.formdata.RegistrationFormData;
 import facade.UserFacade;
 
-@InjectSupport
 public class Registration extends AbstractRoomrController {
 	@Inject
 	private static UserFacade userFacade;
@@ -22,21 +15,24 @@ public class Registration extends AbstractRoomrController {
 	 * redirect the user in all cases to redirectUrl.
 	 */
 	public static String createRegistrationURL(String redirectUrl) {
-		ActionDefinition registrationFormAction = reverse();
-		{
-			Registration.registrationForm(redirectUrl, null);
-		}
-		registrationFormAction.absolute();
-		return registrationFormAction.url;
+		// ActionDefinition registrationFormAction = reverse();
+		// {
+		// Registration.registrationForm(redirectUrl, null);
+		// }
+		// registrationFormAction.absolute();
+		// return registrationFormAction.url;
+		return "";
 	}
 
-	public static void registrationForm(String redirectUrl, RegistrationFormData formData) {
+	public static void registrationForm(String redirectUrl,
+			RegistrationFormData formData) {
 		if (!userFacade.isAuthenticationProviderUserLoggedIn()) {
 			// the user is not logged in with an authentication provider
 			// account, so redirect him back to the authentication provider
 			// login page
 			String registrationFormURL = createRegistrationURL(redirectUrl);
-			String loginURL = userFacade.getAuthenticationProviderLoginUrl(registrationFormURL);
+			String loginURL = userFacade
+					.getAuthenticationProviderLoginUrl(registrationFormURL);
 			redirect(loginURL);
 			return;
 		}
@@ -52,33 +48,34 @@ public class Registration extends AbstractRoomrController {
 
 		if (formData == null) {
 			formData = new RegistrationFormData();
-			InstantSearchFormData searchData = (InstantSearchFormData) Cache.get(session.getId()
-					+ Search.INSTANT_SEARCH_DATA_CACHE_KEY);
-			if (searchData != null) {
-				formData.gender = searchData.gender;
-			}
+			// InstantSearchFormData searchData = (InstantSearchFormData) Cache
+			// .get(session.getId() + Search.INSTANT_SEARCH_DATA_CACHE_KEY);
+			// if (searchData != null) {
+			// formData.gender = searchData.gender;
+			// }
 		}
 
-		render(redirectUrl, formData);
+		// render(redirectUrl, formData);
 	}
 
-	public static void register(String redirectUrl, @Valid RegistrationFormData formData) {
-		if (validation.hasErrors()) {
-			validation.keep(); // keep the errors for the next request
-			Registration.registrationForm(redirectUrl, formData);
-		}
-
-		RoomrUser roomrUser = new RoomrUser();
-		roomrUser.name = formData.name;
-		roomrUser.birthdate = formData.birthdate;
-		roomrUser.gender = formData.gender;
-
-		// might throw an exception if no authentication provider user is logged
-		// in, this exception is handled in parent class
-		roomrUser = userFacade.createUser(roomrUser);
-
-		Cache.delete(session.getId() + Search.INSTANT_SEARCH_DATA_CACHE_KEY);
-
-		redirect(redirectUrl);
-	}
+	// public static void register(String redirectUrl,
+	// @Valid RegistrationFormData formData) {
+	// if (validation.hasErrors()) {
+	// validation.keep(); // keep the errors for the next request
+	// Registration.registrationForm(redirectUrl, formData);
+	// }
+	//
+	// RoomrUser roomrUser = new RoomrUser();
+	// roomrUser.name = formData.name;
+	// roomrUser.birthdate = formData.birthdate;
+	// roomrUser.gender = formData.gender;
+	//
+	// // might throw an exception if no authentication provider user is logged
+	// // in, this exception is handled in parent class
+	// roomrUser = userFacade.createUser(roomrUser);
+	//
+	// Cache.delete(session.getId() + Search.INSTANT_SEARCH_DATA_CACHE_KEY);
+	//
+	// redirect(redirectUrl);
+	// }
 }
