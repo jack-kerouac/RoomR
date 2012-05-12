@@ -13,7 +13,10 @@ object ApplicationBuild extends Build {
     "joda-time" % "joda-time" % "[2.0,3.0[",
     "org.joda" % "joda-money" % "[0.6,1.0[",
     "org.apache.httpcomponents" % "httpclient" % "4.1.3",
-    "org.mockito" % "mockito-all" % "1.9.0")
+    "org.mockito" % "mockito-all" % "1.9.0",
+
+    // needed to deploy on Heroku
+    "postgresql" % "postgresql" % "8.4-702.jdbc4")
 
   val main = PlayProject(appName, appVersion, appDependencies, mainLang = JAVA).settings( // Add your own project settings here      
   )
