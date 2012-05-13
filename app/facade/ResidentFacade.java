@@ -4,9 +4,9 @@ import javax.inject.Inject;
 
 import models.flatshare.Flatshare;
 import models.flatshare.FlatshareRepository;
+import models.notification.NotificationService;
 import models.offer.RoomOffer;
 import models.offer.RoomOfferRepository;
-import notifiers.RoomrMailer;
 import facade.exception.RoomOfferUpdateException;
 
 public class ResidentFacade {
@@ -14,11 +14,13 @@ public class ResidentFacade {
 	private FlatshareRepository flatshareRepository;
 	private RoomOfferRepository roomOfferRepository;
 
+	private NotificationService notificationService;
+	
 	public void createFlatshareAndOffer(Flatshare newFlatshare, RoomOffer roomOffer) {
 		flatshareRepository.add(newFlatshare);
 		roomOffer.setFlatshare(newFlatshare);
 		roomOfferRepository.add(roomOffer);
-		RoomrMailer.offerCreated(roomOffer);
+		notificationService.notifyResidentOfCreatedOffer(roomOffer);
 	}
 
 	/**
@@ -52,4 +54,10 @@ public class ResidentFacade {
 	public void setFlatshareRepository(FlatshareRepository flatshareRepository) {
 		this.flatshareRepository = flatshareRepository;
 	}
+	
+	@Inject
+	public void setNotificationService(NotificationService notificationService) {
+		this.notificationService = notificationService;
+	}
+	
 }

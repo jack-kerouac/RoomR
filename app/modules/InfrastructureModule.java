@@ -1,4 +1,5 @@
-package models;
+package modules;
+
 
 import models.application.RoomOfferApplicationRepository;
 import models.flatshare.FlatshareRepository;
@@ -6,13 +7,9 @@ import models.internal.reposImpl.objectify.ObjectifyFlatshareRepository;
 import models.internal.reposImpl.objectify.ObjectifyRoomOfferApplicationRepository;
 import models.internal.reposImpl.objectify.ObjectifyRoomOfferRepository;
 import models.internal.reposImpl.objectify.ObjectifyRoomrUserRepository;
+import models.notification.NotificationService;
+import models.notification.PlayMailNotificationService;
 import models.offer.RoomOfferRepository;
-import models.offer.RoomOfferTokenService;
-import models.ranking.OfferRanker;
-import models.ranking.matching.OfferMatcher;
-import models.ranking.matching.inmemory.InmemoryMatcher;
-import models.ranking.sorting.OfferSorter;
-import models.ranking.sorting.OfferSorterByScore;
 import models.user.RoomrUserRepository;
 
 import com.google.appengine.api.users.UserService;
@@ -20,12 +17,7 @@ import com.google.appengine.api.users.UserServiceFactory;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 
-import facade.AdministrationFacade;
-import facade.ResidentFacade;
-import facade.SeekerFacade;
-import facade.UserFacade;
-
-public class RoomrModule extends AbstractModule {
+public class InfrastructureModule extends AbstractModule {
 
 	@Override
 	protected void configure() {
@@ -35,18 +27,7 @@ public class RoomrModule extends AbstractModule {
 		bind(RoomOfferApplicationRepository.class).to(ObjectifyRoomOfferApplicationRepository.class);
 		bind(FlatshareRepository.class).to(ObjectifyFlatshareRepository.class);
 
-		bind(OfferRanker.class);
-		bind(OfferMatcher.class).to(InmemoryMatcher.class);
-		bind(OfferSorter.class).to(OfferSorterByScore.class);
-
-		// bind facades
-		bind(SeekerFacade.class);
-		bind(ResidentFacade.class);
-		bind(AdministrationFacade.class);
-		bind(UserFacade.class);
-
-		// bind services
-		bind(RoomOfferTokenService.class);
+		bind(NotificationService.class).to(PlayMailNotificationService.class);
 	}
 
 	@Provides
