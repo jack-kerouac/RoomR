@@ -1,21 +1,15 @@
 package models.internal.reposImpl.objectify;
 
-import java.util.HashSet;
 import java.util.Set;
 
-import com.google.common.collect.ImmutableSet;
-import com.googlecode.objectify.Objectify;
-import com.googlecode.objectify.Query;
-
-import play.modules.objectify.Datastore;
-import play.modules.objectify.ObjectifyService;
-
-import models.flatshare.Flatshare;
 import models.offer.RoomOffer;
 import models.offer.RoomOfferRepository;
-import models.user.RoomrUser;
+import play.modules.objectify.Datastore;
 
-public class ObjectifyRoomOfferRepository implements RoomOfferRepository{
+import com.google.common.collect.ImmutableSet;
+import com.googlecode.objectify.Query;
+
+public class ObjectifyRoomOfferRepository implements RoomOfferRepository {
 
 	@Override
 	public void add(RoomOffer offer) {
@@ -38,5 +32,9 @@ public class ObjectifyRoomOfferRepository implements RoomOfferRepository{
 		Datastore.delete(offer);
 	}
 
+	@Override
+	public void update(RoomOffer offer) {
+		Datastore.put(offer);
+	}
 
 }

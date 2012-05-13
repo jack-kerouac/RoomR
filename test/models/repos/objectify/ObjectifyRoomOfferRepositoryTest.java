@@ -77,6 +77,21 @@ public class ObjectifyRoomOfferRepositoryTest extends UnitTest {
 	}
 
 	@Test
+	public void testUpdate() {
+		// persist mocked room offer
+		repositoryUnderTest.add(mockedRoomOffer);
+
+		// change email and update offer
+		String newEmail = "newemail@newhost.com";
+		mockedRoomOffer.contactEmail = newEmail;
+		repositoryUnderTest.update(mockedRoomOffer);
+
+		// verify integrity of updated room offer
+		RoomOffer persistedOffer = repositoryUnderTest.find(mockedRoomOffer.id);
+		assertEquals("Email has not been updated", newEmail, persistedOffer.contactEmail);
+	}
+
+	@Test
 	public void testRemoval() {
 		// persist mocked room offer
 		repositoryUnderTest.add(mockedRoomOffer);
