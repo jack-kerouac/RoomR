@@ -19,6 +19,7 @@ import models.offer.RoomDetails;
 import models.offer.RoomOffer;
 import models.offer.SeekerCriteria;
 import models.user.RoomrUser;
+import play.data.validation.Required;
 import play.data.validation.Valid;
 import play.modules.guice.InjectSupport;
 
@@ -49,7 +50,7 @@ public class Offers extends AbstractRoomrController {
 	@Inject
 	private static AdministrationFacade administrationFacade;
 
-	public static void offerForm(OfferFormData formData) {
+	public static void createOfferForm(OfferFormData formData) {
 		if (formData == null) {
 			// no offer to prefill form with
 			formData = new OfferFormData();
@@ -72,6 +73,16 @@ public class Offers extends AbstractRoomrController {
 		render(formData, genders, floors, smokingTolerances, typesOfHouse, appliances, additionalSpaces);
 	}
 
+	public static void editOfferForm(@Required(message = "room offer ID required") Long roomOfferId,
+			@Required(message = "authentication token required") String authToken) {
+		if (validation.hasErrors()) {
+			response.print(validation.errors());
+			badRequest();
+		}
+
+		render();
+	}
+
 	public static void createOffer(@Valid OfferFormData formData) {
 		if (formData.genders.isEmpty()) {
 			validation.addError("formData.genders", "validation.offerFormData.gendersEmpty");
@@ -92,7 +103,7 @@ public class Offers extends AbstractRoomrController {
 		if (validation.hasErrors()) {
 			// params.flash(); // add http parameters to the flash scope
 			validation.keep(); // keep the errors for the next request
-			Offers.offerForm(formData);
+			Offers.createOfferForm(formData);
 		}
 
 		RoomOffer offer = new RoomOffer();
@@ -135,7 +146,7 @@ public class Offers extends AbstractRoomrController {
 
 		// DESCRIPTION
 		offer.description = formData.description;
-		
+
 		// CONTACT DATA
 		offer.contactEmail = formData.email;
 
