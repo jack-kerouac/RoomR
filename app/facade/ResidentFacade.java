@@ -5,20 +5,18 @@ import java.security.NoSuchAlgorithmException;
 
 import javax.inject.Inject;
 
-import facade.exception.RoomOfferUpdateException;
-
 import models.flatshare.Flatshare;
 import models.flatshare.FlatshareRepository;
 import models.offer.RoomOffer;
 import models.offer.RoomOfferRepository;
 import notifiers.RoomrMailer;
+import facade.exception.RoomOfferUpdateException;
 
 public class ResidentFacade {
 
 	@Inject
 	private FlatshareRepository flatshareRepository;
 
-	@Inject
 	private RoomOfferRepository roomOfferRepository;
 
 	public final String SALT = "ROOMR_SECRET";
@@ -70,5 +68,15 @@ public class ResidentFacade {
 		// hash ok -> update
 		flatshareRepository.update(flatshare);
 		roomOfferRepository.update(offer);
+	}
+
+	@Inject
+	public void setRoomOfferRepository(RoomOfferRepository roomOfferRepository) {
+		this.roomOfferRepository = roomOfferRepository;
+	}
+
+	@Inject
+	public void setFlatshareRepository(FlatshareRepository flatshareRepository) {
+		this.flatshareRepository = flatshareRepository;
 	}
 }
