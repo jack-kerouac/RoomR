@@ -14,7 +14,6 @@ public class ResidentFacade {
 
 	private FlatshareRepository flatshareRepository;
 	private RoomOfferRepository roomOfferRepository;
-	@Inject
 	private RoomOfferTokenService roomOfferTokenService;
 
 	public void createFlatshareAndOffer(Flatshare newFlatshare, RoomOffer roomOffer) {
@@ -66,4 +65,10 @@ public class ResidentFacade {
 	public void setFlatshareRepository(FlatshareRepository flatshareRepository) {
 		this.flatshareRepository = flatshareRepository;
 	}
+
+	@Inject
+	public void setRoomOfferTokenService(RoomOfferTokenService tokenService) {
+		this.roomOfferTokenService = tokenService;
+	}
+
 }
