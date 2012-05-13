@@ -1,0 +1,11 @@
+@(elements: helper.FieldElements)
+
+<dl class="@elements.args.get('_class) @if(elements.hasErrors) {error}" id="@elements.args.get('_id).getOrElse(elements.id + "_field")">
+	@if(elements.label != "") {
+    	<dt><label for="@elements.id">@elements.label(elements.lang)</label></dt>
+    }
+    <dd>@elements.input</dd>
+    @elements.errors(elements.lang).map { error =>
+        <dd class="error">@error</dd>
+    }
+</dl>

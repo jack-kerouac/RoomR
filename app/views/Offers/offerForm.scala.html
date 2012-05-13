@@ -5,6 +5,8 @@
 @import helper._
 @import tags._
 
+@implicitField = @{ FieldConstructor(RoomrFieldConstructorTemplate.f) }
+
 @inputNumber(field: play.api.data.Field, args: (Symbol,Any)*)(implicit handler: FieldConstructor, lang: play.api.i18n.Lang) = {
 	@input(field, args:_*) { (id, name, value, htmlArgs) =>
 	    <input type="number" id="@id" name="@name" value="@value" @toHtmlArgs(htmlArgs)>
@@ -114,19 +116,19 @@
 			</li>
 			
 			<li>
-			#{field 'formData.appliances'}
-				<label for="${field.id}" class="caption">Gadgets</label>
-				#{enumMultiSelect field.name, id:field.id, items:appliances, values:field.value, class:'field' /}
-				<span class="error">${field.error}</span>
-			#{/}
+				<label class="caption">Gadgets</label>
+				@enumMultiSelect(formData("appliances"), appliances)
+			    @formData("appliances").errors().map { error =>
+			        <span class="error">@Messages(error.message)</span>
+			    }
 			</li>
 			
 			<li>
-			#{field 'formData.additionalSpaces'}
-				<label for="${field.id}" class="caption">Zusatzflächen</label>
-				#{enumMultiSelect field.name, id:field.id, items:additionalSpaces, values:field.value, class:'field' /}
-				<span class="error">${field.error}</span>
-			#{/}
+				<label class="caption">Zusatzflächen</label>
+				@enumMultiSelect(formData("additionalSpaces"), additionalSpaces)
+			    @formData("additionalSpaces").errors().map { error =>
+			        <span class="error">@Messages(error.message)</span>
+			    }
 			</li>
 		</ul>
 	</fieldset>
@@ -156,9 +158,9 @@
 			
 			<li id="free_period_select">
 				<label class="caption">Zeitraum</label>
-				@inputDate(formData("freeFrom"), '_label -> ""))
+				@inputDate(formData("freeFrom"), '_label -> "")
 				&nbsp;&#8210;&nbsp;
-				@inputDate(formData("freeTo"), '_label -> ""))
+				@inputDate(formData("freeTo"), '_label -> "")
 			</li>
 		</ul>
 	</fieldset>
