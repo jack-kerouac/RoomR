@@ -13,7 +13,7 @@ import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Cached;
 
 @Cached
-public final class RoomOffer extends ObjectifyModel {
+public class RoomOffer extends ObjectifyModel {
 
 	@Id
 	public Long id;
@@ -22,7 +22,7 @@ public final class RoomOffer extends ObjectifyModel {
 
 	@Embedded
 	public RoomDetails roomDetails;
-	
+
 	@Embedded
 	public SeekerCriteria criteria;
 
