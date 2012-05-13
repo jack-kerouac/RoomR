@@ -20,4 +20,10 @@ public class RoomOfferTokenService {
 		String hashString = new String(byteHash);
 		return hashString;
 	}
+	
+	public boolean isCorrectToken(String token, RoomOffer offer) {
+		String correctToken = createTokenForRoomOffer(offer);
+		return correctToken.equals(token);
+	}
+	
 }
