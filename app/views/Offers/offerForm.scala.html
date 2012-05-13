@@ -1,4 +1,14 @@
-@()
+@(formData: Form[controllers.formdata.OfferFormData], genders: List[models.common.Gender],
+  floors: List[models.common.Floor], smokingTolerances: List[models.flatshare.SmokingTolerance],
+  typesOfHouse: List[models.flatshare.TypeOfHouse], appliances: List[models.flatshare.Appliance],
+  additionalSpaces: List[models.flatshare.AdditionalSpace])
+@import helper._
+
+@inputNumber(field: play.api.data.Field, args: (Symbol,Any)*)(implicit handler: FieldConstructor, lang: play.api.i18n.Lang) = {
+	@input(field, args:_*) { (id, name, value, htmlArgs) =>
+	    <input type="number" id="@id" name="@name" value="@value" @toHtmlArgs(htmlArgs)>
+	}
+}
 
 @main(title = "Anzeige anlegen", pageId = "create_offer"){
 
@@ -10,7 +20,7 @@
 	<div id="street_view_error"></div>
 </div>
 
-#{form Offers.createOffer(), id:'create_offer_form'}
+@form(action = routes.Offers.createOffer(), 'id -> "create_offer_form"){
 	<fieldset name="seeker criteria">
 		<legend>Wen suchst du?</legend>
 		<ul>
@@ -24,15 +34,9 @@
 		
 			<li id="ageRangeSelect">
 				<label class="caption">Alter</label>
-				#{field 'formData.minAge'}
-				<input id="${field.id}" name="${field.name}" type="number" data-validate="${field.validationData}" value="${field.value}" class="age ${field.errorClass}">
-				<span class="error">${field.error}</span>
-				#{/}
+				@inputNumber(formData("minAge"))
 				&nbsp;&#8210;&nbsp;
-				#{field 'formData.maxAge'}
-				<input id="${field.id}" name="${field.name}" type="number" data-validate="${field.validationData}" value="${field.value}" class="age ${field.errorClass}">
-				<span class="error">${field.error}</span>
-				#{/}
+				@inputNumber(formData("maxAge"))
 			</li>
 		</ul>
 	</fieldset>
@@ -42,28 +46,12 @@
 		<fieldset name="address" class="adr">
 			<ul>
 				<li>
-				#{field 'formData.street'}
-					<label for="${field.id}" class="caption">Straße</label>
-					<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass} street">
-					<span class="error">${field.error}</span>
-				#{/}
-				#{field 'formData.streetNumber'}
-					<label for="${field.id}">Nr.</label>
-					<input id="${field.id}" name="${field.name}" type="number" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass} streetnumber">
-					<span class="error">${field.error}</span>
-				#{/}
+				@inputText(formData("street"), '_label -> "Straße")
+				@inputNumber(formData("streetNumber"), '_label -> "Nr.")
 				</li>
 				<li>
-				#{field 'formData.zipCode'}
-					<label for="${field.id}" class="caption">PLZ</label>
-					<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass} postal-code" maxlength="5">
-					<span class="error">${field.error}</span>
-				#{/}
-				#{field 'formData.city'}
-					<label for="${field.id}">Stadt</label>
-					<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value ? field.value : 'München'}" class="${field.errorClass} locality">
-					<span class="error">${field.error}</span>
-				#{/}
+				@inputText(formData("zipCode"), '_label -> "PLZ")
+				@inputText(formData("city"), '_label -> "Stadt")
 				</li>
 				<li>
 				#{field 'formData.displayStreetView'}
@@ -226,6 +214,6 @@
 	</fieldset>
 	
 	<button type="submit">Anzeige einstellen!</button>
-#{/form}
+}
 
 }

@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -51,22 +52,19 @@ public class Offers extends AbstractRoomrController {
 	private static Form<OfferFormData> offerForm = form(OfferFormData.class);
 
 	public static Result offerForm() {
-		offerForm.bindFromRequest();
-		OfferFormData formData = offerForm.get();
-
-		if (formData == null) {
-			// no offer to prefill form with
-			formData = new OfferFormData();
-			formData.minAge = 18;
-			formData.maxAge = 50;
-			formData.genders = Sets.newHashSet(Gender.male, Gender.female);
-			formData.appliances = ImmutableSet.of(Appliance.clothesWasher,
-					Appliance.dishWasher);
-			Optional<RoomrUser> loggedInUser = userFacade.getLoggedInUser();
-			if (loggedInUser.isPresent()) {
-				formData.email = userFacade.getLoggedInUser().get().gaeUserEmail;
-			}
+		// no offer to prefill form with
+		OfferFormData formData = new OfferFormData();
+		formData.minAge = 18;
+		formData.maxAge = 50;
+		formData.genders = Sets.newHashSet(Gender.male, Gender.female);
+		formData.appliances = ImmutableSet.of(Appliance.clothesWasher,
+				Appliance.dishWasher);
+		Optional<RoomrUser> loggedInUser = userFacade.getLoggedInUser();
+		if (loggedInUser.isPresent()) {
+			formData.email = userFacade.getLoggedInUser().get().gaeUserEmail;
 		}
+
+		offerForm = offerForm.fill(formData);
 
 		Gender[] genders = Gender.values();
 		Floor[] floors = Floor.values();
@@ -74,9 +72,10 @@ public class Offers extends AbstractRoomrController {
 		TypeOfHouse[] typesOfHouse = TypeOfHouse.values();
 		Appliance[] appliances = Appliance.values();
 		AdditionalSpace[] additionalSpaces = AdditionalSpace.values();
-		// TODO: render(formData, genders, floors, smokingTolerances,
-		// typesOfHouse, appliances, additionalSpaces);
-		return ok(views.html.Offers.offerForm.render());
+		return ok(views.html.Offers.offerForm.render(offerForm,
+				Arrays.asList(genders), Arrays.asList(floors),
+				Arrays.asList(smokingTolerances), Arrays.asList(typesOfHouse),
+				Arrays.asList(appliances), Arrays.asList(additionalSpaces)));
 	}
 
 	public static Result createOffer() {
