@@ -60,20 +60,22 @@
 				@inputText(formData("city"), '_label -> "Stadt")
 				</li>
 				<li>
-				#{field 'formData.displayStreetView'}
+				@defining(formData("displayStreetView")) { f =>
 					<label class="caption">Street View</label>
-					<ul class="inline_buttons" id="${field.id}">
+					<ul class="inline_buttons" id="@f.id">
 						<li>
-							<label for="${field.id}_true" class="caption">Anzeigen</label>
-							<input id="${field.id}_true" name="${field.name}" type="radio" value="true" class="${field.errorClass}" ${formData.displayStreetView ? 'checked' : ''}>
+							<label for="@{f.id}_true" class="caption">Anzeigen</label>
+							<input id="@{f.id}_true" name="@f.name" type="radio" value="true" @{if(f.value()) "checked" else ""}>
 						</li>
 						<li>
-							<label for="${field.id}_false" class="caption">Verstecken</label>
-							<input id="${field.id}_false" name="${field.name}" type="radio" value="false" class="${field.errorClass}" ${formData.displayStreetView ? '' : 'checked'}>
+							<label for="@{f.id}_false" class="caption">Verstecken</label>
+							<input id="@{f.id}_false" name="@f.name" type="radio" value="false" @{if(f.value()) "" else "checked"}>
 						</li>
 					</ul>
-					<span class="error">${field.error}</span>
-				#{/}
+				    @f.errors().map { error =>
+			        	<span class="error">@Messages(error.message)</span>
+			    	}
+				}
 				@inputHidden(formData("streetViewLat"))
 				@inputHidden(formData("streetViewLng"))
 				@inputHidden(formData("streetViewHeading"))
@@ -88,11 +90,13 @@
 		
 		<ul>
 			<li>
-			#{field 'formData.floor'}
-				<label for="${field.id}" class="caption">Stockwerk</label>
-				#{enumSelect field.name, id:field.id, items:floors, value:'ground', class:'field' /}
-				<span class="error">${field.error}</span>
-			#{/}
+			@defining(formData("floor")) { f =>
+				<label for="@f.id" class="caption">Stockwerk</label>
+				@enumSelect(f, floors)
+			    @f.errors().map { error =>
+		        	<span class="error">@Messages(error.message)</span>
+		    	}
+			}
 			</li>
 			
 			<li>
@@ -100,19 +104,23 @@
 			</li>
 			
 			<li>
-			#{field 'formData.smokingTolerance'}
-				<label for="${field.id}" class="caption">Rauchen</label>
-				#{enumSelect field.name, id:field.id, items:smokingTolerances, value:'prohibited', class:'field' /}
-				<span class="error">${field.error}</span>
-			#{/}
+			@defining(formData("smokingTolerance")) { f =>
+				<label for="@f.id" class="caption">Rauchen</label>
+				@enumSelect(f, smokingTolerances)
+			    @f.errors().map { error =>
+		        	<span class="error">@Messages(error.message)</span>
+		    	}
+			}
 			</li>
 			
 			<li>
-			#{field 'formData.typeOfHouse'}
-				<label for="${field.id}" class="caption">Haustyp</label>
-				#{enumSelect field.name, id:field.id, items:typesOfHouse, value:field.value, class:'field' /}
-				<span class="error">${field.error}</span>
-			#{/}
+			@defining(formData("typeOfHouse")) { f =>
+				<label for="@f.id" class="caption">Haustyp</label>
+				@enumSelect(f, typesOfHouse)
+			    @f.errors().map { error =>
+		        	<span class="error">@Messages(error.message)</span>
+		    	}
+			}
 			</li>
 			
 			<li>

@@ -1,9 +1,6 @@
-*{
-A select for enum values, that uses the #enum tag in order to print the option label for each enum. The option value is the enum itself.
-}*
+@**
+A select for enum values, that uses the @enum tag in order to print the option label for each enum. The option value is the enum itself.
+*@
+@(field: play.api.data.Field, items: List[_ <: Object], args: (Symbol,Any)*)
 
-#{select _arg, value:_value, id:_id, class:_class}
-	#{list items:_items}
-		#{option _}#{enum _ /}#{/option}
-	#{/list} 
-#{/select}
+@helper.select(field, items.map(v => (v.toString(), Messages(v.getClass().getSimpleName() + "." + v))))
