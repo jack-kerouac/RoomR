@@ -1,25 +1,21 @@
 package facade;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 import javax.inject.Inject;
 
 import models.flatshare.Flatshare;
 import models.flatshare.FlatshareRepository;
 import models.offer.RoomOffer;
 import models.offer.RoomOfferRepository;
+import models.offer.RoomOfferTokenService;
 import notifiers.RoomrMailer;
 import facade.exception.RoomOfferUpdateException;
 
 public class ResidentFacade {
 
-	@Inject
 	private FlatshareRepository flatshareRepository;
-
 	private RoomOfferRepository roomOfferRepository;
-
-	public final String SALT = "ROOMR_SECRET";
+	@Inject
+	private RoomOfferTokenService roomOfferTokenService;
 
 	public void createFlatshareAndOffer(Flatshare newFlatshare, RoomOffer roomOffer) {
 		flatshareRepository.add(newFlatshare);
@@ -51,17 +47,8 @@ public class ResidentFacade {
 		}
 
 		// check hash
-		MessageDigest md;
-		try {
-			md = MessageDigest.getInstance("SHA-1");
-		} catch (NoSuchAlgorithmException e) {
-			throw new RoomOfferUpdateException("Error during hash verification");
-		}
-		String stringToHash = SALT + offer.id;
-		byte[] bytesOfMessage = stringToHash.getBytes();
-		byte[] hashedBytes = md.digest(bytesOfMessage);
-		String hashString = new String(hashedBytes);
-		if (!hashString.equals(hash)) {
+		String expectedHash = roomOfferTokenService.createTokenForRoomOffer(offer);
+		if (!expectedHash.equals(hash)) {
 			throw new RoomOfferUpdateException("Incorrect hash supplied for update request");
 		}
 

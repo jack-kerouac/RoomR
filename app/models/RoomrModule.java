@@ -7,6 +7,7 @@ import models.internal.reposImpl.objectify.ObjectifyRoomOfferApplicationReposito
 import models.internal.reposImpl.objectify.ObjectifyRoomOfferRepository;
 import models.internal.reposImpl.objectify.ObjectifyRoomrUserRepository;
 import models.offer.RoomOfferRepository;
+import models.offer.RoomOfferTokenService;
 import models.ranking.OfferRanker;
 import models.ranking.matching.OfferMatcher;
 import models.ranking.matching.inmemory.InmemoryMatcher;
@@ -43,6 +44,9 @@ public class RoomrModule extends AbstractModule {
 		bind(ResidentFacade.class);
 		bind(AdministrationFacade.class);
 		bind(UserFacade.class);
+
+		// bind services
+		bind(RoomOfferTokenService.class);
 	}
 
 	@Provides
