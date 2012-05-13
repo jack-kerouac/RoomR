@@ -13,6 +13,7 @@ import play.modules.objectify.ObjectifyModel;
 
 import com.google.appengine.api.datastore.GeoPt;
 import com.google.common.base.Objects;
+import com.google.common.collect.Sets;
 import com.googlecode.objectify.annotation.Cached;
 
 @Cached
@@ -38,9 +39,9 @@ public class Flatshare extends ObjectifyModel {
 	
 	public Integer numberOfRooms;
 	
-	public Set<Appliance> appliances;
+	public Set<Appliance> appliances = Sets.newLinkedHashSet();
 	
-	public Set<AdditionalSpace> additionalSpaces;
+	public Set<AdditionalSpace> additionalSpaces = Sets.newLinkedHashSet();
 	
 	
 	public Set<RoomrUser> getResidents() {

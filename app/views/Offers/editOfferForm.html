@@ -1,0 +1,229 @@
+#{extends 'main.html' /}
+#{set title:'Anzeige anlegen' /}
+#{set pageId:'create_offer' /}
+
+<div id="maps">
+	<div id="map_canvas"></div>
+	<div id="street_view_canvas">
+		<div class="disabled_overlay"></div>
+	</div>
+	<div id="street_view_error"></div>
+</div>
+
+#{form @Offers.createOffer(), id:'create_offer_form'}
+	<fieldset name="seeker criteria">
+		<legend>Wen suchst du?</legend>
+		<ul>
+			<li>
+				#{field 'formData.genders'}
+				<label class="caption">Geschlecht</label>
+				#{enumMultiSelect field.name, id:field.id, items:genders, values:field.value, class:'field' /}
+				<span class="error">${field.error}</span>
+				#{/}
+			</li>
+		
+			<li id="ageRangeSelect">
+				<label class="caption">Alter</label>
+				#{field 'formData.minAge'}
+				<input id="${field.id}" name="${field.name}" type="number" data-validate="${field.validationData}" value="${field.value}" class="age ${field.errorClass}">
+				<span class="error">${field.error}</span>
+				#{/}
+				&nbsp;&#8210;&nbsp;
+				#{field 'formData.maxAge'}
+				<input id="${field.id}" name="${field.name}" type="number" data-validate="${field.validationData}" value="${field.value}" class="age ${field.errorClass}">
+				<span class="error">${field.error}</span>
+				#{/}
+			</li>
+		</ul>
+	</fieldset>
+
+	<fieldset name="flatshare">
+		<legend>Deine WG</legend>
+		<fieldset name="address" class="adr">
+			<ul>
+				<li>
+				#{field 'formData.street'}
+					<label for="${field.id}" class="caption">Straße</label>
+					<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass} street">
+					<span class="error">${field.error}</span>
+				#{/}
+				#{field 'formData.streetNumber'}
+					<label for="${field.id}">Nr.</label>
+					<input id="${field.id}" name="${field.name}" type="number" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass} streetnumber">
+					<span class="error">${field.error}</span>
+				#{/}
+				</li>
+				<li>
+				#{field 'formData.zipCode'}
+					<label for="${field.id}" class="caption">PLZ</label>
+					<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass} postal-code" maxlength="5">
+					<span class="error">${field.error}</span>
+				#{/}
+				#{field 'formData.city'}
+					<label for="${field.id}">Stadt</label>
+					<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value ? field.value : 'München'}" class="${field.errorClass} locality">
+					<span class="error">${field.error}</span>
+				#{/}
+				</li>
+				<li>
+				#{field 'formData.displayStreetView'}
+					<label class="caption">Street View</label>
+					<ul class="inline_buttons" id="${field.id}">
+						<li>
+							<label for="${field.id}_true" class="caption">Anzeigen</label>
+							<input id="${field.id}_true" name="${field.name}" type="radio" value="true" class="${field.errorClass}" ${formData.displayStreetView ? 'checked' : ''}>
+						</li>
+						<li>
+							<label for="${field.id}_false" class="caption">Verstecken</label>
+							<input id="${field.id}_false" name="${field.name}" type="radio" value="false" class="${field.errorClass}" ${formData.displayStreetView ? '' : 'checked'}>
+						</li>
+					</ul>
+					<span class="error">${field.error}</span>
+				#{/}
+				#{field 'formData.streetViewLat'}
+					<input id="${field.id}" name="${field.name}" type="hidden" value="${field.value}">
+				#{/}
+				#{field 'formData.streetViewLng'}
+					<input id="${field.id}" name="${field.name}" type="hidden" value="${field.value}">
+				#{/}
+				#{field 'formData.streetViewHeading'}
+					<input id="${field.id}" name="${field.name}" type="hidden" value="${field.value}">
+				#{/}
+				#{field 'formData.streetViewPitch'}
+					<input id="${field.id}" name="${field.name}" type="hidden" value="${field.value}">
+				#{/}
+				#{field 'formData.streetViewZoom'}
+					<input id="${field.id}" name="${field.name}" type="hidden" value="${field.value}">
+				#{/}
+				</li>
+			</ul>
+			
+			#{field 'formData.lat'}
+				<input id="${field.id}" name="${field.name}" type="hidden" value="${field.value}">
+			#{/}
+			#{field 'formData.lng'}
+				<input id="${field.id}" name="${field.name}" type="hidden" value="${field.value}">
+			#{/}
+		</fieldset>
+		
+		<ul>
+			<li>
+			#{field 'formData.floor'}
+				<label for="${field.id}" class="caption">Stockwerk</label>
+				#{enumSelect field.name, id:field.id, items:floors, value:'ground', class:'field' /}
+				<span class="error">${field.error}</span>
+			#{/}
+			</li>
+			
+			<li>
+			#{field 'formData.numberOfRooms'}
+				<label for="${field.id}" class="caption">Bewohnte Zimmer</label>
+				<input id="${field.id}" name="${field.name}" type="number" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}" maxlength="2">
+				<span class="error">${field.error}</span>
+			#{/}
+			</li>
+			
+			<li>
+			#{field 'formData.smokingTolerance'}
+				<label for="${field.id}" class="caption">Rauchen</label>
+				#{enumSelect field.name, id:field.id, items:smokingTolerances, value:'prohibited', class:'field' /}
+				<span class="error">${field.error}</span>
+			#{/}
+			</li>
+			
+			<li>
+			#{field 'formData.typeOfHouse'}
+				<label for="${field.id}" class="caption">Haustyp</label>
+				#{enumSelect field.name, id:field.id, items:typesOfHouse, value:field.value, class:'field' /}
+				<span class="error">${field.error}</span>
+			#{/}
+			</li>
+			
+			<li>
+			#{field 'formData.appliances'}
+				<label for="${field.id}" class="caption">Gadgets</label>
+				#{enumMultiSelect field.name, id:field.id, items:appliances, values:field.value, class:'field' /}
+				<span class="error">${field.error}</span>
+			#{/}
+			</li>
+			
+			<li>
+			#{field 'formData.additionalSpaces'}
+				<label for="${field.id}" class="caption">Zusatzflächen</label>
+				#{enumMultiSelect field.name, id:field.id, items:additionalSpaces, values:field.value, class:'field' /}
+				<span class="error">${field.error}</span>
+			#{/}
+			</li>
+		</ul>
+	</fieldset>
+	
+	<fieldset name="room details">
+		<legend>Das Zimmer</legend>
+		<ul>
+			<li>
+			#{field 'formData.totalRentPerMonthInEuro'}
+				<label for="${field.id}" class="caption">Gesamtmiete / Monat</label>
+				<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
+				<label for="${field.id}">€</label>
+				<span class="error">${field.error}</span>
+			#{/}
+			</li>
+			<li>
+			#{field 'formData.depositInEuro'}
+				<label for="${field.id}" class="caption">Kaution</label>
+				<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
+				<label for="${field.id}">€</label>
+				<span class="error">${field.error}</span>
+			#{/}
+			</li>
+			<li>
+			#{field 'formData.roomSize'}
+				<label for="${field.id}" class="caption">Zimmergröße</label>
+				<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
+				<label for="${field.id}">m²</label>
+				<span class="error">${field.error}</span>
+			#{/}
+			</li>
+			
+			<li id="free_period_select">
+				<label class="caption">Zeitraum</label>
+				#{field 'formData.freeFrom'}
+				<input id="${field.id}" name="${field.name}" type="date" data-validate="${field.validationData}" value="${field.value?.format()}" class="age ${field.errorClass}">
+				<span class="error">${field.error}</span>
+				#{/}
+				&nbsp;&#8210;&nbsp;
+				#{field 'formData.freeTo'}
+				<input id="${field.id}" name="${field.name}" type="date" data-validate="${field.validationData}" value="${field.value?.format()}" class="age ${field.errorClass}" placeholder="unbegrenzt">
+				<span class="error">${field.error}</span>
+				#{/}
+			</li>
+		</ul>
+	</fieldset>
+	
+	<fieldset name="description">
+		<legend>Beschreibung</legend>
+		<ul>
+			<li>
+			#{field 'formData.description'}
+				<textarea id="${field.id}" name="${field.name}" data-validate="${field.validationData}" class="${field.errorClass}" placeholder="Schreib was über deine WG!"></textarea>
+				<span class="error">${field.error}</span>
+			#{/}
+			</li>
+		</ul>
+	</fieldset>
+	
+	<fieldset name="contact data">
+		<legend>Deine Kontaktdaten</legend>
+		<ul>
+			<li>
+			#{field 'formData.email'}
+				<label for="${field.id}" class="caption">Deine Email</label>
+				<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
+				<span class="error">${field.error}</span>
+			#{/}
+			</li>
+		</ul>
+	</fieldset>
+	
+	<button type="submit">Anzeige einstellen!</button>
+#{/form}

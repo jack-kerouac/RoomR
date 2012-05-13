@@ -30,6 +30,8 @@ public class SeekerFacade {
 		return application;
 	}
 
+	// TODO (Flo): This method does not really belong to this facade, since it is called from various points
+	// TODO (Flo): throw exception here, if offer not found?
 	public RoomOffer findOffer(long id) {
 		return roomOfferRepository.find(id);
 	}

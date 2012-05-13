@@ -17,6 +17,7 @@ import models.flatshare.StreetViewParameters;
 import models.flatshare.TypeOfHouse;
 import models.offer.RoomDetails;
 import models.offer.RoomOffer;
+import models.offer.RoomOfferTokenService;
 import models.offer.SeekerCriteria;
 import models.user.RoomrUser;
 import play.data.validation.Required;
@@ -34,6 +35,7 @@ import facade.AdministrationFacade;
 import facade.ResidentFacade;
 import facade.SeekerFacade;
 import facade.UserFacade;
+import facade.exception.RoomOfferUpdateException;
 
 @InjectSupport
 public class Offers extends AbstractRoomrController {
@@ -50,6 +52,9 @@ public class Offers extends AbstractRoomrController {
 	@Inject
 	private static AdministrationFacade administrationFacade;
 
+	@Inject
+	private static RoomOfferTokenService tokenService;
+
 	public static void createOfferForm(OfferFormData formData) {
 		if (formData == null) {
 			// no offer to prefill form with
@@ -64,23 +69,7 @@ public class Offers extends AbstractRoomrController {
 			}
 		}
 
-		Gender[] genders = Gender.values();
-		Floor[] floors = Floor.values();
-		SmokingTolerance[] smokingTolerances = SmokingTolerance.values();
-		TypeOfHouse[] typesOfHouse = TypeOfHouse.values();
-		Appliance[] appliances = Appliance.values();
-		AdditionalSpace[] additionalSpaces = AdditionalSpace.values();
-		render(formData, genders, floors, smokingTolerances, typesOfHouse, appliances, additionalSpaces);
-	}
-
-	public static void editOfferForm(@Required(message = "room offer ID required") Long roomOfferId,
-			@Required(message = "authentication token required") String authToken) {
-		if (validation.hasErrors()) {
-			response.print(validation.errors());
-			badRequest();
-		}
-
-		render();
+		renderOfferForm(formData);
 	}
 
 	public static void createOffer(@Valid OfferFormData formData) {
@@ -107,15 +96,76 @@ public class Offers extends AbstractRoomrController {
 		}
 
 		RoomOffer offer = new RoomOffer();
-
-		// CRITERIA
-		offer.criteria = new SeekerCriteria();
-		offer.criteria.genders = formData.genders;
-		offer.criteria.minAge = new Age(formData.minAge);
-		offer.criteria.maxAge = new Age(formData.maxAge);
-
-		// FLATSHARE
 		Flatshare flatshare = new Flatshare();
+
+		copy(formData, flatshare, offer);
+
+		residentFacade.createFlatshareAndOffer(flatshare, offer);
+
+		viewOffer(offer.id);
+	}
+
+	public static void editOfferForm(@Required(message = "room offer ID required") Long id,
+			@Required(message = "authentication token required") String authToken) {
+		if (validation.hasErrors()) {
+			response.print(validation.errors());
+			badRequest();
+		}
+
+		RoomOffer offer = seekerFacade.findOffer(id);
+
+		if (offer == null) {
+			notFound("not offer with id " + id + " found");
+		}
+
+		if (!tokenService.isCorrectToken(authToken, offer)) {
+			response.print("WRONG TOKEN");
+			badRequest();
+		}
+
+		Flatshare flatshare = offer.getFlatshare();
+
+		OfferFormData formData = new OfferFormData();
+		copy(flatshare, offer, formData);
+		
+		renderOfferForm(formData);
+	}
+
+	public static void editOffer(@Required Long roomOfferId, @Valid OfferFormData formData) {
+		checkAuthenticity();
+
+		RoomOffer offer = seekerFacade.findOffer(roomOfferId);
+		Flatshare flatshare = offer.getFlatshare();
+
+		copy(formData, flatshare, offer);
+
+		try {
+			residentFacade.updateRoomOfferForFlatshare(offer, flatshare);
+		} catch (RoomOfferUpdateException e) {
+			// TODO (Flo): how to handle this exception
+			response.print(e);
+			badRequest();
+		}
+	}
+	
+
+	private static void renderOfferForm(OfferFormData formData) {
+		Gender[] genders = Gender.values();
+		Floor[] floors = Floor.values();
+		SmokingTolerance[] smokingTolerances = SmokingTolerance.values();
+		TypeOfHouse[] typesOfHouse = TypeOfHouse.values();
+		Appliance[] appliances = Appliance.values();
+		AdditionalSpace[] additionalSpaces = AdditionalSpace.values();
+		render(formData, genders, floors, smokingTolerances, typesOfHouse, appliances, additionalSpaces);
+	}
+
+
+	/**
+	 * Copy attributes from form backing object {@code formData} to
+	 * {@code flatshare} and {@code offer}.
+	 */
+	private static void copy(OfferFormData formData, Flatshare flatshare, RoomOffer offer) {
+		// FLATSHARE
 		flatshare.address = new Address(formData.street, formData.streetNumber, formData.zipCode, formData.city);
 		flatshare.geoLocation = new GeoPt(formData.lat, formData.lng);
 
@@ -136,6 +186,12 @@ public class Offers extends AbstractRoomrController {
 		flatshare.appliances = formData.appliances;
 		flatshare.additionalSpaces = formData.additionalSpaces;
 
+		// CRITERIA
+		offer.criteria = new SeekerCriteria();
+		offer.criteria.genders = formData.genders;
+		offer.criteria.minAge = new Age(formData.minAge);
+		offer.criteria.maxAge = new Age(formData.maxAge);
+
 		// ROOM DETAILS
 		offer.roomDetails = new RoomDetails();
 		offer.roomDetails.roomSize = new FloorSpace(formData.roomSize);
@@ -149,11 +205,59 @@ public class Offers extends AbstractRoomrController {
 
 		// CONTACT DATA
 		offer.contactEmail = formData.email;
-
-		residentFacade.createFlatshareAndOffer(flatshare, offer);
-
-		viewOffer(offer.id);
 	}
+	
+	
+	/**
+	 * Copy attributes from {@code flatshare} and {@code offer} to form backing object {@code formData};
+	 */
+	private static void copy(Flatshare flatshare, RoomOffer offer, OfferFormData formData) {
+		// FLATSHARE
+
+		formData.street = flatshare.address.street;
+		formData.streetNumber = flatshare.address.streetNumber;
+		formData.zipCode = flatshare.address.zipCode;
+		formData.city = flatshare.address.city;
+		
+		formData.lat = flatshare.geoLocation.getLatitude();
+		formData.lng = flatshare.geoLocation.getLongitude();
+		
+		formData.displayStreetView = flatshare.streetViewParameters.displayStreetView;
+		formData.streetViewLat = flatshare.streetViewParameters.streetViewGeoLocation.getLatitude();
+		formData.streetViewLng = flatshare.streetViewParameters.streetViewGeoLocation.getLongitude();
+		// TODO (Flo): why is it float in the form backing object?
+		formData.streetViewHeading = (float) flatshare.streetViewParameters.streetViewHeading;
+		formData.streetViewPitch = (float) flatshare.streetViewParameters.streetViewPitch;
+		formData.streetViewZoom = (float) flatshare.streetViewParameters.streetViewZoom;
+		
+		formData.floor = flatshare.floor;
+		formData.numberOfRooms = flatshare.numberOfRooms;
+		formData.smokingTolerance = flatshare.smokingTolerance;
+		formData.typeOfHouse = flatshare.typeOfHouse;
+		formData.appliances = flatshare.appliances;
+		formData.additionalSpaces = flatshare.additionalSpaces;
+		
+		// CRITERIA
+		formData.genders = offer.criteria.genders;
+		formData.minAge = offer.criteria.minAge.years;
+		formData.maxAge = offer.criteria.maxAge.years;
+		
+		// ROOM DETAILS
+		formData.roomSize = offer.roomDetails.roomSize.squareMeters;
+		formData.totalRentPerMonthInEuro = offer.roomDetails.totalRentPerMonthInEuro;
+		formData.depositInEuro = offer.roomDetails.depositInEuro;
+		formData.freeFrom = offer.roomDetails.freeFrom;
+		formData.freeTo = offer.roomDetails.freeTo;
+
+		// DESCRIPTION
+		
+		formData.description = offer.description;
+
+		// CONTACT DATA
+		
+		formData.email = offer.contactEmail;
+	}
+	
 
 	public static void viewAll() {
 		ArrayList<RoomOffer> offers = Lists.newArrayList(administrationFacade.findAllOffers());
