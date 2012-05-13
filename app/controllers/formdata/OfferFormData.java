@@ -22,7 +22,6 @@ import com.google.common.collect.Sets;
 public class OfferFormData implements Serializable {
 
 	// CRITERIA
-
 	public Set<Gender> genders = Sets.newHashSet();
 
 	@Required
@@ -36,7 +35,6 @@ public class OfferFormData implements Serializable {
 	public Integer maxAge;
 
 	// FLATSHARE
-
 	@Required
 	public String street;
 
@@ -86,7 +84,6 @@ public class OfferFormData implements Serializable {
 	public Set<AdditionalSpace> additionalSpaces = Sets.newHashSet();
 
 	// ROOM DETAILS
-
 	@Required
 	@Min(0)
 	public Double totalRentPerMonthInEuro;
@@ -105,11 +102,9 @@ public class OfferFormData implements Serializable {
 	public Date freeTo;
 
 	// DESCRIPTION
-
 	public String description;
 
 	// CONTACT DATA
-
 	@Required
 	@Email
 	public String email;

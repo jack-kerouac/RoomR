@@ -21,6 +21,7 @@ import models.offer.RoomDetails;
 import models.offer.RoomOffer;
 import models.offer.SeekerCriteria;
 import models.user.RoomrUser;
+import play.api.templates.Html;
 import play.data.Form;
 import play.mvc.Result;
 
@@ -65,47 +66,40 @@ public class Offers extends AbstractRoomrController {
 		}
 
 		offerForm = offerForm.fill(formData);
-
-		Gender[] genders = Gender.values();
-		Floor[] floors = Floor.values();
-		SmokingTolerance[] smokingTolerances = SmokingTolerance.values();
-		TypeOfHouse[] typesOfHouse = TypeOfHouse.values();
-		Appliance[] appliances = Appliance.values();
-		AdditionalSpace[] additionalSpaces = AdditionalSpace.values();
-		return ok(views.html.Offers.offerForm.render(offerForm,
-				Arrays.asList(genders), Arrays.asList(floors),
-				Arrays.asList(smokingTolerances), Arrays.asList(typesOfHouse),
-				Arrays.asList(appliances), Arrays.asList(additionalSpaces)));
+		return ok(renderOfferForm());
 	}
 
 	public static Result createOffer() {
+		offerForm = offerForm.bindFromRequest();
+
 		OfferFormData formData = null;
+		if (offerForm.value().isDefined()) {
+			formData = offerForm.get();
 
-		if (formData.genders.isEmpty()) {
-			// validation.addError("formData.genders",
-			// "validation.offerFormData.gendersEmpty");
-		}
+			if (formData.genders.isEmpty()) {
+				offerForm.reject("genders",
+						"validation.offerFormData.gendersEmpty");
+			}
 
-		// min/max age being null is handled by @Required annotations
-		if (formData.minAge != null && formData.maxAge != null) {
-			if (formData.minAge > formData.maxAge) {
-				// validation.addError("formData.maxAge",
-				// "validation.offerFormData.maxAgeSmallerThanMinAge");
+			// min/max age being null is handled by @Required annotations
+			if (formData.minAge != null && formData.maxAge != null) {
+				if (formData.minAge > formData.maxAge) {
+					offerForm.reject("maxAge",
+							"validation.offerFormData.maxAgeSmallerThanMinAge");
+				}
+			}
+
+			// free from being null is handled by @Required annotations
+			if (formData.freeFrom != null && formData.freeTo != null
+					&& formData.freeFrom.after(formData.freeTo)) {
+				offerForm.reject("freeTo",
+						"validation.offerFormData.freeToBeforeFreeFrom");
 			}
 		}
 
-		// free from being null is handled by @Required annotations
-		if (formData.freeFrom != null && formData.freeTo != null
-				&& formData.freeFrom.after(formData.freeTo)) {
-			// validation.addError("formData.freeTo",
-			// "validation.offerFormData.freeToBeforeFreeFrom");
+		if (formData == null || offerForm.hasErrors()) {
+			return badRequest(renderOfferForm());
 		}
-
-		/*
-		 * if (validation.hasErrors()) { // params.flash(); // add http
-		 * parameters to the flash scope validation.keep(); // keep the errors
-		 * for the next request Offers.offerForm(formData); }
-		 */
 
 		RoomOffer offer = new RoomOffer();
 
@@ -156,6 +150,19 @@ public class Offers extends AbstractRoomrController {
 		residentFacade.createFlatshareAndOffer(flatshare, offer);
 
 		return redirect(routes.Offers.viewOffer(offer.id));
+	}
+
+	private static Html renderOfferForm() {
+		Gender[] genders = Gender.values();
+		Floor[] floors = Floor.values();
+		SmokingTolerance[] smokingTolerances = SmokingTolerance.values();
+		TypeOfHouse[] typesOfHouse = TypeOfHouse.values();
+		Appliance[] appliances = Appliance.values();
+		AdditionalSpace[] additionalSpaces = AdditionalSpace.values();
+		return views.html.Offers.offerForm.render(offerForm,
+				Arrays.asList(genders), Arrays.asList(floors),
+				Arrays.asList(smokingTolerances), Arrays.asList(typesOfHouse),
+				Arrays.asList(appliances), Arrays.asList(additionalSpaces));
 	}
 
 	public static Result viewAll() {

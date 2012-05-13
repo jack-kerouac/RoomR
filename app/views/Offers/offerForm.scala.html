@@ -3,11 +3,15 @@
   typesOfHouse: List[models.flatshare.TypeOfHouse], appliances: List[models.flatshare.Appliance],
   additionalSpaces: List[models.flatshare.AdditionalSpace])
 @import helper._
+@import tags._
 
 @inputNumber(field: play.api.data.Field, args: (Symbol,Any)*)(implicit handler: FieldConstructor, lang: play.api.i18n.Lang) = {
 	@input(field, args:_*) { (id, name, value, htmlArgs) =>
 	    <input type="number" id="@id" name="@name" value="@value" @toHtmlArgs(htmlArgs)>
 	}
+}
+@inputHidden(field: play.api.data.Field, args: (Symbol,Any)*)(implicit handler: FieldConstructor, lang: play.api.i18n.Lang) = {
+	<input type="hidden" id="@field.id" name="@field.name" value="@field.value" @toHtmlArgs(args.toMap)>
 }
 
 @main(title = "Anzeige anlegen", pageId = "create_offer"){
@@ -25,11 +29,11 @@
 		<legend>Wen suchst du?</legend>
 		<ul>
 			<li>
-				#{field 'formData.genders'}
 				<label class="caption">Geschlecht</label>
-				#{enumMultiSelect field.name, id:field.id, items:genders, values:field.value, class:'field' /}
-				<span class="error">${field.error}</span>
-				#{/}
+				@enumMultiSelect(formData("genders"), genders)
+			    @formData("genders").errors().map { error =>
+			        <span class="error">@Messages(error.message)</span>
+			    }
 			</li>
 		
 			<li id="ageRangeSelect">
@@ -68,30 +72,16 @@
 					</ul>
 					<span class="error">${field.error}</span>
 				#{/}
-				#{field 'formData.streetViewLat'}
-					<input id="${field.id}" name="${field.name}" type="hidden" value="${field.value}">
-				#{/}
-				#{field 'formData.streetViewLng'}
-					<input id="${field.id}" name="${field.name}" type="hidden" value="${field.value}">
-				#{/}
-				#{field 'formData.streetViewHeading'}
-					<input id="${field.id}" name="${field.name}" type="hidden" value="${field.value}">
-				#{/}
-				#{field 'formData.streetViewPitch'}
-					<input id="${field.id}" name="${field.name}" type="hidden" value="${field.value}">
-				#{/}
-				#{field 'formData.streetViewZoom'}
-					<input id="${field.id}" name="${field.name}" type="hidden" value="${field.value}">
-				#{/}
+				@inputHidden(formData("streetViewLat"))
+				@inputHidden(formData("streetViewLng"))
+				@inputHidden(formData("streetViewHeading"))
+				@inputHidden(formData("streetViewPitch"))
+				@inputHidden(formData("streetViewZoom"))
 				</li>
 			</ul>
 			
-			#{field 'formData.lat'}
-				<input id="${field.id}" name="${field.name}" type="hidden" value="${field.value}">
-			#{/}
-			#{field 'formData.lng'}
-				<input id="${field.id}" name="${field.name}" type="hidden" value="${field.value}">
-			#{/}
+			@inputHidden(formData("lat"))
+			@inputHidden(formData("lng"))
 		</fieldset>
 		
 		<ul>
@@ -104,11 +94,7 @@
 			</li>
 			
 			<li>
-			#{field 'formData.numberOfRooms'}
-				<label for="${field.id}" class="caption">Bewohnte Zimmer</label>
-				<input id="${field.id}" name="${field.name}" type="number" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}" maxlength="2">
-				<span class="error">${field.error}</span>
-			#{/}
+			@inputNumber(formData("numberOfRooms"), 'maxlength -> "2", '_label -> "Bewohnte Zimmer")
 			</li>
 			
 			<li>
@@ -149,41 +135,30 @@
 		<legend>Das Zimmer</legend>
 		<ul>
 			<li>
-			#{field 'formData.totalRentPerMonthInEuro'}
-				<label for="${field.id}" class="caption">Gesamtmiete / Monat</label>
-				<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
-				<label for="${field.id}">€</label>
-				<span class="error">${field.error}</span>
-			#{/}
+			@input(formData("totalRentPerMonthInEuro"), '_label -> "Gesamtmiete / Monat") { (id, name, value, htmlArgs) =>
+			    <input type="text" id="@id" name="@name" value="@value" @toHtmlArgs(htmlArgs)>
+			    <label for="@id">€</label>
+			}
 			</li>
 			<li>
-			#{field 'formData.depositInEuro'}
-				<label for="${field.id}" class="caption">Kaution</label>
-				<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
-				<label for="${field.id}">€</label>
-				<span class="error">${field.error}</span>
-			#{/}
+			@input(formData("depositInEuro"), '_label -> "Kaution") { (id, name, value, htmlArgs) =>
+			    <input type="text" id="@id" name="@name" value="@value" @toHtmlArgs(htmlArgs)>
+			    <label for="@id">€</label>
+			}
 			</li>
 			<li>
-			#{field 'formData.roomSize'}
-				<label for="${field.id}" class="caption">Zimmergröße</label>
-				<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
-				<label for="${field.id}">m²</label>
-				<span class="error">${field.error}</span>
-			#{/}
+			
+			@input(formData("roomSize"), '_label -> "Zimmergröße") { (id, name, value, htmlArgs) =>
+			    <input type="text" id="@id" name="@name" value="@value" @toHtmlArgs(htmlArgs)>
+			    <label for="@id">m²</label>
+			}
 			</li>
 			
 			<li id="free_period_select">
 				<label class="caption">Zeitraum</label>
-				#{field 'formData.freeFrom'}
-				<input id="${field.id}" name="${field.name}" type="date" data-validate="${field.validationData}" value="${field.value?.format()}" class="age ${field.errorClass}">
-				<span class="error">${field.error}</span>
-				#{/}
+				@inputDate(formData("freeFrom"), '_label -> ""))
 				&nbsp;&#8210;&nbsp;
-				#{field 'formData.freeTo'}
-				<input id="${field.id}" name="${field.name}" type="date" data-validate="${field.validationData}" value="${field.value?.format()}" class="age ${field.errorClass}" placeholder="unbegrenzt">
-				<span class="error">${field.error}</span>
-				#{/}
+				@inputDate(formData("freeTo"), '_label -> ""))
 			</li>
 		</ul>
 	</fieldset>
@@ -192,10 +167,7 @@
 		<legend>Beschreibung</legend>
 		<ul>
 			<li>
-			#{field 'formData.description'}
-				<textarea id="${field.id}" name="${field.name}" data-validate="${field.validationData}" class="${field.errorClass}" placeholder="Schreib was über deine WG!"></textarea>
-				<span class="error">${field.error}</span>
-			#{/}
+			@textarea(formData("description"), '_label -> "", 'placeholder -> "Schreib was über deine WG!")
 			</li>
 		</ul>
 	</fieldset>
@@ -204,11 +176,7 @@
 		<legend>Deine Kontaktdaten</legend>
 		<ul>
 			<li>
-			#{field 'formData.email'}
-				<label for="${field.id}" class="caption">Deine Email</label>
-				<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
-				<span class="error">${field.error}</span>
-			#{/}
+			@inputText(formData("email"), '_label -> "Deine Email")
 			</li>
 		</ul>
 	</fieldset>

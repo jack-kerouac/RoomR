@@ -1,1 +1,3 @@
-&{_arg.getClass().getSimpleName() + "." + _arg}
+@(arg: Object)
+
+@Messages(arg.getClass().getSimpleName() + "." + arg)
