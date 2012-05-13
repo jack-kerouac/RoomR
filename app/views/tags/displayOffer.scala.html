@@ -1,9 +1,11 @@
-*{ Display an offer in one of these modes: 'teaser' }*
+@(offer: models.offer.RoomOffer, as: String)
 
-<div class="${_as == 'teaser' ? 'teaser' : ''}">
-	Address: ${_offer.flatshare?.address}<br />
+@* Display an offer in one of these modes: 'teaser' *@
+
+<div class="@{if(as == "teaser") "teaser" else ""}">
+	Address: @offer.flatshare.address<br />
 
 	<div class="toString">
-		${_offer}
+		@offer
 	</div>
 </div>

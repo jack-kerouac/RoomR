@@ -7,3 +7,4 @@ conf/evolutions
 .classpath
 .project
 .settings
+.cache

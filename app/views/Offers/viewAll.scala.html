@@ -1,0 +1,14 @@
+@(offers: List[models.offer.RoomOffer])
+@import tags._
+
+@main(title = "Alle Angebote", pageId = "view_all_offers"){
+
+<ul class="all_offers">
+@for(offer <- offers) {
+	<li class="offer">
+		<a href="routes.Offers.viewOffer(offer.id)">@displayOffer(offer = offer, as = "teaser")</a>
+	</li>
+}
+</ul>
+
+}

@@ -1,9 +1,0 @@
-#{extends 'main.html' /}
-#{set title:'Alle Angebote' /}
-#{set pageId:'view_all_offers' /}
-
-<ul class="all_offers">
-#{list items:offers, as:'offer'}
-	<li class="offer">#{a @Offers.viewOffer(offer.id)}#{displayOffer offer:offer, as:'teaser' /}#{/a}</li>
-#{/list}
-</ul>

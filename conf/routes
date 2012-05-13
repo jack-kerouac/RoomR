@@ -3,32 +3,32 @@
 # ~~~~
 
 # Home page
-GET     /                                       	controllers.Start.start()
+GET     /                                       controllers.Start.start()
 
 # create room offers
-# GET		/createOffer							controllers.Offers.offerForm()
-# POST	/offers/								controllers.Offers.createOffer()
+GET		/createOffer							controllers.Offers.offerForm()
+POST	/offers/								controllers.Offers.createOffer()
 
-# GET		/offers/								controllers.Offers.viewAll()
-# GET		/offers/:id								controllers.Offers.viewOffer(id: Long)
+GET		/offers/								controllers.Offers.viewAll()
+GET		/offers/:id								controllers.Offers.viewOffer(id: Long)
 
 # search
-# GET		/search									controllers.Search.searchForm()
-# GET		/offers									controllers.Search.offers()
+#GET		/search									controllers.Search.searchForm()
+#GET		/offers									controllers.Search.offers()
 
 # registration
-# GET		/register								controllers.Registration.registrationForm()
-# POST	/users									controllers.Registration.register()
+#GET		/register								controllers.Registration.registrationForm()
+#POST	/users									controllers.Registration.register()
 
 # users
-# GET		/users									controllers.Users.viewAll()
+#GET		/users									controllers.Users.viewAll()
 
 # applications
-# POST	/applications							controllers.Applications.apply()
+#POST	/applications							controllers.Applications.apply(roomOfferId: Long)
 
 # dashboard
-# GET		/dashboard								controllers.Dashboard.view()
-# GET		/applications							controllers.Applications.view()
+#GET		/dashboard								controllers.Dashboard.view()
+#GET		/applications							controllers.Applications.view()
 
 
 # Map static resources from the /public folder to the /assets URL path

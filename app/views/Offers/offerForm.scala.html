@@ -1,6 +1,6 @@
-#{extends 'main.html' /}
-#{set title:'Anzeige anlegen' /}
-#{set pageId:'create_offer' /}
+@()
+
+@main(title = "Anzeige anlegen", pageId = "create_offer"){
 
 <div id="maps">
 	<div id="map_canvas"></div>
@@ -10,7 +10,7 @@
 	<div id="street_view_error"></div>
 </div>
 
-#{form @Offers.createOffer(), id:'create_offer_form'}
+#{form Offers.createOffer(), id:'create_offer_form'}
 	<fieldset name="seeker criteria">
 		<legend>Wen suchst du?</legend>
 		<ul>
@@ -227,3 +227,5 @@
 	
 	<button type="submit">Anzeige einstellen!</button>
 #{/form}
+
+}

@@ -23,7 +23,9 @@ public class Applications extends AbstractRoomrController {
 	@Inject
 	private static UserFacade userFacade;
 
-	public static void apply(long roomOfferId, RoomOfferApplication application) {
+	public static Result apply(long roomOfferId) {
+		RoomOfferApplication application = null;
+
 		application.currentState = State.WAITING_FOR_INVITATION;
 
 		Optional<RoomrUser> loggedInUser = userFacade.getLoggedInUser();
@@ -33,7 +35,7 @@ public class Applications extends AbstractRoomrController {
 		seekerFacade
 				.apply(loggedInUser.get(), roomOfferId, application.message);
 
-		// Offers.viewOffer(roomOfferId);
+		return redirect(routes.Offers.viewOffer(roomOfferId));
 	}
 
 	public static Result view() {

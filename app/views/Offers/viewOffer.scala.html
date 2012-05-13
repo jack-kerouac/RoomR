@@ -1,6 +1,6 @@
-#{extends 'main.html' /}
-#{set title:'Angebot ' + offer.id /}
-#{set pageId:'view_offer' /}
+@(offer: models.offer.RoomOffer)
+
+@main(title = "Angebot " + offer.id, pageId = "view_offer"){
 
 *{ Display an offer with a rank }*
 
@@ -70,7 +70,7 @@
 		#{/if}
 		#{else}
 			#{if user}
-			#{form @Applications.apply(offer.id), id:'application_form'}
+			#{form Applications.apply(offer.id), id:'application_form'}
 				#{field 'application.message'}
 					<label for="${field.id}" class="caption">Deine Nachricht an die WG:</label>
 					<br />
@@ -106,3 +106,5 @@
 	</div>
 	
 </div>
+
+}

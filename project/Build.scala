@@ -18,6 +18,6 @@ object ApplicationBuild extends Build {
     // needed to deploy on Heroku
     "postgresql" % "postgresql" % "8.4-702.jdbc4")
 
-  val main = PlayProject(appName, appVersion, appDependencies, mainLang = JAVA).settings( // Add your own project settings here      
+  val main = PlayProject(appName, appVersion, appDependencies, mainLang = JAVA).settings(
   )
 }
