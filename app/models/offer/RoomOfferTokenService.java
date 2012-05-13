@@ -3,6 +3,8 @@ package models.offer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import com.google.appengine.repackaged.org.apache.commons.codec.binary.Base64;
+
 public class RoomOfferTokenService {
 
 	private final String SALT = "ROOMR!Secret";
@@ -17,13 +19,13 @@ public class RoomOfferTokenService {
 		String stringToHash = SALT + offer.id;
 		byte[] bytesOfMessage = stringToHash.getBytes();
 		byte[] byteHash = md.digest(bytesOfMessage);
-		String hashString = new String(byteHash);
+		String hashString = Base64.encodeBase64String(byteHash);
 		return hashString;
 	}
-	
+
 	public boolean isCorrectToken(String token, RoomOffer offer) {
 		String correctToken = createTokenForRoomOffer(offer);
 		return correctToken.equals(token);
 	}
-	
+
 }
