@@ -8,6 +8,10 @@ import play.data.validation.Required;
 
 public class InstantSearchFormData implements Serializable {
 
+	public static enum StartDateType {
+		now, fixedDate;
+	}
+	
 	@Required
 	public String city;
 
@@ -17,6 +21,7 @@ public class InstantSearchFormData implements Serializable {
 	public Integer age;
 	public Gender gender;
 
+	public StartDateType startDateType;
 	public Date startDate;
 
 }

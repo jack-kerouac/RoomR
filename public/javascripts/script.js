@@ -142,10 +142,41 @@ roomr.instantSearch = (function() {
 		});
 		$(':checkbox, :radio', $('#search_offers_form')).each(function() {
 			   $(this).change(function() {
-				   updateOfferResultList()
+				   updateOfferResultList();
 			   });
 		});
 		
+		// START DATE
+		// localized date picker by inserting the ge locale into plugins.js
+		$("#formData_startDate").datepicker({
+			defaultDate : "+1w",
+			changeMonth : false,
+			numberOfMonths : 2,
+			onClose : function(dateText, inst) {
+				$(this).keyup();
+			}
+		});
+		
+		// remove normal change handler, since we only want to refresh the results,
+		// if "now" is checked. If "fixedDate" is checked, we want to display a date picker. 
+		$("input[name='formData.startDateType']").unbind();
+        $("input[name='formData.startDateType']").change(function() {
+        	var radioValue = $(this).val();
+
+	        if(radioValue == "fixedDate") {
+	        	$("#formData_startDate").removeAttr("disabled").fadeTo(500, 1.0);
+	        	$("#formData_startDate").datepicker("show");
+	        }
+	        else {
+	        	$("#formData_startDate").attr("disabled", "disabled").fadeTo(500, 0.2);
+	        	updateOfferResultList();
+	        }
+        });
+        
+        if(!$("#formData_startDateType_fixed_date").is(":checked"))
+        	$("#formData_startDate").attr("disabled", "disabled").fadeTo(0, 0.2);
+
+        
 		// update list to account for initial content of the field
 		updateOfferResultList();
 	};

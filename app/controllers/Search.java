@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -18,6 +19,7 @@ import play.modules.guice.InjectSupport;
 import com.google.common.base.Optional;
 
 import controllers.formdata.InstantSearchFormData;
+import controllers.formdata.InstantSearchFormData.StartDateType;
 import facade.UserFacade;
 
 @InjectSupport
@@ -30,18 +32,19 @@ public class Search extends AbstractRoomrController {
 	@Inject
 	private static UserFacade userFacade;
 
-	public static void searchForm(String city, Double max_rent, Integer age, Gender gender) {
-
+	public static void searchForm(String city, Double max_rent, Date startDate, Integer age, Gender gender) {
 		Optional<RoomrUser> loggedInUser = userFacade.getLoggedInUser();
 
 		InstantSearchFormData formData = new InstantSearchFormData();
 
+		// AGE
 		if (age == null && loggedInUser.isPresent()) {
 			formData.age = loggedInUser.get().getAge();
 		}
 		else {
 			formData.age = age;
 		}
+		// GENDER
 		if (gender == null && loggedInUser.isPresent()) {
 			gender = loggedInUser.get().gender;
 		}
@@ -49,6 +52,15 @@ public class Search extends AbstractRoomrController {
 			formData.gender = gender;
 		}
 
+		// START DATE
+		if(startDate == null) {
+			formData.startDateType = StartDateType.now;
+		}
+		else {
+			formData.startDateType = StartDateType.fixedDate;
+			formData.startDate = startDate;
+		}
+		
 		formData.city = city;
 		formData.maxRentPerMonthInEuro = max_rent;
 
@@ -69,11 +81,21 @@ public class Search extends AbstractRoomrController {
 
 		RoomRequest rr = new RoomRequest();
 
-		// TODO: change this: null should mean, date not set, not "now"
-		if (formData.startDate == null)
-			rr.startDateQuery = DateQuery.now();
-		else
-			rr.startDateQuery = DateQuery.fixedDate(formData.startDate);
+		// START DATE
+		if (formData.startDateType != null) {
+			switch(formData.startDateType) {
+			case now:
+				rr.startDateQuery = DateQuery.now();
+				break;
+			case fixedDate:
+				validation.required("formData.maxAge", formData.startDate);
+				if(formData.startDate != null)
+					rr.startDateQuery = DateQuery.fixedDate(formData.startDate);
+			}
+		}
+		else {
+			rr.startDateQuery = null;
+		}
 
 		rr.city = formData.city;
 		rr.maxRentPerMonthInEuro = formData.maxRentPerMonthInEuro;

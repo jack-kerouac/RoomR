@@ -40,6 +40,11 @@ public class RoomRequest {
 		public Date getDate() {
 			return isNow() ? new Date() : date;
 		}
+		
+		@Override
+		public String toString() {
+			return isNow() ? "now" : "fixed date (" + date + ")";
+		}
 
 	}
 

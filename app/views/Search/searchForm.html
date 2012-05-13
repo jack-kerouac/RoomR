@@ -22,12 +22,21 @@
 				<label for="${field.id}">€ Miete</label>
 				<span class="error">${field.error}</span>
 			#{/}
-			und
-			<!-- TODO (Flo): add radio buttons for now vs. fixed date logic -->
-			#{field 'formData.startDate'}
-				<label for="${field.id}">ab</label>
-				<input id="${field.id}" name="${field.name}" type="date" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
-				<span class="error">${field.error}</span>
+			und ab
+			#{field 'formData.startDateType'}
+			<ul class="inline_buttons">
+				<li>
+					<input id="${field.id}_now" name="${field.name}" type="radio" value="now" class="${field.errorClass}" ${formData.startDateType == controllers.formdata.InstantSearchFormData.StartDateType.now ? 'checked' : ''}>
+					<label for="${field.id}_now" class="caption">sofort</label>
+				</li>
+				<li>
+					<input id="${field.id}_fixed_date" name="${field.name}" type="radio" value="fixedDate" class="${field.errorClass}" ${formData.startDateType == controllers.formdata.InstantSearchFormData.StartDateType.fixedDate ? 'checked' : ''}>
+					<label for="${field.id}_fixed_date" class="caption">Datum</label>
+					#{field 'formData.startDate'}
+					<input id="${field.id}" name="${field.name}" type="date" data-validate="${field.validationData}" value="${field.value?.format()}" class="${field.errorClass}">
+					#{/}
+				</li>
+			</ul>
 			#{/}
 			</li>
 		</ul>
