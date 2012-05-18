@@ -8,7 +8,6 @@ import models.common.FloorSpace;
 
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
-import org.joda.time.Interval;
 
 import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
@@ -28,7 +27,7 @@ public final class RoomDetails {
 
 	public RoomDetails() {}
 
-	public RoomDetails(Interval freePeriod, Money rent) {
+	public RoomDetails(Money rent) {
 		super();
 		Preconditions.checkArgument(rent.getCurrencyUnit() == DEFAULT_CURRENCY, "only " + DEFAULT_CURRENCY
 				+ " is supported as currency");
@@ -38,7 +37,7 @@ public final class RoomDetails {
 	public Money getTotalRentPerMonth() {
 		return Money.of(DEFAULT_CURRENCY, totalRentPerMonthInEuro);
 	}
-	
+
 	public Money getDeposit() {
 		return Money.of(DEFAULT_CURRENCY, depositInEuro);
 	}
@@ -59,7 +58,7 @@ public final class RoomDetails {
 		return Objects.toStringHelper(this).add("rent", getTotalRentPerMonth()).add("room size", roomSize)
 				.add("rent period", freeFrom + " - " + (freeTo == null ? "unlimited" : freeTo)).toString();
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -85,23 +84,25 @@ public final class RoomDetails {
 		if (freeFrom == null) {
 			if (other.freeFrom != null)
 				return false;
-		} else if (!freeFrom.equals(other.freeFrom))
+		}
+		else if (!freeFrom.equals(other.freeFrom))
 			return false;
 		if (freeTo == null) {
 			if (other.freeTo != null)
 				return false;
-		} else if (!freeTo.equals(other.freeTo))
+		}
+		else if (!freeTo.equals(other.freeTo))
 			return false;
 		if (roomSize == null) {
 			if (other.roomSize != null)
 				return false;
-		} else if (!roomSize.equals(other.roomSize))
+		}
+		else if (!roomSize.equals(other.roomSize))
 			return false;
 		if (Double.doubleToLongBits(totalRentPerMonthInEuro) != Double.doubleToLongBits(other.totalRentPerMonthInEuro))
 			return false;
 		return true;
 	}
 
-	
 
 }

@@ -1,5 +1,8 @@
 package models.common;
 
+import org.joda.time.DateTime;
+import org.joda.time.Interval;
+
 
 public final class Age implements Comparable<Age> {
 
@@ -9,6 +12,10 @@ public final class Age implements Comparable<Age> {
 
 	public Age(int years) {
 		this.years = years;
+	}
+
+	public Age(DateTime birthday) {
+		this.years = new Interval(birthday, new DateTime()).toPeriod().getYears();
 	}
 
 	@Override

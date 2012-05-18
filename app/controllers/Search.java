@@ -8,7 +8,6 @@ import javax.inject.Inject;
 import models.common.Age;
 import models.common.FloorSpace;
 import models.common.Gender;
-import models.ranking.OfferRanker;
 import models.ranking.matching.ScoredRoomOffer;
 import models.request.RoomRequest;
 import models.request.RoomRequest.DateQuery;
@@ -20,6 +19,7 @@ import com.google.common.base.Optional;
 
 import controllers.formdata.InstantSearchFormData;
 import controllers.formdata.InstantSearchFormData.StartDateType;
+import facade.SeekerFacade;
 import facade.UserFacade;
 
 @InjectSupport
@@ -27,10 +27,10 @@ public class Search extends AbstractRoomrController {
 	public static final String INSTANT_SEARCH_DATA_CACHE_KEY = "-instantSearchData";
 
 	@Inject
-	private static OfferRanker ranker;
+	private static UserFacade userFacade;
 
 	@Inject
-	private static UserFacade userFacade;
+	private static SeekerFacade seekerFacade;
 
 	public static void searchForm(String city, Double max_rent, Date startDate, Integer age, Gender gender) {
 		Optional<RoomrUser> loggedInUser = userFacade.getLoggedInUser();
@@ -53,14 +53,14 @@ public class Search extends AbstractRoomrController {
 		}
 
 		// START DATE
-		if(startDate == null) {
+		if (startDate == null) {
 			formData.startDateType = StartDateType.now;
 		}
 		else {
 			formData.startDateType = StartDateType.fixedDate;
 			formData.startDate = startDate;
 		}
-		
+
 		formData.city = city;
 		formData.maxRentPerMonthInEuro = max_rent;
 
@@ -83,13 +83,13 @@ public class Search extends AbstractRoomrController {
 
 		// START DATE
 		if (formData.startDateType != null) {
-			switch(formData.startDateType) {
+			switch (formData.startDateType) {
 			case now:
 				rr.startDateQuery = DateQuery.now();
 				break;
 			case fixedDate:
 				validation.required("formData.maxAge", formData.startDate);
-				if(formData.startDate != null)
+				if (formData.startDate != null)
 					rr.startDateQuery = DateQuery.fixedDate(formData.startDate);
 			}
 		}
@@ -102,7 +102,7 @@ public class Search extends AbstractRoomrController {
 		if (formData.minRoomSizeSquareMeters != null)
 			rr.minRoomSize = new FloorSpace(formData.minRoomSizeSquareMeters);
 
-		List<ScoredRoomOffer> offers = ranker.search(rr, Optional.fromNullable(seekerAge),
+		List<ScoredRoomOffer> offers = seekerFacade.search(rr, Optional.fromNullable(seekerAge),
 				Optional.fromNullable(formData.gender));
 
 		Cache.set(session.getId() + INSTANT_SEARCH_DATA_CACHE_KEY, formData, "30min");

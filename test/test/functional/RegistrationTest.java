@@ -1,4 +1,4 @@
-package controllers;
+package test.functional;
 
 import org.apache.http.HttpStatus;
 import org.junit.Test;
@@ -7,6 +7,8 @@ import play.mvc.Http.Response;
 import play.test.FunctionalTest;
 
 import com.google.common.collect.ImmutableMap;
+
+import controllers.Registration;
 
 public class RegistrationTest extends FunctionalTest {
 	private static final String LOCATION_HEADER = "Location";
