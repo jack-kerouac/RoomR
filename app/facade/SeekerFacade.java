@@ -9,6 +9,7 @@ import models.application.RoomOfferApplication.State;
 import models.application.RoomOfferApplicationRepository;
 import models.common.Age;
 import models.common.Gender;
+import models.notification.NotificationService;
 import models.offer.RoomOffer;
 import models.offer.RoomOfferRepository;
 import models.ranking.OfferRanker;
@@ -28,6 +29,10 @@ public class SeekerFacade {
 
 	@Inject
 	private OfferRanker ranker;
+	
+	
+	@Inject
+	private NotificationService notificationService;
 
 
 	public RoomOfferApplication apply(RoomrUser applicant, long roomOfferId, String message) {
@@ -40,6 +45,10 @@ public class SeekerFacade {
 		application.setApplicant(applicant);
 		application.setRoomOffer(offer);
 		roomOfferApplicationRepository.add(application);
+		
+		// NOTIFY FLATSHARE
+		notificationService.notifyFlatshareOfNewApplication(offer, application);
+		
 		return application;
 	}
 

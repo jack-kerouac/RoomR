@@ -1,0 +1,10 @@
+Hallo,
+
+${application.applicant.name} interessiert sich für dein ausgeschriebenes WG-Zimmer. Er schreibt dir folgendes:
+
+${application.message}
+
+Hier findest du eine Übersicht aller Bewerbungen die für das Zimmer bisher eingegangen sind: @@{Dashboard.view()}.  
+
+
+Dein RoomR Team
