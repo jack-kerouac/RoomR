@@ -10,6 +10,11 @@ public final class Age implements Comparable<Age> {
 
 	public Age() {}
 
+	// required by SnakeYAML
+	public Age(String years) {
+		this(Integer.valueOf(years));
+	}
+	
 	public Age(int years) {
 		this.years = years;
 	}
