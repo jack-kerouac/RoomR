@@ -4,6 +4,6 @@ import models.offer.RoomOffer;
 
 public interface NotificationService {
 
-	public void notifyResidentOfCreatedOffer(RoomOffer offer);
+	public void notifyFlatshareOfCreatedOffer(RoomOffer offer);
 	
 }

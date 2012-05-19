@@ -6,7 +6,7 @@ import notifiers.RoomrMailer;
 public class PlayMailNotificationService implements NotificationService {
 
 	@Override
-	public void notifyResidentOfCreatedOffer(RoomOffer offer) {
+	public void notifyFlatshareOfCreatedOffer(RoomOffer offer) {
 		RoomrMailer.offerCreated(offer);
 	}
 

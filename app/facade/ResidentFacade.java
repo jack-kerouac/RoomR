@@ -20,7 +20,7 @@ public class ResidentFacade {
 		flatshareRepository.add(newFlatshare);
 		roomOffer.setFlatshare(newFlatshare);
 		roomOfferRepository.add(roomOffer);
-		notificationService.notifyResidentOfCreatedOffer(roomOffer);
+		notificationService.notifyFlatshareOfCreatedOffer(roomOffer);
 	}
 
 	/**
