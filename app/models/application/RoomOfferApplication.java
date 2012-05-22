@@ -9,7 +9,6 @@ import play.modules.objectify.ObjectifyModel;
 
 import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
-import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Cached;
 
 @Cached
@@ -25,8 +24,8 @@ public class RoomOfferApplication extends ObjectifyModel {
 
 	public State currentState;
 	public String message;
-	private Key<RoomrUser> applicantKey;
-	private Key<RoomOffer> roomOfferKey;
+	private String applicantId;
+	private Long roomOfferId;
 
 	/**
 	 * loads the (cached) applicant for this application from the datastore
@@ -34,10 +33,10 @@ public class RoomOfferApplication extends ObjectifyModel {
 	 * @return the applicant for this application
 	 */
 	public RoomrUser getApplicant() {
-		if (this.applicantKey == null) {
+		if (this.applicantId == null) {
 			return null;
 		}
-		return Datastore.find(this.applicantKey, false);
+		return Datastore.find(RoomrUser.class, applicantId, false);
 	}
 
 	/**
@@ -48,7 +47,7 @@ public class RoomOfferApplication extends ObjectifyModel {
 	 */
 	public void setApplicant(RoomrUser applicant) {
 		Preconditions.checkState(applicant.gaeUserEmail != null, "gae user email has to be set for the applicant");
-		this.applicantKey = new Key<RoomrUser>(RoomrUser.class, applicant.gaeUserEmail);
+		this.applicantId = applicant.gaeUserEmail;
 	}
 
 	/**
@@ -59,8 +58,8 @@ public class RoomOfferApplication extends ObjectifyModel {
 	 */
 	public void setRoomOffer(RoomOffer roomOffer) {
 		Preconditions.checkState(roomOffer.id != null, "the id of the room offer has to be set for the applicant");
-		Key<RoomOffer> keyOfNewRoomOffer = new Key<RoomOffer>(RoomOffer.class, roomOffer.id);
-		this.roomOfferKey = keyOfNewRoomOffer;
+		this.roomOfferId = roomOffer.id;
+		System.out.println("Setting room offer id " + roomOfferId);
 	}
 
 	/**
@@ -69,10 +68,10 @@ public class RoomOfferApplication extends ObjectifyModel {
 	 * @return the applicant for this application
 	 */
 	public RoomOffer getRoomOffer() {
-		if (this.roomOfferKey == null) {
+		if (this.roomOfferId == null) {
 			return null;
 		}
-		return Datastore.find(this.roomOfferKey, false);
+		return Datastore.find(RoomOffer.class, this.roomOfferId, false);
 	}
 
 	@Override

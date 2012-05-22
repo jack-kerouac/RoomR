@@ -17,7 +17,6 @@ import org.joda.time.Period;
 import play.modules.objectify.Datastore;
 import play.modules.objectify.ObjectifyModel;
 
-import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.users.User;
 import com.google.appengine.repackaged.com.google.common.base.Predicate;
 import com.google.appengine.repackaged.com.google.common.collect.Iterables;
@@ -52,6 +51,7 @@ public class RoomrUser extends ObjectifyModel {
 	 * @return the flatshare for this user
 	 */
 	public Flatshare getFlatshare() {
+		// TODO (Gernot) use id as parameter for the find method
 		if (this.flatshareKey == null) {
 			return null;
 		}
@@ -66,6 +66,7 @@ public class RoomrUser extends ObjectifyModel {
 	 *            the Flatshare which should be set for this user
 	 */
 	public void setFlatshare(Flatshare flatshare) {
+		// TODO (Gernot) use preconditions to check if flatshare has a valid id
 		Key<Flatshare> keyOfNewFlatshare;
 		if (flatshare.id == null) {
 			// flatshare has to be persisted first to obtain a valid key
@@ -83,8 +84,8 @@ public class RoomrUser extends ObjectifyModel {
 	 */
 	public Set<RoomOfferApplication> getApplications() {
 		Set<RoomOfferApplication> result = new HashSet<RoomOfferApplication>();
-		Query<RoomOfferApplication> query = Datastore.query(RoomOfferApplication.class).filter("applicantKey",
-				KeyFactory.createKey("RoomrUser", this.gaeUserEmail));
+		Query<RoomOfferApplication> query = Datastore.query(RoomOfferApplication.class).filter("applicantId",
+				this.gaeUserEmail);
 
 		for (RoomOfferApplication roomOfferApplication : query) {
 			result.add(roomOfferApplication);
