@@ -15,7 +15,7 @@ public class ResidentFacade {
 	private RoomOfferRepository roomOfferRepository;
 
 	private NotificationService notificationService;
-	
+
 	public void createFlatshareAndOffer(Flatshare newFlatshare, RoomOffer roomOffer) {
 		flatshareRepository.add(newFlatshare);
 		roomOffer.setFlatshare(newFlatshare);
@@ -24,8 +24,7 @@ public class ResidentFacade {
 	}
 
 	/**
-	 * Updates a room offer and its associated flatshare and validates the salt
-	 * value for the update request.
+	 * Updates a room offer and its associated flatshare.
 	 * 
 	 * @param offer
 	 *            the offer to update
@@ -54,10 +53,10 @@ public class ResidentFacade {
 	public void setFlatshareRepository(FlatshareRepository flatshareRepository) {
 		this.flatshareRepository = flatshareRepository;
 	}
-	
+
 	@Inject
 	public void setNotificationService(NotificationService notificationService) {
 		this.notificationService = notificationService;
 	}
-	
+
 }
