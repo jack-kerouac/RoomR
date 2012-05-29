@@ -124,4 +124,56 @@ public class RoomrUser extends ObjectifyModel {
 
 		return stringHelper.toString();
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((birthdate == null) ? 0 : birthdate.hashCode());
+		result = prime * result + ((flatshareKey == null) ? 0 : flatshareKey.hashCode());
+		result = prime * result + ((gaeUser == null) ? 0 : gaeUser.hashCode());
+		result = prime * result + ((gaeUserEmail == null) ? 0 : gaeUserEmail.hashCode());
+		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RoomrUser other = (RoomrUser) obj;
+		if (birthdate == null) {
+			if (other.birthdate != null)
+				return false;
+		} else if (!birthdate.equals(other.birthdate))
+			return false;
+		if (flatshareKey == null) {
+			if (other.flatshareKey != null)
+				return false;
+		} else if (!flatshareKey.equals(other.flatshareKey))
+			return false;
+		if (gaeUser == null) {
+			if (other.gaeUser != null)
+				return false;
+		} else if (!gaeUser.equals(other.gaeUser))
+			return false;
+		if (gaeUserEmail == null) {
+			if (other.gaeUserEmail != null)
+				return false;
+		} else if (!gaeUserEmail.equals(other.gaeUserEmail))
+			return false;
+		if (gender != other.gender)
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
 }
