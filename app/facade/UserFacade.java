@@ -10,7 +10,6 @@ import com.google.appengine.api.users.UserService;
 import com.google.common.base.Optional;
 
 import facade.exception.NoAuthenticationProviderUserLoggedInException;
-import facade.exception.NoUserLoggedInException;
 
 public class UserFacade {
 	private RoomrUserRepository userRepository;
@@ -40,10 +39,9 @@ public class UserFacade {
 	}
 
 	/**
-	 * @return the currently logged in {@link RoomrUser}
-	 * @throws NoUserLoggedInException
-	 *             If either no GAE user is logged in, or the logged in GAE user
-	 *             has no associated {@link RoomrUser}.
+	 * @return the currently logged in {@link RoomrUser} or absent, if either no
+	 *         GAE user is logged in, or the logged in GAE user has no
+	 *         associated {@link RoomrUser}.
 	 */
 	public Optional<RoomrUser> getLoggedInUser() {
 		User currentGaeUser = userService.getCurrentUser();
