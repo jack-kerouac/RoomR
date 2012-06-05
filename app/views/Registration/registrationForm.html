@@ -20,6 +20,22 @@
 			</li>
 
 			<li>
+				#{field 'formData.email'}
+					<label class="caption" for="${field.id}">E-Mail</label>
+					<input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
+					<span class="error">${field.error}</span>
+				#{/}
+			</li>
+			
+			<li>
+				#{field 'formData.password'}
+					<label class="caption" for="${field.id}">Passwort</label>
+					<input id="${field.id}" name="${field.name}" type="password" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
+					<span class="error">${field.error}</span>
+				#{/}
+			</li>
+
+			<li>
 				#{field 'formData.birthdate'}
 					<label class="caption" for="${field.id}">Geburtsdatum</label>
 					<input id="${field.id}" name="${field.name}" type="date" data-validate="${field.validationData}" value="${field.value?.format()}" class="${field.errorClass}">

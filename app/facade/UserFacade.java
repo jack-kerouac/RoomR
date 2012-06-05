@@ -4,10 +4,21 @@ import models.user.RoomrUser;
 
 import com.google.common.base.Optional;
 
+import controllers.Security;
+import facade.exception.LoginFailedException;
 import facade.exception.NoAuthenticationProviderUserLoggedInException;
 import facade.exception.NoUserLoggedInException;
 
 public class UserFacade {
+	public RoomrUser login(String email, String password)
+			throws LoginFailedException {
+		RoomrUser user = RoomrUser.findByEmail(email);
+		if (user == null || !user.password.equals(password)) {
+			throw new LoginFailedException(email);
+		}
+
+		return user;
+	}
 
 	/**
 	 * Persists the given user and associates the currently logged in
@@ -31,30 +42,11 @@ public class UserFacade {
 	 *             has no associated {@link RoomrUser}.
 	 */
 	public Optional<RoomrUser> getLoggedInUser() {
-		return Optional.absent();
-	}
-
-	/**
-	 * @return <code>true</code> if a user is authenticated by an authentication
-	 *         provider (like Google or Facebook). This method can return
-	 *         <code>true</code> even if there is no {@link RoomrUser} for this
-	 *         user yet.
-	 */
-	public boolean isAuthenticationProviderUserLoggedIn() {
-		return false;
-	}
-
-	/**
-	 * Create an URL which allows the user to log in to the underlying
-	 * authentication provider. The authentication provider redirects the user
-	 * after the successful login to continueUrl.
-	 * 
-	 * @param continueUrl
-	 *            the URL to redirect the user to after successful login
-	 * @return the URL which allows the user to log in at the given
-	 *         authentication provider.
-	 */
-	public String getAuthenticationProviderLoginUrl(String continueUrl) {
-		return "";
+		if (!Security.isConnected()) {
+			return Optional.absent();
+		} else {
+			return Optional.fromNullable(RoomrUser.findByEmail(Security
+					.connected()));
+		}
 	}
 }

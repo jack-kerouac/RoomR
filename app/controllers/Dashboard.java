@@ -20,7 +20,7 @@ public class Dashboard extends AbstractRoomrController {
 
 	public static void view() {
 		Optional<RoomrUser> loggedInUser = userFacade.getLoggedInUser();
-		;
+
 		if (loggedInUser.isPresent()) {
 			Set<RoomOfferApplication> myApplications = loggedInUser.get().applications;
 

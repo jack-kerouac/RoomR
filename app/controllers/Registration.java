@@ -30,17 +30,8 @@ public class Registration extends AbstractRoomrController {
 		return registrationFormAction.url;
 	}
 
-	public static void registrationForm(String redirectUrl, RegistrationFormData formData) {
-		if (!userFacade.isAuthenticationProviderUserLoggedIn()) {
-			// the user is not logged in with an authentication provider
-			// account, so redirect him back to the authentication provider
-			// login page
-			String registrationFormURL = createRegistrationURL(redirectUrl);
-			String loginURL = userFacade.getAuthenticationProviderLoginUrl(registrationFormURL);
-			redirect(loginURL);
-			return;
-		}
-
+	public static void registrationForm(String redirectUrl,
+			RegistrationFormData formData) {
 		if (userFacade.getLoggedInUser().isPresent()) {
 			// the user is already logged in and has an account in RoomR, so
 			// just redirect him to his final target
@@ -52,8 +43,8 @@ public class Registration extends AbstractRoomrController {
 
 		if (formData == null) {
 			formData = new RegistrationFormData();
-			InstantSearchFormData searchData = (InstantSearchFormData) Cache.get(session.getId()
-					+ Search.INSTANT_SEARCH_DATA_CACHE_KEY);
+			InstantSearchFormData searchData = (InstantSearchFormData) Cache
+					.get(session.getId() + Search.INSTANT_SEARCH_DATA_CACHE_KEY);
 			if (searchData != null) {
 				formData.gender = searchData.gender;
 			}
@@ -62,7 +53,8 @@ public class Registration extends AbstractRoomrController {
 		render(redirectUrl, formData);
 	}
 
-	public static void register(String redirectUrl, @Valid RegistrationFormData formData) {
+	public static void register(String redirectUrl,
+			@Valid RegistrationFormData formData) {
 		if (validation.hasErrors()) {
 			validation.keep(); // keep the errors for the next request
 			Registration.registrationForm(redirectUrl, formData);
@@ -70,6 +62,8 @@ public class Registration extends AbstractRoomrController {
 
 		RoomrUser roomrUser = new RoomrUser();
 		roomrUser.name = formData.name;
+		roomrUser.email = formData.email;
+		roomrUser.password = formData.password;
 		roomrUser.birthdate = formData.birthdate;
 		roomrUser.gender = formData.gender;
 
@@ -78,6 +72,10 @@ public class Registration extends AbstractRoomrController {
 		roomrUser = userFacade.createUser(roomrUser);
 
 		Cache.delete(session.getId() + Search.INSTANT_SEARCH_DATA_CACHE_KEY);
+
+		// this logs the user in, unfortunately I didn't find a nicer way to do
+		// this...
+		session.put("username", roomrUser.email);
 
 		redirect(redirectUrl);
 	}

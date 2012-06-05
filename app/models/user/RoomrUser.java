@@ -58,6 +58,10 @@ public class RoomrUser extends Model {
 		return flatshare != null;
 	}
 
+	public static RoomrUser findByEmail(String email) {
+		return find("byEmail", email).first();
+	}
+
 	@Override
 	public String toString() {
 		ToStringHelper stringHelper = Objects.toStringHelper(this);

@@ -5,6 +5,9 @@
 # CRUD interface for DB operations
 *		/crud									module:crud
 
+# Import secure routes
+*		/										module:secure
+
 # REST interface
 
 GET		/rest/user								rest.RoomrUsers.list
