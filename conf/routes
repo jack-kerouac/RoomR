@@ -5,6 +5,21 @@
 # CRUD interface for DB operations
 *		/crud									module:crud
 
+# REST interface
+
+GET		/rest/user								rest.RoomrUsers.list
+GET		/rest/user/{id}							rest.RoomrUsers.get
+GET		/rest/user/{id}/applications			rest.RoomrUsers.getApplications
+
+GET		/rest/roomOffer							rest.RoomOffers.list
+GET		/rest/roomOffer/{id}					rest.RoomOffers.get
+GET		/rest/roomOffer/{id}/applications		rest.RoomOffers.getApplications
+
+GET		/rest/flatshare							rest.Flatshares.list
+GET		/rest/flatshare/{id}					rest.Flatshares.get
+
+GET		/rest/application/{id}					rest.RoomOfferApplications.get
+
 # Home page
 GET     /                                       Start.start
 

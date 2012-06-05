@@ -68,9 +68,9 @@ public class RoomrUser extends Model {
 
 		stringHelper.add("applications", applications);
 		if (flatshare != null) {
-			stringHelper.add("currentFlatshare", flatshare.address);
+			stringHelper.add("currentFlatshareID", flatshare.id);
 		} else {
-			stringHelper.add("currentFlatshare", "none");
+			stringHelper.add("currentFlatshareID", "none");
 		}
 
 		return stringHelper.toString();
