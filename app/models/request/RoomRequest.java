@@ -15,7 +15,8 @@ public class RoomRequest {
 		private boolean now;
 		private Date date;
 
-		private DateQuery() {}
+		private DateQuery() {
+		}
 
 		public static DateQuery now() {
 			DateQuery dq = new DateQuery();
@@ -35,12 +36,13 @@ public class RoomRequest {
 		}
 
 		/**
-		 * if type is "now", returns {@code new Date()}, else, returns fixed date.
+		 * if type is "now", returns {@code new Date()}, else, returns fixed
+		 * date.
 		 */
 		public Date getDate() {
 			return isNow() ? new Date() : date;
 		}
-		
+
 		@Override
 		public String toString() {
 			return isNow() ? "now" : "fixed date (" + date + ")";
@@ -52,7 +54,6 @@ public class RoomRequest {
 	public FloorSpace minRoomSize;
 	public Double maxRentPerMonthInEuro;
 
-
 	public DateQuery startDateQuery;
 
 	public Optional<DateQuery> getStartDateQuery() {
@@ -60,7 +61,7 @@ public class RoomRequest {
 	}
 
 	public Optional<FloorSpace> getMinRoomSize() {
-		if (minRoomSize == null || minRoomSize.squareMeters == null)
+		if (minRoomSize == null)
 			return Optional.<FloorSpace> absent();
 		else
 			return Optional.<FloorSpace> of(minRoomSize);
@@ -70,7 +71,8 @@ public class RoomRequest {
 		if (maxRentPerMonthInEuro == null)
 			return Optional.<Money> absent();
 		else
-			return Optional.<Money> of(Money.of(CurrencyUnit.EUR, maxRentPerMonthInEuro));
+			return Optional.<Money> of(Money.of(CurrencyUnit.EUR,
+					maxRentPerMonthInEuro));
 	}
 
 }

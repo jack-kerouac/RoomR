@@ -10,7 +10,6 @@ import static models.ranking.matching.MatchingCriterion.START_DATE;
 import java.util.Map;
 import java.util.Set;
 
-import models.common.Age;
 import models.common.Gender;
 import models.common.Score;
 import models.offer.RoomOffer;
@@ -30,24 +29,21 @@ import com.google.common.collect.Sets;
 public class WeightedOfferScoringFunction implements OfferScoringFunction {
 
 	private final RoomRequest request;
-	private final Optional<Age> seekerAge;
+	private final Optional<Integer> seekerAge;
 	private final Optional<Gender> seekerGender;
 
-	public WeightedOfferScoringFunction(RoomRequest request, Optional<Age> seekerAge, Optional<Gender> seekerGender) {
+	public WeightedOfferScoringFunction(RoomRequest request,
+			Optional<Integer> seekerAge, Optional<Gender> seekerGender) {
 		this.request = request;
 		this.seekerAge = seekerAge;
 		this.seekerGender = seekerGender;
 	}
 
 	// @formatter:off
-	private final Map<MatchingCriterion, Double> weights = ImmutableMap.<MatchingCriterion, Double> builder().
-			put(AGE, 0.5).
-			put(GENDER, 1.5).
-			put(CITY, 2.0).
-			put(ROOM_SIZE, 0.5).
-			put(RENT_PER_MONTH, 1.0).
-			put(START_DATE, 1.0).
-		build();
+	private final Map<MatchingCriterion, Double> weights = ImmutableMap
+			.<MatchingCriterion, Double> builder().put(AGE, 0.5)
+			.put(GENDER, 1.5).put(CITY, 2.0).put(ROOM_SIZE, 0.5)
+			.put(RENT_PER_MONTH, 1.0).put(START_DATE, 1.0).build();
 
 	// @formatter:on
 
@@ -66,18 +62,26 @@ public class WeightedOfferScoringFunction implements OfferScoringFunction {
 		evaluateScore(new GenderScorer().score(offer, seekerGender), GENDER);
 
 		// TODO: remove city scorer and just load offers from one city!
-		// evaluateScore(new CityScorer().score(offer, request.getCity()), CITY);
-		evaluateScore(new RoomSizeScorer().score(offer, request.getMinRoomSize()), ROOM_SIZE);
-		evaluateScore(new RentPerMonthScorer().score(offer, request.getMaxRent()), RENT_PER_MONTH);
-		evaluateScore(new StartDateScorer().score(offer, request.getStartDateQuery()), START_DATE);
+		// evaluateScore(new CityScorer().score(offer, request.getCity()),
+		// CITY);
+		evaluateScore(
+				new RoomSizeScorer().score(offer, request.getMinRoomSize()),
+				ROOM_SIZE);
+		evaluateScore(
+				new RentPerMonthScorer().score(offer, request.getMaxRent()),
+				RENT_PER_MONTH);
+		evaluateScore(
+				new StartDateScorer().score(offer, request.getStartDateQuery()),
+				START_DATE);
 
 		ScoredRoomOffer scoredRoomOffer;
 		if (totalWeight != 0.0)
-			scoredRoomOffer = new ScoredRoomOffer(offer, Score.defined(totalScore / totalWeight), metCriteria,
+			scoredRoomOffer = new ScoredRoomOffer(offer,
+					Score.defined(totalScore / totalWeight), metCriteria,
 					unmetCriteria, undefinedCriteria);
 		else
-			scoredRoomOffer = new ScoredRoomOffer(offer, Score.undefined(), metCriteria, unmetCriteria,
-					undefinedCriteria);
+			scoredRoomOffer = new ScoredRoomOffer(offer, Score.undefined(),
+					metCriteria, unmetCriteria, undefinedCriteria);
 
 		totalWeight = 0.0;
 		totalScore = 0.0;
@@ -96,8 +100,7 @@ public class WeightedOfferScoringFunction implements OfferScoringFunction {
 				unmetCriteria.add(criterion);
 			totalWeight += weights.get(criterion);
 			totalScore += weights.get(criterion) * score.getValue();
-		}
-		else {
+		} else {
 			undefinedCriteria.add(criterion);
 		}
 	}

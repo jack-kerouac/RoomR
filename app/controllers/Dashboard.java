@@ -19,9 +19,10 @@ public class Dashboard extends AbstractRoomrController {
 	private static UserFacade userFacade;
 
 	public static void view() {
-		Optional<RoomrUser> loggedInUser = userFacade.getLoggedInUser();;
+		Optional<RoomrUser> loggedInUser = userFacade.getLoggedInUser();
+		;
 		if (loggedInUser.isPresent()) {
-			Set<RoomOfferApplication> myApplications = loggedInUser.get().getApplications();
+			Set<RoomOfferApplication> myApplications = loggedInUser.get().applications;
 
 			if (loggedInUser.get().hasFlatshare()) {
 				// Flatshare myFlatshare = loggedInUser.get().getFlatshare();

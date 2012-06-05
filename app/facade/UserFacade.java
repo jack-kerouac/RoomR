@@ -1,24 +1,17 @@
 package facade;
 
-import javax.inject.Inject;
-
 import models.user.RoomrUser;
-import models.user.RoomrUserRepository;
 
-import com.google.appengine.api.users.User;
-import com.google.appengine.api.users.UserService;
 import com.google.common.base.Optional;
 
 import facade.exception.NoAuthenticationProviderUserLoggedInException;
 import facade.exception.NoUserLoggedInException;
 
 public class UserFacade {
-	private RoomrUserRepository userRepository;
-	private UserService userService;
 
 	/**
 	 * Persists the given user and associates the currently logged in
-	 * authentication provider user.
+	 * authentication provider user if any.
 	 * 
 	 * @param roomrUser
 	 *            the user to persist.
@@ -26,17 +19,9 @@ public class UserFacade {
 	 * @throws NoAuthenticationProviderUserLoggedInException
 	 *             If the user was not logged in to an authentication provider.
 	 */
-	public RoomrUser createUser(final RoomrUser roomrUser) throws NoAuthenticationProviderUserLoggedInException {
-		User currentGaeUser = userService.getCurrentUser();
-		if (currentGaeUser == null) {
-			throw new NoAuthenticationProviderUserLoggedInException("No GAE user is logged in!");
-		}
-
-		roomrUser.gaeUser = currentGaeUser;
-		roomrUser.gaeUserEmail = currentGaeUser.getEmail();
-
-		userRepository.add(roomrUser);
-		return roomrUser;
+	public RoomrUser createUser(final RoomrUser roomrUser)
+			throws NoAuthenticationProviderUserLoggedInException {
+		return roomrUser.save();
 	}
 
 	/**
@@ -46,13 +31,7 @@ public class UserFacade {
 	 *             has no associated {@link RoomrUser}.
 	 */
 	public Optional<RoomrUser> getLoggedInUser() {
-		User currentGaeUser = userService.getCurrentUser();
-		if (currentGaeUser == null) {
-			return Optional.absent();
-		}
-
-		RoomrUser roomrUser = userRepository.findUser(currentGaeUser);
-		return Optional.fromNullable(roomrUser);
+		return Optional.absent();
 	}
 
 	/**
@@ -62,7 +41,7 @@ public class UserFacade {
 	 *         user yet.
 	 */
 	public boolean isAuthenticationProviderUserLoggedIn() {
-		return userService.getCurrentUser() != null;
+		return false;
 	}
 
 	/**
@@ -76,16 +55,6 @@ public class UserFacade {
 	 *         authentication provider.
 	 */
 	public String getAuthenticationProviderLoginUrl(String continueUrl) {
-		return userService.createLoginURL(continueUrl);
-	}
-
-	@Inject
-	public void setUserRepository(RoomrUserRepository userRepository) {
-		this.userRepository = userRepository;
-	}
-
-	@Inject
-	public void setUserService(UserService userService) {
-		this.userService = userService;
+		return "";
 	}
 }

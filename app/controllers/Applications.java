@@ -31,7 +31,8 @@ public class Applications extends AbstractRoomrController {
 		if (!loggedInUser.isPresent())
 			throw new NoUserLoggedInException();
 
-		seekerFacade.apply(loggedInUser.get(), roomOfferId, application.message);
+		seekerFacade
+				.apply(loggedInUser.get(), roomOfferId, application.message);
 
 		Offers.viewOffer(roomOfferId);
 	}
@@ -40,7 +41,7 @@ public class Applications extends AbstractRoomrController {
 		Optional<RoomrUser> loggedInUser = userFacade.getLoggedInUser();
 
 		if (loggedInUser.isPresent()) {
-			Set<RoomOfferApplication> applications = loggedInUser.get().getApplications();
+			Set<RoomOfferApplication> applications = loggedInUser.get().applications;
 			render(applications);
 
 		} else {

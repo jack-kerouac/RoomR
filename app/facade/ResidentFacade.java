@@ -3,23 +3,19 @@ package facade;
 import javax.inject.Inject;
 
 import models.flatshare.Flatshare;
-import models.flatshare.FlatshareRepository;
 import models.notification.NotificationService;
 import models.offer.RoomOffer;
-import models.offer.RoomOfferRepository;
 import facade.exception.RoomOfferUpdateException;
 
 public class ResidentFacade {
 
-	private FlatshareRepository flatshareRepository;
-	private RoomOfferRepository roomOfferRepository;
-
 	private NotificationService notificationService;
 
-	public void createFlatshareAndOffer(Flatshare newFlatshare, RoomOffer roomOffer) {
-		flatshareRepository.add(newFlatshare);
-		roomOffer.setFlatshare(newFlatshare);
-		roomOfferRepository.add(roomOffer);
+	public void createFlatshareAndOffer(Flatshare newFlatshare,
+			RoomOffer roomOffer) {
+		newFlatshare.save();
+		roomOffer.flatshare = newFlatshare;
+		roomOffer.save();
 		notificationService.notifyFlatshareOfCreatedOffer(roomOffer);
 	}
 
@@ -33,25 +29,17 @@ public class ResidentFacade {
 	 * @throws RoomOfferUpdateException
 	 *             when the room offer doesn't belong to the flatshare
 	 */
-	public void updateRoomOfferForFlatshare(RoomOffer offer, Flatshare flatshare) throws RoomOfferUpdateException {
+	public void updateRoomOfferForFlatshare(RoomOffer offer, Flatshare flatshare)
+			throws RoomOfferUpdateException {
 		// check if the offer really belongs to the given flatshare
-		if (flatshare.id != offer.getFlatshare().id) {
-			throw new RoomOfferUpdateException("Room Offer doesn't belong to the given flatshare");
+		if (flatshare.id != offer.flatshare.id) {
+			throw new RoomOfferUpdateException(
+					"Room Offer doesn't belong to the given flatshare");
 		}
 
 		// update entities
-		flatshareRepository.update(flatshare);
-		roomOfferRepository.update(offer);
-	}
-
-	@Inject
-	public void setRoomOfferRepository(RoomOfferRepository roomOfferRepository) {
-		this.roomOfferRepository = roomOfferRepository;
-	}
-
-	@Inject
-	public void setFlatshareRepository(FlatshareRepository flatshareRepository) {
-		this.flatshareRepository = flatshareRepository;
+		flatshare.save();
+		offer.save();
 	}
 
 	@Inject

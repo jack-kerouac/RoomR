@@ -3,7 +3,6 @@ package models.ranking;
 import java.util.List;
 import java.util.Set;
 
-import models.common.Age;
 import models.common.Gender;
 import models.ranking.matching.OfferMatcher;
 import models.ranking.matching.ScoredRoomOffer;
@@ -23,11 +22,13 @@ public class OfferRanker {
 		this.matcher = matcher;
 		this.sorter = sorter;
 	}
-	
-	public List<ScoredRoomOffer> search(RoomRequest request, Optional<Age> seekerAge, Optional<Gender> seekerGender) {
-		Set<ScoredRoomOffer> scoredOffers = matcher.match(request, seekerAge, seekerGender);
-		
+
+	public List<ScoredRoomOffer> search(RoomRequest request,
+			Optional<Integer> seekerAge, Optional<Gender> seekerGender) {
+		Set<ScoredRoomOffer> scoredOffers = matcher.match(request, seekerAge,
+				seekerGender);
+
 		return sorter.sort(scoredOffers);
 	}
-	
+
 }

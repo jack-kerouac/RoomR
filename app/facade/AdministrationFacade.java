@@ -1,19 +1,17 @@
 package facade;
 
+import java.util.List;
 import java.util.Set;
 
-import javax.inject.Inject;
-
 import models.offer.RoomOffer;
-import models.offer.RoomOfferRepository;
+
+import com.google.common.collect.ImmutableSet;
 
 public class AdministrationFacade {
 
-	@Inject
-	private RoomOfferRepository offerRepository;
-
 	public Set<RoomOffer> findAllOffers() {
-		return offerRepository.findAll();
+		List allOffers = RoomOffer.all().fetch();
+		return ImmutableSet.copyOf(allOffers);
 	}
 
 }

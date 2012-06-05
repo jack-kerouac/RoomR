@@ -3,7 +3,7 @@ package models.offer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import com.google.appengine.repackaged.org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.Base64;
 
 public class RoomOfferTokenService {
 

@@ -2,6 +2,9 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
+# CRUD interface for DB operations
+*		/crud									module:crud
+
 # Home page
 GET     /                                       Start.start
 

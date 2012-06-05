@@ -2,25 +2,25 @@ package models.offer;
 
 import java.util.Set;
 
-import javax.persistence.Embedded;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embeddable;
 
-import models.common.Age;
 import models.common.Gender;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Range;
 import com.google.common.collect.Ranges;
 
+@Embeddable
 public class SeekerCriteria {
 
-	@Embedded
-	public Age minAge;
-	@Embedded
-	public Age maxAge;
+	public Integer minAge;
+	public Integer maxAge;
 
+	@ElementCollection
 	public Set<Gender> genders;
 
-	public Range<Age> getAgeRange() {
+	public Range<Integer> getAgeRange() {
 		if (minAge == null && maxAge == null)
 			return Ranges.all();
 		else if (minAge != null && maxAge == null)
@@ -31,7 +31,7 @@ public class SeekerCriteria {
 			return Ranges.closed(minAge, maxAge);
 	}
 
-	public void setAgeRange(Range<Age> ageRange) {
+	public void setAgeRange(Range<Integer> ageRange) {
 		if (ageRange.hasLowerBound())
 			minAge = ageRange.lowerEndpoint();
 		if (ageRange.hasUpperBound())
@@ -40,7 +40,8 @@ public class SeekerCriteria {
 
 	@Override
 	public String toString() {
-		return Objects.toStringHelper(this).add("genders", genders).add("age range", getAgeRange()).toString();
+		return Objects.toStringHelper(this).add("genders", genders)
+				.add("age range", getAgeRange()).toString();
 	}
 
 	@Override

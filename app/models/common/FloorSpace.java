@@ -2,6 +2,7 @@ package models.common;
 
 import java.text.DecimalFormat;
 
+import javax.persistence.Embeddable;
 
 /**
  * This class is representing an area measure for a room in square meter.
@@ -9,16 +10,12 @@ import java.text.DecimalFormat;
  * @author "Florian Rampp (Florian.Rampp@web.de)"
  * 
  */
+@Embeddable
 public final class FloorSpace {
 
-	public Double squareMeters;
-
-	public FloorSpace() {
-		super();
-	}
+	public double squareMeters;
 
 	public FloorSpace(double squareMeters) {
-		super();
 		this.squareMeters = squareMeters;
 	}
 
@@ -50,9 +47,9 @@ public final class FloorSpace {
 		if (getClass() != obj.getClass())
 			return false;
 		FloorSpace other = (FloorSpace) obj;
-		if (Double.doubleToLongBits(squareMeters) != Double.doubleToLongBits(other.squareMeters))
+		if (Double.doubleToLongBits(squareMeters) != Double
+				.doubleToLongBits(other.squareMeters))
 			return false;
 		return true;
 	}
-
 }

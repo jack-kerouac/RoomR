@@ -2,7 +2,6 @@ package models.ranking.matching;
 
 import java.util.Set;
 
-import models.common.Age;
 import models.common.Gender;
 import models.request.RoomRequest;
 
@@ -18,6 +17,7 @@ import com.google.common.base.Optional;
  */
 public interface OfferMatcher {
 
-	public Set<ScoredRoomOffer> match(RoomRequest request, Optional<Age> seekerAge, Optional<Gender> seekerGender);
+	public Set<ScoredRoomOffer> match(RoomRequest request,
+			Optional<Integer> seekerAge, Optional<Gender> seekerGender);
 
 }

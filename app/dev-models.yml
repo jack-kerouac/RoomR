@@ -7,7 +7,7 @@
     city: Munich
   streetViewParameters:
     displayStreetView: false
-  geoLocation: !!com.google.appengine.api.datastore.GeoPt [48.141836, 11.620228]
+  geoLocation: !geoPt [48.141836, 11.620228]
   floor: basement
   numberOfRooms: 3
   smokingTolerance: prohibited
@@ -24,11 +24,11 @@
     city: Munich
   streetViewParameters:
     displayStreetView: true
-    streetViewGeoLocation: !!com.google.appengine.api.datastore.GeoPt [48.137053,11.584969]
+    streetViewGeoLocation: !geoPt [48.137053,11.584969]
     streetViewHeading: 70.0
     streetViewPitch: 20.0
     streetViewZoom: 1.1    
-  geoLocation: !!com.google.appengine.api.datastore.GeoPt [48.137053,11.584969]
+  geoLocation: !geoPt [48.137053,11.584969]
   floor: first
   numberOfRooms: 2
   smokingTolerance: allowedInRoom
@@ -45,7 +45,7 @@
     city: Munich
   streetViewParameters:
     displayStreetView: false
-  geoLocation: !!com.google.appengine.api.datastore.GeoPt [48.128956,11.575011]
+  geoLocation: !geoPt [48.128956,11.575011]
   floor: third
   numberOfRooms: 5
   smokingTolerance: allowedInFlat
@@ -62,7 +62,7 @@
     city: Munich
   streetViewParameters:
     displayStreetView: false
-  geoLocation: !!com.google.appengine.api.datastore.GeoPt [48.114648,11.580758]
+  geoLocation: !geoPt [48.114648,11.580758]
   floor: forth
   numberOfRooms: 4
   smokingTolerance: prohibited
@@ -135,19 +135,22 @@
     
     
 - !user
-  gaeUserEmail: seeker@gmail.com
-  gaeUser: !!com.google.appengine.api.users.User [seeker@gmail.com, gmail.com]
+  name: Seeker
+  password: 123
+  email: seeker@gmail.com
   birthdate: 1982-01-25
   gender: female
 
 - !user
-  gaeUserEmail: resident@gmail.com
-  gaeUser: !!com.google.appengine.api.users.User [resident@gmail.com, gmail.com]
+  name: Resident
+  password: 123
+  email: resident@gmail.com
   birthdate: 1988-12-16
   gender: male
 
 - !user
-  gaeUserEmail: Florian.Rampp@googlemail.com
-  gaeUser: !!com.google.appengine.api.users.User [Florian.Rampp@googlemail.com, gmail.com]
+  name: Flo
+  password: 123
+  email: Florian.Rampp@googlemail.com
   birthdate: 2001-04-30
   gender: male

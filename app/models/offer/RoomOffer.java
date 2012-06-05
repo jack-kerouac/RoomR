@@ -1,24 +1,23 @@
 package models.offer;
 
-import javax.persistence.Embedded;
-import javax.persistence.Id;
+import java.util.Set;
 
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+import models.application.RoomOfferApplication;
 import models.flatshare.Flatshare;
-import play.modules.objectify.Datastore;
-import play.modules.objectify.ObjectifyModel;
+import play.db.jpa.Model;
 
 import com.google.common.base.Objects;
-import com.google.common.base.Preconditions;
-import com.googlecode.objectify.Key;
-import com.googlecode.objectify.annotation.Cached;
 
-@Cached
-public class RoomOffer extends ObjectifyModel {
+@Entity
+public class RoomOffer extends Model {
 
-	@Id
-	public Long id;
-
-	private Key<Flatshare> flatshareKey;
+	@OneToOne(optional = false)
+	public Flatshare flatshare;
 
 	@Embedded
 	public RoomDetails roomDetails;
@@ -30,61 +29,13 @@ public class RoomOffer extends ObjectifyModel {
 
 	public String contactEmail;
 
-	/**
-	 * Sets the flatshare for this RoomOffer. If the flatshare hasn't been
-	 * persisted yet, this will be done first to obtain a valid key.
-	 * 
-	 * @param flatshare
-	 *            the Flatshare which should be set for this user.
-	 */
-	public void setFlatshare(Flatshare flatshare) {
-		Preconditions.checkState(flatshare.id != null, "flatshare must have been persisted before it can be set");
-		Key<Flatshare> keyOfNewFlatshare;
-		keyOfNewFlatshare = new Key<Flatshare>(Flatshare.class, flatshare.id);
-		this.flatshareKey = keyOfNewFlatshare;
-	}
-
-	/**
-	 * loads the (cached) flatshare for Room Offer from the datastore
-	 * 
-	 * @return the flatshare for this user
-	 */
-	public Flatshare getFlatshare() {
-		if (this.flatshareKey == null) {
-			return null;
-		}
-		return Datastore.find(this.flatshareKey, false);
-	}
+	@OneToMany(mappedBy = "roomOffer")
+	public Set<RoomOfferApplication> applications;
 
 	@Override
 	public String toString() {
-		return Objects.toStringHelper(this).add("id", id).add("flatshare", getFlatshare())
-				.add("room details", roomDetails).add("seeker criteria", criteria).toString();
+		return Objects.toStringHelper(this).add("id", id)
+				.add("flatshare", flatshare).add("room details", roomDetails)
+				.add("seeker criteria", criteria).toString();
 	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		RoomOffer other = (RoomOffer) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
-	}
-
 }
