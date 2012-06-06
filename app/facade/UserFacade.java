@@ -8,6 +8,7 @@ import controllers.Security;
 import facade.exception.LoginFailedException;
 import facade.exception.NoAuthenticationProviderUserLoggedInException;
 import facade.exception.NoUserLoggedInException;
+import facade.exception.UserAlreadyCreatedException;
 
 public class UserFacade {
 	public RoomrUser login(String email, String password)
@@ -29,9 +30,16 @@ public class UserFacade {
 	 * @return the persisted user.
 	 * @throws NoAuthenticationProviderUserLoggedInException
 	 *             If the user was not logged in to an authentication provider.
+	 * @throws UserAlreadyCreatedException
+	 *             if a user with the given email address was already created.
 	 */
 	public RoomrUser createUser(final RoomrUser roomrUser)
-			throws NoAuthenticationProviderUserLoggedInException {
+			throws NoAuthenticationProviderUserLoggedInException,
+			UserAlreadyCreatedException {
+		if (RoomrUser.findByEmail(roomrUser.email) != null) {
+			throw new UserAlreadyCreatedException();
+		}
+
 		return roomrUser.save();
 	}
 

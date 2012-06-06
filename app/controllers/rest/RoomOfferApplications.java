@@ -8,13 +8,14 @@ import models.user.RoomrUser;
 import play.mvc.Controller;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+
+import controllers.rest.serialize.ModelIdSerializer;
 
 public class RoomOfferApplications extends Controller {
 	public static String renderApplications(
 			Collection<RoomOfferApplication> applications) {
 
-		Gson gson = new GsonBuilder()
+		Gson gson = RoomrGsonBuilder.builder()
 				.registerTypeAdapter(RoomOffer.class, new ModelIdSerializer())
 				.registerTypeAdapter(RoomrUser.class, new ModelIdSerializer())
 				.create();
@@ -34,7 +35,7 @@ public class RoomOfferApplications extends Controller {
 	public static void get(int id) {
 		RoomOfferApplication roomOfferApplication = getRoomOfferApplication(id);
 
-		Gson gson = new GsonBuilder()
+		Gson gson = RoomrGsonBuilder.builder()
 				.registerTypeAdapter(RoomOffer.class, new ModelIdSerializer())
 				.registerTypeAdapter(RoomrUser.class, new ModelIdSerializer())
 				.create();

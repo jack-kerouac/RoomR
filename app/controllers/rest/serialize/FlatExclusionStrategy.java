@@ -1,4 +1,4 @@
-package controllers.rest;
+package controllers.rest.serialize;
 
 import java.util.Collection;
 

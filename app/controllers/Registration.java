@@ -10,6 +10,7 @@ import play.mvc.Router.ActionDefinition;
 import controllers.formdata.InstantSearchFormData;
 import controllers.formdata.RegistrationFormData;
 import facade.UserFacade;
+import facade.exception.UserAlreadyCreatedException;
 
 @InjectSupport
 public class Registration extends AbstractRoomrController {
@@ -69,7 +70,13 @@ public class Registration extends AbstractRoomrController {
 
 		// might throw an exception if no authentication provider user is logged
 		// in, this exception is handled in parent class
-		roomrUser = userFacade.createUser(roomrUser);
+		try {
+			roomrUser = userFacade.createUser(roomrUser);
+		} catch (UserAlreadyCreatedException e) {
+			validation.addError("email", "emailAlreadyTaken");
+			validation.keep(); // keep the errors for the next request
+			Registration.registrationForm(redirectUrl, formData);
+		}
 
 		Cache.delete(session.getId() + Search.INSTANT_SEARCH_DATA_CACHE_KEY);
 

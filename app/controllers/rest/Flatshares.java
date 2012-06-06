@@ -6,12 +6,14 @@ import models.user.RoomrUser;
 import play.mvc.Controller;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+
+import controllers.rest.serialize.ModelIdSerializer;
 
 public class Flatshares extends Controller {
 	public static void list() {
-		Gson gson = new GsonBuilder().registerTypeAdapter(Flatshare.class,
-				new ModelIdSerializer()).create();
+		Gson gson = RoomrGsonBuilder.builder()
+				.registerTypeAdapter(Flatshare.class, new ModelIdSerializer())
+				.create();
 		renderJSON(gson.toJson(Flatshare.all().fetch()));
 	}
 
@@ -26,7 +28,7 @@ public class Flatshares extends Controller {
 	public static void get(int id) {
 		Flatshare flatshare = getFlatshare(id);
 
-		Gson gson = new GsonBuilder()
+		Gson gson = RoomrGsonBuilder.builder()
 				.registerTypeAdapter(RoomrUser.class, new ModelIdSerializer())
 				.registerTypeAdapter(RoomOffer.class, new ModelIdSerializer())
 				.create();

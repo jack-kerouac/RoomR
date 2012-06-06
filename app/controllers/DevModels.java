@@ -23,7 +23,6 @@ public class DevModels extends AbstractRoomrController {
 
 		loader.loadFixtures(DevModels.class
 				.getResourceAsStream("/dev-models.yml"));
-
 		Offers.viewAll();
 	}
 

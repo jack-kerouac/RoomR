@@ -8,20 +8,42 @@
 # Import secure routes
 *		/										module:secure
 
+#######################################################################
 # REST interface
+#######################################################################
 
+# login with email and password
+POST	/rest/login								rest.Security.login
+# logout again
+POST	/rest/logout							rest.Security.logout
+
+# list all users
 GET		/rest/user								rest.RoomrUsers.list
+# create a new user (i.e. register)
+POST	/rest/user								rest.RoomrUsers.create
+# get details of the currently logged in user
+GET		/rest/user/current						rest.RoomrUsers.getCurrent
+# get details of an user
 GET		/rest/user/{id}							rest.RoomrUsers.get
+# get applications the given user has made
 GET		/rest/user/{id}/applications			rest.RoomrUsers.getApplications
 
+# list all room offers
 GET		/rest/roomOffer							rest.RoomOffers.list
+# get details of a room offer
 GET		/rest/roomOffer/{id}					rest.RoomOffers.get
+# get applications which were made for the given room offer
 GET		/rest/roomOffer/{id}/applications		rest.RoomOffers.getApplications
 
+# list all flatshares
 GET		/rest/flatshare							rest.Flatshares.list
+# get details of a flatshare
 GET		/rest/flatshare/{id}					rest.Flatshares.get
 
+# get details about a single application
 GET		/rest/application/{id}					rest.RoomOfferApplications.get
+
+#######################################################################
 
 # Home page
 GET     /                                       Start.start

@@ -5,12 +5,15 @@ import models.offer.RoomOffer;
 import play.mvc.Controller;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+
+import controllers.rest.serialize.FlatExclusionStrategy;
+import controllers.rest.serialize.ModelIdSerializer;
 
 public class RoomOffers extends Controller {
 	public static void list() {
-		Gson gson = new GsonBuilder().registerTypeAdapter(RoomOffer.class,
-				new ModelIdSerializer()).create();
+		Gson gson = RoomrGsonBuilder.builder()
+				.registerTypeAdapter(RoomOffer.class, new ModelIdSerializer())
+				.create();
 		renderJSON(gson.toJson(RoomOffer.all().fetch()));
 	}
 
@@ -25,7 +28,7 @@ public class RoomOffers extends Controller {
 	public static void get(int id) {
 		RoomOffer offer = getRoomOffer(id);
 
-		Gson gson = new GsonBuilder()
+		Gson gson = RoomrGsonBuilder.builder()
 				.setExclusionStrategies(new FlatExclusionStrategy())
 				.registerTypeAdapter(Flatshare.class, new ModelIdSerializer())
 				.create();

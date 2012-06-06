@@ -1,13 +1,13 @@
-package controllers.formdata;
+package controllers.rest.dto;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import models.common.Gender;
 import play.data.validation.Email;
+import play.data.validation.Equals;
 import play.data.validation.Required;
 
-public class RegistrationFormData implements Serializable {
+public class RegistrationData {
 	@Required
 	public String name;
 	@Required
@@ -15,6 +15,9 @@ public class RegistrationFormData implements Serializable {
 	public String email;
 	@Required
 	public String password;
+	@Required
+	@Equals("password")
+	public String passwordVerification;
 
 	@Required
 	public Date birthdate;
