@@ -30,6 +30,8 @@ GET		/rest/user/{id}/applications			rest.RoomrUsers.getApplications
 
 # list all room offers
 GET		/rest/roomOffer							rest.RoomOffers.list
+# get room offers by a search
+GET		/rest/roomOffer/search					rest.RoomOffers.search
 # get details of a room offer
 GET		/rest/roomOffer/{id}					rest.RoomOffers.get
 # get applications which were made for the given room offer
