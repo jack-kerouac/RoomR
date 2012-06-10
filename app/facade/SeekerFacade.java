@@ -30,7 +30,6 @@ public class SeekerFacade {
 	@Inject
 	private OfferRanker ranker;
 
-	@Inject
 	private NotificationService notificationService;
 
 	public RoomOfferApplication apply(RoomrUser applicant, long roomOfferId, String message) {
@@ -83,4 +82,8 @@ public class SeekerFacade {
 		this.roomOfferApplicationRepository = repository;
 	}
 
+	@Inject
+	public void setNotificationService(NotificationService service) {
+		this.notificationService = service;
+	}
 }
