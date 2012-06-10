@@ -18,8 +18,7 @@ public class RoomOfferApplication extends ObjectifyModel {
 	Long id;
 
 	public static enum State {
-		// TODO: define useful states
-		WAITING_FOR_INVITATION;
+		WAITING_FOR_INVITATION, INVITED, REJECTED, VISITED, ACCEPTED
 	}
 
 	public State currentState;
