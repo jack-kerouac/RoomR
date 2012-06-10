@@ -25,7 +25,6 @@ public class SeekerFacade {
 	@Inject
 	private RoomOfferRepository roomOfferRepository;
 
-	@Inject
 	private RoomOfferApplicationRepository roomOfferApplicationRepository;
 
 	@Inject
@@ -77,6 +76,11 @@ public class SeekerFacade {
 	// TODO (Flo): throw exception here, if offer not found?
 	public RoomOffer findOffer(long id) {
 		return roomOfferRepository.find(id);
+	}
+
+	@Inject
+	public void setRoomOfferApplicationRepository(RoomOfferApplicationRepository repository) {
+		this.roomOfferApplicationRepository = repository;
 	}
 
 }
