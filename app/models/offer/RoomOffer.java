@@ -15,6 +15,10 @@ import com.googlecode.objectify.annotation.Cached;
 @Cached
 public class RoomOffer extends ObjectifyModel {
 
+	public static enum State {
+		PUBLIC, DELETED
+	}
+
 	@Id
 	public Long id;
 
@@ -29,6 +33,8 @@ public class RoomOffer extends ObjectifyModel {
 	public String description;
 
 	public String contactEmail;
+
+	public State currentState;
 
 	/**
 	 * Sets the flatshare for this RoomOffer. The flatshare must have an id.
