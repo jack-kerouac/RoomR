@@ -31,8 +31,7 @@ public class RoomOffer extends ObjectifyModel {
 	public String contactEmail;
 
 	/**
-	 * Sets the flatshare for this RoomOffer. If the flatshare hasn't been
-	 * persisted yet, this will be done first to obtain a valid key.
+	 * Sets the flatshare for this RoomOffer. The flatshare must have an id.
 	 * 
 	 * @param flatshare
 	 *            the Flatshare which should be set for this user.
