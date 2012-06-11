@@ -39,7 +39,7 @@ GET		/rest/roomOffer/{id}					rest.RoomOffers.get
 # get applications which were made for the given room offer
 GET		/rest/roomOffer/{id}/applications		rest.RoomOffers.getApplications
 # apply for a given room offer
-### POST	/rest/roomOffer/{id}/applications
+POST	/rest/roomOffer/{id}/applications		rest.RoomOfferApplications.create
 
 
 # list all flatshares
