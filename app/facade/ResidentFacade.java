@@ -19,6 +19,7 @@ public class ResidentFacade {
 	public void createFlatshareAndOffer(Flatshare newFlatshare, RoomOffer roomOffer) {
 		flatshareRepository.add(newFlatshare);
 		roomOffer.setFlatshare(newFlatshare);
+		roomOffer.currentState = RoomOffer.State.PUBLIC;
 		roomOfferRepository.add(roomOffer);
 		notificationService.notifyFlatshareOfCreatedOffer(roomOffer);
 	}

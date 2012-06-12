@@ -21,6 +21,19 @@ public class RoomOfferApplicationTest extends UnitTest {
 		roomOfferApplicationUnderTest = new RoomOfferApplication();
 	}
 
+	//
+	// public void setApplicant(RoomrUser applicant) {
+	// Preconditions.checkState(applicant.gaeUserEmail != null,
+	// "gae user email has to be set for the applicant");
+	// this.applicantId = applicant.gaeUserEmail;
+	// }
+	//
+	@Test(expected = IllegalStateException.class)
+	public void testSetApplicantNoId() {
+		RoomrUser userWithoutMail = new RoomrUser();
+		roomOfferApplicationUnderTest.setApplicant(userWithoutMail);
+	}
+
 	@Test
 	public void testSetAndGetUser() {
 		// create associated RoomRUser and persist it

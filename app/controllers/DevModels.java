@@ -1,7 +1,5 @@
 package controllers;
 
-import java.io.File;
-
 import javax.inject.Inject;
 
 import models.application.RoomOfferApplication;
@@ -36,7 +34,7 @@ public class DevModels extends AbstractRoomrController {
 		for (RoomOfferApplication application : applicationRepository.findAll())
 			applicationRepository.remove(application);
 
-		loader.loadFixtures(new File("conf/dev-models.yml"));
+		loader.loadFixtures(DevModels.class.getResourceAsStream("/dev-models.yml"));
 
 		Offers.viewAll();
 	}

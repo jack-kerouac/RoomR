@@ -1,40 +1,26 @@
 package util;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import models.application.RoomOfferApplication;
-import models.application.RoomOfferApplication.State;
-import models.application.RoomOfferApplicationRepository;
-import models.common.Address;
-import models.common.Floor;
-
 import models.application.RoomOfferApplicationRepository;
 import models.flatshare.Flatshare;
 import models.flatshare.FlatshareRepository;
-import models.flatshare.SmokingTolerance;
 import models.offer.RoomOffer;
 import models.offer.RoomOfferRepository;
-import models.offer.SeekerCriteria;
 import models.user.RoomrUser;
 import models.user.RoomrUserRepository;
-
-
-import com.google.appengine.api.datastore.GeoPt;
-import com.google.appengine.api.datastore.KeyFactory;
-import com.google.appengine.api.users.User;
-import com.googlecode.objectify.Key;
 
 import org.yaml.snakeyaml.TypeDescription;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
 import play.modules.guice.InjectSupport;
-
 
 /**
  * Loads dev models from specified YAML file using SnakeYAML and uses
@@ -59,8 +45,7 @@ public class DevelopmentModelDataLoader {
 	@Inject
 	private static FlatshareRepository flatshareRepository;
 
-
-	public static void loadFixtures(File file) {
+	public static void loadFixtures(InputStream is) {
 		Constructor constructor = new Constructor();
 		constructor.addTypeDescription(new TypeDescription(RoomrUser.class, "!user"));
 		constructor.addTypeDescription(new TypeDescription(Flatshare.class, "!flatshare"));
@@ -70,8 +55,8 @@ public class DevelopmentModelDataLoader {
 
 		List<Object> all;
 		try {
-			all = (List<Object>) yaml.load(new FileReader(file));
-		} catch (FileNotFoundException e) {
+			all = (List<Object>) yaml.load(new InputStreamReader(is, "UTF-8"));
+		} catch (UnsupportedEncodingException e) {
 			throw new RuntimeException(e);
 		}
 
@@ -86,9 +71,4 @@ public class DevelopmentModelDataLoader {
 				flatshareRepository.add((Flatshare) o);
 		}
 	}
-
-	public static void main(String[] args) {
-		loadFixtures(new File("conf/dev-models/dev-models.yml"));
-	}
-
 }
