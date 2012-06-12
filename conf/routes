@@ -17,40 +17,44 @@ POST	/rest/login								rest.Security.login
 # logout again
 POST	/rest/logout							rest.Security.logout
 
+
 # list all users
-GET		/rest/user								rest.RoomrUsers.list
+GET		/rest/users								rest.RoomrUsers.list
 # create a new user (i.e. register)
-POST	/rest/user								rest.RoomrUsers.create
+POST	/rest/users								rest.RoomrUsers.create
 # get details of the currently logged in user
-GET		/rest/user/current						rest.RoomrUsers.getCurrent
+GET		/rest/users/current						rest.RoomrUsers.getCurrent
 # get details of an user
-GET		/rest/user/{id}							rest.RoomrUsers.get
+GET		/rest/users/{id}						rest.RoomrUsers.get
 # get applications the given user has made
-GET		/rest/user/{id}/applications			rest.RoomrUsers.getApplications
+GET		/rest/users/{id}/applications			rest.RoomrUsers.getApplications
+
 
 # list all room offers
-GET		/rest/roomOffer							rest.RoomOffers.list
+GET		/rest/roomOffers						rest.RoomOffers.list
 # create a new room offer for an existing flatshare
 ### POST	/rest/roomOffer
 # get room offers by a search
-GET		/rest/roomOffer/search					rest.RoomOffers.search
+GET		/rest/roomOffers/search					rest.RoomOffers.search
 # get details of a room offer
-GET		/rest/roomOffer/{id}					rest.RoomOffers.get
+GET		/rest/roomOffers/{id}					rest.RoomOffers.get
 # get applications which were made for the given room offer
-GET		/rest/roomOffer/{id}/applications		rest.RoomOffers.getApplications
+GET		/rest/roomOffers/{id}/applications		rest.RoomOffers.getApplications
 # apply for a given room offer
-POST	/rest/roomOffer/{id}/applications		rest.RoomOfferApplications.create
+POST	/rest/roomOffers/{id}/applications		rest.RoomOfferApplications.create
 
 
 # list all flatshares
-GET		/rest/flatshare							rest.Flatshares.list
+GET		/rest/flatshares						rest.Flatshares.list
 # create a new flatshare including a room offer
 ### POST	/rest/flatshare
 # get details of a flatshare
-GET		/rest/flatshare/{id}					rest.Flatshares.get
+GET		/rest/flatshares/{id}					rest.Flatshares.get
+
 
 # get details about a single application
-GET		/rest/application/{id}					rest.RoomOfferApplications.get
+GET		/rest/applications/{id}					rest.RoomOfferApplications.get
+
 
 #######################################################################
 

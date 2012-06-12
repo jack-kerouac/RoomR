@@ -17,7 +17,7 @@ import com.google.gson.Gson;
 import controllers.rest.dto.RegistrationData;
 import controllers.rest.serialize.BriefUserSerializer;
 import controllers.rest.serialize.FlatExclusionStrategy;
-import controllers.rest.serialize.ModelIdSerializer;
+import controllers.rest.serialize.FlatshareUrlSerializer;
 import controllers.rest.serialize.NameBasedExclusionStrategy;
 import facade.UserFacade;
 import facade.exception.UserAlreadyCreatedException;
@@ -28,10 +28,7 @@ public class RoomrUsers extends Controller {
 	private static UserFacade userFacade;
 
 	public static void list() {
-		Gson gson = RoomrGsonBuilder
-				.builder()
-				.registerTypeAdapter(RoomrUser.class, new BriefUserSerializer())
-				.create();
+		Gson gson = RoomrGsonBuilder.builder().registerTypeAdapter(RoomrUser.class, new BriefUserSerializer()).create();
 		renderJSON(gson.toJson(RoomrUser.all().fetch()));
 	}
 
@@ -51,7 +48,8 @@ public class RoomrUsers extends Controller {
 		try {
 			createdUser = userFacade.createUser(user);
 			get(createdUser.id);
-		} catch (UserAlreadyCreatedException e) {
+		}
+		catch (UserAlreadyCreatedException e) {
 			response.status = Http.StatusCode.BAD_REQUEST;
 			renderJSON(ImmutableMap.of("error", "emailAlreadyTaken"));
 		}
@@ -72,10 +70,8 @@ public class RoomrUsers extends Controller {
 				.builder()
 				.setExclusionStrategies(
 						new FlatExclusionStrategy(),
-						new NameBasedExclusionStrategy().withExclusionsFor(
-								RoomrUser.class, ImmutableSet.of("password")))
-				.registerTypeAdapter(Flatshare.class, new ModelIdSerializer())
-				.create();
+						new NameBasedExclusionStrategy().withExclusionsFor(RoomrUser.class, ImmutableSet.of("password")))
+				.registerTypeAdapter(Flatshare.class, new FlatshareUrlSerializer()).create();
 		renderJSON(gson.toJson(user));
 	}
 
@@ -83,14 +79,14 @@ public class RoomrUsers extends Controller {
 		Optional<RoomrUser> loggedInUser = userFacade.getLoggedInUser();
 		if (loggedInUser.isPresent()) {
 			get(loggedInUser.get().id);
-		} else {
+		}
+		else {
 			unauthorized();
 		}
 	}
 
 	public static void getApplications(int id) {
 		RoomrUser roomrUser = getRoomrUser(id);
-		renderJSON(RoomOfferApplications
-				.renderApplications(roomrUser.applications));
+		renderJSON(RoomOfferApplications.renderApplications(roomrUser.applications));
 	}
 }

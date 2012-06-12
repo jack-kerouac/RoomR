@@ -18,7 +18,8 @@ import com.google.gson.Gson;
 
 import controllers.rest.dto.SearchData;
 import controllers.rest.serialize.FlatExclusionStrategy;
-import controllers.rest.serialize.ModelIdSerializer;
+import controllers.rest.serialize.FlatshareUrlSerializer;
+import controllers.rest.serialize.RoomOfferUrlSerializer;
 import facade.SeekerFacade;
 
 @InjectSupport
@@ -28,8 +29,7 @@ public class RoomOffers extends Controller {
 	private static SeekerFacade seekerFacade;
 
 	public static void list() {
-		Gson gson = RoomrGsonBuilder.builder()
-				.registerTypeAdapter(RoomOffer.class, new ModelIdSerializer())
+		Gson gson = RoomrGsonBuilder.builder().registerTypeAdapter(RoomOffer.class, new RoomOfferUrlSerializer())
 				.create();
 		renderJSON(gson.toJson(RoomOffer.all().fetch()));
 	}
@@ -45,10 +45,8 @@ public class RoomOffers extends Controller {
 	public static void get(int id) {
 		RoomOffer offer = getRoomOffer(id);
 
-		Gson gson = RoomrGsonBuilder.builder()
-				.setExclusionStrategies(new FlatExclusionStrategy())
-				.registerTypeAdapter(Flatshare.class, new ModelIdSerializer())
-				.create();
+		Gson gson = RoomrGsonBuilder.builder().setExclusionStrategies(new FlatExclusionStrategy())
+				.registerTypeAdapter(Flatshare.class, new FlatshareUrlSerializer()).create();
 		renderJSON(gson.toJson(offer));
 	}
 
@@ -79,10 +77,10 @@ public class RoomOffers extends Controller {
 				break;
 			case fixedDate:
 				if (searchData.startDate != null)
-					rr.startDateQuery = DateQuery
-							.fixedDate(searchData.startDate);
+					rr.startDateQuery = DateQuery.fixedDate(searchData.startDate);
 			}
-		} else {
+		}
+		else {
 			rr.startDateQuery = null;
 		}
 
@@ -91,14 +89,11 @@ public class RoomOffers extends Controller {
 		if (searchData.minRoomSizeSquareMeters != null)
 			rr.minRoomSize = new FloorSpace(searchData.minRoomSizeSquareMeters);
 
-		List<ScoredRoomOffer> offers = seekerFacade.search(rr,
-				Optional.fromNullable(seekerAge),
+		List<ScoredRoomOffer> offers = seekerFacade.search(rr, Optional.fromNullable(seekerAge),
 				Optional.fromNullable(searchData.gender));
 
-		Gson gson = RoomrGsonBuilder.builder()
-				.setExclusionStrategies(new FlatExclusionStrategy())
-				.registerTypeAdapter(Flatshare.class, new ModelIdSerializer())
-				.create();
+		Gson gson = RoomrGsonBuilder.builder().setExclusionStrategies(new FlatExclusionStrategy())
+				.registerTypeAdapter(Flatshare.class, new FlatshareUrlSerializer()).create();
 
 		renderJSON(gson.toJson(offers));
 	}

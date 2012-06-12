@@ -14,7 +14,8 @@ import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 
-import controllers.rest.serialize.ModelIdSerializer;
+import controllers.rest.serialize.RoomOfferUrlSerializer;
+import controllers.rest.serialize.RoomrUserUrlSerializer;
 import facade.SeekerFacade;
 import facade.UserFacade;
 
@@ -29,8 +30,8 @@ public class RoomOfferApplications extends Controller {
 
 	public static String renderApplications(Collection<RoomOfferApplication> applications) {
 
-		Gson gson = RoomrGsonBuilder.builder().registerTypeAdapter(RoomOffer.class, new ModelIdSerializer())
-				.registerTypeAdapter(RoomrUser.class, new ModelIdSerializer()).create();
+		Gson gson = RoomrGsonBuilder.builder().registerTypeAdapter(RoomOffer.class, new RoomOfferUrlSerializer())
+				.registerTypeAdapter(RoomrUser.class, new RoomrUserUrlSerializer()).create();
 
 		return gson.toJson(applications);
 	}
@@ -46,8 +47,8 @@ public class RoomOfferApplications extends Controller {
 	public static void get(int id) {
 		RoomOfferApplication roomOfferApplication = getRoomOfferApplication(id);
 
-		Gson gson = RoomrGsonBuilder.builder().registerTypeAdapter(RoomOffer.class, new ModelIdSerializer())
-				.registerTypeAdapter(RoomrUser.class, new ModelIdSerializer()).create();
+		Gson gson = RoomrGsonBuilder.builder().registerTypeAdapter(RoomOffer.class, new RoomOfferUrlSerializer())
+				.registerTypeAdapter(RoomrUser.class, new RoomrUserUrlSerializer()).create();
 		renderJSON(gson.toJson(roomOfferApplication));
 	}
 
@@ -56,7 +57,8 @@ public class RoomOfferApplications extends Controller {
 		if (loggedInUser.isPresent()) {
 			RoomOfferApplication application = seekerFacade.apply(loggedInUser.get(), roomOfferId, message);
 			renderJSON(ImmutableMap.of("application", application));
-		} else {
+		}
+		else {
 			unauthorized();
 		}
 	}
