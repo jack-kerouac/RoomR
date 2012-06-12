@@ -124,7 +124,7 @@ roomr.instantSearch = (function() {
 		$('#loading').show();
 		
 		// omit empty input fields
-		$('.offers').load('/offers', $(':input[value]', $('#search_offers_form')).serialize(), function(responseText, textStatus, XMLHttpRequest) {
+		$('.offers').load('/old/offers', $(':input[value]', $('#search_offers_form')).serialize(), function(responseText, textStatus, XMLHttpRequest) {
 			$('.offers .score:not(.undefined)').each(function() {
 				$(this).css('background-color', calcColor($(this).text().replace('%', '')));
 

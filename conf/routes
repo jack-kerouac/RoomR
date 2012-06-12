@@ -8,6 +8,8 @@
 # Import secure routes
 *		/										module:secure
 
+
+
 #######################################################################
 # REST interface
 #######################################################################
@@ -58,47 +60,54 @@ GET		/rest/applications/{id}					rest.RoomOfferApplications.get
 
 #######################################################################
 
+
+
+
 # Home page
-GET     /                                       Start.start
+GET     /old                                       Start.start
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
 
 # Map static resources from the /app/public folder to the /public path
-GET     /public/                                staticDir:public
+GET     /old/public/                                staticDir:public
+
 
 # create room offers
-GET		/createOffer							Offers.createOfferForm
-POST	/offers/								Offers.createOffer
+GET		/old/createOffer							Offers.createOfferForm
+POST	/old/offers/								Offers.createOffer
 
 # edit room offers
-GET		/editOffer								Offers.editOfferForm
+GET		/old/editOffer								Offers.editOfferForm
 
-GET		/offers/								Offers.viewAll
-GET		/offers/{id}							Offers.viewOffer
+GET		/old/offers/								Offers.viewAll
+GET		/old/offers/{id}							Offers.viewOffer
 
 # search
-GET		/search									Search.searchForm
-GET		/offers									Search.offers
+GET		/old/search									Search.searchForm
+GET		/old/offers									Search.offers
 
 # registration
-GET		/register								Registration.registrationForm
-POST	/users									Registration.register
+GET		/old/register								Registration.registrationForm
+POST	/old/users									Registration.register
 
 # users
-GET		/users									Users.viewAll
+GET		/old/users									Users.viewAll
 
 
 # applications
-POST	/applications							Applications.apply
+POST	/old/applications							Applications.apply
 
 # dashboard
-GET		/dashboard								Dashboard.view
-GET		/applications							Applications.view
+GET		/old/dashboard								Dashboard.view
+GET		/old/applications							Applications.view
 
 
 # DEV MODELS
-GET		/reset									DevModels.reset
+GET		/old/reset									DevModels.reset
+
+
+GET     /			                            staticDir:public/workshop
 
 # Catch all
-#*       /{controller}/{action}                  {controller}.{action}
+#*       /old/{controller}/{action}                  {controller}.{action}

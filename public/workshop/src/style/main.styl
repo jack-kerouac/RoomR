@@ -1,0 +1,48 @@
+@import "nib/clearfix"
+@import "nib/vendor"
+
+// Basics
+*
+  box-sizing border-box
+body
+  background #CCC
+
+
+// Layout
+#Wrapper
+  clearfix()
+#Main
+  width 70%
+  float left
+#Side
+  width 25%
+  float right
+
+
+// Design
+#Wrapper, .item-bigview
+  background #FFF // url(img/bild.gif) center center no-repeat
+  margin 2em
+  border-radius(8px)
+  box-shadow(0.2em 0.2em 1.5em #999);
+#Wrapper > header, #Main, #Side, .item-bigview
+  padding 1em 2em
+
+// Eintrags-Großansicht
+.item-bigview
+  position absolute
+  top 15%
+  left 15%
+  right 15%
+  bottom 15%
+
+// Anklickbare Sachen die kein Link sind
+klickable()
+  cursor pointer
+  font-weight bold
+  color blue
+  text-decoration underline
+  &:hover
+    text-decoration none
+li .item-title, .clickable
+  klickable()
