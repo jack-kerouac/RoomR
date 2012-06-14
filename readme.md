@@ -19,6 +19,7 @@ Systemvoraussetzungen
     1. Put `play` executable in your path 
   3. irgendein Git Client (<http://www.makeuseof.com/tag/5-windows-git-clients-git-job/>)
   4. [Node.js & NPM](http://nodejs.org/) >= 6.0.0
+    1. For Linux, follow [this](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager) notes
   5. [Phantom.js](http://www.phantomjs.org/) (`bin`-Ordner muss im Systempfad liegen)
 
 Setup
@@ -30,7 +31,7 @@ Setup
   4. `play run`
   5. browse to <http://localhost:9000/>, <http://localhost:9000/rest/users/1>
   6. in `public/workshops` `npm install` ausfuehren
-  7. `node_modules/grunt/bin/grunt` ausfuehren
+  7. `./node_modules/grunt/bin/grunt` ausfuehren
 
 Ordnerstruktur
 --------------
