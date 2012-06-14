@@ -19,7 +19,7 @@ Systemvoraussetzungen
     1. Das `play` Kommando muss im Systempfad liegen
   3. irgendein Git Client (<http://www.makeuseof.com/tag/5-windows-git-clients-git-job/>)
   4. [Node.js & NPM](http://nodejs.org/) >= 6.0.0
-    1. For Linux, follow [this](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager) notes
+    1. Für Linux gibt's [hier](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager) eine Anleitung
   5. [Phantom.js](http://www.phantomjs.org/)
     1. Der `bin`-Ordner muss im Systempfad liegen
 
@@ -30,13 +30,13 @@ Setup
   2. `play deps --sync`
   3. `play eclipsify`
   4. `play run`
-  5. browse to <http://localhost:9000/>, <http://localhost:9000/rest/users/1>
-  6. in `public/workshops` `npm install` ausfuehren
-  7. `./node_modules/grunt/bin/grunt` ausfuehren
+  5. Die Anwendung läuft unter <http://localhost:9000/>, <http://localhost:9000/rest/users/1>
+  6. in `public/workshops` `npm install` ausführen
+  7. `./node_modules/grunt/bin/grunt` ausführen
 
 Ordnerstruktur
 --------------
-  * Content von Peter: `public/workshop`. Dort liegt alles, was uns Peter schon bereitgestellt hat. Der Content
+  * `public/workshop`: Content von Peter. Dort liegt alles, was uns Peter schon bereitgestellt hat. Der Content
     von diesem Verzeichnis wird unter der Basis-URL ausgeliefert.
-  * Routes file: `conf/routes`. Diese Datei konfiguriert, welche Ressourcen unter welcher URL erreichbar sind.
+  * `conf/routes`: Routes file. Diese Datei konfiguriert, welche Ressourcen unter welcher URL erreichbar sind.
     Dort ist auch das REST-Interface beschrieben.
