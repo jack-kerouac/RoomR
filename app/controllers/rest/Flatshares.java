@@ -67,10 +67,25 @@ public class Flatshares extends Controller {
 		renderJSON(createFlatshareGson().toJson(createdFlatshare));
 	}
 
+	public static void update(long id, @Valid Flatshare flatshare) {
+		flatshare.id = id;
+		residentFacade.updateFlatshare(flatshare);
+
+		response.status = Http.StatusCode.NO_RESPONSE;
+	}
+
 	public static void get(long id) {
 		Flatshare flatshare = getFlatshare(id);
 
 		renderJSON(createFlatshareGson().toJson(flatshare));
+	}
+
+	public static void getRoomOffers(long id) {
+		Flatshare flatshare = getFlatshare(id);
+
+		Gson gson = RoomrGsonBuilder.builder().registerTypeAdapter(RoomOffer.class, new RoomOfferUrlSerializer())
+				.create();
+		renderJSON(gson.toJson(flatshare.roomOffers));
 	}
 
 	private static Gson createFlatshareGson() {

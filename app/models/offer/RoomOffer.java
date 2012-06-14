@@ -35,8 +35,7 @@ public class RoomOffer extends Model {
 	@Override
 	public String toString() {
 		return Objects.toStringHelper(this).add("id", id)
-				.add("flatshareID", flatshare.id)
-				.add("room details", roomDetails)
+				.add("flatshareID", (flatshare != null ? flatshare.id : "null")).add("room details", roomDetails)
 				.add("seeker criteria", criteria).toString();
 	}
 }

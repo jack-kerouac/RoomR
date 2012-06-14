@@ -24,6 +24,10 @@ public class ResidentFacade {
 		return result.refresh();
 	}
 
+	public Flatshare updateFlatshare(Flatshare flatshare) {
+		return flatshare.merge();
+	}
+
 	/**
 	 * Updates a room offer and its associated flatshare.
 	 * 
@@ -34,15 +38,16 @@ public class ResidentFacade {
 	 * @throws RoomOfferUpdateException
 	 *             when the room offer doesn't belong to the flatshare
 	 */
-	public void updateRoomOfferForFlatshare(RoomOffer offer, Flatshare flatshare) throws RoomOfferUpdateException {
+	public Flatshare updateRoomOfferForFlatshare(RoomOffer offer, Flatshare flatshare) throws RoomOfferUpdateException {
 		// check if the offer really belongs to the given flatshare
 		if (flatshare.id != offer.flatshare.id) {
 			throw new RoomOfferUpdateException("Room Offer doesn't belong to the given flatshare");
 		}
 
 		// update entities
-		flatshare.save();
-		offer.save();
+		Flatshare result = flatshare.merge();
+		offer.merge();
+		return result;
 	}
 
 	@Inject
