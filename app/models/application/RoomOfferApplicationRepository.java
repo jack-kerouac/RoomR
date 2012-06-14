@@ -10,4 +10,5 @@ public interface RoomOfferApplicationRepository {
 
 	public void remove(RoomOfferApplication application);
 
+	void update(RoomOfferApplication application);
 }

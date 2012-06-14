@@ -54,6 +54,25 @@ public class ObjectifyRoomOfferApplicationRepoTest extends UnitTest {
 	}
 
 	@Test
+	public void testUpdate() {
+		repositoryUnderTest.add(mockedApplication);
+
+		// update message
+		String newMessage = "This is the new message";
+		mockedApplication.message = newMessage;
+		repositoryUnderTest.update(mockedApplication);
+
+		// verify integrity
+		// check number of persisted applications
+		Set<RoomOfferApplication> persistedApplications = repositoryUnderTest.findAll();
+		assertEquals("More or less than one entity has been persisted", 1, persistedApplications.size());
+		// check consistency of persisted application
+		RoomOfferApplication persistedApplication = Iterables.getOnlyElement(persistedApplications);
+		assertEquals("Application message is not consistent for persisted application", newMessage,
+				persistedApplication.message);
+	}
+
+	@Test
 	public void testRemoval() {
 		// store mocked application
 		repositoryUnderTest.add(mockedApplication);
