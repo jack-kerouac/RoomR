@@ -34,6 +34,7 @@ public class RoomrUsers extends Controller {
 
 	public static void create(@Valid RegistrationData registrationData) {
 		if (validation.hasErrors()) {
+			response.print(validation.errorsMap());
 			badRequest();
 		}
 
@@ -48,8 +49,7 @@ public class RoomrUsers extends Controller {
 		try {
 			createdUser = userFacade.createUser(user);
 			get(createdUser.id);
-		}
-		catch (UserAlreadyCreatedException e) {
+		} catch (UserAlreadyCreatedException e) {
 			response.status = Http.StatusCode.BAD_REQUEST;
 			renderJSON(ImmutableMap.of("error", "emailAlreadyTaken"));
 		}
@@ -79,8 +79,7 @@ public class RoomrUsers extends Controller {
 		Optional<RoomrUser> loggedInUser = userFacade.getLoggedInUser();
 		if (loggedInUser.isPresent()) {
 			get(loggedInUser.get().id);
-		}
-		else {
+		} else {
 			unauthorized();
 		}
 	}
