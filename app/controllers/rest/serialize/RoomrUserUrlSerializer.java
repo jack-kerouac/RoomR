@@ -14,7 +14,7 @@ import controllers.rest.RoomrUsers;
 public class RoomrUserUrlSerializer implements JsonSerializer<RoomrUser> {
 
 	@Override
-	public JsonElement serialize(RoomrUser user, Type typeOfUser, JsonSerializationContext context) {
+	public JsonElement serialize(RoomrUser user, Type type, JsonSerializationContext context) {
 		String url = RoomrUsers.getUrlFor(user);
 		return new JsonPrimitive(url);
 	}

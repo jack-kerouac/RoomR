@@ -14,7 +14,7 @@ import com.google.gson.JsonSerializer;
 public class BriefUserSerializer implements JsonSerializer<RoomrUser> {
 
 	@Override
-	public JsonElement serialize(RoomrUser user, Type typeOfUser, JsonSerializationContext context) {
+	public JsonElement serialize(RoomrUser user, Type type, JsonSerializationContext context) {
 		String url = Router.reverse("rest.RoomrUsers.get", ImmutableMap.of("id", (Object) String.valueOf(user.id))).url;
 		JsonObject result = new JsonObject();
 		result.addProperty("url", url);

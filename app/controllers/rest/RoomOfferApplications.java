@@ -9,8 +9,10 @@ import models.offer.RoomOffer;
 import models.user.RoomrUser;
 import play.modules.guice.InjectSupport;
 import play.mvc.Controller;
+import play.mvc.Router;
 
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 
 import controllers.rest.dto.RoomOfferApplicationData;
@@ -28,6 +30,11 @@ public class RoomOfferApplications extends Controller {
 
 	@Inject
 	private static UserFacade userFacade;
+
+	public static String getUrlFor(RoomOfferApplication application) {
+		return Router.reverse("rest.RoomOfferApplications.get",
+				ImmutableMap.of("id", (Object) String.valueOf(application.id))).url;
+	}
 
 	public static String renderApplications(Collection<RoomOfferApplication> applications) {
 
@@ -58,9 +65,10 @@ public class RoomOfferApplications extends Controller {
 		if (loggedInUser.isPresent()) {
 			RoomOfferApplication application = seekerFacade.apply(loggedInUser.get(), id, applicationData.message);
 
-			// TODO: Flo
-			response.setHeader("Location", "TODO");
-			renderJSON(application, new RoomOfferApplicationSerializer());
+			response.setHeader("Location", getUrlFor(application));
+			Gson gson = RoomrGsonBuilder.builder()
+					.registerTypeAdapter(RoomOfferApplication.class, new RoomOfferApplicationSerializer()).create();
+			renderJSON(gson.toJson(application));
 
 		} else {
 			unauthorized();

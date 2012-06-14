@@ -14,7 +14,7 @@ import controllers.rest.Flatshares;
 public class FlatshareUrlSerializer implements JsonSerializer<Flatshare> {
 
 	@Override
-	public JsonElement serialize(Flatshare flatshare, Type typeOfUser, JsonSerializationContext context) {
+	public JsonElement serialize(Flatshare flatshare, Type type, JsonSerializationContext context) {
 		String url = Flatshares.getUrlFor(flatshare);
 		return new JsonPrimitive(url);
 	}
