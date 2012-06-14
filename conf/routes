@@ -34,8 +34,6 @@ GET		/rest/users/{id}/applications			rest.RoomrUsers.getApplications
 
 # list all room offers
 GET		/rest/roomOffers						rest.RoomOffers.list
-# create a new room offer for an existing flatshare
-### POST	/rest/roomOffer
 # get room offers by a search
 GET		/rest/roomOffers/search					rest.RoomOffers.search
 # get details of a room offer
@@ -50,8 +48,12 @@ POST	/rest/roomOffers/{id}/applications		rest.RoomOfferApplications.create
 GET		/rest/flatshares						rest.Flatshares.list
 # create a new flatshare including a room offer
 POST	/rest/flatshares						rest.Flatshares.create
+# update a flatshare and optionally a room offer
+PUT		/rest/flatshares/{id}					rest.Flatshares.update
 # get details of a flatshare
 GET		/rest/flatshares/{id}					rest.Flatshares.get
+# get room offers for the given flatshare
+GET		/rest/flatshares/{id}/roomOffers		rest.Flatshares.getRoomOffers
 
 
 # get details about a single application
