@@ -8,6 +8,7 @@ import play.data.validation.Valid;
 import play.modules.guice.InjectSupport;
 import play.mvc.Controller;
 import play.mvc.Http;
+import play.mvc.Router;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableMap;
@@ -26,6 +27,10 @@ import facade.exception.UserAlreadyCreatedException;
 public class RoomrUsers extends Controller {
 	@Inject
 	private static UserFacade userFacade;
+
+	public static String getUrlFor(RoomrUser user) {
+		return Router.reverse("rest.RoomrUsers.get", ImmutableMap.of("id", (Object) String.valueOf(user.id))).url;
+	}
 
 	public static void list() {
 		Gson gson = RoomrGsonBuilder.builder().registerTypeAdapter(RoomrUser.class, new BriefUserSerializer()).create();
@@ -48,7 +53,10 @@ public class RoomrUsers extends Controller {
 		RoomrUser createdUser;
 		try {
 			createdUser = userFacade.createUser(user);
-			get(createdUser.id);
+
+			response.status = Http.StatusCode.CREATED;
+			response.setHeader("Location", getUrlFor(createdUser));
+			renderJSON(createRoomrUserGson().toJson(createdUser));
 		} catch (UserAlreadyCreatedException e) {
 			response.status = Http.StatusCode.BAD_REQUEST;
 			renderJSON(ImmutableMap.of("error", "emailAlreadyTaken"));
@@ -66,13 +74,17 @@ public class RoomrUsers extends Controller {
 	public static void get(long id) {
 		RoomrUser user = getRoomrUser(id);
 
+		renderJSON(createRoomrUserGson().toJson(user));
+	}
+
+	private static Gson createRoomrUserGson() {
 		Gson gson = RoomrGsonBuilder
 				.builder()
 				.setExclusionStrategies(
 						new FlatExclusionStrategy(),
 						new NameBasedExclusionStrategy().withExclusionsFor(RoomrUser.class, ImmutableSet.of("password")))
 				.registerTypeAdapter(Flatshare.class, new FlatshareUrlSerializer()).create();
-		renderJSON(gson.toJson(user));
+		return gson;
 	}
 
 	public static void getCurrent() {

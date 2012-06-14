@@ -12,8 +12,10 @@ import models.request.RoomRequest;
 import models.request.RoomRequest.DateQuery;
 import play.modules.guice.InjectSupport;
 import play.mvc.Controller;
+import play.mvc.Router;
 
 import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 
 import controllers.rest.dto.SearchData;
@@ -27,6 +29,10 @@ public class RoomOffers extends Controller {
 
 	@Inject
 	private static SeekerFacade seekerFacade;
+
+	public static String getUrlFor(RoomOffer offer) {
+		return Router.reverse("rest.RoomOffers.get", ImmutableMap.of("id", (Object) String.valueOf(offer.id))).url;
+	}
 
 	public static void list() {
 		Gson gson = RoomrGsonBuilder.builder().registerTypeAdapter(RoomOffer.class, new RoomOfferUrlSerializer())

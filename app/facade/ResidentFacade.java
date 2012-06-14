@@ -8,15 +8,20 @@ import models.offer.RoomOffer;
 import facade.exception.RoomOfferUpdateException;
 
 public class ResidentFacade {
-
 	private NotificationService notificationService;
 
-	public void createFlatshareAndOffer(Flatshare newFlatshare,
-			RoomOffer roomOffer) {
-		newFlatshare.save();
+	public Flatshare createFlatshare(Flatshare newFlatshare) {
+		return newFlatshare.save();
+	}
+
+	public Flatshare createFlatshareAndOffer(Flatshare newFlatshare, RoomOffer roomOffer) {
+		Flatshare result = createFlatshare(newFlatshare);
 		roomOffer.flatshare = newFlatshare;
 		roomOffer.save();
 		notificationService.notifyFlatshareOfCreatedOffer(roomOffer);
+
+		// have to be refreshed as a roomOffer has been added...
+		return result.refresh();
 	}
 
 	/**
@@ -29,12 +34,10 @@ public class ResidentFacade {
 	 * @throws RoomOfferUpdateException
 	 *             when the room offer doesn't belong to the flatshare
 	 */
-	public void updateRoomOfferForFlatshare(RoomOffer offer, Flatshare flatshare)
-			throws RoomOfferUpdateException {
+	public void updateRoomOfferForFlatshare(RoomOffer offer, Flatshare flatshare) throws RoomOfferUpdateException {
 		// check if the offer really belongs to the given flatshare
 		if (flatshare.id != offer.flatshare.id) {
-			throw new RoomOfferUpdateException(
-					"Room Offer doesn't belong to the given flatshare");
+			throw new RoomOfferUpdateException("Room Offer doesn't belong to the given flatshare");
 		}
 
 		// update entities
