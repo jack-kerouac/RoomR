@@ -49,7 +49,7 @@ POST	/rest/roomOffers/{id}/applications		rest.RoomOfferApplications.create
 # list all flatshares
 GET		/rest/flatshares						rest.Flatshares.list
 # create a new flatshare including a room offer
-### POST	/rest/flatshare
+POST	/rest/flatshares						rest.Flatshares.create
 # get details of a flatshare
 GET		/rest/flatshares/{id}					rest.Flatshares.get
 
