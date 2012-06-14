@@ -11,9 +11,10 @@ import play.modules.guice.InjectSupport;
 import play.mvc.Controller;
 
 import com.google.common.base.Optional;
-import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 
+import controllers.rest.dto.RoomOfferApplicationData;
+import controllers.rest.serialize.RoomOfferApplicationSerializer;
 import controllers.rest.serialize.RoomOfferUrlSerializer;
 import controllers.rest.serialize.RoomrUserUrlSerializer;
 import facade.SeekerFacade;
@@ -52,15 +53,17 @@ public class RoomOfferApplications extends Controller {
 		renderJSON(gson.toJson(roomOfferApplication));
 	}
 
-	public static void create(long roomOfferId, String message) {
+	public static void create(long id, RoomOfferApplicationData applicationData) {
 		Optional<RoomrUser> loggedInUser = userFacade.getLoggedInUser();
 		if (loggedInUser.isPresent()) {
-			RoomOfferApplication application = seekerFacade.apply(loggedInUser.get(), roomOfferId, message);
-			renderJSON(ImmutableMap.of("application", application));
-		}
-		else {
+			RoomOfferApplication application = seekerFacade.apply(loggedInUser.get(), id, applicationData.message);
+
+			// TODO: Flo
+			response.setHeader("Location", "TODO");
+			renderJSON(application, new RoomOfferApplicationSerializer());
+
+		} else {
 			unauthorized();
 		}
 	}
-
 }

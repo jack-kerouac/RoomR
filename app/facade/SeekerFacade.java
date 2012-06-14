@@ -23,10 +23,12 @@ public class SeekerFacade {
 	@Inject
 	private NotificationService notificationService;
 
-	public RoomOfferApplication apply(RoomrUser applicant, long roomOfferId,
-			String message) {
+	public RoomOfferApplication apply(RoomrUser applicant, long roomOfferId, String message) {
 
 		RoomOffer offer = RoomOffer.findById(roomOfferId);
+		if (offer == null) {
+			throw new IllegalStateException("room offer with ID " + roomOfferId + " not found");
+		}
 
 		// CREATE APPLICATION
 		RoomOfferApplication application = new RoomOfferApplication();
@@ -42,8 +44,7 @@ public class SeekerFacade {
 		return application;
 	}
 
-	public List<ScoredRoomOffer> search(RoomRequest request,
-			Optional<Integer> seekerAge, Optional<Gender> seekerGender) {
+	public List<ScoredRoomOffer> search(RoomRequest request, Optional<Integer> seekerAge, Optional<Gender> seekerGender) {
 		return ranker.search(request, seekerAge, seekerGender);
 	}
 

@@ -79,8 +79,7 @@ public class RoomOffers extends Controller {
 				if (searchData.startDate != null)
 					rr.startDateQuery = DateQuery.fixedDate(searchData.startDate);
 			}
-		}
-		else {
+		} else {
 			rr.startDateQuery = null;
 		}
 
