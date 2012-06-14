@@ -16,6 +16,7 @@ Systemvoraussetzungen
 
   1. [Sun JDK 1.6](http://www.oracle.com/technetwork/java/javase/downloads/jdk-6u25-download-346242.html)
   2. [Play 1.2.5-RC4](http://download.playframework.org/releases/play-1.2.5-RC4.zip)
+    1. Put `play` executable in your path 
   3. irgendein Git Client (<http://www.makeuseof.com/tag/5-windows-git-clients-git-job/>)
   4. [Node.js & NPM](http://nodejs.org/) >= 6.0.0
   5. [Phantom.js](http://www.phantomjs.org/) (`bin`-Ordner muss im Systempfad liegen)
