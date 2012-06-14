@@ -4,7 +4,6 @@ import java.util.Date;
 
 import models.common.Gender;
 import play.data.validation.Email;
-import play.data.validation.Equals;
 import play.data.validation.Required;
 
 public class RegistrationData {
@@ -15,9 +14,6 @@ public class RegistrationData {
 	public String email;
 	@Required
 	public String password;
-	@Required
-	@Equals("password")
-	public String passwordVerification;
 
 	@Required
 	public Date birthdate;
