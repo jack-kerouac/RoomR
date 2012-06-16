@@ -31,7 +31,11 @@ module.exports = function(grunt){
   // Der Helper kompiliert eine Stylus-Datei und nimmt uns das Error Handling ab.
   grunt.registerHelper('stylus-file', function(file, options, callback){
     var input = fs.readFileSync(file, 'utf8');
-    stylus(input).define('url', stylus.url({ paths: options.url.paths })).use(nib()).render(function(err, css){
+    stylus(input)
+    .set('compress', options.compress)
+    .define('url', stylus.url({ paths: options.url.paths }))
+    .use(nib())
+    .render(function(err, css){
       if(err){
         throw err;
       }

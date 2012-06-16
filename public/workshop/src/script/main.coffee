@@ -87,7 +87,7 @@ require ['backbone', 'lib/formatPriority'], (Backbone, formatPriority) ->
   # Model für Einträge
   # ------------------
 
-  #
+  # Einfach wieder ein Abziehbild der Basisklasse anlegen
   Item = Backbone.Model.extend()
 
 
@@ -98,8 +98,8 @@ require ['backbone', 'lib/formatPriority'], (Backbone, formatPriority) ->
   # Wenn wir Gruppen von Models verwalten wollen, sind **Collections** das Mittel der
   # Wahl.
   ItemCollection = Backbone.Collection.extend {
-    model: Item                 # Was für ein Model findet sich in dieser Collection?
-    url: 'api/index.php/items'  # Wo ist die REST-Api für die Daten?
+    model: Item  # Was für ein Model findet sich in dieser Collection?
+    url: 'http://files.peterkroener.de/workshop/api/index.php/items/'  # Wo liegt die API?
   }
   Items = new ItemCollection()
 

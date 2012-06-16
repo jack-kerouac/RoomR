@@ -1,8 +1,0 @@
-{
-	"id": 2,
-	"items": [
-		{ "id": 0, "title": "Beispielapp studieren", "priority": 0 },
-		{ "id": 1, "title": "CoffeeScript lernen", "priority": 1 },
-		{ "id": 2, "title": "Kaffepause einplanen", "priority": 2 }
-	]
-}

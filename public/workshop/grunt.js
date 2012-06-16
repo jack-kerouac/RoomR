@@ -25,7 +25,8 @@ module.exports = function(grunt){
         options: {                   // Zusatzoptionen
           url: {
             paths: [ 'src/style' ]   // Pfad(e) für Bilder
-          }
+          },
+          compress: true             // Code-Komprimierung an/aus
         }
       }
     },
@@ -65,6 +66,7 @@ module.exports = function(grunt){
       },
       name: 'main',             // Wurzelmodul
       out: 'app.js'             // Zieldatei
+      //optimize: 'none'        // Optimierung deaktivieren (Debugging/Schnellerer Build)
     },
 
     // Cleanup; die aus CS generierten JS-Files entfernen
@@ -72,11 +74,6 @@ module.exports = function(grunt){
       src:  '<config:coffee.src>', // Alle Source-JS-Files
       test: '<config:coffee.test>' // Alle Test-JS-Files
     }
-
-    // Den ganzen Build-Prozess automatisch starten, sobald sich eine .coffee- oder
-    // .styl-Datei oder die grunt.js ändert
-    // TBD
-
 
   });
 
