@@ -63,25 +63,25 @@ POST	/rest/roomOffers/{id}/applications		rest.RoomOfferApplications.create
 GET		/rest/flatshares						rest.Flatshares.list
 # create a new flatshare including a room offer
 POST	/rest/flatshares						rest.Flatshares.create
-#{
-#"address" : {
+# {
+# "address" : {
 #	"street" : "Erika-Mann-Straße",
 #	"streetNumber" : "63",
 #	"zipCode" : "80636",
 #	"city" : "München"
-#},
-#"floor" : "third",
-#"geoLocation" : {
+# },
+# "floor" : "third",
+# "geoLocation" : {
 #	"latitude" : 48.137053,
 #	"longitude" : 11.584969
-#},
-#"streetViewParameters" : {},
-#"smokingTolerance" : "prohibited",
-#"typeOfHouse" : "old",
-#"numberOfRooms" : 3,
-#"appliances" : ["dishWasher", "tv"],
-#"additionalSpaces" : ["balcony", "garden"]
-#}
+# },
+# "streetViewParameters" : {},
+# "smokingTolerance" : "prohibited",
+# "typeOfHouse" : "old",
+# "numberOfRooms" : 3,
+# "appliances" : ["dishWasher", "tv"],
+# "additionalSpaces" : ["balcony", "garden"]
+# }
 
 
 # update a flatshare and optionally a room offer

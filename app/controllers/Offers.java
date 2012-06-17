@@ -104,7 +104,7 @@ public class Offers extends AbstractRoomrController {
 
 		copy(formData, flatshare, offer);
 
-		residentFacade.createFlatshareAndOffer(flatshare, offer);
+		residentFacade.createFlatshareAndOffer(flatshare, offer, userFacade.getLoggedInUser());
 
 		viewOffer(offer.id);
 	}

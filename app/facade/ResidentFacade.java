@@ -5,17 +5,46 @@ import javax.inject.Inject;
 import models.flatshare.Flatshare;
 import models.notification.NotificationService;
 import models.offer.RoomOffer;
+import models.user.RoomrUser;
+
+import com.google.common.base.Optional;
+
 import facade.exception.RoomOfferUpdateException;
 
 public class ResidentFacade {
 	private NotificationService notificationService;
 
-	public Flatshare createFlatshare(Flatshare newFlatshare) {
-		return newFlatshare.save();
+	public Flatshare createFlatshare(Flatshare newFlatshare, Optional<RoomrUser> potentialCreator) {
+		if (potentialCreator.isPresent()) {
+			final RoomrUser creator = potentialCreator.get();
+
+			if (creator.hasFlatshare())
+				throw new RuntimeException("resident is already living in another flatshare: " + creator.flatshare);
+
+			Flatshare ret = newFlatshare.save();
+			creator.flatshare = newFlatshare;
+			creator.save();
+			
+			// have to be refreshed as a resident has been added...
+			return ret.refresh();
+		} else {
+			return newFlatshare.save();
+		}
+	}
+	
+	public Flatshare addOfferToFlatshare(Flatshare flatshare, RoomOffer roomOffer) {
+		roomOffer.flatshare = flatshare;
+		roomOffer.save();
+		notificationService.notifyFlatshareOfCreatedOffer(roomOffer);
+
+		// have to be refreshed as a roomOffer has been added...
+		return flatshare.refresh();
 	}
 
-	public Flatshare createFlatshareAndOffer(Flatshare newFlatshare, RoomOffer roomOffer) {
-		Flatshare result = createFlatshare(newFlatshare);
+	@Deprecated
+	public Flatshare createFlatshareAndOffer(Flatshare newFlatshare, RoomOffer roomOffer,
+			Optional<RoomrUser> potentialCreator) {
+		Flatshare result = createFlatshare(newFlatshare, potentialCreator);
 		roomOffer.flatshare = newFlatshare;
 		roomOffer.save();
 		notificationService.notifyFlatshareOfCreatedOffer(roomOffer);

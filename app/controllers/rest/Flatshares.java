@@ -22,11 +22,15 @@ import controllers.rest.serialize.FlatshareUrlSerializer;
 import controllers.rest.serialize.RoomOfferUrlSerializer;
 import controllers.rest.serialize.RoomrUserUrlSerializer;
 import facade.ResidentFacade;
+import facade.UserFacade;
 
 @InjectSupport
 public class Flatshares extends Controller {
 	@Inject
 	private static ResidentFacade residentFacade;
+
+	@Inject
+	private static UserFacade userFacade;
 
 	public static String getUrlFor(Flatshare flatshare) {
 		return Router.reverse("rest.Flatshares.get", ImmutableMap.of("id", (Object) String.valueOf(flatshare.id))).url;
@@ -55,11 +59,9 @@ public class Flatshares extends Controller {
 
 		flatshare.roomOffers = Collections.emptySet();
 
-		Flatshare createdFlatshare;
-		if (roomOffers.isEmpty()) {
-			createdFlatshare = residentFacade.createFlatshare(flatshare);
-		} else {
-			createdFlatshare = residentFacade.createFlatshareAndOffer(flatshare, Iterables.getOnlyElement(roomOffers));
+		Flatshare createdFlatshare = residentFacade.createFlatshare(flatshare, userFacade.getLoggedInUser());
+		if (!roomOffers.isEmpty()) {
+			createdFlatshare = residentFacade.addOfferToFlatshare(flatshare, Iterables.getOnlyElement(roomOffers));
 		}
 
 		response.status = Http.StatusCode.CREATED;
