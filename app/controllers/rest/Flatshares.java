@@ -61,14 +61,24 @@ public class Flatshares extends Controller {
 
 		Flatshare createdFlatshare = residentFacade.createFlatshare(flatshare, userFacade.getLoggedInUser());
 		if (!roomOffers.isEmpty()) {
-			createdFlatshare = residentFacade.addOfferToFlatshare(flatshare, Iterables.getOnlyElement(roomOffers));
+			residentFacade.addOfferToFlatshare(flatshare, Iterables.getOnlyElement(roomOffers));
 		}
 
 		response.status = Http.StatusCode.CREATED;
 		response.setHeader("Location", getUrlFor(createdFlatshare));
 		renderJSON(createFlatshareGson().toJson(createdFlatshare));
 	}
+	
+	public static void addRoomOffer(long id, @Valid RoomOffer roomOffer) {
+		Flatshare flatshare = getFlatshare(id);
+		residentFacade.addOfferToFlatshare(flatshare, roomOffer);
 
+		response.status = Http.StatusCode.CREATED;
+		response.setHeader("Location", RoomOffers.getUrlFor(roomOffer));
+		renderJSON(createFlatshareGson().toJson(roomOffer));
+
+	}
+	
 	public static void update(long id, @Valid Flatshare flatshare) {
 		flatshare.id = id;
 		residentFacade.updateFlatshare(flatshare);

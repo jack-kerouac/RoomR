@@ -24,21 +24,21 @@ public class ResidentFacade {
 			Flatshare ret = newFlatshare.save();
 			creator.flatshare = newFlatshare;
 			creator.save();
-			
+
 			// have to be refreshed as a resident has been added...
 			return ret.refresh();
 		} else {
 			return newFlatshare.save();
 		}
 	}
-	
-	public Flatshare addOfferToFlatshare(Flatshare flatshare, RoomOffer roomOffer) {
+
+	public void addOfferToFlatshare(Flatshare flatshare, RoomOffer roomOffer) {
 		roomOffer.flatshare = flatshare;
 		roomOffer.save();
+		// this refresh should automatically add the new room offer to the
+		// flatshare's collection of room offers
+		flatshare.refresh();
 		notificationService.notifyFlatshareOfCreatedOffer(roomOffer);
-
-		// have to be refreshed as a roomOffer has been added...
-		return flatshare.refresh();
 	}
 
 	@Deprecated

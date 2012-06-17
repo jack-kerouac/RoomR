@@ -108,6 +108,27 @@ PUT		/rest/flatshares/{id}					rest.Flatshares.update
 GET		/rest/flatshares/{id}					rest.Flatshares.get
 # get room offers for the given flatshare
 GET		/rest/flatshares/{id}/roomOffers		rest.Flatshares.getRoomOffers
+# adds a new room offer to the existing flatshare
+POST	/rest/flatshares/{id}/roomOffers		rest.Flatshares.addRoomOffer
+# {
+#	"roomDetails" : {
+#		"totalRentPerMonthInEuro" : 200.0,
+#		"depositInEuro" : 400.0,
+#		"freeFrom" : "2012-10-01T00:00:00.000+0100",
+#		"freeTo" : "2012-11-30T00:00:00.000+0100",
+#		"roomSize" : {
+#			"squareMeters" : 12.0
+#		}
+#	},
+#	"criteria" : {
+#		"minAge" : 18,
+#		"maxAge" : 30,
+#		"genders" : [male, female]
+#	},
+#	"description" : "Ein super Zimmer",
+#	"contactEmail" : "bob@example.com"
+# }
+
 
 
 # get details about a single application
