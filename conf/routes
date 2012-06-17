@@ -16,14 +16,27 @@
 
 # login with email and password
 POST	/rest/login								rest.Security.login
+#	{
+#		"email" : "alice@example.com",
+#		"password" : "123"
+#	}
+
 # logout again
 POST	/rest/logout							rest.Security.logout
-
+# NO BODY
 
 # list all users
 GET		/rest/users								rest.RoomrUsers.list
 # create a new user (i.e. register)
 POST	/rest/users								rest.RoomrUsers.create
+#	{
+#		"name" : "Alice",
+#		"email" : "alice@example.com",
+#		"password" : "123",
+#		"birthdate" : "1980-12-01T00:00:00.000+0100",
+#		"gender" : "female"
+#	}
+
 # get details of the currently logged in user
 GET		/rest/users/current						rest.RoomrUsers.getCurrent
 # get details of an user
@@ -42,12 +55,35 @@ GET		/rest/roomOffers/{id}					rest.RoomOffers.get
 GET		/rest/roomOffers/{id}/applications		rest.RoomOffers.getApplications
 # apply for a given room offer
 POST	/rest/roomOffers/{id}/applications		rest.RoomOfferApplications.create
-
+#	{
+#		"message" : "Her mit dem Zimmer!"
+#	}
 
 # list all flatshares
 GET		/rest/flatshares						rest.Flatshares.list
 # create a new flatshare including a room offer
 POST	/rest/flatshares						rest.Flatshares.create
+#{
+#"address" : {
+#	"street" : "Erika-Mann-Straße",
+#	"streetNumber" : "63",
+#	"zipCode" : "80636",
+#	"city" : "München"
+#},
+#"floor" : "third",
+#"geoLocation" : {
+#	"latitude" : 48.137053,
+#	"longitude" : 11.584969
+#},
+#"streetViewParameters" : {},
+#"smokingTolerance" : "prohibited",
+#"typeOfHouse" : "old",
+#"numberOfRooms" : 3,
+#"appliances" : ["dishWasher", "tv"],
+#"additionalSpaces" : ["balcony", "garden"]
+#}
+
+
 # update a flatshare and optionally a room offer
 PUT		/rest/flatshares/{id}					rest.Flatshares.update
 # get details of a flatshare
