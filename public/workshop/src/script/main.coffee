@@ -50,8 +50,8 @@ require ['backbone', 'lib/formatPriority'], (Backbone, formatPriority) ->
   }
 
   # Neue Instanz des Page-Models anlegen. Wenn wir die Page wechseln wollen, können wir
-  # das Page.show(page, id) machen - den Job übernimmt der Router weiter unten.
-  Page = new PageModel()
+  # das page.show(page, id) machen - den Job übernimmt der Router weiter unten.
+  page = new PageModel()
 
 
 
@@ -101,7 +101,7 @@ require ['backbone', 'lib/formatPriority'], (Backbone, formatPriority) ->
     model: Item  # Was für ein Model findet sich in dieser Collection?
     url: 'http://files.peterkroener.de/workshop/api/index.php/items/'  # Wo liegt die API?
   }
-  Items = new ItemCollection()
+  items = new ItemCollection()
 
 
 
@@ -168,20 +168,20 @@ require ['backbone', 'lib/formatPriority'], (Backbone, formatPriority) ->
 
     # Startseite
     start: ->
-      Page.show('start')
+      page.show('start')
 
     # Info-Seite
     about: ->
-      Page.show('about')
+      page.show('about')
 
     # Alle Einträge auflisten und Ggf. den Eintrag mit der Nummer `:num` einblenden
     view: (num) ->
-      Page.show('view', num)
+      page.show('view', num)
 
   }
 
   # Router anwerfen
-  App = new AppRouter()
+  app = new AppRouter()
 
 
 
@@ -192,7 +192,7 @@ require ['backbone', 'lib/formatPriority'], (Backbone, formatPriority) ->
 
   openItem = null; # Welcher Eintrag ist geöffnet?
 
-  Page.on 'change:page', (model, value) ->
+  page.on 'change:page', (model, value) ->
     switch value
 
 
@@ -224,7 +224,7 @@ require ['backbone', 'lib/formatPriority'], (Backbone, formatPriority) ->
       when 'view'
         $.get 'static/view.tpl.html', (result) ->
           new PageView().render('Einträge', result)
-          Items.fetch {  # `fetch()` wie einen ganz normalen jQuery-Request konfigurieren
+          items.fetch {  # `fetch()` wie einen ganz normalen jQuery-Request konfigurieren
 
             success: (collection) ->
               collection.each (listItem) ->  # `each()` ist eine Methode aus Underscore.js
@@ -252,7 +252,7 @@ require ['backbone', 'lib/formatPriority'], (Backbone, formatPriority) ->
                     # können wir am besten direkt hier machen. **Tipp:** In CoffeeScript
                     # sind `no` und `off` das gleiche wie `false`. Entsprechend sind `yes`
                     # und `on` das gleiche wie `true`.
-                    App.navigate "#view/#{id}"
+                    app.navigate "#view/#{id}"
 
                     # Ein großen Eintrag anzeigen ist ganz einfach: neue View-Instanz
                     # mit den passenden Events erstellen und das Ganze in den Body
@@ -260,14 +260,14 @@ require ['backbone', 'lib/formatPriority'], (Backbone, formatPriority) ->
                     # geschlossen werden
                     if openItem? then openItem.remove()
                     openItem = new ItemView {
-                      model: Items.at id
+                      model: items.at id
                       className: 'item-bigview'
                       template: 'full'
                     }
                     openItem.delegateEvents {
                       'click .close-item': ->
                         @remove()  # Entfernt das Element des Views aus dem DOM
-                        App.navigate "#view"
+                        app.navigate "#view"
                     }
                     openItem.render 'body'
 
@@ -280,19 +280,19 @@ require ['backbone', 'lib/formatPriority'], (Backbone, formatPriority) ->
                 # unseres gerade behandelten Eintrags übereinstimmt, müssen wir diesen
                 # groß einblenden. Das machen wir einfach, indem wir ein Klick-Event auf
                 # dem View triggern.
-                if Page.get('id') == item.model.get('id')
+                if page.get('id') == item.model.get('id')
                   item.$el.find('.item-title').trigger('click')
           }
 
 
   # Das Page-Model auf Änderungen des `id`-Parameters überwachen
-  Page.on 'change:id', (model, id) ->
+  page.on 'change:id', (model, id) ->
 
     # Wenn die ID nicht undefiniert/null ist, die View-Page angezeigt wird und die
     # Collection ein Item mit der ID enthält, dieses groß anzeigen. Vorher ggf. offene
     # Einträge schließen
-    if id? && Page.get('page') == 'view'
-      item = Items.find (model) ->
+    if id? && page.get('page') == 'view'
+      item = items.find (model) ->
         return model.get('id') == id
       if item?
         if openItem? then openItem.remove()
@@ -304,7 +304,7 @@ require ['backbone', 'lib/formatPriority'], (Backbone, formatPriority) ->
         openItem.delegateEvents {
           'click .close-item': ->
             @remove()
-            App.navigate "#view"
+            app.navigate "#view"
         }
         openItem.render 'body'
 
