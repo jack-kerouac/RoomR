@@ -1,6 +1,8 @@
 HTML5-Workshop - RoomR
 ======================
 
+Hallo Jungs!
+
 Technologien im Workshop
 ------------------------
 
