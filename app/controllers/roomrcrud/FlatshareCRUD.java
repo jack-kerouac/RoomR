@@ -1,4 +1,4 @@
-package controllers.crud;
+package controllers.roomrcrud;
 
 import models.flatshare.Flatshare;
 import controllers.CRUD;
