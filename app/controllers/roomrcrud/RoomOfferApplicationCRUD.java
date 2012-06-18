@@ -1,4 +1,4 @@
-package controllers.crud;
+package controllers.roomrcrud;
 
 import models.application.RoomOfferApplication;
 import controllers.CRUD;
