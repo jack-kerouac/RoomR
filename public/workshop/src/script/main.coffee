@@ -15,173 +15,20 @@
 # je doch diese beiden Libraries  ihre APIs (`$` und `_`) als globale Objekte
 # bereitstellen, können wir beides in unserer Callback-Funkion verwenden, ohne sie dort
 # im Callback explizit aufzuführen.
-require ['backbone', 'lib/formatPriority'], (Backbone, formatPriority) ->
+require ['backbone', 'PageModel', 'PageView', 'ItemCollection', 'ItemView', 'AppRouter'], 
+(Backbone, PageModel, PageView, ItemCollection, ItemView, AppRouter) ->
+  
   'use strict'
 
 
-  # Model für Pages
-  # ---------------
-
-  # Als `Page` wird in diesem Beispiel der Inhalt der Hauptspalte bezeichnet. Ein
-  # **Model** hierfür erstellen wir, indem wir von der Model-Vorlage `Backbone.Model`
-  # über die **`extend()`-Methode** ein Abziehbild erstellen und unsere eigenen
-  # Eigenschaften hineinschreiben. Wir können einerseits vorhandene Eigenschaften und
-  # Methoden überschreiben (z.B. `initialize`), andererseits auch komplett eigene
-  # Eigenschaften festlegen (z.B. `show`).
-  PageModel = Backbone.Model.extend {
-
-    # Wir überschreiben die normale (nichts machende) `initialize()`-Methode, um zu Beginn
-    # immer `start` als Page zu verwenden
-    initialize: ->
-      # **Tipp:** `@` ist CoffeeScript das gleiche wie `this.`
-      @set {
-        page: 'start'
-      }
-
-    # Eine eigene Methode, die nichts weiter macht als auf komfortable Art und Weise die
-    # Werte `page` und `id` zu setzen. Bei `id` aufpassen, dass es eine Number ist - der
-    # Parameter kommt als String aus der URL an
-    show: (page, id) ->
-      @set {
-        page: page
-        id: Number id
-      }
-
-  }
-
   # Neue Instanz des Page-Models anlegen. Wenn wir die Page wechseln wollen, können wir
   # das Page.show(page, id) machen - den Job übernimmt der Router weiter unten.
-  Page = new PageModel()
+  page = new PageModel()
 
-
-
-  # View für Pages
-  # --------------
-
-  # Views sind für den Output von Daten verantwortlich. Man kann sie direkt mit Models
-  # verzahnen, muss das aber nicht tun. Eigentlich *muss* man gar nichts - Views sind sehr
-  # flexibel und es gibt nicht viele Vorgaben. Dieser PageView dient dazu, den Inhalt der
-  # Hauptspalte `#main` neu zu rendern.
-  PageView = Backbone.View.extend {
-
-    # Jeder View repräsentiert ein HTML-Element. Das kann entweder ein bereits vorhandenes
-    # Element in der Seite sein oder es kann kann auch erst vom View erzeugt werden. In
-    # diesem Fall ist das Element für diesen View (View-Eigenschaft `el`) ein Element in
-    # der Seite - daher der Selektor hier.
-    el: '#Main'
-
-    # `render()` ist die View-Methode für die Ausgabe. Standardmäßig macht `render()` gar
-    # nichts, d.h. man *muss* für jeden View eine eigene Methode schreiben. Diese Variante
-    # nimmt einen Titel und Inhalt an und befüllt damit die entsprechenden Elemente.
-    render: (title, html) ->
-      $('#Headline').html title                   # Überschrift setzen
-      # **Tipp:** In Strings mit " gibt es String-Interpolation mit `#{variable}`
-      $('title').text("Beispiel-App - #{title}")  # `<title>` setzen
-      # **Tipp:** `$el` in Views ist ein jQuery-Objekt mit dem `el` des Views
-      @$el.html(html)             # Das Element des Views mit Inhalt befüllen
-      return this
-
-  }
-
-
-  # Model für Einträge
-  # ------------------
-
-  # Einfach wieder ein Abziehbild der Basisklasse anlegen
-  Item = Backbone.Model.extend()
-
-
-
-  # Collection für Einträge
-  # -----------------------
-
-  # Wenn wir Gruppen von Models verwalten wollen, sind **Collections** das Mittel der
-  # Wahl.
-  ItemCollection = Backbone.Collection.extend {
-    model: Item  # Was für ein Model findet sich in dieser Collection?
-    url: 'http://files.peterkroener.de/workshop/api/index.php/items/'  # Wo liegt die API?
-  }
-  Items = new ItemCollection()
-
-
-
-  # View für Einträge
-  # -----------------
-
-  #
-  ItemView = Backbone.View.extend {
-
-    #
-
-    # **Tipp:** In CoffeeScript hat Multiline-Strings
-    templates: {
-      list: '<span id="list-item-<%= id %>" class="item-title"><%= title %></span>
-              (Priorität: <span class="priority"><%= priority %></span>)'
-      full: '<h3><%= title %></h3>
-              <p>(Priorität: <span class="priority"><%= priority %></span>)</p>
-              <p>[ <span class="clickable close-item">Schließen</span> ]'
-    }
-
-    # Da Einträge könnten recht vielfältig verwendet werden können, richten wir uns auf
-    # flexible Nutzung von Templates ein. Falls `options.template` gesetzt ist, prüfen
-    # wir, ob der Wert ein Key von `@templates` ist. Falls das der Fall ist, wird dessen
-    # Wert verwendet, andernfalls behandeln wir den übergebenen String selbst als
-    # Template. Das Template kompilieren wir in eine Funktion, die wir am Ende nur noch
-    # aufrufen müssen.
-    initialize: (options) ->
-      if options.template
-        tpl = @templates[options.template] if options.template of @templates
-        @template = _.template(tpl)
-
-    # Für das Rendering verwenden wir das übergebene Template und hängen das fertige
-    # Element direkt in `target` ein.
-    render: (target) ->
-      target = $(target) unless target instanceof jQuery
-      html = @template {
-        id: @model.get('id')
-        title: @model.get('title')
-        priority: formatPriority @model.get('priority') # Schön formatiert
-      }
-      @$el.html(html).appendTo(target)
-      return this
-
-  }
-
-
-
-  # Router
-  # ------
-
-  # Im Router werden URLs auf Funktionen gemappt und auch die Funktionen selbst definiert.
-  # In unserem Fall machen diese Funktionen nichts weiter, als die entspechenden
-  # Änderungen im Page-Model auszulösen. Auf diese Änderungen können dann wiederum andere
-  # Teile der Applikation reagieren
-  AppRouter = Backbone.Router.extend {
-
-    # Zuordnung von Routen und Funktionsnamen im Router
-    routes: {
-      ''          : 'start' # Startseite
-      'about'     : 'about' # Info-Seite
-      'view'      : 'view'  # Alle Einträge
-      'view/:num' : 'view'  # Alle Einträge + Eintrag mit der Nummer `:num`
-    }
-
-    # Startseite
-    start: ->
-      Page.show('start')
-
-    # Info-Seite
-    about: ->
-      Page.show('about')
-
-    # Alle Einträge auflisten und Ggf. den Eintrag mit der Nummer `:num` einblenden
-    view: (num) ->
-      Page.show('view', num)
-
-  }
+  items = new ItemCollection()
 
   # Router anwerfen
-  App = new AppRouter()
+  app = new AppRouter(page)
 
 
 
@@ -192,7 +39,7 @@ require ['backbone', 'lib/formatPriority'], (Backbone, formatPriority) ->
 
   openItem = null; # Welcher Eintrag ist geöffnet?
 
-  Page.on 'change:page', (model, value) ->
+  page.on 'change:page', (model, value) ->
     switch value
 
 
@@ -224,7 +71,7 @@ require ['backbone', 'lib/formatPriority'], (Backbone, formatPriority) ->
       when 'view'
         $.get 'static/view.tpl.html', (result) ->
           new PageView().render('Einträge', result)
-          Items.fetch {  # `fetch()` wie einen ganz normalen jQuery-Request konfigurieren
+          items.fetch {  # `fetch()` wie einen ganz normalen jQuery-Request konfigurieren
 
             success: (collection) ->
               collection.each (listItem) ->  # `each()` ist eine Methode aus Underscore.js
@@ -252,7 +99,7 @@ require ['backbone', 'lib/formatPriority'], (Backbone, formatPriority) ->
                     # können wir am besten direkt hier machen. **Tipp:** In CoffeeScript
                     # sind `no` und `off` das gleiche wie `false`. Entsprechend sind `yes`
                     # und `on` das gleiche wie `true`.
-                    App.navigate "#view/#{id}"
+                    app.navigate "#view/#{id}"
 
                     # Ein großen Eintrag anzeigen ist ganz einfach: neue View-Instanz
                     # mit den passenden Events erstellen und das Ganze in den Body
@@ -260,14 +107,14 @@ require ['backbone', 'lib/formatPriority'], (Backbone, formatPriority) ->
                     # geschlossen werden
                     if openItem? then openItem.remove()
                     openItem = new ItemView {
-                      model: Items.at id
+                      model: items.at id
                       className: 'item-bigview'
                       template: 'full'
                     }
                     openItem.delegateEvents {
                       'click .close-item': ->
                         @remove()  # Entfernt das Element des Views aus dem DOM
-                        App.navigate "#view"
+                        app.navigate "#view"
                     }
                     openItem.render 'body'
 
@@ -280,19 +127,19 @@ require ['backbone', 'lib/formatPriority'], (Backbone, formatPriority) ->
                 # unseres gerade behandelten Eintrags übereinstimmt, müssen wir diesen
                 # groß einblenden. Das machen wir einfach, indem wir ein Klick-Event auf
                 # dem View triggern.
-                if Page.get('id') == item.model.get('id')
+                if page.get('id') == item.model.get('id')
                   item.$el.find('.item-title').trigger('click')
           }
 
 
   # Das Page-Model auf Änderungen des `id`-Parameters überwachen
-  Page.on 'change:id', (model, id) ->
+  page.on 'change:id', (model, id) ->
 
     # Wenn die ID nicht undefiniert/null ist, die View-Page angezeigt wird und die
     # Collection ein Item mit der ID enthält, dieses groß anzeigen. Vorher ggf. offene
     # Einträge schließen
-    if id? && Page.get('page') == 'view'
-      item = Items.find (model) ->
+    if id? && page.get('page') == 'view'
+      item = items.find (model) ->
         return model.get('id') == id
       if item?
         if openItem? then openItem.remove()
@@ -304,7 +151,7 @@ require ['backbone', 'lib/formatPriority'], (Backbone, formatPriority) ->
         openItem.delegateEvents {
           'click .close-item': ->
             @remove()
-            App.navigate "#view"
+            app.navigate "#view"
         }
         openItem.render 'body'
 
