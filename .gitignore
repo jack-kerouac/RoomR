@@ -11,3 +11,6 @@
 precompiled/
 server.pid
 war/WEB-INF/appengine-generated/
+RoomR.iml
+RoomR.ipr
+RoomR.iws
