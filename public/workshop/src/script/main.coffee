@@ -15,8 +15,8 @@
 # je doch diese beiden Libraries  ihre APIs (`$` und `_`) als globale Objekte
 # bereitstellen, können wir beides in unserer Callback-Funkion verwenden, ohne sie dort
 # im Callback explizit aufzuführen.
-require ['backbone', 'PageModel', 'PageView', 'ItemCollection', 'ItemView', 'AppRouter'], 
-(Backbone, PageModel, PageView, ItemCollection, ItemView, AppRouter) ->
+require ['backbone', 'PageModel', 'PageView', 'ItemCollection', 'ItemView', 'ItemViewBig', 'AppRouter'], 
+(Backbone, PageModel, PageView, ItemCollection, ItemView, ItemViewBig, AppRouter) ->
   
   'use strict'
 
@@ -80,7 +80,6 @@ require ['backbone', 'PageModel', 'PageView', 'ItemCollection', 'ItemView', 'App
                 item = new ItemView {
                   tagName: 'li'     # Container-Tag (Standard: `div`)
                   model: listItem   # Model für diesen View
-                  template: 'list'  # Template-Vorlage oder -String
                 }
 
                 # Item-Events mit Event Delegation. In dem Event-Hash sind die Keys
@@ -106,10 +105,9 @@ require ['backbone', 'PageModel', 'PageView', 'ItemCollection', 'ItemView', 'App
                     # rendern. Vorher muss natürlich der ggf. schon geöffnete Eintrag
                     # geschlossen werden
                     if openItem? then openItem.remove()
-                    openItem = new ItemView {
+                    openItem = new ItemViewBig {
                       model: items.at id
                       className: 'item-bigview'
-                      template: 'full'
                     }
                     openItem.delegateEvents {
                       'click .close-item': ->
@@ -143,10 +141,9 @@ require ['backbone', 'PageModel', 'PageView', 'ItemCollection', 'ItemView', 'App
         return model.get('id') == id
       if item?
         if openItem? then openItem.remove()
-        openItem = new ItemView {
+        openItem = new ItemViewBig {
           model: item
           className: 'item-bigview'
-          template: 'full'
         }
         openItem.delegateEvents {
           'click .close-item': ->
