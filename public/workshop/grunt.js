@@ -13,7 +13,7 @@ module.exports = function(grunt){
     // Gesamten selbstgeschriebenen Non-CoffeeScript-Code (d.h. das Buildsystem) einem
     // Qualitätscheck mittels [JSHint](http://jshint.com) unterziehen.
     lint: {
-      build: ['build/**/*.js'] // Alle .js-Files in build (inkl. Unterverzeichnisse)
+      build: ['grunt.js', 'build/**/*.js'] // Alle .js-Files in build (inkl. Unterverzeichnisse)
     },
 
     // Haupt-.styl-File(s) nach CSS kompilieren. Alles was als Modul in die Haupt-Files
@@ -73,6 +73,11 @@ module.exports = function(grunt){
     cleanup: {
       src:  '<config:coffee.src>', // Alle Source-JS-Files
       test: '<config:coffee.test>' // Alle Test-JS-Files
+    },
+
+    watch: {
+      files: ['src/**/*'],
+      tasks: 'default'
     }
 
   });
