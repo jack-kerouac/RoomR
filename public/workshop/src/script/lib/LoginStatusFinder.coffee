@@ -8,7 +8,7 @@ define ['lib/EventEmitter'], (EventEmitter) ->
       @registerEvent 'loggedOut'
 
     findOutState: ->
-      successCbk =  () -> emit 'loggedIn'
-      errorCbk = () -> emit 'loggedOut'
+      successCbk =  () => this.emit 'loggedIn'
+      errorCbk = () => this.emit 'loggedOut'
 
       $.get('/rest/users/current', successCbk ).error errorCbk

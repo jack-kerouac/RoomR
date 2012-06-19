@@ -8,19 +8,19 @@ require ['../src/script/lib/EventEmitter'], (EventEmitter) ->
     module 'Modul EventEmitter'
 
     # In`test()` finden die eigentlichen Tests statt
-    test 'Funktion registerEvent_inRoomrWidget_isAFunction()', ->
+    test 'Funktion registerEvent_inEventEmitter_isAFunction()', ->
       emitter = new EventEmitter()
       ok typeof emitter.registerEvent == 'function'
 
-    test 'Funktion listEvents_inRoomrWidget_isAFunction()', ->
+    test 'Funktion listEvents_inEventEmitter_isAFunction()', ->
       emitter = new EventEmitter()
       ok typeof emitter.listEvents == 'function'
 
-    test 'Funktion emit_inRoomrWidget_isAFunction()', ->
+    test 'Funktion emit_inEventEmitter_isAFunction()', ->
       emitter = new EventEmitter()
       ok typeof emitter.emit == 'function'
 
-    test 'Funktion subscribe_inRoomrWidget_isAFunction()', ->
+    test 'Funktion subscribe_inEventEmitter_isAFunction()', ->
       emitter = new EventEmitter()
       ok typeof emitter.subscribe == 'function'
 

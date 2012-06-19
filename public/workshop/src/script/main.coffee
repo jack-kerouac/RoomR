@@ -15,12 +15,12 @@
 # je doch diese beiden Libraries  ihre APIs (`$` und `_`) als globale Objekte
 # bereitstellen, können wir beides in unserer Callback-Funkion verwenden, ohne sie dort
 # im Callback explizit aufzuführen.
-require ['backbone', 'Navigation', 'UserCollection', 'AppRouter'], 
-(Backbone, Navigation, UserCollection, AppRouter) ->
+require ['backbone', 'Navigation', 'UserCollection', 'AppRouter', 'lib/LoginStatusFinder'], 
+(Backbone, Navigation, UserCollection, AppRouter, LoginStatusFinder) ->
   
   'use strict'
 
-  finder = new LoginStateFinder()
+  finder = new LoginStatusFinder()
 
   users = new UserCollection()
 
