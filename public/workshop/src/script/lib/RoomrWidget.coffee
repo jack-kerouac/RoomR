@@ -19,3 +19,6 @@ define ['lib/EventEmitter', 'lib/renderTemplate'], (EventEmitter, renderTemplate
       renderTemplate "widgets/#{@name}", context, callback
 
     renderInto: (element) ->
+
+  	reportError: (widgetName, errorMsg) ->
+      $(window).trigger('error', [widgetName, errorMsg])     
