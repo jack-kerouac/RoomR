@@ -20,6 +20,8 @@ require ['backbone', 'Navigation', 'UserCollection', 'AppRouter'],
   
   'use strict'
 
+  finder = new LoginStateFinder()
+
   users = new UserCollection()
 
   nav = new Navigation()
@@ -36,3 +38,5 @@ require ['backbone', 'Navigation', 'UserCollection', 'AppRouter'],
 
   # Die URL auf Änderungen überwachen
   Backbone.history.start()
+
+  finder.findOutState()
