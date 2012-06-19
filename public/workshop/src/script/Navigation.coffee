@@ -20,9 +20,8 @@ define ['PageView', 'UserView', 'lib/renderTemplate'], (PageView, UserView, rend
         new PageView().render('Über dieses Beispiel', content)
 
     showLogin: ->
-      renderTemplate 'login', {}, (content) ->
-        if @openItem? then @openItem.remove()
-        new PageView().render('LOG DICH EIN!', content)
+      login = new LoginWidget()
+      login.render('#Main')
 
     # Einträge anzeigen. Wenn im Model darüber hinaus noch `num` nicht `undefined` ist,
     # müssen wir auch noch einen Einzel-Eintrag zeigen.
