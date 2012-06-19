@@ -15,7 +15,7 @@
 # je doch diese beiden Libraries  ihre APIs (`$` und `_`) als globale Objekte
 # bereitstellen, können wir beides in unserer Callback-Funkion verwenden, ohne sie dort
 # im Callback explizit aufzuführen.
-require ['backbone', 'lib/formatPriority'], (Backbone, formatPriority) ->
+require ['backbone', 'lib/renderTemplate'], (Backbone, renderTemplate) ->
   'use strict'
 
 
@@ -78,6 +78,7 @@ require ['backbone', 'lib/formatPriority'], (Backbone, formatPriority) ->
       # **Tipp:** In Strings mit " gibt es String-Interpolation mit `#{variable}`
       $('title').text("Beispiel-App - #{title}")  # `<title>` setzen
       # **Tipp:** `$el` in Views ist ein jQuery-Objekt mit dem `el` des Views
+
       @$el.html(html)             # Das Element des Views mit Inhalt befüllen
       return this
 
@@ -203,18 +204,15 @@ require ['backbone', 'lib/formatPriority'], (Backbone, formatPriority) ->
       # Statische Startseite anzeigen. Wir laden einfach per jQuery die Template-Datei
       # `static/start.tpl.html` und geben ihren Inhalt an den page-View weiter
       when 'start'
-        $.get 'static/start.tpl.html', (result) ->
+        renderTemplate 'start', {}, (content) ->
           if openItem? then openItem.remove()
-          new PageView().render('Startseite', result)
+          new PageView().render('Startseite', content)
 
 
       # About-Seite anzeigen. Template-Datei laden und den Inhalt als Template-String
       # verarbeiten. Der Platzhalter `<%= date %>` wird durch das aktuelle Datum ersetzt
       when 'about'
-        $.get 'static/about.tpl.html', (tpl) ->
-          content = _.template tpl, {
-            date: Date().toString()
-          }
+        renderTemplate 'about', {date: Date().toString()}, (content) ->
           if openItem? then openItem.remove()
           new PageView().render('Über dieses Beispiel', content)
 
@@ -226,8 +224,8 @@ require ['backbone', 'lib/formatPriority'], (Backbone, formatPriority) ->
       # 2. users mittels `fetch()` vom Server holen
       # 3. Für jedes User einen neuen `UserView` in das Ziel-Element schreiben
       when 'view'
-        $.get 'static/view.tpl.html', (result) ->
-          new PageView().render('Einträge', result)
+        renderTemplate 'view', {}, (content) ->
+          new PageView().render('Einträge', content)
           users.fetch {  # `fetch()` wie einen ganz normalen jQuery-Request konfigurieren
 
             success: (collection) ->
