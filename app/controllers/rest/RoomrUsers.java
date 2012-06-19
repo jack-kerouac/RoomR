@@ -92,7 +92,7 @@ public class RoomrUsers extends Controller {
 		if (loggedInUser.isPresent()) {
 			get(loggedInUser.get().id);
 		} else {
-			unauthorized();
+			notFound();
 		}
 	}
 
