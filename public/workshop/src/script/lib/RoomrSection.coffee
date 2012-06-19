@@ -20,7 +20,7 @@ define ['backbone', 'lib/renderTemplate'], (Backbone, renderTemplate) ->
     addWidget: (widget) ->
       @widgets[widget.name] = widget;
 
-    render: () ->
+    render: (callback) ->
       $('title').text("RoomR - #{@title}")
       $('#Headline').html(@title)
 
@@ -34,6 +34,7 @@ define ['backbone', 'lib/renderTemplate'], (Backbone, renderTemplate) ->
             widget.renderInto(element)
           else
             alert "no widget found for <... data-type=\"#{widgetType}\">"
+        if callback? then callback()
       
       return this
   }
