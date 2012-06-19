@@ -15,7 +15,7 @@
 # je doch diese beiden Libraries  ihre APIs (`$` und `_`) als globale Objekte
 # bereitstellen, können wir beides in unserer Callback-Funkion verwenden, ohne sie dort
 # im Callback explizit aufzuführen.
-require ['backbone', 'Navigation', 'UserCollection', 'AppRouter', 'lib/RoomrSection', 'lib/RoomrWidget'], 
+require ['backbone', 'Navigation', 'UserCollection', 'AppRouter', 'lib/RoomrSection', 'lib/RoomrWidget', 'ErrorLogger'], 
 (Backbone, Navigation, UserCollection, AppRouter, RoomrSection, RoomrWidget) ->
   'use strict'
 
