@@ -65,8 +65,8 @@ module.exports = function(grunt){
         'underscore': 'lib/vendor/underscore-amd' // AMD-Build (https://github.com/amdjs)
       },
       name: 'main',             // Wurzelmodul
-      out: 'app.js'             // Zieldatei
-      //optimize: 'none'        // Optimierung deaktivieren (Debugging/Schnellerer Build)
+      out: 'app.js',            // Zieldatei
+      optimize: 'none'          // Optimierung deaktivieren (Debugging/Schnellerer Build)
     },
 
     // Cleanup; die aus CS generierten JS-Files entfernen
