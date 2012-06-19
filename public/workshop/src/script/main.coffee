@@ -147,6 +147,7 @@ require ['backbone', 'lib/renderTemplate'], (Backbone, renderTemplate) ->
     # Zuordnung von Routen und Funktionsnamen im Router
     routes: {
       ''          : 'start' # Startseite
+      'login'     : 'login' # Login-Seite
       'about'     : 'about' # Info-Seite
       'view'      : 'view'  # Alle Einträge
       'view/:num' : 'view'  # Alle Einträge + Eintrag mit der Nummer `:num`
@@ -155,6 +156,10 @@ require ['backbone', 'lib/renderTemplate'], (Backbone, renderTemplate) ->
     # Startseite
     start: ->
       page.show('start')
+
+    # Login-Seite
+    login: ->
+      page.show('login')
 
     # Info-Seite
     about: ->
@@ -189,6 +194,12 @@ require ['backbone', 'lib/renderTemplate'], (Backbone, renderTemplate) ->
           if openItem? then openItem.remove()
           new PageView().render('Startseite', content)
 
+      # Login-Seite anzeigen. Wir wollen das Widget "einfach mal sehen". Wo das
+      # Ding dann endgültig hin kommt, darf sich wer anderes überlegen ;-)
+      when 'login'
+        renderTemplate 'login', {}, (content) ->
+          if openItem? then openItem.remove()
+          new PageView().render('Login-Seite', content)
 
       # About-Seite anzeigen. Template-Datei laden und den Inhalt als Template-String
       # verarbeiten. Der Platzhalter `<%= date %>` wird durch das aktuelle Datum ersetzt
