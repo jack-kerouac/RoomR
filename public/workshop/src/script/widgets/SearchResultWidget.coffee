@@ -3,15 +3,16 @@ define ['base/RoomrWidget', 'base/renderTemplate'], (RoomrWidget, renderTemplate
 
   class SearchResultWidget extends RoomrWidget
     nidus: undefined
+    searchResults: []
 
     constructor: ->
       super('searchResult')
 
     renderInto: (element) ->
       @nidus = $(element)
-      @renderTemplate {}, (content) =>
+      @renderTemplate {searchResults: @searchResults}, (content) =>
         @nidus.html content
 
     searchResultsChanged: (searchResults) ->
-      _.each searchResults, (result) =>
-        @nidus.append result.toString()
+      @searchResults = searchResults
+      @renderInto @nidus
