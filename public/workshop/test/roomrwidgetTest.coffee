@@ -47,3 +47,20 @@ require ['../src/script/lib/roomrwidget'], (RoomrWidget) ->
 
       ok wasCalled
 
+
+    test 'Funktion emit_afterRegisterEvent_callsAllCallbacks()', ->
+      emitter = new RoomrWidget()
+      emitter.registerEvent 'bar'
+
+      wasCalledOne = false
+      wasCalledTwo = false
+      fctOne = -> wasCalledOne = true
+      fctTwo = -> wasCalledTwo = true
+
+      emitter.subscribe 'bar', fctOne
+      emitter.subscribe 'bar', fctTwo
+      emitter.emit 'bar'
+
+      ok wasCalledOne
+      ok wasCalledTwo
+
