@@ -7,7 +7,7 @@
   # Teile der Applikation reagieren
   define ['backbone'], (Backbone) -> Backbone.Router.extend {
 
-    initialize: (page) -> @page = page
+    initialize: (nav) -> @nav = nav
 
     # Zuordnung von Routen und Funktionsnamen im Router
     routes: {
@@ -19,15 +19,18 @@
 
     # Startseite
     start: ->
-      @page.show('start')
+      @nav.showStart()
 
     # Info-Seite
     about: ->
-      @page.show('about')
+      @nav.showAbout()
 
     # Alle Einträge auflisten und Ggf. den Eintrag mit der Nummer `:num` einblenden
     view: (num) ->
-      @page.show('view', num)
+      if num?
+        @nav.showSingleItem(Number num)
+      else
+        @nav.showItems()
 
   }
 
