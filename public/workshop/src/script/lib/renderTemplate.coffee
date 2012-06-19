@@ -4,7 +4,14 @@
 define ['Handlebars'], ->
   'use strict'
 
+  templateCache = {}
+
   return (templateName, context, callback) ->
+    if templateCache[templateName]?
+      callback(templateCache[templateName] context)
+      return
+
     $.get "templates/#{templateName}.handlebars", (tpl) ->
       template = Handlebars.compile(tpl);
+      templateCache[templateName] = template
       callback(template context)
