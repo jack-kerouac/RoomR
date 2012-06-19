@@ -6,7 +6,29 @@
 
 <script>
 $(document).ready(function(){
+    var validationMessages = {};
+    $('input').each(function(i, input) {
+        input.addEventListener("invalid", function() {
+            console.log(input.validationMessage);
+            validationMessages[input.name] = input.validationMessage;
+        }, false);
+    });
+
+
+    /*
     $('#roomofferform').submit(function(evt) {
+
+
+        validationMessages = {};
+
+        for (input in allinputs) {
+            console.log(input.validationMessage);
+            if (input.validationMessage != null) {
+                validationMessages[input.name] = input.validationMessage;
+            }
+        }
+        
+
         var minAge = document.getElementById('minAge');
         var maxAge = document.getElementById('maxAge');
         if(minAge.value > maxAge.value) {
@@ -18,14 +40,31 @@ $(document).ready(function(){
             maxAge.setCustomValidity(null);
         }
     });
+    */
+
+    /*
+    $('#submitbutton').click(function() {
+        var allinputs = $('input');
+
+        validationMessages = {};
+
+        for (input in allinputs) {
+            console.log(input.validationMessage);
+            if (input.validationMessage != null) {
+                validationMessages[input.name] = input.validationMessage;
+            }
+        }
+
+    });
+    */
 });
 </script>
 
 <div id="roomoffer">
     <form id="roomofferform" name="roomoffer" autocomplete="on">
         <select name="flatshare">
-            <option value="dummy1">
-            <option value="dummy2">
+            <option value="dummy1">dummy1</option>
+            <option value="dummy2">dummy2</option>
             <option value="dummy3">
             <option value="dummy4">
         </select>
@@ -61,6 +100,6 @@ $(document).ready(function(){
         <input type="email" name="contactEmail" title="testest">        
 
         <br>
-        <input type="submit">
+        <input type="submit" id="submitbutton">
     </form>
 </div>

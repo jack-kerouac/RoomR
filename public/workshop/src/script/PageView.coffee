@@ -15,7 +15,7 @@ define ['backbone'], (Backbone) ->
     # Element in der Seite sein oder es kann kann auch erst vom View erzeugt werden. In
     # diesem Fall ist das Element für diesen View (View-Eigenschaft `el`) ein Element in
     # der Seite - daher der Selektor hier.
-    el: '#Main'
+    el: '#Mainfd'
 
     # `render()` ist die View-Methode für die Ausgabe. Standardmäßig macht `render()` gar
     # nichts, d.h. man *muss* für jeden View eine eigene Methode schreiben. Diese Variante

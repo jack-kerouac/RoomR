@@ -15,12 +15,28 @@
 # je doch diese beiden Libraries  ihre APIs (`$` und `_`) als globale Objekte
 # bereitstellen, können wir beides in unserer Callback-Funkion verwenden, ohne sie dort
 # im Callback explizit aufzuführen.
-require ['backbone', 'Navigation', 'UserCollection', 'AppRouter', 'lib/LoginStatusFinder'], 
-(Backbone, Navigation, UserCollection, AppRouter, LoginStatusFinder) ->
-  
+require ['backbone', 'Navigation', 'UserCollection', 'AppRouter', 'lib/RoomrSection', 'lib/SearchWidget', 'lib/SearchResultWidget', 'lib/LoginStatusFinder'], 
+(Backbone, Navigation, UserCollection, AppRouter, RoomrSection, SearchWidget, SearchResultWidget, LoginStatusFinder) ->
   'use strict'
 
   finder = new LoginStatusFinder()
+
+  testSection = new RoomrSection {
+      name: 'main'
+      title: 'test title'
+    }
+  searchWidget = new SearchWidget()
+  testSection.addWidget(searchWidget)
+
+  searchResultWidget = new SearchResultWidget()
+  testSection.addWidget(searchResultWidget)
+
+  searchWidget.subscribe 'searchResultsChanged', (params...) ->
+    searchResultWidget.searchResultsChanged.apply(searchResultWidget, params)
+
+
+
+  testSection.render()
 
   users = new UserCollection()
 
