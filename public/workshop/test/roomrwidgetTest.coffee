@@ -64,3 +64,14 @@ require ['../src/script/lib/roomrwidget'], (RoomrWidget) ->
       ok wasCalledOne
       ok wasCalledTwo
 
+    test 'Funktion emitWithParam_afterRegisterEvent_callsCallbackWithParam()', ->
+      emitter = new RoomrWidget()
+      emitter.registerEvent 'baz'
+
+      eventParam = 0
+      fct = (param) -> eventParam = param
+
+      emitter.subscribe 'baz', fct
+      emitter.emit 'baz', 42
+
+      equal 42, eventParam
