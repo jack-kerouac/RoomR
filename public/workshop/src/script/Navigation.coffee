@@ -1,4 +1,4 @@
-define ['PageView', 'ItemView', 'ItemViewBig'], (PageView, ItemView, ItemViewBig) ->
+define ['PageView', 'UserView', 'lib/renderTemplate'], (PageView, UserView, renderTemplate) ->
 	class Navigation
 		
 		#openItem: null
@@ -7,42 +7,44 @@ define ['PageView', 'ItemView', 'ItemViewBig'], (PageView, ItemView, ItemViewBig
 
 		#app: null
 
-    constructor: (@openItem, @items, @app) ->
+    constructor: (@openItem, @users, @app) ->
 		
     showStart: ->
-      $.get 'static/start.tpl.html', (result) ->
+      renderTemplate 'start', {}, (content) ->
         if @openItem? then @openItem.remove()
-        new PageView().render('Startseite', result)
+        new PageView().render('Startseite', content)
 
     showAbout: -> 
-      $.get 'static/about.tpl.html', (tpl) ->
-        content = _.template tpl, {
-          date: Date().toString()
-        }
+      renderTemplate 'about', {date: Date().toString()}, (content) ->
         if @openItem? then @openItem.remove()
         new PageView().render('Über dieses Beispiel', content)
 
+    # Einträge anzeigen. Wenn im Model darüber hinaus noch `num` nicht `undefined` ist,
+    # müssen wir auch noch einen Einzel-Eintrag zeigen.
+    #
+    # 1. Template-Datei laden, in die page rendern
+    # 2. users mittels `fetch()` vom Server holen
+    # 3. Für jedes User einen neuen `UserView` in das Ziel-Element schreiben
     showItems: ->
-      $.get 'static/view.tpl.html', (result) =>
-        if @openItem? then @openItem.remove()
-        new PageView().render('Einträge', result)
-        
-        @items.fetch {  # `fetch()` wie einen ganz normalen jQuery-Request konfigurieren
+      renderTemplate 'view', {}, (content) =>
+        new PageView().render('Einträge', content)
+        @users.fetch {  # `fetch()` wie einen ganz normalen jQuery-Request konfigurieren
 
           success: (collection) =>
-            collection.each (listItem) =>  # `each()` ist eine Methode aus Underscore.js
+            collection.each (userItem) =>  # `each()` ist eine Methode aus Underscore.js
 
-              # Item-View-Instanz mit Konfiguation erstellen
-              item = new ItemView {
+              # User-View-Instanz mit Konfiguation erstellen
+              itemView = new UserView {
                 tagName: 'li'     # Container-Tag (Standard: `div`)
-                model: listItem   # Model für diesen View
+                model: userItem   # Model für diesen View
+                template: 'list'  # Template-Vorlage oder -String
               }
 
-              # Item-Events mit Event Delegation. In dem Event-Hash sind die Keys
+              # User-Events mit Event Delegation. In dem Event-Hash sind die Keys
               # Strings mit dem Event (hier: `click`) und dem Selektor, auf dem Event
               # aktiv werden soll (hier: `title`). Der Klick auf den Titel soll den
               # Eintrag in der Großansicht zeigen.
-              item.delegateEvents {
+              itemView.delegateEvents {
                 'click .item-title': (evt) =>
                   id = $(evt.target).attr('id').split('-').pop()
 
@@ -57,26 +59,29 @@ define ['PageView', 'ItemView', 'ItemViewBig'], (PageView, ItemView, ItemViewBig
                   @app.navigate("#view/#{id}", on)
               }
 
-              # Den Eintrag in die Liste hineinrendern.
-              item.render('#ItemsList')
+              userItem.fetch()
+              userItem.on 'change', ->
+                # Den Eintrag in die Liste hineinrendern.
+                itemView.render('#ItemsList')
         }
 
     showSingleItem: (id) ->
-	    # Wenn die ID nicht undefiniert/null ist, die View-Page angezeigt wird und die
-	    # Collection ein Item mit der ID enthält, dieses groß anzeigen. Vorher ggf. offene
-	    # Einträge schließen
-	    if id? #&& page.get('page') == 'view'
-	      item = @items.find (model) ->
-	        return model.get('id') == id
-	      if item?
-	        if @openItem? then @openItem.remove()
-	        @openItem = new ItemViewBig {
-	          model: item
-	          className: 'item-bigview'
-	        }
-	        @openItem.delegateEvents {
-	          'click .close-item': ->
-	            @remove()
-	            @app.navigate "#view"
-	        }
-	        @openItem.render 'body'
+      # Wenn die ID nicht undefiniert/null ist, die View-Page angezeigt wird und die
+      # Collection ein User mit der ID enthält, dieses groß anzeigen. Vorher ggf. offene
+      # Einträge schließen
+      if id? #&& page.get('page') == 'view'
+        item = @users.find (model) ->
+          return model.get('id') == id
+        if item?
+          if openItem? then openItem.remove()
+          @openItem = new UserView {
+            model: item
+            className: 'item-bigview'
+            template: 'full'
+          }
+          @openItem.delegateEvents {
+            'click .close-item': ->
+              @remove()
+              app.navigate "#view"
+          }
+          @openItem.render 'body'

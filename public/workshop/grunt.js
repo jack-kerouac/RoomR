@@ -62,11 +62,12 @@ module.exports = function(grunt){
       paths: {                  // Pfade für Libraries mit doofen/abweichenden Dateinamen
         'jquery': 'lib/vendor/jquery-1.7.2',      // Versionsnummer
         'backbone': 'lib/vendor/backbone-amd',    // AMD-Build (https://github.com/amdjs)
-        'underscore': 'lib/vendor/underscore-amd' // AMD-Build (https://github.com/amdjs)
+        'underscore': 'lib/vendor/underscore-amd', // AMD-Build (https://github.com/amdjs)
+        'Handlebars': 'lib/vendor/Handlebars-1.0.beta.6' // AMD-Build (https://github.com/SlexAxton/require-handlebars-plugin)
       },
       name: 'main',             // Wurzelmodul
-      out: 'app.js'             // Zieldatei
-      //optimize: 'none'        // Optimierung deaktivieren (Debugging/Schnellerer Build)
+      out: 'app.js',            // Zieldatei
+      optimize: 'none'          // Optimierung deaktivieren (Debugging/Schnellerer Build)
     },
 
     // Cleanup; die aus CS generierten JS-Files entfernen

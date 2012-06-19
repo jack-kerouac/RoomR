@@ -25,6 +25,7 @@ define ['backbone'], (Backbone) ->
       # **Tipp:** In Strings mit " gibt es String-Interpolation mit `#{variable}`
       $('title').text("Beispiel-App - #{title}")  # `<title>` setzen
       # **Tipp:** `$el` in Views ist ein jQuery-Objekt mit dem `el` des Views
+
       @$el.html(html)             # Das Element des Views mit Inhalt befüllen
       return this
     

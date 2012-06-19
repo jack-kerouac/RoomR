@@ -15,12 +15,12 @@
 # je doch diese beiden Libraries  ihre APIs (`$` und `_`) als globale Objekte
 # bereitstellen, können wir beides in unserer Callback-Funkion verwenden, ohne sie dort
 # im Callback explizit aufzuführen.
-require ['backbone', 'Navigation', 'ItemCollection', 'AppRouter'], 
-(Backbone, Navigation, ItemCollection, AppRouter) ->
+require ['backbone', 'Navigation', 'UserCollection', 'AppRouter'], 
+(Backbone, Navigation, UserCollection, AppRouter) ->
   
   'use strict'
 
-  items = new ItemCollection()
+  users = new UserCollection()
 
   nav = new Navigation()
 
@@ -28,7 +28,7 @@ require ['backbone', 'Navigation', 'ItemCollection', 'AppRouter'],
   app = new AppRouter(nav)
 
   nav.app = app
-  nav.items = items
+  nav.users = users
 
 
   # App starten

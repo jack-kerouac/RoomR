@@ -11,7 +11,7 @@ public class RoomrGsonBuilder {
 				.addSerializationExclusionStrategy(new ExclusionStrategy() {
 					@Override
 					public boolean shouldSkipField(FieldAttributes attr) {
-						return attr.getName().equals("id");
+						return false;
 					}
 
 					@Override
