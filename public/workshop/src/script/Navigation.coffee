@@ -1,14 +1,12 @@
 define ['PageView', 'UserView', 'lib/renderTemplate', 'lib/loginWidget'], (PageView, UserView, renderTemplate, LoginWidget) ->
 	class Navigation
 		
-		#openItem: null
+    users: null
 
-		#items: null
+    app: null
 
-		#app: null
-
-    constructor: (@openItem, @users, @app) ->
-		
+    constructor: (@users) ->
+    
     showStart: ->
       renderTemplate 'start', {}, (content) ->
         if @openItem? then @openItem.remove()

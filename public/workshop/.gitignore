@@ -1,6 +1,7 @@
 node_modules
 app.js
 app.css
+*.sublime-*
 docs/*.html
 .*.swp
 .*.swo
