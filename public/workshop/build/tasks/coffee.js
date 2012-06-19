@@ -12,6 +12,9 @@ module.exports = function(grunt){
     files.forEach(function(file){ // Jede Datei durch den Helper jagen
       grunt.helper('coffee-file', file);
     });
+
+    // Fail task if errors were logged.
+    if (this.errorCount) { return false; }
   });
 
   // Jede einzelne CS-Datei wird durch diesen Helper kompiliert. Eine .js-Datei gleichen
@@ -19,8 +22,9 @@ module.exports = function(grunt){
   grunt.registerHelper('coffee-file', function(file){
     var source = fs.readFileSync(file, 'utf8');
     var js;
+    
     try {
-      js = coffee.compile(source);
+      js = coffee.compile(source, {'filename': file});
     }
     catch (e) {
       grunt.log.error('Failed to compile ' + file);
