@@ -1,4 +1,4 @@
-define ['lib/EventMediator'], (EventMediatorX) ->
+define ['base/EventMediator'], (EventMediatorX) ->
   'use strict'
 
   class EventEmitter

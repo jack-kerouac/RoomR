@@ -1,4 +1,4 @@
-define ['lib/EventEmitter'], (EventEmitter) ->
+define ['base/EventEmitter'], (EventEmitter) ->
   'use strict'
 
   class LoginStateFinder extends EventEmitter

@@ -3,7 +3,7 @@
 <meta charset="utf-8">
 
 <!-- Das allgegenwärtige jQuery -->
-<script src="../src/script/lib/vendor/jquery.js"></script>
+<script src="../src/script/vendor/jquery.js"></script>
 
 <!-- Das Testsystem selbst -->
 <script src="qunit/qunit.js"></script>
@@ -12,13 +12,13 @@
 <script type="text/javascript">
   var require = {
     paths: {                  // Pfade für Libraries mit doofen/abweichenden Dateinamen
-      'Handlebars': '../src/script/lib/vendor/Handlebars-1.0.beta.6' // AMD-Build (https://github.com/SlexAxton/require-handlebars-plugin)
+      'Handlebars': '../src/script/vendor/Handlebars-1.0.beta.6' // AMD-Build (https://github.com/SlexAxton/require-handlebars-plugin)
     }
   };
 </script>
 
 <!-- Das Testscript mit Require.JS laden -->
-<script src="../src/script/lib/vendor/require.js" data-main="renderTemplateTest.js"></script>
+<script src="../src/script/vendor/require.js" data-main="renderTemplateTest.js"></script>
 
 <!-- Test-Markup, immer erforderlich -->
 <h1 id="qunit-header">Test von renderTemplate</h1>

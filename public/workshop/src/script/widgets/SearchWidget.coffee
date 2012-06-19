@@ -1,4 +1,4 @@
-define ['backbone', 'lib/RoomrWidget', 'lib/roomrUtil', 'lib/SearchResult'], 
+define ['backbone', 'base/RoomrWidget', 'base/roomrUtil', 'models/SearchResult'], 
 (Backbone, RoomrWidget, roomrUtil, SearchResult) ->
   'use strict'
 

@@ -1,5 +1,5 @@
 # Für den Test muss erst mal das zuständige Modul geladen werden
-require ['../src/script/lib/RoomrSection', 'lib/jqueryMock'], (RoomrSection, jqueryMock) ->
+require ['../src/script/base/RoomrSection', 'lib/jqueryMock'], (RoomrSection, jqueryMock) ->
   'use strict'
 
   $(document).ready ->

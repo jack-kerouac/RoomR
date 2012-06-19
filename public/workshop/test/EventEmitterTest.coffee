@@ -1,5 +1,5 @@
 # Für den Test muss erst mal das zuständige Modul geladen werden
-require ['../src/script/lib/EventEmitter'], (EventEmitter) ->
+require ['../src/script/base/EventEmitter'], (EventEmitter) ->
   'use strict'
 
   $(document).ready ->

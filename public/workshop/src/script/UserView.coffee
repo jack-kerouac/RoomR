@@ -2,7 +2,7 @@
 # -----------------
 
 #
-define ['backbone', 'lib/renderTemplate'], (Backbone, renderTemplate) -> 
+define ['backbone', 'base/renderTemplate'], (Backbone, renderTemplate) -> 
 
   'use strict'
 

@@ -3,7 +3,7 @@
 <meta charset="utf-8">
 
 <!-- Das allgegenwärtige jQuery -->
-<script src="../src/script/lib/vendor/jquery.js"></script>
+<script src="../src/script/vendor/jquery.js"></script>
 
 <!-- Das Testsystem selbst -->
 <script src="qunit/qunit.js"></script>
@@ -13,15 +13,15 @@
 <script type="text/javascript">
  var require = {
     paths: {                  // Pfade für Libraries mit doofen/abweichenden Dateinamen
-      'backbone': '../src/script/lib/vendor/backbone-amd',
-      'jquery': '../src/script/lib/vendor/jquery-1.7.2',
-      'underscore': '../src/script/lib/vendor/underscore-amd',
-      'lib/renderTemplate': '../src/script/lib/renderTemplate',
-      'Handlebars': '../src/script/lib/vendor/Handlebars-1.0.beta.6'
+      'backbone': '../src/script/vendor/backbone-amd',
+      'jquery': '../src/script/vendor/jquery-1.7.2',
+      'underscore': '../src/script/vendor/underscore-amd',
+      'base/renderTemplate': '../src/script/base/renderTemplate',
+      'Handlebars': '../src/script/vendor/Handlebars-1.0.beta.6'
     }
   };
 </script>
-<script src="../src/script/lib/vendor/require.js" data-main="RoomrSectionTest.js"></script>
+<script src="../src/script/vendor/require.js" data-main="RoomrSectionTest.js"></script>
 
 <!-- Test-Markup, immer erforderlich -->
 <h1 id="qunit-header">Test von RoomrSection</h1>

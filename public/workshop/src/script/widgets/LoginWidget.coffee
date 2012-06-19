@@ -1,4 +1,4 @@
-define ['PageView', 'lib/renderTemplate', 'lib/EventMediator'], (PageView, renderTemplate, EventMediator) ->
+define ['PageView', 'base/renderTemplate', 'base/EventMediator'], (PageView, renderTemplate, EventMediator) ->
   'use strict'
 
   class LoginWidget
