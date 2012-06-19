@@ -1,3 +1,11 @@
+# A section is a view of the website addressable by a URL. It can thus be bookmarked. It 
+# is rendered into the `section` element below the `#Main` element.
+# It contains a set of widgets that are added with `addWidget`.
+# Each section is associated with a template in the folder `sections/`. `<div>` elements
+# in the template that have the class `widget` set will be used as the containers for 
+# widgets. Their `data-widget-name` attribute defines the name of the widget that is
+# rendered into this `div`.
+
 define ['backbone', 'lib/renderTemplate'], (Backbone, renderTemplate) ->
 
   return Backbone.View.extend {
@@ -7,27 +15,23 @@ define ['backbone', 'lib/renderTemplate'], (Backbone, renderTemplate) ->
     initialize: (options) ->
       @widgets = []
       @title = options.title
-      @templateUrl = options.templateUrl
+      @name = options.name
 
     addWidget: (widget) ->
       @widgets[widget.name] = widget;
 
-    # `render()` ist die View-Methode für die Ausgabe. Standardmäßig macht `render()` gar
-    # nichts, d.h. man *muss* für jeden View eine eigene Methode schreiben. Diese Variante
-    # nimmt einen Titel und Inhalt an und befüllt damit die entsprechenden Elemente.
     render: () ->
       $('title').text("RoomR - #{@title}")
       $('#Headline').html(@title)
 
-      renderTemplate @templateUrl, {}, (template) =>
+      renderTemplate "sections/#{@name}", {}, (template) =>
         @$el.html(template)
-        @$el.attr('id', @options.id)
+        @$el.attr('id', "#{@name}-section")
         this.$('.widget').each (index, element) =>
           widgetType = $(element).attr('data-type')
-          # widget = _.find(@widgets, (widget) -> widget.id == widgetType)
           widget = @widgets[widgetType]
           if widget?
-            widget.renderInto($(element))
+            widget.renderInto(element)
           else
             alert "no widget found for <... data-type=\"#{widgetType}\">"
       
