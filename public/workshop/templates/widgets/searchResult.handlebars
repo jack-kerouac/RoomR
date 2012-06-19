@@ -1,3 +1,28 @@
-<p>
-Search Result Widget!
-</p>
+<h3>Search Result Widget!</h3>
+<ul>
+  {{#each searchResults}}
+    <li>
+      <div>
+        <div>MatchingScore {{matchingScore.value}} - {{matchingScore.defined}}</div>
+
+        <div>{{offer.roomDetails.totalRentPerMonthInEuro}}€</div>
+
+        <div>
+          <div>Zimmergröße:&nbsp;{{offer.roomDetails.roomSize.squareMeters}}&nbsp;m²</div>
+          <div>Zeitraum:
+            {{#unless offer.roomDetails.freeTo}}
+              ab {{date offer.roomDetails.freeFrom}}
+            {{else}}
+              {{date offer.roomDetails.freeFrom}}&nbsp;bis&nbsp;{{date offer.roomDetails.freeTo}}
+            {{/unless}}
+          </div>
+        </div>
+
+        <div>
+          <div>gewünschtes Alter: {{offer.criteria.minAge}}&nbsp;bis&nbsp;{{offer.criteria.maxAge}}</div>
+          <div>gewünschtes Geschlecht: {{offer.criteria.genders}}</div>
+        </div>
+      </div>
+    </li>
+  {{/each}}
+</ul>

@@ -4,6 +4,8 @@
 define ['Handlebars'], ->
   'use strict'
 
+  Handlebars.registerHelper 'date', (date) -> new Date(date).toLocaleDateString()
+
   templateCache = {}
 
   return (templateName, context, callback) ->
