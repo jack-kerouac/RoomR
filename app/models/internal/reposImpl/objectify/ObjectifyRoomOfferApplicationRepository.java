@@ -17,6 +17,11 @@ public class ObjectifyRoomOfferApplicationRepository implements RoomOfferApplica
 	}
 
 	@Override
+	public void update(RoomOfferApplication application) {
+		Datastore.put(application);
+	}
+
+	@Override
 	public Set<RoomOfferApplication> findAll() {
 		Query<RoomOfferApplication> query = Datastore.query(RoomOfferApplication.class);
 		return ImmutableSet.copyOf(query);

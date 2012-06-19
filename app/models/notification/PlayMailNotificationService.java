@@ -2,6 +2,7 @@ package models.notification;
 
 import models.application.RoomOfferApplication;
 import models.offer.RoomOffer;
+import models.user.RoomrUser;
 import notifiers.RoomrMailer;
 
 public class PlayMailNotificationService implements NotificationService {
@@ -21,4 +22,9 @@ public class PlayMailNotificationService implements NotificationService {
 		RoomrMailer.applicationRemoved(offer, application);
 	}
 
+	@Override
+	public void notifyUserOfInvitation(RoomrUser applicant, RoomOfferApplication application) {
+		// TODO Auto-generated method stub
+
+	}
 }

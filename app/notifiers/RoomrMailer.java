@@ -5,6 +5,7 @@ import javax.inject.Inject;
 import models.application.RoomOfferApplication;
 import models.offer.RoomOffer;
 import models.offer.RoomOfferTokenService;
+import models.user.RoomrUser;
 import play.modules.guice.InjectSupport;
 import play.mvc.Mailer;
 
@@ -39,6 +40,14 @@ public class RoomrMailer extends Mailer {
 		setFrom("RoomR Notifier <" + fromEmail + ">");
 
 		send(roomOffer, application);
+	}
+
+	public static void userInvited(RoomrUser user, RoomOfferApplication application) {
+		setSubject("WG Einladung");
+		addRecipient(user.gaeUserEmail);
+		setFrom("RoomR Notifier <" + fromEmail + ">");
+
+		send(application);
 	}
 
 }
