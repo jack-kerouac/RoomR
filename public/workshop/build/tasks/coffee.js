@@ -18,7 +18,14 @@ module.exports = function(grunt){
   // Namens wird an der gleichen Stelle abgelegt
   grunt.registerHelper('coffee-file', function(file){
     var source = fs.readFileSync(file, 'utf8');
-    var js = coffee.compile(source);
+    var js;
+    try {
+      js = coffee.compile(source);
+    }
+    catch (e) {
+      grunt.log.error(e);
+      return false;
+    }
     var jsPath = file.split('.coffee')[0] + '.js';
     fs.writeFileSync(jsPath, js);
     grunt.log.ok('Compiled ' + file);
