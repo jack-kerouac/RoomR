@@ -1,16 +1,17 @@
-define ['PageView', 'lib/renderTemplate', 'lib/eventEmitter'], (PageView, renderTemplate, eventEmitter) ->
+define ['PageView', 'lib/renderTemplate', 'lib/EventEmitter'], (PageView, renderTemplate, EventEmitter) ->
   'use strict'
 
-  class loginWidget extends eventEmitter
+  class LoginWidget extends EventEmitter
     constructor: ->
       super()
       @registerEvent 'onLogin'
       @registerEvent 'onLogout'
 
     isLoggedIn: ->
-      $.get('/rest/users/current', () ->
-        alert "Sind eingeloggt" )
-        .error () -> alert "Sind nicht eingeloggt"
+      successCbk =  () -> alert "Sind eingeloggt"
+      errorCbk = () -> alert "Sind nicht eingeloggt"
+
+      $.get('/rest/users/current', successCbk ).error errorCbk
 
     render: (idOfParentElement) ->
       if @isLoggedIn()
