@@ -42,7 +42,19 @@ module.exports = function(grunt){
     // JS-Tests mit QUnit in einer PhantomJS-Instanz durchführen. Quasi ein Browsertest
     // ohne Browser.
     qunit: {
-      all: ['test/*.html']
+      all: (function() {
+        var files = grunt.file.expandFiles('test/*.html');
+        var result = [];
+        files.forEach(function(file){
+          result.push('http://localhost:16000/' + file);
+        });
+        return result;
+      })()
+    },
+
+    server: {
+      port: 16000,
+      base: '.'
     },
 
     // Dokumentation aus den .coffee-Files erstellen
@@ -78,7 +90,7 @@ module.exports = function(grunt){
 
     watch: {
       files: ['src/**/*'],
-      tasks: 'default'
+      tasks: 'defaultWatch'
     }
 
   });
@@ -89,6 +101,8 @@ module.exports = function(grunt){
 
   // Alle automatisch zu startenden Tasks unter dem Label 'default' ablegen
   // `cleanup` rauswerfen um die generierten JavaScript-Dateien zu inspizieren
-  grunt.registerTask('default', 'lint stylus coffee qunit docco requirejs cleanup');
+  grunt.registerTask('default', 'lint stylus coffee server qunit docco requirejs cleanup');
+
+  grunt.registerTask('defaultWatch', 'lint stylus coffee requirejs cleanup');
 
 };

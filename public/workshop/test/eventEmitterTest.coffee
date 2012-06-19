@@ -1,42 +1,42 @@
 # Für den Test muss erst mal das zuständige Modul geladen werden
-require ['../src/script/lib/roomrwidget'], (RoomrWidget) ->
+require ['../src/script/lib/eventEmitter'], (eventEmitter) ->
   'use strict'
 
   $(document).ready ->
 
     # `module()` teilt eine Testdatei in Module auf
-    module 'Modul RoomrWidget'
+    module 'Modul eventEmitter'
 
     # In`test()` finden die eigentlichen Tests statt
     test 'Funktion registerEvent_inRoomrWidget_isAFunction()', ->
-      emitter = new RoomrWidget()
+      emitter = new eventEmitter()
       ok typeof emitter.registerEvent == 'function'
 
     test 'Funktion listEvents_inRoomrWidget_isAFunction()', ->
-      emitter = new RoomrWidget()
+      emitter = new eventEmitter()
       ok typeof emitter.listEvents == 'function'
 
     test 'Funktion emit_inRoomrWidget_isAFunction()', ->
-      emitter = new RoomrWidget()
+      emitter = new eventEmitter()
       ok typeof emitter.emit == 'function'
 
     test 'Funktion subscribe_inRoomrWidget_isAFunction()', ->
-      emitter = new RoomrWidget()
+      emitter = new eventEmitter()
       ok typeof emitter.subscribe == 'function'
 
     test 'Funktion listEvents_afterRegisterEvent_containsThisEvent()', ->
-      emitter = new RoomrWidget()
+      emitter = new eventEmitter()
       emitter.registerEvent 'foo'
       ok 'foo' in emitter.listEvents()
 
     test 'Funktion listEvents_afterRegisterEventCalledOnce_containsOneEvent()', ->
-      emitter = new RoomrWidget()
+      emitter = new eventEmitter()
       emitter.registerEvent 'foo'
 
       equal emitter.listEvents().length, 1
 
     test 'Funktion emit_afterRegisterEvent_callsCallback()', ->
-      emitter = new RoomrWidget()
+      emitter = new eventEmitter()
       emitter.registerEvent 'foo'
 
       wasCalled = false
@@ -49,7 +49,7 @@ require ['../src/script/lib/roomrwidget'], (RoomrWidget) ->
 
 
     test 'Funktion emit_afterRegisterEvent_callsAllCallbacks()', ->
-      emitter = new RoomrWidget()
+      emitter = new eventEmitter()
       emitter.registerEvent 'bar'
 
       wasCalledOne = false
@@ -64,3 +64,14 @@ require ['../src/script/lib/roomrwidget'], (RoomrWidget) ->
       ok wasCalledOne
       ok wasCalledTwo
 
+    test 'Funktion emitWithParam_afterRegisterEvent_callsCallbackWithParam()', ->
+      emitter = new eventEmitter()
+      emitter.registerEvent 'baz'
+
+      eventParam = 0
+      fct = (param) -> eventParam = param
+
+      emitter.subscribe 'baz', fct
+      emitter.emit 'baz', 42
+
+      equal 42, eventParam
