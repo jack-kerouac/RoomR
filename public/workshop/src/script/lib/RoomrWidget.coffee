@@ -11,8 +11,7 @@ define ['lib/EventEmitter', 'lib/renderTemplate'], (EventEmitter, renderTemplate
 
     constructor: (@name) ->
       super()
-      if _.isUndefined(@name) || name == ''
-        throw new Error('name is empty')
+      throw new Error('name is empty') unless @name? || name == ''
 
     name: ''
 
@@ -21,5 +20,5 @@ define ['lib/EventEmitter', 'lib/renderTemplate'], (EventEmitter, renderTemplate
 
     renderInto: (element) ->
 
-  	reportError: (widgetName, errorMsg) ->
-      $(window).trigger('error', [widgetName, errorMsg])     
+    reportError: (widgetName, errorMsg) ->
+      $(window).trigger('error', [widgetName, errorMsg])

@@ -1,10 +1,17 @@
-define ['lib/RoomrWidget'], (RoomrWidget) ->
+define ['lib/RoomrWidget', 'lib/renderTemplate'], (RoomrWidget, renderTemplate) ->
   'use strict'
 
   class SearchResultWidget extends RoomrWidget
+    nidus: undefined
+
     constructor: ->
       super('searchResult')
 
     renderInto: (element) ->
-      @renderTemplate {}, (content) ->
-        $(element).html content
+      @nidus = $(element)
+      @renderTemplate {}, (content) =>
+        @nidus.html content
+
+    searchResultsChanged: (searchResults) ->
+      _.each searchResults, (result) =>
+        @nidus.append result.toString()

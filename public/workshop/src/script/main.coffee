@@ -23,14 +23,18 @@ require ['backbone', 'Navigation', 'UserCollection', 'AppRouter', 'lib/RoomrSect
       name: 'main'
       title: 'test title'
     }
-  searchWidget = new SearchWidget('search')
-  searchResultWidget = new SearchResultWidget()
-
-  testSection.addWidget(searchResultWidget)
+  searchWidget = new SearchWidget()
   testSection.addWidget(searchWidget)
-  
-  testSection.render()
 
+  searchResultWidget = new SearchResultWidget()
+  testSection.addWidget(searchResultWidget)
+
+  searchWidget.subscribe 'searchResultsChanged', (params...) ->
+    searchResultWidget.searchResultsChanged.apply(searchResultWidget, params)
+
+
+
+  testSection.render()
 
 
   users = new UserCollection()
