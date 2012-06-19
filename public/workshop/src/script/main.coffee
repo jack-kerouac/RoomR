@@ -15,25 +15,29 @@
 # je doch diese beiden Libraries  ihre APIs (`$` und `_`) als globale Objekte
 # bereitstellen, können wir beides in unserer Callback-Funkion verwenden, ohne sie dort
 # im Callback explizit aufzuführen.
-
-require ['backbone', 'Navigation', 'UserCollection', 'AppRouter', 'lib/RoomrSection', 'lib/SearchWidget', 'lib/SearchResultWidget', 'ErrorLogger'], 
-(Backbone, Navigation, UserCollection, AppRouter, RoomrSection, SearchWidget, SearchResultWidget) ->
+require ['backbone', 'Navigation', 'UserCollection', 'AppRouter', 'base/RoomrSection', 'widgets/SearchWidget', 'widgets/SearchResultWidget', 'widgets/LoginStatusFinder', 'ErrorLogger'], 
+(Backbone, Navigation, UserCollection, AppRouter, RoomrSection, SearchWidget, SearchResultWidget, LoginStatusFinder) ->
 
   'use strict'
+
+  finder = new LoginStatusFinder()
 
   testSection = new RoomrSection {
       name: 'main'
       title: 'test title'
     }
-  searchWidget = new SearchWidget('search')
-  searchResultWidget = new SearchResultWidget()
-
-  testSection.addWidget(searchResultWidget)
+  searchWidget = new SearchWidget()
   testSection.addWidget(searchWidget)
-  
+
+  searchResultWidget = new SearchResultWidget()
+  testSection.addWidget(searchResultWidget)
+
+  searchWidget.subscribe 'searchResultsChanged', (params...) ->
+    searchResultWidget.searchResultsChanged.apply(searchResultWidget, params)
+
+
+
   testSection.render()
-
-
 
   users = new UserCollection()
 
@@ -51,3 +55,5 @@ require ['backbone', 'Navigation', 'UserCollection', 'AppRouter', 'lib/RoomrSect
 
   # Die URL auf Änderungen überwachen
   Backbone.history.start()
+
+  finder.findOutState()

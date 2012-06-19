@@ -1,5 +1,5 @@
 # Für den Test muss erst mal das zuständige Modul geladen werden
-require ['../src/script/lib/renderTemplate'], (renderTemplate) ->
+require ['../src/script/base/renderTemplate'], (renderTemplate) ->
   'use strict'
 
   $(document).ready ->

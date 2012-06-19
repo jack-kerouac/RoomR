@@ -9,21 +9,28 @@
 <script src="qunit/qunit.js"></script>
 <link rel="stylesheet" href="qunit/qunit.css">
 
+<!-- Das Testscript mit Require.JS laden -->
 <script type="text/javascript">
-  var require = {
+ var require = {
     paths: {                  // Pfade für Libraries mit doofen/abweichenden Dateinamen
-      'Handlebars': '../src/script/vendor/Handlebars-1.0.beta.6' // AMD-Build (https://github.com/SlexAxton/require-handlebars-plugin)
+      'backbone': '../src/script/vendor/backbone-amd',
+      'jquery': '../src/script/vendor/jquery-1.7.2',
+      'underscore': '../src/script/vendor/underscore-amd',
+      'base/renderTemplate': '../src/script/base/renderTemplate',
+      'Handlebars': '../src/script/vendor/Handlebars-1.0.beta.6'
     }
   };
 </script>
-
-<!-- Das Testscript mit Require.JS laden -->
-<script src="../src/script/vendor/require.js" data-main="renderTemplateTest.js"></script>
+<script src="../src/script/vendor/require.js" data-main="RoomrSectionTest.js"></script>
 
 <!-- Test-Markup, immer erforderlich -->
-<h1 id="qunit-header">Test von renderTemplate</h1>
+<h1 id="qunit-header">Test von RoomrSection</h1>
 <h2 id="qunit-banner"></h2>
 <div id="qunit-testrunner-toolbar"></div>
 <h2 id="qunit-userAgent"></h2>
 <ol id="qunit-tests"></ol>
 <div id="qunit-fixture"></div>
+
+<div id="Main">
+  <section></section>
+</div>

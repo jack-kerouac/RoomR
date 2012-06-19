@@ -1,47 +1,43 @@
-<p>
-  <form id="search_offers_form">
-		<ul>
-			<li>
-				<label for="minRoomSizeSquareMeters">Mindestens&nbsp;</label>
-				<input id="minRoomSizeSquareMeters" name="searchData.minRoomSizeSquareMeters" type="text" >
-				<label for="minRoomSizeSquareMeters">m² groß</label>
-			und
-				<label for="maxRentPerMonthInEuro">maximal&nbsp;</label>
-				<input id="maxRentPerMonthInEuro" name="searchData.maxRentPerMonthInEuro" type="text" >
-				<label for="maxRentPerMonthInEuro">€ Miete</label>
-			und ab
-			<ul class="inline_buttons">
-				<li>
-					<input id="startDateType_now" name="searchData.startDateType_now" type="radio">
-					<label for="startDateType_now" >sofort</label>
-				</li>
-				<li>
-					<input id="startDateType_fixed_date" name="searchData.startDateType_fixed_date" type="radio">
-					<label for="startDateType_fixed_date" class="caption">Datum</label>
-					<input id="startDate" name="searchData.startDate" type="date">
-				</li>
-			</ul>
-			</li>
-		</ul>
-	</fieldset>
-			
-	<fieldset id="additional_parameters">
-		<ul>
-			<li>
-					<label for="age">Alter</label>
-					<input id="age" name="searchData.age" type="number">
-				
-				<ul id="genders_select" class="inline_buttons">
-					<li>
-						<label for="gender_male" >Mann</label>
-						<input id="gender_male" name="searchData.gender_male" type="radio">
-					</li>
-					<li>
-						<label for="gender_female" class="caption">Frau</label>
-						<input id="gender_female" name="searchData.gender_female" type="radio">
-					</li>
-				</ul>
-			</li>
-		</ul>
-	</fieldset>
+<form id="search_offers_form">
+  <ul>
+    <li>
+      <label for="minRoomSizeSquareMeters">Mindestens&nbsp;</label>
+      <input id="minRoomSizeSquareMeters" name="searchData.minRoomSizeSquareMeters" type="text" >
+      <label for="minRoomSizeSquareMeters">m² groß</label>
+    und
+      <label for="maxRentPerMonthInEuro">maximal&nbsp;</label>
+      <input id="maxRentPerMonthInEuro" name="searchData.maxRentPerMonthInEuro" type="text" >
+      <label for="maxRentPerMonthInEuro">€ Miete</label>
+    und ab
+    <ul class="inline_buttons">
+      <li>
+        <input id="startDateType_now" name="searchData.startDateType" value="now" type="radio">
+        <label for="startDateType_now" >sofort</label>
+      </li>
+      <li>
+        <input id="startDateType_fixed_date" name="searchData.startDateType" value="fixed_date" type="radio">
+        <label for="startDateType_fixed_date" class="caption">Datum</label>
+        <input id="startDate" name="searchData.startDate" type="date">
+      </li>
+    </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+        <label for="age">Alter</label>
+        <input id="age" name="searchData.age" type="number">
+
+      <ul id="genders_select" class="inline_buttons">
+        <li>
+          <label for="gender_male" >Mann</label>
+          <input id="gender_male" name="searchData.gender" value="male" type="radio">
+        </li>
+        <li>
+          <label for="gender_female" class="caption">Frau</label>
+          <input id="gender_female" name="searchData.gender" value="female" type="radio">
+        </li>
+      </ul>
+    </li>
+  </ul>
 </form>

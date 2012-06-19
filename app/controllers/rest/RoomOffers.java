@@ -51,7 +51,7 @@ public class RoomOffers extends Controller {
 	public static void get(int id) {
 		RoomOffer offer = getRoomOffer(id);
 
-		Gson gson = RoomrGsonBuilder.builder().setExclusionStrategies(new FlatExclusionStrategy())
+		Gson gson = RoomrGsonBuilder.builder()
 				.registerTypeAdapter(Flatshare.class, new FlatshareUrlSerializer()).create();
 		renderJSON(gson.toJson(offer));
 	}
@@ -97,7 +97,7 @@ public class RoomOffers extends Controller {
 		List<ScoredRoomOffer> offers = seekerFacade.search(rr, Optional.fromNullable(seekerAge),
 				Optional.fromNullable(searchData.gender));
 
-		Gson gson = RoomrGsonBuilder.builder().setExclusionStrategies(new FlatExclusionStrategy())
+		Gson gson = RoomrGsonBuilder.builder()
 				.registerTypeAdapter(Flatshare.class, new FlatshareUrlSerializer()).create();
 
 		renderJSON(gson.toJson(offers));

@@ -72,10 +72,10 @@ module.exports = function(grunt){
     requirejs: {
       baseUrl: './src/script',  // Script-Source-Verzeichnis
       paths: {                  // Pfade für Libraries mit doofen/abweichenden Dateinamen
-        'jquery': 'lib/vendor/jquery-1.7.2',      // Versionsnummer
-        'backbone': 'lib/vendor/backbone-amd',    // AMD-Build (https://github.com/amdjs)
-        'underscore': 'lib/vendor/underscore-amd', // AMD-Build (https://github.com/amdjs)
-        'Handlebars': 'lib/vendor/Handlebars-1.0.beta.6' // AMD-Build (https://github.com/SlexAxton/require-handlebars-plugin)
+        'jquery': 'vendor/jquery-1.7.2',      // Versionsnummer
+        'backbone': 'vendor/backbone-amd',    // AMD-Build (https://github.com/amdjs)
+        'underscore': 'vendor/underscore-amd', // AMD-Build (https://github.com/amdjs)
+        'Handlebars': 'vendor/Handlebars-1.0.beta.6' // AMD-Build (https://github.com/SlexAxton/require-handlebars-plugin)
       },
       name: 'main',             // Wurzelmodul
       out: 'app.js',            // Zieldatei
