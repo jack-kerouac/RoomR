@@ -9,11 +9,10 @@ define ['lib/EventEmitter', 'lib/renderTemplate'], (EventEmitter, renderTemplate
 
   class RoomrWidget extends EventEmitter
 
-    constructor: (@name) -> 
+    constructor: (@name) ->
+      super()
       if _.isUndefined(@name) || name == ''
         throw new Error('name is empty')
-
-    name: ''
 
     renderTemplate: (context, callback) ->
       renderTemplate "widgets/#{@name}", context, callback
