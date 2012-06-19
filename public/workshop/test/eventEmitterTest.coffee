@@ -1,5 +1,5 @@
 # Für den Test muss erst mal das zuständige Modul geladen werden
-require ['../src/script/lib/roomrwidget'], (RoomrWidget) ->
+require ['../src/script/lib/eventEmitter'], (RoomrWidget) ->
   'use strict'
 
   $(document).ready ->

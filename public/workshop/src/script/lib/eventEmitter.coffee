@@ -1,7 +1,7 @@
 define ->
   'use strict'
 
-  class RoomrWidget
+  class EventEmitter
     constructor: ->
       @subscribers = {}
 
