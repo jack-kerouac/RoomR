@@ -1,4 +1,5 @@
-define ['PageView', 'UserView', 'lib/renderTemplate', 'lib/LoginWidget'], (PageView, UserView, renderTemplate, LoginWidget) ->
+define ['PageView', 'UserView', 'lib/renderTemplate', 'lib/LoginWidget', 'lib/SearchWidget'], 
+(PageView, UserView, renderTemplate, LoginWidget, SearchWidget) ->
 	class Navigation
 		
     users: null
