@@ -1,0 +1,62 @@
+<!doctype html>
+<meta charset="utf-8">
+<title></title>
+
+<div id="flatshare">
+    <datalist id="floornames">
+        <option value="UG">
+        <option value="EG">
+        <option value="1. OG">
+        <option value="2. OG">
+        <option value="3. OG">
+        <option value="4. OG">
+        <option value="5. OG">
+        <option value="6. OG">
+        <option value="7. OG">
+        <option value="8. OG">
+        <option value="9. OG">
+        <option value="10. OG">
+    </datalist>
+
+    <form autocomplete="on">
+        Straße: <input type="text" name="street" required>
+        Nummer: <input type="text" name="streetnumber" pattern="[0-9]{1,4}[a-z]?"
+        title="Nummer (gegebenenfalls mit Zusatz)" required>
+        <br>
+        PLZ: <input type="number" min=10000 max=99999 pattern="[1-9][0-9]{4}"
+        title="fünfstellige Zahl" required>
+        Ort: <input type="text" required>
+        
+        <br>
+        
+        Flur: <input type="text" list="floornames" required>
+        <input type="hidden" name="geolocation_latitude">
+        <input type="hidden" name="geolocation_longitude">
+
+        <br>
+
+        Rauchertoleranz: 
+        <select name="smokingtolarance">
+            <option value="allowedInRoom">Erlaubt im Zimmer</option>
+            <option value="allowedInFlat">Erlaubt in Wohnung</option>
+            <option value="prohibited">Verboten</option>
+        </select>
+
+        <br>
+
+        Haustyp:
+        <select name="typeOfHouse">
+            <option value="old">Altbau</option>
+            <option value="new">Neubau</option>
+            <option value="renovated">Renoviert</option>
+        </select>
+
+        <br>
+
+        Anzahl der Zimmer:
+        <input type="number" min=1 pattern="[1-9][0-9]*" title="Zahl" required>
+
+        <br>
+        <input type="submit">
+    </form>
+</div>
