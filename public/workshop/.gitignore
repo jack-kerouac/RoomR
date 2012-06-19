@@ -3,3 +3,4 @@ app.js
 app.css
 docs/*.html
 .*.swp
+.*.swo
