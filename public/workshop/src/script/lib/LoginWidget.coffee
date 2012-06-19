@@ -1,29 +1,19 @@
-define ['PageView', 'lib/renderTemplate', 'lib/EventEmitter'], (PageView, renderTemplate, EventEmitter) ->
+define ['PageView', 'lib/renderTemplate', 'lib/EventMediator'], (PageView, renderTemplate, EventMediator) ->
   'use strict'
 
-  class LoginWidget extends EventEmitter
-    constructor: ->
-      super()
-      @registerEvent 'onLogin'
-      @registerEvent 'onLogout'
+  class LoginWidget
+    constructor: () ->
+      EventMediator.subscribeToEvent 'loggedIn', @renderLoggedIn
+      EventMediator.subscribeToEvent 'loggedOut', @renderLoggedOut
 
-    isLoggedIn: ->
-      successCbk =  () -> alert "Sind eingeloggt"
-      errorCbk = () -> alert "Sind nicht eingeloggt"
+    render: () -> @renderLoggedOut()
 
-      $.get('/rest/users/current', successCbk ).error errorCbk
-
-    render: (idOfParentElement) ->
-      if @isLoggedIn()
-        @renderProfileInfo(idOfParentElement)
-      else
-        @renderLoginWidget(idOfParentElement)
-
-    renderProfileInfo: (idOfParentElement) ->
-      # TODO: Implement this
-      @renderLoginWidget(idOfParentElement)
-
-    renderLoginWidget: (idOfParentElement) ->
+    renderLoggedOut: () =>
       renderTemplate 'login', {}, (content) ->
         if @openItem? then @openItem.remove()
         new PageView().render('LOG DICH EIN!', content)
+
+    renderLoggedIn: () =>
+      renderTemplate 'profileInfo', {}, (content) ->
+        if @openItem? then @openItem.remove()
+        new PageView().render('Hi there', content)
