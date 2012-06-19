@@ -1,8 +1,19 @@
 define -> 
-  $(window).error (event, params...) -> 
-    console.log "Event: " + event + " params: " + params unless console.log?
-    #if params[0]? and params[1]?
-    #  errorMsg = "Widget name: " + params[0] + " message: " + params[1]
-    #else
-    #  errorMsg = event 
-    #$.post 'http://localhost:9000/rest/log', {'message' : 'errorMsg', 'severity' : 'ERROR'}    
+  postError = (errorMsg) ->    
+    currentDate = new Date().toLocaleString()
+    errorMsg = "[#{currentDate}] #{errorMsg}" 
+    $.ajax({
+      url:'http://localhost:9000/rest/log',
+      type:'POST',
+      data:"{ 'message' : '#{errorMsg}', 'severity' : 'ERROR'}",
+      contentType:"application/json; charset=utf-8"
+    }) 
+
+  $(window).error (event) -> 
+    postError event.type
+
+  $(window).bind 'widgetError', (event, widgetName, msg)->    
+    errorMsg = "Widget error in #{widgetName}: #{msg}"
+    postError errorMsg
+    
+    
