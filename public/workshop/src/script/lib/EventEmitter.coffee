@@ -1,12 +1,13 @@
-define ->
+define ['lib/EventMediator'], (EventMediatorX) ->
   'use strict'
 
   class EventEmitter
     constructor: ->
       @subscribers = {}
 
-    registerEvent: (name) ->
-      @subscribers[name] = []
+    registerEvent: (eventName) ->
+      @subscribers[eventName] = []
+      #EventMediator.registerEvent this eventName
 
     subscribe: (eventName, callback) ->
       if eventName

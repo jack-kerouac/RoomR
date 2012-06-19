@@ -15,9 +15,11 @@
 # je doch diese beiden Libraries  ihre APIs (`$` und `_`) als globale Objekte
 # bereitstellen, können wir beides in unserer Callback-Funkion verwenden, ohne sie dort
 # im Callback explizit aufzuführen.
-require ['backbone', 'Navigation', 'UserCollection', 'AppRouter', 'lib/RoomrSection', 'lib/SearchWidget', 'lib/SearchResultWidget'], 
-(Backbone, Navigation, UserCollection, AppRouter, RoomrSection, SearchWidget, SearchResultWidget) ->
+require ['backbone', 'Navigation', 'UserCollection', 'AppRouter', 'lib/RoomrSection', 'lib/SearchWidget', 'lib/SearchResultWidget', 'lib/LoginStatusFinder'], 
+(Backbone, Navigation, UserCollection, AppRouter, RoomrSection, SearchWidget, SearchResultWidget, LoginStatusFinder) ->
   'use strict'
+
+  finder = new LoginStatusFinder()
 
   testSection = new RoomrSection {
       name: 'main'
@@ -36,7 +38,6 @@ require ['backbone', 'Navigation', 'UserCollection', 'AppRouter', 'lib/RoomrSect
 
   testSection.render()
 
-
   users = new UserCollection()
 
   nav = new Navigation()
@@ -53,3 +54,5 @@ require ['backbone', 'Navigation', 'UserCollection', 'AppRouter', 'lib/RoomrSect
 
   # Die URL auf Änderungen überwachen
   Backbone.history.start()
+
+  finder.findOutState()
