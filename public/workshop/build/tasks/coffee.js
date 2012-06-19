@@ -27,8 +27,9 @@ module.exports = function(grunt){
       js = coffee.compile(source, {'filename': file});
     }
     catch (e) {
+      grunt.log.error('Failed to compile ' + file);
       grunt.log.error(e);
-      return false;
+      throw e;
     }
 
     var jsPath = file.split('.coffee')[0] + '.js';
