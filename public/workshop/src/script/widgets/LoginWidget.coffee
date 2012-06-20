@@ -6,16 +6,31 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
     constructor: () ->
       super('login')
       @loginState = 'unknown'
+      @userName = 'foo'
+      @userEmail = 'foo'
       @registerPropChgEvent 'loginStateChanged'
+      @registerPropChgEvent 'userNameChanged'
+      @registerPropChgEvent 'userEmailChanged'
+      @registerPropChgEvent 'userBirthdate'
+      @registerPropChgEvent 'userGender'
       window.eventMediator.subscribeToEvent 'loginStateChanged', @onLoginStateChanged
+      window.eventMediator.subscribeToEvent 'userNameChanged', @onUserNameChanged
+      window.eventMediator.subscribeToEvent 'userEmailChanged', @onUserEmailChanged
       @findOutState()
+
+    emitUserInfoEvents: (userInfo) ->
+      @emit 'userNameChanged', userInfo.name
+      @emit 'userEmailChanged', userInfo.email
+      @emit 'loginStateChanged', 'loggedIn'
+      @emit 'userBirthdate', userInfo.birthdate
+      @emit 'userGender', userInfo.gender
 
     findOutState: ->
       $.ajax {
         url: '/rest/users/current'
         complete: (jqXHR, stat) =>
           if stat == 'success'
-            @emit 'loginStateChanged', 'loggedIn'
+            @emitUserInfoEvents JSON.parse jqXHR.responseText
           else
             @emit 'loginStateChanged', 'loggedOut'
       }
@@ -32,8 +47,7 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
           type: 'POST'
           complete: (jqXHR, stat) =>
             if stat == 'success'
-              @emit 'loginStateChanged', 'loggedIn'
-              console.log "Eingeloggt: ", jqXHR
+              @emitUserInfoEvents JSON.parse jqXHR.responseText
             else
               console.log "Kaputt", jqXHR
         }
@@ -49,6 +63,8 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
           complete: (jqXHR, stat) =>
             if stat == 'success'
               @emit 'loginStateChanged', 'loggedOut'
+              @emit 'userNameChanged', ''
+              @emit 'userEmailChanged', ''
             else
               console.log "Kaputt", jqXHR
         }
@@ -56,6 +72,10 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
     onLoginStateChanged: (newState) =>
       @loginState = newState
       @render()
+
+    onUserNameChanged: (newName) => @userName = newName
+
+    onUserEmailChanged: (newEmail) => @userEmail = newEmail
 
     renderInto: (element) ->
       @elem = element
@@ -77,8 +97,7 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
 
     renderLogoutForm: () =>
       @name = 'logout'
-      @renderTemplate {}, (html) =>
+      @renderTemplate { UserName: @userName, UserEmail: @userEmail}, (html) =>
           $(@elem).empty()
           $(@elem).append(html)
           @setLogoutSubmitEvent()
-          @fetchAndFillProfileInfo()
