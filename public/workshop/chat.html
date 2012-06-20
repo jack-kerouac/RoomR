@@ -1,0 +1,45 @@
+<script type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>
+<script type="text/javascript" src="http://localhost:1337/socket.io/socket.io.js"></script>
+
+<body>
+<script>
+	var socket = io.connect('ws://localhost:1337');
+	// Add a connect listener
+	socket.on('connect',function() {
+  		console.log('Client has connected to the server!');
+	});
+
+	$(document).ready(function(){
+		var username = window.prompt('Bitte User-Name eingeben');
+		$('#chatform').submit(function(evt){
+			evt.preventDefault();
+			doSomething(username);
+		});
+		socket.on('message', function(data){
+			console.log("Client received a message");
+			console.log(data);
+			$('#chatarea').append('<br/>');
+			$('#chatarea').append(data);
+		});
+		socket.on('broadcast', function(data){
+			console.log("Client received a broadcast");
+			console.log(data);
+		});
+	});
+
+	var doSomething = function (username){
+		var chatMessage = username + ': ' + $('#chatfeld').val();
+		console.log(chatMessage);
+		socket.send(chatMessage);
+		$('#chatarea').append('<br/>');
+		$('#chatarea').append(chatMessage);
+	};
+	
+	
+</script>
+<div id="chatarea">
+</div>
+<form id="chatform">
+	<input id="chatfeld" type="text"  placeholder="Type here"/>
+</form>
+
