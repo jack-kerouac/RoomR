@@ -16,17 +16,11 @@
 # bereitstellen, können wir beides in unserer Callback-Funkion verwenden, ohne sie dort
 # im Callback explizit aufzuführen.
 
-# HLE old
-# require ['base/EventMediator', 'backbone', 'Navigation', 'models/UserCollection', 'AppRouter', 'base/RoomrSection', 'widgets/SearchWidget', 'widgets/SearchResultWidget', 'widgets/LoginStatusFinder', 'ErrorLogger', 'widgets/LoginWidget'],
-# (EventMediator, Backbone, Navigation, UserCollection, AppRouter, RoomrSection, SearchWidget, SearchResultWidget, LoginStatusFinder, ErrorLogger, LoginWidget) ->
 require ['base/EventMediator', 'backbone', 'Navigation', 'models/UserCollection', 'base/AppRouter', 'base/RoomrSection', 'widgets/SearchWidget',
-'widgets/SearchResultWidget', 'widgets/LoginWidget', 'widgets/LoginStatusFinder', 'widgets/FlatshareWidget', 'widgets/PhotoUploadWidget'],
-(EventMediator, Backbone, Navigation, UserCollection, AppRouter, RoomrSection, SearchWidget, SearchResultWidget, LoginWidget, LoginStatusFinder, FlatshareWidget, PhotoUploadWidget) ->
+'widgets/SearchResultWidget', 'widgets/LoginWidget', 'widgets/FlatshareWidget', 'widgets/PhotoUploadWidget'],
+(EventMediator, Backbone, Navigation, UserCollection, AppRouter, RoomrSection, SearchWidget, SearchResultWidget, LoginWidget, FlatshareWidget, PhotoUploadWidget) ->
 
   'use strict'
-
-  finder = new LoginStatusFinder()
-
 
   # Router anwerfen
   app = new AppRouter()
@@ -66,6 +60,7 @@ require ['base/EventMediator', 'backbone', 'Navigation', 'models/UserCollection'
 
   # App starten
   # -----------
+
   $(document).ready ->
     Backbone.history.start( { pushState: true } )
 
