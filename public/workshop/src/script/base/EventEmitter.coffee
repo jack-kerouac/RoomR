@@ -28,6 +28,8 @@ define ->
         if @subscribers[eventName]?
           @subscribers[eventName].forEach (callback) ->
             callback.apply(this, params)
+          if @cachedProps[eventName]?
+            @cachedProps[eventName] = params[0]
         else
           alert "Tried to emit unregistered event"
 
