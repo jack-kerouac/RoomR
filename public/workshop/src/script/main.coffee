@@ -16,18 +16,29 @@
 # bereitstellen, können wir beides in unserer Callback-Funkion verwenden, ohne sie dort
 # im Callback explizit aufzuführen.
 
-require ['base/EventMediator', 'backbone', 'Navigation', 'models/UserCollection', 'AppRouter', 'base/RoomrSection', 'widgets/SearchWidget', 'widgets/SearchResultWidget', 'widgets/LoginStatusFinder', 'ErrorLogger', 'widgets/LoginWidget'],
-(EventMediator, Backbone, Navigation, UserCollection, AppRouter, RoomrSection, SearchWidget, SearchResultWidget, LoginStatusFinder, ErrorLogger, LoginWidget) ->
+# HLE old
+# require ['base/EventMediator', 'backbone', 'Navigation', 'models/UserCollection', 'AppRouter', 'base/RoomrSection', 'widgets/SearchWidget', 'widgets/SearchResultWidget', 'widgets/LoginStatusFinder', 'ErrorLogger', 'widgets/LoginWidget'],
+# (EventMediator, Backbone, Navigation, UserCollection, AppRouter, RoomrSection, SearchWidget, SearchResultWidget, LoginStatusFinder, ErrorLogger, LoginWidget) ->
+require ['backbone', 'Navigation', 'models/UserCollection', 'base/AppRouter', 'base/RoomrSection', 'widgets/SearchWidget',
+'widgets/SearchResultWidget', 'widgets/LoginWidget', 'widgets/LoginStatusFinder', 'widgets/FlatshareWidget'],
+(Backbone, Navigation, UserCollection, AppRouter, RoomrSection, SearchWidget, SearchResultWidget, LoginWidget, LoginStatusFinder, FlatshareWidget) ->
 
   'use strict'
 
   finder = new LoginStatusFinder()
+
+
+  # Router anwerfen
+  app = new AppRouter()
 
   mainSection = new RoomrSection {
       name: 'main'
       title: 'test title'
       path: ''
     }
+  loginWidget = new LoginWidget()
+  mainSection.addWidget(loginWidget)
+
   searchWidget = new SearchWidget()
   mainSection.addWidget(searchWidget)
 
@@ -37,26 +48,19 @@ require ['base/EventMediator', 'backbone', 'Navigation', 'models/UserCollection'
   searchWidget.subscribe 'searchResultsChanged', (params...) ->
     searchResultWidget.searchResultsChanged.apply(searchResultWidget, params)
 
-  loginWidget = new LoginWidget()
-  mainSection.addWidget loginWidget
+  app.addSection mainSection
 
-  users = new UserCollection()
-
-  nav = new Navigation()
-
-  # Router anwerfen
-  app = new AppRouter(nav)
-
-  nav.app = app
-  nav.users = users
 
   testSection = new RoomrSection {
     name: 'test'
     title: 'test 2 title'
   }
 
+  flatshareWidget = new FlatshareWidget()
+  testSection.addWidget(flatshareWidget)
+
   app.addSection testSection
-  app.addSection mainSection
+
 
   # App starten
   # -----------

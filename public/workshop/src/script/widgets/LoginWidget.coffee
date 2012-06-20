@@ -1,5 +1,5 @@
-define ['PageView', 'base/renderTemplate', 'base/RoomrWidget'],
-(PageView, renderTemplate, RoomrWidget) ->
+define ['base/renderTemplate', 'base/RoomrWidget'],
+(renderTemplate, RoomrWidget) ->
   'use strict'
 
   class LoginWidget extends RoomrWidget
