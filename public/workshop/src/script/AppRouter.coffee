@@ -38,6 +38,7 @@ define ['backbone'], (Backbone) -> Backbone.Router.extend {
     else
       @nav.showItems()
 
+  # TODO: Flo: handle unexpected hash tags
   addSection: (section) ->
     @route section.path, section.name, -> section.render()
 
