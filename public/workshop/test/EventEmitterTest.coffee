@@ -1,5 +1,5 @@
 # Für den Test muss erst mal das zuständige Modul geladen werden
-require ['../src/script/base/EventEmitter'], (EventEmitter) ->
+require ['../src/script/base/EventMediator', '../src/script/base/EventEmitter'], (EventMediator, EventEmitter) ->
   'use strict'
 
   $(document).ready ->
@@ -26,24 +26,24 @@ require ['../src/script/base/EventEmitter'], (EventEmitter) ->
 
     test 'Funktion listEvents_afterRegisterEvent_containsThisEvent()', ->
       emitter = new EventEmitter()
-      emitter.registerEvent 'foo'
-      ok 'foo' in emitter.listEvents()
+      emitter.registerEvent 'foo1'
+      ok 'foo1' in emitter.listEvents()
 
     test 'Funktion listEvents_afterRegisterEventCalledOnce_containsOneEvent()', ->
       emitter = new EventEmitter()
-      emitter.registerEvent 'foo'
+      emitter.registerEvent 'foo2'
 
       equal emitter.listEvents().length, 1
 
     test 'Funktion emit_afterRegisterEvent_callsCallback()', ->
       emitter = new EventEmitter()
-      emitter.registerEvent 'foo'
+      emitter.registerEvent 'foo3'
 
       wasCalled = false
       fct = -> wasCalled = true
 
-      emitter.subscribe 'foo', fct
-      emitter.emit 'foo'
+      emitter.subscribe 'foo3', fct
+      emitter.emit 'foo3'
 
       ok wasCalled
 

@@ -1,4 +1,4 @@
-define ['base/EventMediator'], (EventMediatorX) ->
+define ->
   'use strict'
 
   class EventEmitter
@@ -7,7 +7,7 @@ define ['base/EventMediator'], (EventMediatorX) ->
 
     registerEvent: (eventName) ->
       @subscribers[eventName] = []
-      #EventMediator.registerEvent this eventName
+      window.eventMediator.registerEvent this, eventName
 
     subscribe: (eventName, callback) ->
       if eventName

@@ -1,19 +1,23 @@
-define ['PageView', 'base/renderTemplate', 'base/EventMediator'], (PageView, renderTemplate, EventMediator) ->
+define ['PageView', 'base/renderTemplate', 'base/RoomrWidget'], (PageView, renderTemplate, RoomrWidget) ->
   'use strict'
 
-  class LoginWidget
+  class LoginWidget extends RoomrWidget
     constructor: () ->
-      EventMediator.subscribeToEvent 'loggedIn', @renderLoggedIn
-      EventMediator.subscribeToEvent 'loggedOut', @renderLoggedOut
+      super('login')
+      window.eventMediator.subscribeToEvent 'loggedIn', @renderLoggedIn
+      window.eventMediator.subscribeToEvent 'loggedOut', @renderLoggedOut
 
-    render: () -> @renderLoggedOut()
+    renderInto: (element) ->
+      @elem = element
 
     renderLoggedOut: () =>
       renderTemplate 'login', {}, (content) ->
         if @openItem? then @openItem.remove()
-        new PageView().render('LOG DICH EIN!', content)
+        renderTemplate {}, (html) =>
+          $(@elem).append(html)
 
     renderLoggedIn: () =>
       renderTemplate 'profileInfo', {}, (content) ->
         if @openItem? then @openItem.remove()
-        new PageView().render('Hi there', content)
+        renderTemplate {}, (html) =>
+          $(@elem).append(html)
