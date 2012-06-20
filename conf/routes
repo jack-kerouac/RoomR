@@ -186,7 +186,8 @@ GET		/old/applications							Applications.view
 GET		/old/reset									DevModels.reset
 
 
-GET     /			                            staticDir:public/workshop
+GET     /test/			                            staticDir:public/workshop
+GET     /				                            staticDir:public/workshop
 
 # Catch all
 #*       /old/{controller}/{action}                  {controller}.{action}

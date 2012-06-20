@@ -1,19 +1,82 @@
-define ['PageView', 'base/renderTemplate', 'base/EventMediator'], (PageView, renderTemplate, EventMediator) ->
+define ['base/renderTemplate', 'base/RoomrWidget'],
+(renderTemplate, RoomrWidget) ->
   'use strict'
 
-  class LoginWidget
+  class LoginWidget extends RoomrWidget
     constructor: () ->
-      EventMediator.subscribeToEvent 'loggedIn', @renderLoggedIn
-      EventMediator.subscribeToEvent 'loggedOut', @renderLoggedOut
+      super('login')
+      @loginState = 'unknown'
+      @registerPropChgEvent 'loginStateChanged'
+      window.eventMediator.subscribeToEvent 'loginStateChanged', @onLoginStateChanged
+      @findOutState()
 
-    render: () -> @renderLoggedOut()
+    findOutState: ->
+      $.ajax {
+        url: '/rest/users/current'
+        complete: (jqXHR, stat) =>
+          if stat == 'success'
+            @emit 'loginStateChanged', 'loggedIn'
+          else
+            @emit 'loginStateChanged', 'loggedOut'
+      }
 
-    renderLoggedOut: () =>
-      renderTemplate 'login', {}, (content) ->
-        if @openItem? then @openItem.remove()
-        new PageView().render('LOG DICH EIN!', content)
+    setLoginSubmitEvent: ->
+      $('#LoginWidgetForm').submit (event) =>
+        event.preventDefault()
+        username = $('#LoginWidgetForm input[name=login]').val()
+        passwd = $('#LoginWidgetForm input[name=passwd]').val()
+        postData = { email: username, password: passwd }
+        $.ajax '/rest/login', {
+          contentType : "application/json"
+          data: JSON.stringify postData
+          type: 'POST'
+          complete: (jqXHR, stat) =>
+            if stat == 'success'
+              @emit 'loginStateChanged', 'loggedIn'
+            else
+              console.log "Kaputt", jqXHR
+        }
 
-    renderLoggedIn: () =>
-      renderTemplate 'profileInfo', {}, (content) ->
-        if @openItem? then @openItem.remove()
-        new PageView().render('Hi there', content)
+    setLogoutSubmitEvent: ->
+      $('#LogoutWidgetForm').submit (event) =>
+        event.preventDefault()
+        postData = { msg : "I'm off" }
+        $.ajax '/rest/logout', {
+          contentType : "application/json"
+          data: JSON.stringify postData
+          type: 'POST'
+          complete: (jqXHR, stat) =>
+            if stat == 'success'
+              @emit 'loginStateChanged', 'loggedOut'
+            else
+              console.log "Kaputt", jqXHR
+        }
+
+    onLoginStateChanged: (newState) =>
+      @loginState = newState
+      @render()
+
+    renderInto: (element) ->
+      @elem = element
+      @render()
+
+    render: ->
+      if @elem?
+        if @loginState == 'loggedIn'
+          @renderProfileInfoForm()
+        else
+          @renderLoginForm()
+
+    renderLoginForm: () =>
+      @name = 'login'
+      @renderTemplate {}, (html) =>
+          $(@elem).empty()
+          $(@elem).append(html)
+          @setLoginSubmitEvent()
+
+    renderProfileInfoForm: () =>
+      @name = 'profileInfo'
+      @renderTemplate {}, (html) =>
+          $(@elem).empty()
+          $(@elem).append(html)
+          @setLogoutSubmitEvent()
