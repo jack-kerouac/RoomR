@@ -9,8 +9,9 @@ define ->
       contentType:"application/json; charset=utf-8"
     })
 
-  $(window).error (event) -> 
-    postError event.type
+  window.onerror = (message,url,line_num) -> 
+    errorMsg = "General error in #{url} at line #{line_num}: #{message}"
+    postError errorMsg
 
   $(window).bind 'widgetError', (event, widgetName, msg)->    
     errorMsg = "Widget error in #{widgetName}: #{msg}"
