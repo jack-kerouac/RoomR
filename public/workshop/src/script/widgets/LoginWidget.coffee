@@ -8,14 +8,20 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
       @loginState = 'unknown'
       @userName = 'foo'
       @userEmail = 'foo'
+
       @registerPropChgEvent 'loginStateChanged'
       @registerPropChgEvent 'userNameChanged'
       @registerPropChgEvent 'userEmailChanged'
       @registerPropChgEvent 'userBirthdate'
       @registerPropChgEvent 'userGender'
-      window.eventMediator.subscribeToEvent 'loginStateChanged', @onLoginStateChanged
-      window.eventMediator.subscribeToEvent 'userNameChanged', @onUserNameChanged
-      window.eventMediator.subscribeToEvent 'userEmailChanged', @onUserEmailChanged
+
+      window.eventMediator.subscribeToEvent 'loginStateChanged',
+        (newState) => @loginState = newState; @render()
+      window.eventMediator.subscribeToEvent 'userNameChanged',
+        (newName) => @userName = newName
+      window.eventMediator.subscribeToEvent 'userEmailChanged',
+        (newEmail) => @userEmail = newEmail
+
       @findOutState()
 
     emitUserInfoEvents: (userInfo) ->
@@ -68,14 +74,6 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
             else
               console.log "Kaputt", jqXHR
         }
-
-    onLoginStateChanged: (newState) =>
-      @loginState = newState
-      @render()
-
-    onUserNameChanged: (newName) => @userName = newName
-
-    onUserEmailChanged: (newEmail) => @userEmail = newEmail
 
     renderInto: (element) ->
       @elem = element
