@@ -16,3 +16,7 @@ define ->
   $(window).bind 'widgetError', (event, widgetName, msg)->    
     errorMsg = "Widget error in #{widgetName}: #{msg}"
     postError errorMsg
+
+  $(window).bind 'templateLoadError', (event, msg)->    
+    errorMsg = "Template loading error: #{msg}"
+    postError errorMsg

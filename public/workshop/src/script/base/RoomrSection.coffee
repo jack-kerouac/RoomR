@@ -25,8 +25,7 @@ define ['backbone', 'base/renderTemplate'], (Backbone, renderTemplate) ->
       $('title').text("RoomR - #{@title}")
       $('#Headline').html(@title)
 
-      renderTemplate "sections/#{@name}", {}, (template) =>
-        # TODO: Flo: catch case that there is no section template
+      successCallback = (template) =>
         @$el.html(template)
         @$el.attr('id', "#{@name}-section")
         this.$('.widget').each (index, element) =>
@@ -37,6 +36,11 @@ define ['backbone', 'base/renderTemplate'], (Backbone, renderTemplate) ->
           else
             alert "no widget found for <... data-type=\"#{widgetType}\">"
         if callback? then callback()
+
+      errorCallback = (templateName, options) ->
+        alert 'failure'
+
+      renderTemplate "sections/#{@name}", {}, successCallback, errorCallback
       
       return this
   }
