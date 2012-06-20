@@ -1,4 +1,4 @@
-define ['base/RoomrWidget', 'base/roomrUtil'], (RoomrWidget, roomrUtil) ->
+define ['base/RoomrWidget', 'base/roomrUtil', 'modernizr'], (RoomrWidget, roomrUtil) ->
   'use strict'
 
   class PhotoUploadWidget extends RoomrWidget
@@ -13,6 +13,7 @@ define ['base/RoomrWidget', 'base/roomrUtil'], (RoomrWidget, roomrUtil) ->
         @nidus.html content
         @dropTarget = $('.drop-target', @nidus)
 
+        # file select field is made invisible by Modernizr powered CSS
         @fileSelect = $('input[type="file"]', @nidus)
         @fileSelect.on 'change', (changeEvent) =>
           changeEvent.preventDefault()
