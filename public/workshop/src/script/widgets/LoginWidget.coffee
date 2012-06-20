@@ -53,7 +53,11 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
           type: 'POST'
           complete: (jqXHR, stat) =>
             if stat == 'success'
-              @emitUserInfoEvents JSON.parse jqXHR.responseText
+              userInfo = JSON.parse jqXHR.responseText
+              if userInfo.error?
+                alert "Fehler beim Login"
+              else
+                @emitUserInfoEvents userInfo
             else
               alert "Fehler beim Login"
         }
