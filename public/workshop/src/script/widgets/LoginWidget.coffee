@@ -41,7 +41,6 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
       @render()
 
     render: ->
-      alert "render called. loginState = #{@loginState}"
       if @elem?
         if @loginState == 'loggedIn'
           @renderLoggedIn()
