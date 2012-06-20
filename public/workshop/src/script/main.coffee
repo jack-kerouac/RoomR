@@ -16,20 +16,29 @@
 # bereitstellen, können wir beides in unserer Callback-Funkion verwenden, ohne sie dort
 # im Callback explizit aufzuführen.
 
-require ['backbone', 'Navigation', 'models/UserCollection', 'AppRouter', 'base/RoomrSection', 'ErrorLogger',
-    'widgets/SearchWidget', 'widgets/SearchResultWidget', 'widgets/LoginStatusFinder', 'widgets/PhotoUploadWidget'],
-(Backbone, Navigation, UserCollection, AppRouter, RoomrSection, ErrorLogger,
- SearchWidget, SearchResultWidget, LoginStatusFinder, PhotoUploadWidget) ->
+# HLE old
+# require ['base/EventMediator', 'backbone', 'Navigation', 'models/UserCollection', 'AppRouter', 'base/RoomrSection', 'widgets/SearchWidget', 'widgets/SearchResultWidget', 'widgets/LoginStatusFinder', 'ErrorLogger', 'widgets/LoginWidget'],
+# (EventMediator, Backbone, Navigation, UserCollection, AppRouter, RoomrSection, SearchWidget, SearchResultWidget, LoginStatusFinder, ErrorLogger, LoginWidget) ->
+require ['base/EventMediator', 'backbone', 'Navigation', 'models/UserCollection', 'base/AppRouter', 'base/RoomrSection', 'widgets/SearchWidget',
+'widgets/SearchResultWidget', 'widgets/LoginWidget', 'widgets/LoginStatusFinder', 'widgets/FlatshareWidget', 'widgets/PhotoUploadWidget'],
+(EventMediator, Backbone, Navigation, UserCollection, AppRouter, RoomrSection, SearchWidget, SearchResultWidget, LoginWidget, LoginStatusFinder, FlatshareWidget, PhotoUploadWidget) ->
 
   'use strict'
 
   finder = new LoginStatusFinder()
+
+
+  # Router anwerfen
+  app = new AppRouter()
 
   mainSection = new RoomrSection {
       name: 'main'
       title: 'test title'
       path: ''
     }
+  loginWidget = new LoginWidget()
+  mainSection.addWidget(loginWidget)
+
   searchWidget = new SearchWidget()
   mainSection.addWidget(searchWidget)
 
@@ -39,25 +48,21 @@ require ['backbone', 'Navigation', 'models/UserCollection', 'AppRouter', 'base/R
   searchWidget.subscribe 'searchResultsChanged', (params...) ->
     searchResultWidget.searchResultsChanged.apply(searchResultWidget, params)
 
-  users = new UserCollection()
+  app.addSection mainSection
 
-  nav = new Navigation()
-
-  # Router anwerfen
-  app = new AppRouter(nav)
-
-  nav.app = app
-  nav.users = users
 
   testSection = new RoomrSection {
     name: 'test'
     title: 'test 2 title'
   }
 
-  testSection.addWidget new PhotoUploadWidget()
+  photoUploadWidget = new PhotoUploadWidget()
+  flatshareWidget = new FlatshareWidget()
+  testSection.addWidget(photoUploadWidget)
+  testSection.addWidget(flatshareWidget)
 
   app.addSection testSection
-  app.addSection mainSection
+
 
   # App starten
   # -----------

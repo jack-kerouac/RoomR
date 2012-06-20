@@ -1,5 +1,5 @@
-define ['PageView', 'UserView', 'base/renderTemplate', 'widgets/LoginWidget', 'widgets/SearchWidget'], 
-(PageView, UserView, renderTemplate, LoginWidget, SearchWidget) ->
+define ['PageView', 'UserView', 'base/renderTemplate', 'widgets/SearchWidget'], 
+(PageView, UserView, renderTemplate, SearchWidget) ->
 	class Navigation
 		
     users: null
@@ -17,10 +17,6 @@ define ['PageView', 'UserView', 'base/renderTemplate', 'widgets/LoginWidget', 'w
       renderTemplate 'about', {date: Date().toString()}, (content) ->
         if @openItem? then @openItem.remove()
         new PageView().render('Über dieses Beispiel', content)
-
-    showLogin: ->
-      login = new LoginWidget()
-      login.render('#Main')
 
     # Einträge anzeigen. Wenn im Model darüber hinaus noch `num` nicht `undefined` ist,
     # müssen wir auch noch einen Einzel-Eintrag zeigen.

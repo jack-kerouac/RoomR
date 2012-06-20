@@ -1,19 +1,42 @@
-define ['PageView', 'base/renderTemplate', 'base/EventMediator'], (PageView, renderTemplate, EventMediator) ->
+define ['base/renderTemplate', 'base/RoomrWidget'],
+(renderTemplate, RoomrWidget) ->
   'use strict'
 
-  class LoginWidget
+  class LoginWidget extends RoomrWidget
     constructor: () ->
-      EventMediator.subscribeToEvent 'loggedIn', @renderLoggedIn
-      EventMediator.subscribeToEvent 'loggedOut', @renderLoggedOut
+      super('login')
+      window.eventMediator.subscribeToEvent 'loggedIn', @renderLoggedIn
+      window.eventMediator.subscribeToEvent 'loggedOut', @renderLoggedOut
 
-    render: () -> @renderLoggedOut()
+    addEvents: ->
+      $('#LoginWidgetForm').submit (event) ->
+        event.preventDefault()
+        username = $('#LoginWidgetForm input[name=login]').val()
+        passwd = $('#LoginWidgetForm input[name=passwd]').val()
+        $.ajax '/rest/login', {
+          contentType : "application/json"
+          data: "{ \"email\" : \"#{username}\", \"password\" : \"#{passwd}\" }"
+          type: 'POST'
+          complete: (jqXHR, stat) ->
+            if stat == 'success'
+              console.log "Hat gepasst"
+            else
+              console.log "Kaputt", jqXHR
+        }
+        ###
+        $.post '/rest/login',
+          "{ \"email\" : \"#{username}\", \"password\" : \"#{passwd}\" }",
+          (data) -> console.log data
+          ###
+
+    renderInto: (element) ->
+      @elem = element
 
     renderLoggedOut: () =>
-      renderTemplate 'login', {}, (content) ->
-        if @openItem? then @openItem.remove()
-        new PageView().render('LOG DICH EIN!', content)
+      @renderTemplate {}, (html) =>
+          $(@elem).append(html)
+          @addEvents()
 
     renderLoggedIn: () =>
-      renderTemplate 'profileInfo', {}, (content) ->
-        if @openItem? then @openItem.remove()
-        new PageView().render('Hi there', content)
+      @renderTemplate {}, (html) =>
+          $(@elem).append(html)
