@@ -8,34 +8,34 @@ require ['../src/script/base/EventMediator', '../src/script/base/EventEmitter'],
     module 'Modul EventEmitter'
 
     # In`test()` finden die eigentlichen Tests statt
-    test 'Funktion registerEvent_inEventEmitter_isAFunction()', ->
+    test 'Funktion registerEvent_inEventEmitter_isAFunction', ->
       emitter = new EventEmitter()
       ok typeof emitter.registerEvent == 'function'
 
-    test 'Funktion listEvents_inEventEmitter_isAFunction()', ->
+    test 'Funktion listEvents_inEventEmitter_isAFunction', ->
       emitter = new EventEmitter()
       ok typeof emitter.listEvents == 'function'
 
-    test 'Funktion emit_inEventEmitter_isAFunction()', ->
+    test 'Funktion emit_inEventEmitter_isAFunction', ->
       emitter = new EventEmitter()
       ok typeof emitter.emit == 'function'
 
-    test 'Funktion subscribe_inEventEmitter_isAFunction()', ->
+    test 'Funktion subscribe_inEventEmitter_isAFunction', ->
       emitter = new EventEmitter()
       ok typeof emitter.subscribe == 'function'
 
-    test 'Funktion listEvents_afterRegisterEvent_containsThisEvent()', ->
+    test 'Funktion listEvents_afterRegisterEvent_containsThisEvent', ->
       emitter = new EventEmitter()
       emitter.registerEvent 'foo1'
       ok 'foo1' in emitter.listEvents()
 
-    test 'Funktion listEvents_afterRegisterEventCalledOnce_containsOneEvent()', ->
+    test 'Funktion listEvents_afterRegisterEventCalledOnce_containsOneEvent', ->
       emitter = new EventEmitter()
       emitter.registerEvent 'foo2'
 
       equal emitter.listEvents().length, 1
 
-    test 'Funktion emit_afterRegisterEvent_callsCallback()', ->
+    test 'Funktion emit_afterRegisterEvent_callsCallback', ->
       emitter = new EventEmitter()
       emitter.registerEvent 'foo3'
 
@@ -48,7 +48,7 @@ require ['../src/script/base/EventMediator', '../src/script/base/EventEmitter'],
       ok wasCalled
 
 
-    test 'Funktion emit_afterRegisterEvent_callsAllCallbacks()', ->
+    test 'Funktion emit_afterRegisterEvent_callsAllCallbacks', ->
       emitter = new EventEmitter()
       emitter.registerEvent 'bar'
 
@@ -64,7 +64,7 @@ require ['../src/script/base/EventMediator', '../src/script/base/EventEmitter'],
       ok wasCalledOne
       ok wasCalledTwo
 
-    test 'Funktion emitWithParam_afterRegisterEvent_callsCallbackWithParam()', ->
+    test 'Funktion emitWithParam_afterRegisterEvent_callsCallbackWithParam', ->
       emitter = new EventEmitter()
       emitter.registerEvent 'baz'
 
@@ -75,3 +75,14 @@ require ['../src/script/base/EventMediator', '../src/script/base/EventEmitter'],
       emitter.emit 'baz', 42
 
       equal 42, eventParam
+
+    test 'Funktion subscribe_propChgEventDidntFired_doesntCallCallback', ->
+      emitter = new EventEmitter()
+      emitter.registerPropChgEvent 'propChanged'
+
+      wasCalled = false
+      fct = () -> wasCalled = true
+
+      emitter.subscribe 'propChanged', fct
+
+      ok not wasCalled

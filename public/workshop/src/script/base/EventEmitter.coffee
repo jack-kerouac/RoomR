@@ -9,6 +9,9 @@ define ->
       @subscribers[eventName] = []
       window.eventMediator.registerEvent this, eventName
 
+    registerPropChgEvent: (eventName) ->
+      @registerEvent eventName
+
     subscribe: (eventName, callback) ->
       if eventName
         if @subscribers[eventName]?
