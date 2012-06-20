@@ -37,10 +37,7 @@ define ['backbone', 'base/renderTemplate'], (Backbone, renderTemplate) ->
             alert "no widget found for <... data-type=\"#{widgetType}\">"
         if callback? then callback()
 
-      errorCallback = (templateName, options) ->
-        alert 'failure'
-
-      renderTemplate "sections/#{@name}", {}, successCallback, errorCallback
+      renderTemplate "sections/#{@name}", {}, successCallback
       
       return this
   }

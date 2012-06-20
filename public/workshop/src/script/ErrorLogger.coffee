@@ -2,6 +2,7 @@ define ->
   postError = (errorMsg) ->    
     currentDate = new Date().toLocaleString()
     errorMsg = "[#{currentDate}] #{errorMsg}" 
+    console.log errorMsg
     $.ajax({
       url:'http://localhost:9000/rest/log',
       type:'POST',
