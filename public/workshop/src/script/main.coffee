@@ -63,5 +63,3 @@ require ['base/EventMediator', 'backbone', 'Navigation', 'models/UserCollection'
 
   $(document).ready ->
     Backbone.history.start( { pushState: true } )
-
-  finder.findOutState()
