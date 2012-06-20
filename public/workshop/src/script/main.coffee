@@ -36,9 +36,9 @@ require ['backbone', 'Navigation', 'models/UserCollection', 'AppRouter', 'base/R
   searchWidget.subscribe 'searchResultsChanged', (params...) ->
     searchResultWidget.searchResultsChanged.apply(searchResultWidget, params)
 
-
-
   testSection.render()
+
+
 
   users = new UserCollection()
 
