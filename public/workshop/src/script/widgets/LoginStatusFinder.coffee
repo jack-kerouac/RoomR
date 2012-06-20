@@ -4,11 +4,6 @@ define ['base/EventEmitter'], (EventEmitter) ->
   class LoginStateFinder extends EventEmitter
     constructor: ->
       super()
-      @registerEvent 'loggedIn'
-      @registerEvent 'loggedOut'
 
     findOutState: ->
-      successCbk =  () => this.emit 'loggedIn'
-      errorCbk = () => this.emit 'loggedOut'
-
-      $.get('/rest/users/current', successCbk ).error errorCbk
+      console.log "Weg damit"
