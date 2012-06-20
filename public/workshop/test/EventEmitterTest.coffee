@@ -81,17 +81,14 @@ require ['../src/script/base/EventMediator', '../src/script/base/EventEmitter'],
       emitter.registerPropChgEvent 'propChanged1'
 
       wasCalled = false
-      eventName = ''
       value = ''
-      fct = (name, newValue) ->
-        eventName = name
+      fct = (newValue) ->
         value = newValue
         wasCalled = true
 
       emitter.subscribe 'propChanged1', fct
 
       ok wasCalled
-      equal eventName, 'propChanged1'
       equal value, 'unknown'
 
     test 'Funktion subscribe_andThenPropChgEventFires_callsCallCallbackWithProp', ->

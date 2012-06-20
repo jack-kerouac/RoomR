@@ -19,7 +19,7 @@ define ->
         if @subscribers[eventName]?
           @subscribers[eventName].push(callback)
           if @cachedProps[eventName]?
-            callback eventName, @cachedProps[eventName]
+            callback @cachedProps[eventName]
         else
           alert "Tried to subscribe to non-existing event" + eventName
 
