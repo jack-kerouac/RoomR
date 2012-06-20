@@ -17,7 +17,7 @@
 # im Callback explizit aufzuführen.
 
 require ['base/EventMediator', 'backbone', 'Navigation', 'models/UserCollection', 'AppRouter', 'base/RoomrSection', 'widgets/SearchWidget', 'widgets/SearchResultWidget', 'widgets/LoginStatusFinder', 'ErrorLogger', 'widgets/LoginWidget'],
-(EventMediator, Backbone, Navigation, UserCollection, AppRouter, RoomrSection, SearchWidget, SearchResultWidget, LoginStatusFinder, LoginWidget) ->
+(EventMediator, Backbone, Navigation, UserCollection, AppRouter, RoomrSection, SearchWidget, SearchResultWidget, LoginStatusFinder, ErrorLogger, LoginWidget) ->
 
   'use strict'
 
@@ -38,9 +38,7 @@ require ['base/EventMediator', 'backbone', 'Navigation', 'models/UserCollection'
     searchResultWidget.searchResultsChanged.apply(searchResultWidget, params)
 
   loginWidget = new LoginWidget()
-  testSection.addWidget(loginWidget)
-
-  testSection.render()
+  mainSection.addWidget loginWidget
 
   users = new UserCollection()
 

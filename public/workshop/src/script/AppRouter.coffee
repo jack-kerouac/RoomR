@@ -13,7 +13,6 @@ define ['backbone'], (Backbone) -> Backbone.Router.extend {
   routes: {
     ''          : 'start' # Startseite
     'about'     : 'about' # Info-Seite
-    'login'     : 'login' # Login-Seite
     'view'      : 'view'  # Alle Einträge
     'view/:num' : 'view'  # Alle Einträge + Eintrag mit der Nummer `:num`
   }
@@ -25,11 +24,6 @@ define ['backbone'], (Backbone) -> Backbone.Router.extend {
   # Info-Seite
   about: ->
     @nav.showAbout()
-
-  # Zeigt den Login-Dialog. Der ist jetzt erst mal hier untergebracht um
-  # "was zu sehen". Schlussendlich kommt der dann wo anders hin
-  login: ->
-    @nav.showLogin()
 
   # Alle Einträge auflisten und Ggf. den Eintrag mit der Nummer `:num` einblenden
   view: (num) ->
