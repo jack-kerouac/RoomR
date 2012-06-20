@@ -60,4 +60,4 @@ require ['base/EventMediator', 'backbone', 'Navigation', 'models/UserCollection'
 
   # App starten
   # -----------
-  Backbone.history.start()
+  Backbone.history.start( { pushState: true } )
