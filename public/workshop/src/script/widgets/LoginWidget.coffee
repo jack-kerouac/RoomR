@@ -20,7 +20,7 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
             @emit 'loginStateChanged', 'loggedOut'
       }
 
-    addEvents: ->
+    setLoginSubmitEvent: ->
       $('#LoginWidgetForm').submit (event) =>
         event.preventDefault()
         username = $('#LoginWidgetForm input[name=login]').val()
@@ -37,6 +37,21 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
               console.log "Kaputt", jqXHR
         }
 
+    setLogoutSubmitEvent: ->
+      $('#LogoutWidgetForm').submit (event) =>
+        event.preventDefault()
+        postData = { msg : "I'm off" }
+        $.ajax '/rest/logout', {
+          contentType : "application/json"
+          data: JSON.stringify postData
+          type: 'POST'
+          complete: (jqXHR, stat) =>
+            if stat == 'success'
+              @emit 'loginStateChanged', 'loggedOut'
+            else
+              console.log "Kaputt", jqXHR
+        }
+
     onLoginStateChanged: (newState) =>
       @loginState = newState
       @render()
@@ -48,19 +63,20 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
     render: ->
       if @elem?
         if @loginState == 'loggedIn'
-          @renderLoggedIn()
+          @renderProfileInfoForm()
         else
-          @renderLoggedOut()
+          @renderLoginForm()
 
-    renderLoggedOut: () =>
+    renderLoginForm: () =>
       @name = 'login'
       @renderTemplate {}, (html) =>
           $(@elem).empty()
           $(@elem).append(html)
-          @addEvents()
+          @setLoginSubmitEvent()
 
-    renderLoggedIn: () =>
+    renderProfileInfoForm: () =>
       @name = 'profileInfo'
       @renderTemplate {}, (html) =>
           $(@elem).empty()
           $(@elem).append(html)
+          @setLogoutSubmitEvent()
