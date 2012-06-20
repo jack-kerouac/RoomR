@@ -14,26 +14,40 @@
         <option value="9. OG">
         <option value="10. OG">
     </datalist>
+    <h2>WG</h2>
+    <h3>Adresse</h3>
 
+    <label for="address_street">Straße:</label>
+    <input id="address_street" type="text" name="address_street" required>
 
-    Straße: <input type="text" name="street" required>
-    Nummer: <input type="text" name="streetnumber" pattern="[0-9]{1,4}[a-z]?"
+    <label for="address_streetNumber">Straßennummer:</label>
+    <input id="address_streetNumber" type="text" name="address_streetNumber" pattern="[0-9]{1,4}[a-z]?"
     title="Nummer (gegebenenfalls mit Zusatz)" required>
+
     <br>
-    PLZ: <input type="number" min=10000 max=99999 pattern="[1-9][0-9]{4}"
+
+    <label for="address_zipCode">PLZ:</label>
+    <input id="address_zipCode" name="address_zipCode" type="number" min=10000 max=99999 pattern="[1-9][0-9]{4}"
     title="fünfstellige Zahl" required>
-    Ort: <input type="text" required>
+    <label for="address_city">Ort:</label>
+    <input id="address_city" name="address_city" type="text" required>
     
     <br>
-    
-    Flur: <input type="text" list="floornames" required>
-    <input type="hidden" name="geolocation_latitude">
-    <input type="hidden" name="geolocation_longitude">
+
+    <label for="floor">Etage:</label>
+    <input id="floor" name="floor" type="text" list="floornames" required>
+
+    <h3>Geolocation</h3>
+    <label for="geolocation_latitude">Latitude:</label>
+    <input type="text" name="geolocation_latitude" id="geolocation_latitude" value="latitude" readonly>
+    <label for="geolocation_longitude">Longitude:</label>
+    <input type="text" name="geolocation_longitude" id="geolocation_longitude" value="longitude" readonly>
 
     <br>
+    <br>
 
-    Rauchertoleranz: 
-    <select name="smokingtolarance">
+    <label for="smokingtolarance">Rauchertoleranz:</label> 
+    <select name="smokingtolarance" id="smokingtolarance">
         <option value="allowedInRoom">Erlaubt im Zimmer</option>
         <option value="allowedInFlat">Erlaubt in Wohnung</option>
         <option value="prohibited">Verboten</option>
@@ -41,8 +55,8 @@
 
     <br>
 
-    Haustyp:
-    <select name="typeOfHouse">
+    <label for="typeOfHouse">Haustyp:</label> 
+    <select name="typeOfHouse" id="typeOfHouse">
         <option value="old">Altbau</option>
         <option value="new">Neubau</option>
         <option value="renovated">Renoviert</option>
@@ -50,10 +64,25 @@
 
     <br>
 
-    Anzahl der Zimmer:
-    <input type="number" min=1 pattern="[1-9][0-9]*" title="Zahl" required>
+    
+    <label for="numberOfRooms">Anzahl der Zimmer:</label> 
+    <input type="number" name="numberOfRooms" id="numberOfRooms" min=1 pattern="[1-9][0-9]*" title="Zahl" required>
 
     <br>
     <input type="submit">
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            if (navigator.geolocation) {                
+                navigator.geolocation.getCurrentPosition(  
+                    function (position) { 
+                        $('#geolocation_longitude').val(position.coords.longitude);
+                        $('#geolocation_latitude').val(position.coords.latitude);
+                    }
+                );
+            }
+        });
+
+    </script>
 </form>
 
