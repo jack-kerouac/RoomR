@@ -1,19 +1,23 @@
-define ['PageView', 'base/renderTemplate', 'base/EventMediator'], (PageView, renderTemplate, EventMediator) ->
+define ['base/EventMediator', 'base/RoomrWidget'], (EventMediator, RoomrWidget) ->
   'use strict'
 
-  class LoginWidget
+  class LoginWidget extends RoomrWidget
+
+  # TODO (Flo): how do we get the element to render this widget into when receiving events?
+
     constructor: () ->
+      super('login')
       EventMediator.subscribeToEvent 'loggedIn', @renderLoggedIn
       EventMediator.subscribeToEvent 'loggedOut', @renderLoggedOut
 
-    render: () -> @renderLoggedOut()
+    renderInto: (element) -> @renderLoggedOut(element)
 
-    renderLoggedOut: () =>
-      renderTemplate 'login', {}, (content) ->
+    renderLoggedOut: (element) =>
+      @renderTemplate {testVar: 'ABC'}, (content) ->
         if @openItem? then @openItem.remove()
-        new PageView().render('LOG DICH EIN!', content)
+        $(element).html(content)
 
-    renderLoggedIn: () =>
-      renderTemplate 'profileInfo', {}, (content) ->
+    renderLoggedIn: (element) =>
+      @renderTemplate {}, (content) ->
         if @openItem? then @openItem.remove()
-        new PageView().render('Hi there', content)
+        $(element).html(content)
