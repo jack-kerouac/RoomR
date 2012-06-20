@@ -20,11 +20,10 @@ require ['../src/script/base/RoomrSection', 'lib/jqueryMock'], (RoomrSection, jq
 
       stop()
       testSection.render -> 
-        console.log(jqueryMock.url)
-
         selection = $('#test-section')
         equal selection.length, 1
         equal selection.text(), returnedTemplateContent
+        equal jqueryMock.url(), '/templates/sections/test.handlebars'
         start()
 
       # trigger end of ajax call
