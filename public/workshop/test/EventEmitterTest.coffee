@@ -102,3 +102,20 @@ require ['../src/script/base/EventMediator', '../src/script/base/EventEmitter'],
 
       ok wasCalled
       equal value, 23
+
+    test 'Funktion subscribe_afterPropChgEventFired_callsCallCallbackWithProp', ->
+      emitter = new EventEmitter()
+      emitter.registerPropChgEvent 'propChanged3'
+
+      wasCalled = false
+      value = 0
+      fct = (param) ->
+        value = param
+        wasCalled = true
+
+      # Note the difference to the later test: First emit, then subscribe!
+      emitter.emit 'propChanged3', 1337
+      emitter.subscribe 'propChanged3', fct
+
+      ok wasCalled
+      equal value, 1337
