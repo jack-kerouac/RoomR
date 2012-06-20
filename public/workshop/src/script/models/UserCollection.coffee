@@ -1,4 +1,4 @@
-define ['backbone', 'User'], (Backbone, User) ->
+define ['backbone', 'models/User'], (Backbone, User) ->
   
   'use strict'
   

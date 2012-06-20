@@ -134,6 +134,8 @@ POST	/rest/flatshares/{id}/roomOffers		rest.Flatshares.addRoomOffer
 # get details about a single application
 GET		/rest/applications/{id}					rest.RoomOfferApplications.get
 
+POST	/rest/log								rest.RoomrLogger.log
+
 
 #######################################################################
 

@@ -16,6 +16,7 @@ define ['backbone', 'base/renderTemplate'], (Backbone, renderTemplate) ->
       @widgets = []
       @title = options.title
       @name = options.name
+      @path = if options.path? then options.path else options.name
 
     addWidget: (widget) ->
       @widgets[widget.name] = widget;
@@ -25,6 +26,7 @@ define ['backbone', 'base/renderTemplate'], (Backbone, renderTemplate) ->
       $('#Headline').html(@title)
 
       renderTemplate "sections/#{@name}", {}, (template) =>
+        # TODO: Flo: catch case that there is no section template
         @$el.html(template)
         @$el.attr('id', "#{@name}-section")
         this.$('.widget').each (index, element) =>

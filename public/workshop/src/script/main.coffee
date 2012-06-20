@@ -16,21 +16,23 @@
 # bereitstellen, können wir beides in unserer Callback-Funkion verwenden, ohne sie dort
 # im Callback explizit aufzuführen.
 
-require ['base/EventMediator', 'backbone', 'Navigation', 'UserCollection', 'AppRouter', 'base/RoomrSection', 'widgets/SearchWidget', 'widgets/SearchResultWidget', 'widgets/LoginStatusFinder', 'widgets/LoginWidget'], 
+require ['base/EventMediator', 'backbone', 'Navigation', 'models/UserCollection', 'AppRouter', 'base/RoomrSection', 'widgets/SearchWidget', 'widgets/SearchResultWidget', 'widgets/LoginStatusFinder', 'ErrorLogger', 'widgets/LoginWidget'],
 (EventMediator, Backbone, Navigation, UserCollection, AppRouter, RoomrSection, SearchWidget, SearchResultWidget, LoginStatusFinder, LoginWidget) ->
+
   'use strict'
 
   finder = new LoginStatusFinder()
 
-  testSection = new RoomrSection {
+  mainSection = new RoomrSection {
       name: 'main'
       title: 'test title'
+      path: ''
     }
   searchWidget = new SearchWidget()
-  testSection.addWidget(searchWidget)
+  mainSection.addWidget(searchWidget)
 
   searchResultWidget = new SearchResultWidget()
-  testSection.addWidget(searchResultWidget)
+  mainSection.addWidget(searchResultWidget)
 
   searchWidget.subscribe 'searchResultsChanged', (params...) ->
     searchResultWidget.searchResultsChanged.apply(searchResultWidget, params)
@@ -50,11 +52,16 @@ require ['base/EventMediator', 'backbone', 'Navigation', 'UserCollection', 'AppR
   nav.app = app
   nav.users = users
 
+  testSection = new RoomrSection {
+    name: 'test'
+    title: 'test 2 title'
+  }
+
+  app.addSection testSection
+  app.addSection mainSection
 
   # App starten
   # -----------
-
-  # Die URL auf Änderungen überwachen
   Backbone.history.start()
 
   finder.findOutState()
