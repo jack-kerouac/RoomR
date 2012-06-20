@@ -20,6 +20,5 @@ define ['base/EventEmitter', 'base/renderTemplate'], (EventEmitter, renderTempla
 
     renderInto: (element) ->
 
-  	reportError: (widgetName, errorMsg) ->
-      $(window).trigger('widgetError', [widgetName, errorMsg])     
-
+    reportError: (widgetName, errorMsg) ->
+      $(window).trigger('widgetError', [widgetName, errorMsg])
