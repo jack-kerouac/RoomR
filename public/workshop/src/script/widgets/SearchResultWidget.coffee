@@ -1,4 +1,4 @@
-define ['base/RoomrWidget', 'base/renderTemplate'], (RoomrWidget, renderTemplate) ->
+define ['base/RoomrWidget'], (RoomrWidget) ->
   'use strict'
 
   class SearchResultWidget extends RoomrWidget

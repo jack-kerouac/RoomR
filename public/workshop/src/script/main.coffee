@@ -20,8 +20,8 @@
 # require ['base/EventMediator', 'backbone', 'Navigation', 'models/UserCollection', 'AppRouter', 'base/RoomrSection', 'widgets/SearchWidget', 'widgets/SearchResultWidget', 'widgets/LoginStatusFinder', 'ErrorLogger', 'widgets/LoginWidget'],
 # (EventMediator, Backbone, Navigation, UserCollection, AppRouter, RoomrSection, SearchWidget, SearchResultWidget, LoginStatusFinder, ErrorLogger, LoginWidget) ->
 require ['base/EventMediator', 'backbone', 'Navigation', 'models/UserCollection', 'base/AppRouter', 'base/RoomrSection', 'widgets/SearchWidget',
-'widgets/SearchResultWidget', 'widgets/LoginWidget', 'widgets/LoginStatusFinder', 'widgets/FlatshareWidget'],
-(EventMediator, Backbone, Navigation, UserCollection, AppRouter, RoomrSection, SearchWidget, SearchResultWidget, LoginWidget, LoginStatusFinder, FlatshareWidget) ->
+'widgets/SearchResultWidget', 'widgets/LoginWidget', 'widgets/LoginStatusFinder', 'widgets/FlatshareWidget', 'widgets/PhotoUploadWidget'],
+(EventMediator, Backbone, Navigation, UserCollection, AppRouter, RoomrSection, SearchWidget, SearchResultWidget, LoginWidget, LoginStatusFinder, FlatshareWidget, PhotoUploadWidget) ->
 
   'use strict'
 
@@ -56,7 +56,9 @@ require ['base/EventMediator', 'backbone', 'Navigation', 'models/UserCollection'
     title: 'test 2 title'
   }
 
+  photoUploadWidget = new PhotoUploadWidget()
   flatshareWidget = new FlatshareWidget()
+  testSection.addWidget(photoUploadWidget)
   testSection.addWidget(flatshareWidget)
 
   app.addSection testSection

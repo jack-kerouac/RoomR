@@ -20,4 +20,23 @@ define ->
 
             clearTimeout typingTimer
             typingTimer = setTimeout callback, doneTypingTimeout
+
+    addDropHandler: (element, callback) ->
+      $(element).bind {
+        # Drop-Operation ermöglichen
+        dragover: (evt) ->
+          evt.preventDefault()
+
+        # Aktiv-Klasse bei Dropover
+        dragenter: (evt) ->
+          $(this).addClass 'active'
+        dragleave: (evt) ->
+          $(this).removeClass 'active'
+
+        # Drop-Event
+        drop: (evt) ->
+          $(this).removeClass 'active'
+          evt.preventDefault()
+          callback.call(this, evt.originalEvent)
+        }
   }
