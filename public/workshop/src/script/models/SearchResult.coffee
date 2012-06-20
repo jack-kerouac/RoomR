@@ -1,5 +1,6 @@
+# Einfaches Datenobject, dass Suchergebnisse hält
 define ->
   class SearchResult
-    constructor: (@offer, @matchingScore) ->
-      throw new Error('offer is undefined!') unless @offer?
+    constructor: (@roomOffer, @matchingScore) ->
+      throw new Error('roomOffer is undefined!') unless @roomOffer?
       throw new Error('matchingScore is undefined!') unless @matchingScore?

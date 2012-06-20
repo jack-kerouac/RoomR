@@ -1,5 +1,6 @@
 @import "nib/clearfix"
 @import "nib/vendor"
+@import "nib/gradients"
 
 // Basics
 *
@@ -46,3 +47,21 @@ klickable()
     text-decoration none
 li .item-title, .clickable
   klickable()
+
+// Thomas' furchtbare versuche...
+.drop-target
+  background-color: red
+
+.active
+  background-color: yellow
+  
+// flatshare styles
+bcolor = #bebebe
+
+input
+  background-color bcolor  
+
+.widget
+  background linear-gradient(top, white, #969696)  
+  border-radius 10px  
+  padding 10px

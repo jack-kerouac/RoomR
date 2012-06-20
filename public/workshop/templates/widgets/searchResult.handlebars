@@ -5,23 +5,31 @@
       <div>
         <div>MatchingScore {{matchingScore.value}} - {{matchingScore.defined}}</div>
 
-        <div>{{offer.roomDetails.totalRentPerMonthInEuro}}€</div>
-
-        <div>
-          <div>Zimmergröße:&nbsp;{{offer.roomDetails.roomSize.squareMeters}}&nbsp;m²</div>
-          <div>Zeitraum:
-            {{#unless offer.roomDetails.freeTo}}
-              ab {{date offer.roomDetails.freeFrom}}
-            {{else}}
-              {{date offer.roomDetails.freeFrom}}&nbsp;bis&nbsp;{{date offer.roomDetails.freeTo}}
-            {{/unless}}
+        {{#with roomOffer}}
+          <div>{{roomDetails.totalRentPerMonthInEuro}}€</div>
+    
+          <div>
+            <div>Zimmergröße:&nbsp;{{roomDetails.roomSize.squareMeters}}&nbsp;m²</div>
+            <div>Zeitraum:
+              {{#unless roomDetails.freeTo}}
+                ab {{date roomDetails.freeFrom}}
+              {{else}}
+                {{date roomDetails.freeFrom}}&nbsp;bis&nbsp;{{date roomDetails.freeTo}}
+              {{/unless}}
+            </div>
           </div>
-        </div>
-
-        <div>
-          <div>gewünschtes Alter: {{offer.criteria.minAge}}&nbsp;bis&nbsp;{{offer.criteria.maxAge}}</div>
-          <div>gewünschtes Geschlecht: {{offer.criteria.genders}}</div>
-        </div>
+    
+          <div>
+            <div>gewünschtes Alter: {{criteria.minAge}}&nbsp;bis&nbsp;{{criteria.maxAge}}</div>
+            <div>gewünschtes Geschlecht: {{criteria.genders}}</div>
+          </div>
+    
+          <div>
+            <div>Beschreibung: {{description}}</div>
+            <div>Kontakt E-Mail: {{contactEmail}}</div>
+            <div>Bewerbungen: {{applications}}</div>
+          </div>
+        {{/with}}
       </div>
     </li>
   {{/each}}

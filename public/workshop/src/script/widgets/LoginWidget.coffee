@@ -1,19 +1,66 @@
-define ['PageView', 'base/renderTemplate', 'base/EventMediator'], (PageView, renderTemplate, EventMediator) ->
+define ['base/renderTemplate', 'base/RoomrWidget'],
+(renderTemplate, RoomrWidget) ->
   'use strict'
 
-  class LoginWidget
+  class LoginWidget extends RoomrWidget
     constructor: () ->
-      EventMediator.subscribeToEvent 'loggedIn', @renderLoggedIn
-      EventMediator.subscribeToEvent 'loggedOut', @renderLoggedOut
+      super('login')
+      @loginState = 'unknown'
+      @registerPropChgEvent 'loginStateChanged'
+      window.eventMediator.subscribeToEvent 'loginStateChanged', @onLoginStateChanged
+      @findOutState()
 
-    render: () -> @renderLoggedOut()
+    findOutState: ->
+      $.ajax {
+        url: '/rest/users/current'
+        complete: (jqXHR, stat) =>
+          if stat == 'success'
+            @emit 'loginStateChanged', 'loggedIn'
+          else
+            @emit 'loginStateChanged', 'loggedOut'
+      }
+
+    addEvents: ->
+      $('#LoginWidgetForm').submit (event) =>
+        event.preventDefault()
+        username = $('#LoginWidgetForm input[name=login]').val()
+        passwd = $('#LoginWidgetForm input[name=passwd]').val()
+        postData = { email: username, password: passwd }
+        $.ajax '/rest/login', {
+          contentType : "application/json"
+          data: JSON.stringify postData
+          type: 'POST'
+          complete: (jqXHR, stat) =>
+            if stat == 'success'
+              @emit 'loginStateChanged', 'loggedIn'
+            else
+              console.log "Kaputt", jqXHR
+        }
+
+    onLoginStateChanged: (newState) =>
+      @loginState = newState
+      @render()
+
+    renderInto: (element) ->
+      @elem = element
+      @render()
+
+    render: ->
+      if @elem?
+        if @loginState == 'loggedIn'
+          @renderLoggedIn()
+        else
+          @renderLoggedOut()
 
     renderLoggedOut: () =>
-      renderTemplate 'login', {}, (content) ->
-        if @openItem? then @openItem.remove()
-        new PageView().render('LOG DICH EIN!', content)
+      @name = 'login'
+      @renderTemplate {}, (html) =>
+          $(@elem).empty()
+          $(@elem).append(html)
+          @addEvents()
 
     renderLoggedIn: () =>
-      renderTemplate 'profileInfo', {}, (content) ->
-        if @openItem? then @openItem.remove()
-        new PageView().render('Hi there', content)
+      @name = 'profileInfo'
+      @renderTemplate {}, (html) =>
+          $(@elem).empty()
+          $(@elem).append(html)

@@ -22,8 +22,10 @@ define ['backbone', 'base/RoomrWidget', 'base/roomrUtil', 'models/SearchResult']
       @searchResults.fetch {
         success: (results) =>
           searchResultsArray = []
-          results.each (result) ->
-            searchResultsArray.push new SearchResult(result.offer(), result.matchingScore())
+          completedSearchResults = 0
+          results.each (result) =>
+            searchResult = new SearchResult(result.offer(), result.matchingScore())
+            searchResultsArray.push searchResult
           @emit 'searchResultsChanged', searchResultsArray
       }
 
