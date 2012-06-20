@@ -21,22 +21,19 @@ require ['backbone', 'Navigation', 'UserCollection', 'AppRouter', 'base/RoomrSec
 
   finder = new LoginStatusFinder()
 
-  testSection = new RoomrSection {
+  mainSection = new RoomrSection {
       name: 'main'
       title: 'test title'
+      path: ''
     }
   searchWidget = new SearchWidget()
-  testSection.addWidget(searchWidget)
+  mainSection.addWidget(searchWidget)
 
   searchResultWidget = new SearchResultWidget()
-  testSection.addWidget(searchResultWidget)
+  mainSection.addWidget(searchResultWidget)
 
   searchWidget.subscribe 'searchResultsChanged', (params...) ->
     searchResultWidget.searchResultsChanged.apply(searchResultWidget, params)
-
-
-
-  testSection.render()
 
   users = new UserCollection()
 
@@ -48,11 +45,16 @@ require ['backbone', 'Navigation', 'UserCollection', 'AppRouter', 'base/RoomrSec
   nav.app = app
   nav.users = users
 
+  testSection = new RoomrSection {
+    name: 'test'
+    title: 'test 2 title'
+  }
+
+  app.addSection testSection
+  app.addSection mainSection
 
   # App starten
   # -----------
-
-  # Die URL auf Änderungen überwachen
   Backbone.history.start()
 
   finder.findOutState()
