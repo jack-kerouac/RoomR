@@ -1,9 +1,14 @@
 package controllers.rest;
 
-import java.util.List;
-
-import javax.inject.Inject;
-
+import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import com.google.gson.Gson;
+import controllers.rest.dto.SearchData;
+import controllers.rest.serialize.FlatshareUrlSerializer;
+import controllers.rest.serialize.NameBasedExclusionStrategy;
+import controllers.rest.serialize.RoomOfferUrlSerializer;
+import facade.SeekerFacade;
 import models.common.FloorSpace;
 import models.flatshare.Flatshare;
 import models.offer.RoomOffer;
@@ -14,15 +19,8 @@ import play.modules.guice.InjectSupport;
 import play.mvc.Controller;
 import play.mvc.Router;
 
-import com.google.common.base.Optional;
-import com.google.common.collect.ImmutableMap;
-import com.google.gson.Gson;
-
-import controllers.rest.dto.SearchData;
-import controllers.rest.serialize.FlatExclusionStrategy;
-import controllers.rest.serialize.FlatshareUrlSerializer;
-import controllers.rest.serialize.RoomOfferUrlSerializer;
-import facade.SeekerFacade;
+import javax.inject.Inject;
+import java.util.List;
 
 @InjectSupport
 public class RoomOffers extends Controller {
@@ -35,8 +33,8 @@ public class RoomOffers extends Controller {
 	}
 
 	public static void list() {
-		Gson gson = RoomrGsonBuilder.builder().registerTypeAdapter(RoomOffer.class, new RoomOfferUrlSerializer())
-				.create();
+		Gson gson =
+				RoomrGsonBuilder.builder().registerTypeAdapter(RoomOffer.class, new RoomOfferUrlSerializer()).create();
 		renderJSON(gson.toJson(RoomOffer.all().fetch()));
 	}
 
@@ -51,8 +49,8 @@ public class RoomOffers extends Controller {
 	public static void get(int id) {
 		RoomOffer offer = getRoomOffer(id);
 
-		Gson gson = RoomrGsonBuilder.builder()
-				.registerTypeAdapter(Flatshare.class, new FlatshareUrlSerializer()).create();
+		Gson gson =
+				RoomrGsonBuilder.builder().registerTypeAdapter(Flatshare.class, new FlatshareUrlSerializer()).create();
 		renderJSON(gson.toJson(offer));
 	}
 
@@ -78,12 +76,12 @@ public class RoomOffers extends Controller {
 		// START DATE
 		if (searchData.startDateType != null) {
 			switch (searchData.startDateType) {
-			case now:
-				rr.startDateQuery = DateQuery.now();
-				break;
-			case fixedDate:
-				if (searchData.startDate != null)
-					rr.startDateQuery = DateQuery.fixedDate(searchData.startDate);
+				case now:
+					rr.startDateQuery = DateQuery.now();
+					break;
+				case fixedDate:
+					if (searchData.startDate != null)
+						rr.startDateQuery = DateQuery.fixedDate(searchData.startDate);
 			}
 		} else {
 			rr.startDateQuery = null;
@@ -94,11 +92,15 @@ public class RoomOffers extends Controller {
 		if (searchData.minRoomSizeSquareMeters != null)
 			rr.minRoomSize = new FloorSpace(searchData.minRoomSizeSquareMeters);
 
-		List<ScoredRoomOffer> offers = seekerFacade.search(rr, Optional.fromNullable(seekerAge),
-				Optional.fromNullable(searchData.gender));
+		List<ScoredRoomOffer> offers =
+				seekerFacade.search(rr, Optional.fromNullable(seekerAge), Optional.fromNullable(searchData.gender));
 
-		Gson gson = RoomrGsonBuilder.builder()
-				.registerTypeAdapter(Flatshare.class, new FlatshareUrlSerializer()).create();
+		Gson gson =
+				RoomrGsonBuilder
+						.builder()
+						.addSerializationExclusionStrategy(
+								new NameBasedExclusionStrategy().withExclusionsFor(Flatshare.class, ImmutableSet.of("roomOffers")))
+						.create();
 
 		renderJSON(gson.toJson(offers));
 	}

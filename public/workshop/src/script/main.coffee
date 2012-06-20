@@ -17,8 +17,8 @@
 # im Callback explizit aufzuführen.
 
 require ['backbone', 'Navigation', 'models/UserCollection', 'base/AppRouter', 'base/RoomrSection', 'widgets/SearchWidget',
-'widgets/SearchResultWidget', 'widgets/LoginWidget', 'widgets/LoginStatusFinder', 'ErrorLogger'],
-(Backbone, Navigation, UserCollection, AppRouter, RoomrSection, SearchWidget, SearchResultWidget, LoginWidget, LoginStatusFinder) ->
+'widgets/SearchResultWidget', 'widgets/LoginWidget', 'widgets/LoginStatusFinder', 'widgets/FlatshareWidget'],
+(Backbone, Navigation, UserCollection, AppRouter, RoomrSection, SearchWidget, SearchResultWidget, LoginWidget, LoginStatusFinder, FlatshareWidget) ->
 
   'use strict'
 
@@ -52,6 +52,9 @@ require ['backbone', 'Navigation', 'models/UserCollection', 'base/AppRouter', 'b
     name: 'test'
     title: 'test 2 title'
   }
+
+  flatshareWidget = new FlatshareWidget()
+  testSection.addWidget(flatshareWidget)  
 
   app.addSection testSection
 
