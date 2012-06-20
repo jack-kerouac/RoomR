@@ -13,9 +13,10 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
         event.preventDefault()
         username = $('#LoginWidgetForm input[name=login]').val()
         passwd = $('#LoginWidgetForm input[name=passwd]').val()
+        postData = { email: username, password: passwd }
         $.ajax '/rest/login', {
           contentType : "application/json"
-          data: "{ \"email\" : \"#{username}\", \"password\" : \"#{passwd}\" }"
+          data: JSON.stringify postData
           type: 'POST'
           complete: (jqXHR, stat) ->
             if stat == 'success'
@@ -23,11 +24,6 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
             else
               console.log "Kaputt", jqXHR
         }
-        ###
-        $.post '/rest/login',
-          "{ \"email\" : \"#{username}\", \"password\" : \"#{passwd}\" }",
-          (data) -> console.log data
-          ###
 
     renderInto: (element) ->
       @elem = element
