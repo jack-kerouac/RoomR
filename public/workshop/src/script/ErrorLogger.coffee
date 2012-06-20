@@ -7,7 +7,7 @@ define ->
       type:'POST',
       data:"{ 'message' : '#{errorMsg}', 'severity' : 'ERROR'}",
       contentType:"application/json; charset=utf-8"
-    }) 
+    })
 
   $(window).error (event) -> 
     postError event.type
@@ -15,5 +15,3 @@ define ->
   $(window).bind 'widgetError', (event, widgetName, msg)->    
     errorMsg = "Widget error in #{widgetName}: #{msg}"
     postError errorMsg
-    
-    
