@@ -5,15 +5,20 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
   class LoginWidget extends RoomrWidget
     constructor: () ->
       super('login')
-      @loginState = 'loggedOut'
-      @registerEvent 'loginStateChanged'
+      @loginState = 'unknown'
+      @registerPropChgEvent 'loginStateChanged'
       window.eventMediator.subscribeToEvent 'loginStateChanged', @onLoginStateChanged
+      @findOutState()
 
     findOutState: ->
-      successCbk = do => this.emit 'loginStateChanged', 'loggedIn'
-      errorCbk = do => this.emit 'loginStateChanged', 'loggedOut'
-
-      $.get('/rest/users/current', successCbk ).error errorCbk
+      $.ajax {
+        url: '/rest/users/current'
+        complete: (jqXHR, stat) =>
+          if stat == 'success'
+            @emit 'loginStateChanged', 'loggedIn'
+          else
+            @emit 'loginStateChanged', 'loggedOut'
+      }
 
     addEvents: ->
       $('#LoginWidgetForm').submit (event) =>
