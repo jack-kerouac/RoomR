@@ -13,6 +13,8 @@ define ['base/RoomrWidget', 'base/roomrUtil'], (RoomrWidget, roomrUtil) ->
         @nidus.html content
         @dropTarget = $('.drop-target', @nidus)
 
+        $('.clickable', @nidus).on 'click', @uploadImages.bind this
+
         @fileSelect = $('input[type="file"]', @nidus)
         @fileSelect.on 'change', (changeEvent) =>
           changeEvent.preventDefault()
@@ -46,3 +48,31 @@ define ['base/RoomrWidget', 'base/roomrUtil'], (RoomrWidget, roomrUtil) ->
           @dropTarget.before canvas
 
       reader.readAsDataURL(file);
+
+    uploadImages: ->
+      BlobBuilder = BlobBuilder || WebKitBlobBuilder || MozBlobBuilder || MSBlobBuilder
+      elements = $('canvas', @nidus)
+      elements.each ->
+        dataUrl = this.toDataURL()
+        binary = atob dataUrl.replace(/^data:image\/(png|jpg);base64,/, "")
+        contentType = dataUrl.match /image\/[^;]+/
+
+        blobBuilder = new BlobBuilder()
+        blobBuilder.append new Uint8Array(Array.prototype.map.call binary, (c) -> c.charCodeAt(0) & 0xff).buffer
+        blob = blobBuilder.getBlob contentType
+
+        formData = new FormData()
+        formData.append 'image', blob
+
+        $.ajax '/rest/postImage', {
+          data: formData
+          contentType: false
+          processData: false
+          type: 'POST'
+          complete: (jqXHR, stat) ->
+            if stat == 'success'
+              console.log "Hat gepasst"
+            else
+              console.log "Kaputt", jqXHR
+        }
+

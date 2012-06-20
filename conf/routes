@@ -136,6 +136,7 @@ GET		/rest/applications/{id}					rest.RoomOfferApplications.get
 
 POST	/rest/log								rest.RoomrLogger.log
 
+POST  /rest/postImage         rest.PostImage.postImage
 
 #######################################################################
 
