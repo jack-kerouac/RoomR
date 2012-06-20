@@ -16,7 +16,7 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
       $.get('/rest/users/current', successCbk ).error errorCbk
 
     addEvents: ->
-      $('#LoginWidgetForm').submit (event) ->
+      $('#LoginWidgetForm').submit (event) =>
         event.preventDefault()
         username = $('#LoginWidgetForm input[name=login]').val()
         passwd = $('#LoginWidgetForm input[name=passwd]').val()
@@ -32,7 +32,7 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
               console.log "Kaputt", jqXHR
         }
 
-    onLoginStateChanged: (newState) ->
+    onLoginStateChanged: (newState) =>
       @loginState = newState
       @render()
 
@@ -41,6 +41,7 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
       @render()
 
     render: ->
+      alert "render called. loginState = #{@loginState}"
       if @elem?
         if @loginState == 'loggedIn'
           @renderLoggedIn()
@@ -48,10 +49,12 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
           @renderLoggedOut()
 
     renderLoggedOut: () =>
+      @name = 'login'
       @renderTemplate {}, (html) =>
           $(@elem).append(html)
           @addEvents()
 
     renderLoggedIn: () =>
+      @name = 'profileInfo'
       @renderTemplate {}, (html) =>
           $(@elem).append(html)
