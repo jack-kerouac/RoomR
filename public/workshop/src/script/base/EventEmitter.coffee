@@ -26,10 +26,10 @@ define ->
     emit: (eventName, params...) ->
       if eventName
         if @subscribers[eventName]?
-          @subscribers[eventName].forEach (callback) ->
-            callback.apply(this, params)
           if @cachedProps[eventName]?
             @cachedProps[eventName] = params[0]
+          @subscribers[eventName].forEach (callback) ->
+            callback.apply(this, params)
         else
           alert "Tried to emit unregistered event"
 
