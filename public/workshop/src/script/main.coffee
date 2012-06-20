@@ -16,8 +16,10 @@
 # bereitstellen, können wir beides in unserer Callback-Funkion verwenden, ohne sie dort
 # im Callback explizit aufzuführen.
 
-require ['backbone', 'Navigation', 'models/UserCollection', 'AppRouter', 'base/RoomrSection', 'widgets/SearchWidget', 'widgets/SearchResultWidget', 'widgets/LoginStatusFinder', 'ErrorLogger'],
-(Backbone, Navigation, UserCollection, AppRouter, RoomrSection, SearchWidget, SearchResultWidget, LoginStatusFinder) ->
+require ['backbone', 'Navigation', 'models/UserCollection', 'AppRouter', 'base/RoomrSection', 'ErrorLogger',
+    'widgets/SearchWidget', 'widgets/SearchResultWidget', 'widgets/LoginStatusFinder', 'widgets/PhotoUploadWidget'],
+(Backbone, Navigation, UserCollection, AppRouter, RoomrSection, ErrorLogger,
+ SearchWidget, SearchResultWidget, LoginStatusFinder, PhotoUploadWidget) ->
 
   'use strict'
 
@@ -51,6 +53,8 @@ require ['backbone', 'Navigation', 'models/UserCollection', 'AppRouter', 'base/R
     name: 'test'
     title: 'test 2 title'
   }
+
+  testSection.addWidget new PhotoUploadWidget()
 
   app.addSection testSection
   app.addSection mainSection
