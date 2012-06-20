@@ -33,6 +33,7 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
           complete: (jqXHR, stat) =>
             if stat == 'success'
               @emit 'loginStateChanged', 'loggedIn'
+              console.log "Eingeloggt: ", jqXHR
             else
               console.log "Kaputt", jqXHR
         }
@@ -63,7 +64,7 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
     render: ->
       if @elem?
         if @loginState == 'loggedIn'
-          @renderProfileInfoForm()
+          @renderLogoutForm()
         else
           @renderLoginForm()
 
@@ -74,9 +75,10 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
           $(@elem).append(html)
           @setLoginSubmitEvent()
 
-    renderProfileInfoForm: () =>
-      @name = 'profileInfo'
+    renderLogoutForm: () =>
+      @name = 'logout'
       @renderTemplate {}, (html) =>
           $(@elem).empty()
           $(@elem).append(html)
           @setLogoutSubmitEvent()
+          @fetchAndFillProfileInfo()
