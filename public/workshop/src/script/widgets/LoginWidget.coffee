@@ -55,7 +55,7 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
             if stat == 'success'
               @emitUserInfoEvents JSON.parse jqXHR.responseText
             else
-              console.log "Kaputt", jqXHR
+              alert "Fehler beim Login"
         }
 
     setLogoutSubmitEvent: ->
