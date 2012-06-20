@@ -50,10 +50,12 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
     renderLoggedOut: () =>
       @name = 'login'
       @renderTemplate {}, (html) =>
+          $(@elem).empty()
           $(@elem).append(html)
           @addEvents()
 
     renderLoggedIn: () =>
       @name = 'profileInfo'
       @renderTemplate {}, (html) =>
+          $(@elem).empty()
           $(@elem).append(html)
