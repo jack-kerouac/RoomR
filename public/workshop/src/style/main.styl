@@ -4,6 +4,10 @@
 
 @import "src/style/photoUpload"
 
+bg_color_out = #163538
+bg_color_mid = #405e64
+bg_color_in  = #66b0c2
+
 // Basics
 *
   box-sizing border-box
@@ -12,13 +16,13 @@ html
   min-height: 100%
 
 body
-  background: #66b0c2
-  background: -moz-radial-gradient(center, ellipse cover,  #66b0c2 0%, #405e64 51%, #163538 100%)
-  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#66b0c2), color-stop(51%,#405e64), color-stop(100%,#163538))
-  background: -webkit-radial-gradient(center, ellipse cover,  #66b0c2 0%,#405e64 51%,#163538 100%)
-  background: -o-radial-gradient(center, ellipse cover,  #66b0c2 0%,#405e64 51%,#163538 100%)
-  background: -ms-radial-gradient(center, ellipse cover,  #66b0c2 0%,#405e64 51%,#163538 100%)
-  background: radial-gradient(center, ellipse cover,  #66b0c2 0%,#405e64 51%,#163538 100%)
+  background: bg_color_in
+  background: -moz-radial-gradient(center, ellipse cover,  bg_color_in 0%, bg_color_mid 51%, bg_color_out 100%)
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,bg_color_in), color-stop(51%,bg_color_mid), color-stop(100%,bg_color_out))
+  background: -webkit-radial-gradient(center, ellipse cover,  bg_color_in 0%,bg_color_mid 51%,bg_color_out 100%)
+  background: -o-radial-gradient(center, ellipse cover,  bg_color_in 0%,bg_color_mid 51%,bg_color_out 100%)
+  background: -ms-radial-gradient(center, ellipse cover,  bg_color_in 0%,bg_color_mid 51%,bg_color_out 100%)
+  background: radial-gradient(center, ellipse cover,  bg_color_in 0%,bg_color_mid 51%,bg_color_out 100%)
   margin: 0px
   font-family: 'Maven Pro', sans-serif;
   font-size: 14px
@@ -125,10 +129,17 @@ input
 
 .widget
   border-radius: 5px
-  background: linear-gradient(top, rgb(181,196,212), rgb(133,164,189), rgb(103,145,173))
+  //background: linear-gradient(top, rgb(181,196,212), rgb(133,164,189), rgb(103,145,173))
+  background-color #66b0c2AA
   box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.75);
   padding 10px
   margin 5px
+
+.widget input
+  background white
+  border-radius: 5px
+  border: 1px solid white
+  margin: 2px
 
 
 stash-padding = 10px
