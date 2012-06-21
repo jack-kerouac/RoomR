@@ -1,7 +1,6 @@
 define ['base/RoomrWidget', 'base/roomrUtil', 'modernizr'], (RoomrWidget, roomrUtil) ->
   'use strict'
 
-
   class PhotoUploadWidget extends RoomrWidget
     ImageModel = Backbone.Model.extend {}
 
@@ -45,6 +44,11 @@ define ['base/RoomrWidget', 'base/roomrUtil', 'modernizr'], (RoomrWidget, roomrU
               imgElem.attr 'src', image.get('url')
               currentImageContainer.append imgElem
         }
+
+        currentImageContainer.click (event) =>
+          el = $(event.target)
+          if el.prop('nodeName').toLowerCase() == 'img'
+            @deleteImage el
 
     handleFiles: (files) ->
       _.each files, (file) =>
@@ -101,3 +105,15 @@ define ['base/RoomrWidget', 'base/roomrUtil', 'modernizr'], (RoomrWidget, roomrU
               fileUploadWidget.reportError "Fileupload failed: #{jqXHR}"
         }
 
+    deleteImage: (image) ->
+      url = image.attr 'src'
+      $.ajax url, {
+        data: ''
+        type: 'DELETE'
+        complete: (jqXHR, stat) ->
+          if stat == 'success'
+            console.log "File deleted successfully"
+            image.remove()
+          else
+            @reportError "Failed to delete file: #{jqXHR}"
+      }
