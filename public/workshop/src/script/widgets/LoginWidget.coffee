@@ -15,7 +15,8 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
       @registerPropChgEvent 'userBirthdate'
       @registerPropChgEvent 'userGender'
 
-      @subscribeToEvent 'loginStateChanged', (newState) => @loginState = newState; @render()
+      @subscribeToEvent 'loginStateChanged',
+        (newState) => @loginState = newState; @render()
       @subscribeToEvent 'userNameChanged', (newName) => @userName = newName
       @subscribeToEvent 'userEmailChanged', (newEmail) => @userEmail = newEmail
 
