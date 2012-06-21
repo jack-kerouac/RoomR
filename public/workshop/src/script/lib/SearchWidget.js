@@ -24,7 +24,7 @@
         model: SearchResultModel
       });
 
-      SearchWidget.prototype.searchResults = new SearchResultCollection();
+      SearchWidget.prototype.existingImages = new SearchResultCollection();
 
       function SearchWidget() {
         SearchWidget.__super__.constructor.call(this, 'search');
@@ -33,8 +33,8 @@
 
       SearchWidget.prototype.performSearch = function() {
         var _this = this;
-        this.searchResults.url = 'rest/roomOffers/search?' + $('#search_offers_form').serialize();
-        return this.searchResults.fetch({
+        this.existingImages.url = 'rest/roomOffers/search?' + $('#search_offers_form').serialize();
+        return this.existingImages.fetch({
           success: function(results) {
             var searchResultsArray;
             searchResultsArray = [];

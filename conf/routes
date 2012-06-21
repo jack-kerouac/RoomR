@@ -136,7 +136,10 @@ GET		/rest/applications/{id}					rest.RoomOfferApplications.get
 
 POST	/rest/log								rest.RoomrLogger.log
 
-POST  /rest/postImage         rest.PostImage.postImage
+POST	/rest/images							rest.Images.postImage
+GET		/rest/images							rest.Images.list
+GET		/rest/images/{id}						rest.Images.get
+DELETE	/rest/images/{id}						rest.Images.delete
 
 #######################################################################
 

@@ -2,6 +2,7 @@ package controllers.rest.serialize;
 
 import java.lang.reflect.Type;
 
+import controllers.rest.RoomrUsers;
 import models.user.RoomrUser;
 import play.mvc.Router;
 
@@ -15,7 +16,7 @@ public class BriefUserSerializer implements JsonSerializer<RoomrUser> {
 
 	@Override
 	public JsonElement serialize(RoomrUser user, Type type, JsonSerializationContext context) {
-		String url = Router.reverse("rest.RoomrUsers.get", ImmutableMap.of("id", (Object) String.valueOf(user.id))).url;
+		String url = RoomrUsers.getUrlFor(user);
 		JsonObject result = new JsonObject();
 		result.addProperty("url", url);
 		result.addProperty("name", user.name);

@@ -1,7 +1,16 @@
 define ['base/RoomrWidget', 'base/roomrUtil'], (RoomrWidget, roomrUtil) ->
   'use strict'
 
+
   class PhotoUploadWidget extends RoomrWidget
+    ImageModel = Backbone.Model.extend {}
+
+    ImageCollection = Backbone.Collection.extend {
+      model: ImageModel  # Was für ein Model findet sich in dieser Collection?
+      url: '/rest/images'
+    }
+
+    existingImages: new ImageCollection()
     nidus: undefined
 
     constructor: ->
@@ -9,6 +18,9 @@ define ['base/RoomrWidget', 'base/roomrUtil'], (RoomrWidget, roomrUtil) ->
 
     renderInto: (element) ->
       @nidus = $(element)
+      @render()
+
+    render: ->
       @renderTemplate {}, (content) =>
         @nidus.html content
         @dropTarget = $('.drop-target', @nidus)
@@ -23,6 +35,15 @@ define ['base/RoomrWidget', 'base/roomrUtil'], (RoomrWidget, roomrUtil) ->
         roomrUtil.addDropHandler @dropTarget, (dropEvent) =>
           dt = dropEvent.dataTransfer;
           @handleFiles dt.files
+
+        currentImageContainer = $('.current-images', @nidus)
+        @existingImages.fetch {
+          success: (images) =>
+            images.each (image) =>
+              imgElem = $('<img>')
+              imgElem.attr 'src', image.get('url')
+              currentImageContainer.append imgElem
+        }
 
     handleFiles: (files) ->
       _.each files, (file) =>
@@ -52,10 +73,11 @@ define ['base/RoomrWidget', 'base/roomrUtil'], (RoomrWidget, roomrUtil) ->
     uploadImages: ->
       BlobBuilder = BlobBuilder || WebKitBlobBuilder || MozBlobBuilder || MSBlobBuilder
       elements = $('canvas', @nidus)
+      fileUploadWidget = this
       elements.each ->
         dataUrl = this.toDataURL()
         binary = atob dataUrl.replace(/^data:image\/(png|jpg);base64,/, "")
-        contentType = dataUrl.match /image\/[^;]+/
+        contentType = dataUrl.match(/image\/[^;]+/)[0]
 
         blobBuilder = new BlobBuilder()
         blobBuilder.append new Uint8Array(Array.prototype.map.call binary, (c) -> c.charCodeAt(0) & 0xff).buffer
@@ -63,16 +85,18 @@ define ['base/RoomrWidget', 'base/roomrUtil'], (RoomrWidget, roomrUtil) ->
 
         formData = new FormData()
         formData.append 'image', blob
+        formData.append 'contentType', contentType
 
-        $.ajax '/rest/postImage', {
+        $.ajax '/rest/images', {
           data: formData
           contentType: false
           processData: false
           type: 'POST'
           complete: (jqXHR, stat) ->
             if stat == 'success'
-              console.log "Hat gepasst"
+              console.log "Fileupload successful"
+              fileUploadWidget.render()
             else
-              console.log "Kaputt", jqXHR
+              fileUploadWidget.reportError "Fileupload failed: #{jqXHR}"
         }
 
