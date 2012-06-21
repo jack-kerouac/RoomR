@@ -90,3 +90,29 @@ input
   background linear-gradient(top, white, #969696)  
   border-radius 10px  
   padding 10px
+
+
+stash-padding = 10px
+icon-size = 80px
+icon-margin = 5px
+
+.appliance-icon
+  width icon-size
+  height icon-size
+  margin icon-margin
+  background-color red
+  color white
+  cursor move
+  text-align center
+  display list-item
+  list-style none outside none
+  border-radius(5px)
+
+.appliance-stash
+  width 2 * (icon-size + 2* icon-margin) + 2 * stash-padding
+  height  2 * (icon-size + 2* icon-margin) + 2 * stash-padding
+  background-color: blue
+  padding stash-padding
+
+  .appliance-icon
+    float left

@@ -47,7 +47,6 @@ require ['../src/script/base/EventMediator', '../src/script/base/EventEmitter'],
 
       ok wasCalled
 
-
     test 'Funktion emit_afterRegisterEvent_callsAllCallbacks', ->
       emitter = new EventEmitter()
       emitter.registerEvent 'bar'
@@ -63,6 +62,17 @@ require ['../src/script/base/EventMediator', '../src/script/base/EventEmitter'],
 
       ok wasCalledOne
       ok wasCalledTwo
+
+    test 'Funktion emit_subscribeBeforeRegister_callsCallback', ->
+      wasCalled = false
+      fct = -> wasCalled = true
+
+      emitter = new EventEmitter()
+      window.roomr.eventMediator.subscribeToEvent 'lateRegister', fct
+      emitter.registerEvent 'lateRegister'
+
+      emitter.emit 'lateRegister'
+      ok wasCalled
 
     test 'Funktion emitWithParam_afterRegisterEvent_callsCallbackWithParam', ->
       emitter = new EventEmitter()
