@@ -1,5 +1,24 @@
-define ->
+define ['jquery'], ->
   'use strict'
+
+  $.postJson = (url, object, success, error) =>
+    if !_.isString url
+      throw "#{url} is not a string"
+    if !_.isObject object
+      throw "#{object} is not an object"
+    if !_.isFunction success
+      throw "#{success} is not a function"
+    if !_.isFunction error
+      throw "#{error} is not a function"
+
+    $.ajax url, {
+      contentType : "application/json"
+      data: JSON.stringify object
+      type: 'POST'
+      success: success
+      error: error
+    }
+
   {
     addTypingFinishedCallback: (elements, callback, doneTypingTimeout = 200) ->
       targets = $(elements)
