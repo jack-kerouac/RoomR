@@ -3,12 +3,17 @@ define ['base/RoomrWidget', 'base/renderTemplate'], (RoomrWidget, renderTemplate
 
   class MapWidget extends RoomrWidget
 
-    searchResults: []
-
     nidus: undefined
+
+    gmap: undefined  
+
+    currentLat: undefined
+    currentLong: undefined
 
     constructor: ->
       super('map')
+      @subscribeToEvent 'searchResultsChanged', (params) =>
+        @searchResultsChanged params
 
     renderInto: (element) ->
       @nidus = $(element)
@@ -18,37 +23,49 @@ define ['base/RoomrWidget', 'base/renderTemplate'], (RoomrWidget, renderTemplate
               
     loadGoogle: ->
       window.roomr = window.roomr || {}
-      window.roomr.roomrMapWidgetDrawCallback = =>
-        @loadGmaps()
+      window.roomr.roomrMapWidgetDrawCallback = @loadGmaps.bind(this)
       $.getScript 'http://maps.google.com/maps/api/js?sensor=false&callback=roomr.roomrMapWidgetDrawCallback'
 
     loadGmaps: ->
-      $.getScript('src/script/vendor/gmaps.js', @createMap).fail (args...) -> console.log args
+      $.getScript('src/script/vendor/gmaps.js', @renderMap.bind(this)).fail (args...) -> console.log args
 
-    createMap: ->      
-
-      $(document).ready ->
-        console.log "document ready"
+    renderMap: ->      
+      $(document).ready =>
         if navigator.geolocation
-          console.log "geolocation"
-          navigator.geolocation.getCurrentPosition (position)->
-            console.log "set position"
-            new GMaps {
-              div: '#SearchResultMap',
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-              height: '400px'
-            }
+          navigator.geolocation.getCurrentPosition (position) =>
+            @createMap position.coords.latitude,position.coords.longitude
         else
-          new GMaps {
-            div: '#SearchResultMap',
-            lat: '-12.043333',
-            lng: '-77.028333',
-            height: '400px'
-          }
+          @createMap '-12.043333','-77.028333'          
 
+    createMap: (latitude, longitude) ->
+      @currentLat = latitude
+      @currentLong = longitude
+      @gmap = new GMaps {
+        div: '#SearchResultMap',
+        lat: latitude,
+        lng: longitude,
+        zoom: 13,
+        height: '400px'
+      }
+      @addMarker4CurrentPosition()      
 
+    addMarker4CurrentPosition: ->
+      @addMarker @currentLat,@currentLong,'aktueller Standort'
+
+    addMarker: (latitude, longitude, markertitle) ->
+      @gmap.addMarker {lat:latitude, lng:longitude, title:markertitle}
 
     searchResultsChanged: (searchResults) ->
-      @searchResults = searchResults
+
+      @gmap.removeMarkers()
+      @addMarker4CurrentPosition()
+
+      for searchResult in searchResults
+        lat = searchResult.roomOffer.flatshare.geoLocation.latitude
+        long = searchResult.roomOffer.flatshare.geoLocation.longitude
+        street = searchResult.roomOffer.flatshare.address.street + ' ' + searchResult.roomOffer.flatshare.address.streetNumber
+        city = searchResult.roomOffer.flatshare.address.city;
+        title = street + ', ' + city
+        @addMarker lat,long,title
+      
       

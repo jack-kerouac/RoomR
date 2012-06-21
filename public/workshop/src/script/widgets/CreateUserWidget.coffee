@@ -14,11 +14,14 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
     setCreateUserSubmitEvent: () ->
       $('#CreateUserWidgetForm').submit (event) =>
         event.preventDefault()
+        day = $('#CreateUserWidgetForm input[name=birthdate_day]').val()
+        mon = $('#CreateUserWidgetForm input[name=birthdate_mon]').val()
+        year = $('#CreateUserWidgetForm input[name=birthdate_year]').val()
         userToCreate = {
           name: $('#CreateUserWidgetForm input[name=name]').val(),
           email: $('#CreateUserWidgetForm input[name=email]').val(),
           password: $('#CreateUserWidgetForm input[name=password]').val(),
-          birthdate: $('#CreateUserWidgetForm input[name=birthdate]').val(),
+          birthdate: "#{year}-#{mon}-#{day}T12:00:00.000+0100",
           gender: $('#CreateUserWidgetForm input[name=gender]').val(),
         }
         $.ajax '/rest/users', {
