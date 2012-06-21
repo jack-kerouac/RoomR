@@ -26,7 +26,7 @@ module.exports = function(grunt){
           url: {
             paths: [ 'src/style' ]   // Pfad(e) für Bilder
           },
-          compress: true             // Code-Komprimierung an/aus
+          compress: false             // Code-Komprimierung an/aus
         }
       }
     },
