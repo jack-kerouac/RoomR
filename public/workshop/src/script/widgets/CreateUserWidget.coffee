@@ -17,8 +17,8 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
         userToCreate = {
           name: $('#CreateUserWidgetForm input[name=name]').val(),
           email: $('#CreateUserWidgetForm input[name=email]').val(),
-          password: $('#CreateUserWidgetForm input[name=passwd]').val(),
-          birthdate: $('#CreateUserWidgetForm input[name=bday]').val(),
+          password: $('#CreateUserWidgetForm input[name=password]').val(),
+          birthdate: $('#CreateUserWidgetForm input[name=birthdate]').val(),
           gender: $('#CreateUserWidgetForm input[name=gender]').val(),
         }
         $.ajax '/rest/users', {
@@ -27,7 +27,7 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
           type: 'POST'
           complete: (jqXHR, stat) =>
             if stat == 'success'
-              @emit 'newUserCreated' userToCreate
+              @emit 'newUserCreated', userToCreate
             else
               alert "Irgendwas ging schief. Sorry..."
         }
