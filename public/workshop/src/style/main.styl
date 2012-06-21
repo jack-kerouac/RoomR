@@ -23,23 +23,24 @@ body
   font-family: 'Maven Pro', sans-serif;
   font-size: 14px
 
+  #Headline
+    visibility: hidden
+
 // Layout
 #Wrapper
   clearfix()
   background-image: url(src/style/img/RoomR_Logo.png), url(src/style/img/oben.png), url(src/style/img/unten.png)
   background-position: top center, top center, bottom center
   background-repeat: no-repeat
-  padding-top: 150px 
+  padding-top: 120px 
   padding-bottom: 50px
   position: relative
   z-index: 2
-#Main
-  width 70%
-  float left
-#Side
-  width 25%
-  float right
+  max-width: 990px
+  margin: auto
 
+#Main
+  padding: 5px 10px 5px 10px
 
 // Design
 #Wrapper, .item-bigview
@@ -83,6 +84,7 @@ body
   text-decoration: none
   color: black
   font-variant: small-caps;
+  font-weight: bold
   &:hover
     background: linear-gradient(top,  #ffd65e 0%,#febf04 100%);
 
@@ -122,9 +124,11 @@ input
   background-color bcolor  
 
 .widget
-  background linear-gradient(top, white, #969696)  
-  border-radius 10px  
+  border-radius: 5px
+  background: linear-gradient(top, rgb(181,196,212), rgb(133,164,189), rgb(103,145,173))
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.75);
   padding 10px
+  margin 5px
 
 
 stash-padding = 10px
