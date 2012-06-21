@@ -16,6 +16,8 @@ body
   background: -ms-radial-gradient(center, ellipse cover,  #66b0c2 0%,#405e64 51%,#163538 100%)
   background: radial-gradient(center, ellipse cover,  #66b0c2 0%,#405e64 51%,#163538 100%)
   margin: 0px
+  font-family: 'Maven Pro', sans-serif;
+  font-size: 14px
 
 // Layout
 #Wrapper
@@ -25,6 +27,8 @@ body
   background-repeat: no-repeat
   padding-top: 150px 
   padding-bottom: 50px
+  position: relative
+  z-index: 2
 #Main
   width 70%
   float left
@@ -43,16 +47,43 @@ body
 #Wrapper > header, #Main, #Side, .item-bigview
   padding 1em 2em
 
-#Wrapper header nav a
+#Navigation nav li
+  display: inline-block
   width: 20%
-  max-width: 200px
-  padding: 8px
-  border-radius: 5px
+  padding: 0px 3px
+  max-width: 160px
+
+#Navigation nav
+  margin: auto
+  width: auto
+  text-align:center
+  position: relative
+  z-index: 1
+
+#Navigation nav ul
+  margin: 0px
+  padding: 0px
+
+#Navigation
+  z-index: 1
+  margin-top: -28px
+
+#Navigation nav a
+  display: inline-block
+  width:100%
+  height: 100%
+  padding: 20px 8px 8px 8px
+  border-radius: 0px 0px 5px 5px
   background: linear-gradient(top, rgb(181,196,212), rgb(133,164,189), rgb(103,145,173))
-  display: block
-  float: left
-  margin-right: 5px
-  text-align: center
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.75);
+  text-decoration: none
+  color: black
+  font-variant: small-caps;
+  &:hover
+    background: linear-gradient(top,  #ffd65e 0%,#febf04 100%);
+
+#Navigation nav a.outernavbutton
+  padding-top: 32px
 
 // Eintrags-Großansicht
 .item-bigview
@@ -90,3 +121,29 @@ input
   background linear-gradient(top, white, #969696)  
   border-radius 10px  
   padding 10px
+
+
+stash-padding = 10px
+icon-size = 80px
+icon-margin = 5px
+
+.appliance-icon
+  width icon-size
+  height icon-size
+  margin icon-margin
+  background-color red
+  color white
+  cursor move
+  text-align center
+  display list-item
+  list-style none outside none
+  border-radius(5px)
+
+.appliance-stash
+  width 2 * (icon-size + 2* icon-margin) + 2 * stash-padding
+  height  2 * (icon-size + 2* icon-margin) + 2 * stash-padding
+  background-color: blue
+  padding stash-padding
+
+  .appliance-icon
+    float left

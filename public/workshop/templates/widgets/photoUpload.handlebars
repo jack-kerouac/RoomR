@@ -1,4 +1,5 @@
 <div class="current-images">
+	<h3>Vorhandene Bilder</h3>
 	{{#each currentImages}}
 		<span class="current-image">
 			<img src="{{url}}" alt="" />
@@ -6,10 +7,13 @@
 		</span>
 	{{/each}}
 </div>
-<span class="drop-target"></span>
-<div class="fileUploadField">
-  <label for="file-select">Bilder auswählen</label>
-  <input id="file-select" type="file" multiple name="image"></input>
-</div>
+<div>
+	<h3>Bilder hochladen</h3>
+	<span class="drop-target"></span>
+	<div class="fileUploadField">
+	  <label for="file-select">Bilder auswählen</label>
+	  <input id="file-select" type="file" multiple name="image"></input>
+	</div>
 
-<div class="clickable">Bilder hochladen</div>
+	<div class="clickable">Bilder hochladen</div>
+</div>
