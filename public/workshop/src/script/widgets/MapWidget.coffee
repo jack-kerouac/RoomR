@@ -7,6 +7,9 @@ define ['base/RoomrWidget', 'base/renderTemplate'], (RoomrWidget, renderTemplate
 
     gmap: undefined  
 
+    currentLat: undefined
+    currentLong: undefined
+
     constructor: ->
       super('map')
       @subscribeToEvent 'searchResultsChanged', (params) =>
@@ -35,18 +38,28 @@ define ['base/RoomrWidget', 'base/renderTemplate'], (RoomrWidget, renderTemplate
           @createMap '-12.043333','-77.028333'          
 
     createMap: (latitude, longitude) ->
+      @currentLat = latitude
+      @currentLong = longitude
       @gmap = new GMaps {
         div: '#SearchResultMap',
         lat: latitude,
         lng: longitude,
+        zoom: 13,
         height: '400px'
       }
-      @addMarker latitude,longitude,'aktueller Standort'
+      @addMarker4CurrentPosition()      
+
+    addMarker4CurrentPosition: ->
+      @addMarker @currentLat,@currentLong,'aktueller Standort'
 
     addMarker: (latitude, longitude, markertitle) ->
       @gmap.addMarker {lat:latitude, lng:longitude, title:markertitle}
 
     searchResultsChanged: (searchResults) ->
+
+      @gmap.removeMarkers()
+      @addMarker4CurrentPosition()
+
       for searchResult in searchResults
         lat = searchResult.roomOffer.flatshare.geoLocation.latitude
         long = searchResult.roomOffer.flatshare.geoLocation.longitude
