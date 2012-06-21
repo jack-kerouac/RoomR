@@ -6,11 +6,17 @@ define ['base/RoomrWidget', 'base/renderTemplate', 'jquery-ui'], (RoomrWidget, r
     constructor: ->
       super('offerRoomForm')
 
-    renderInto: (element) ->
-      @renderTemplate {}, (html) =>
-        form = $(html)
+    getSelectedAppliances: (form, type) ->
+      appliances = _.map $("#appliances .#{type} li", form), (elem) ->
+        $(elem).data('value')
+      appliances
 
-        $items = $("li", form)
+
+    renderInto: (element) ->
+      @renderTemplate {}, (content) =>
+        $content = $(content)
+
+        $items = $("li", $content)
         $items.draggable {
           drag: (event, ui) ->
             $(this).draggable "option", "revert", "invalid"
@@ -18,7 +24,7 @@ define ['base/RoomrWidget', 'base/renderTemplate', 'jquery-ui'], (RoomrWidget, r
 
           cursor: "move"
         }
-        $("ul", form).droppable {
+        $("ul", $content).droppable {
           accept: $items
 
           drop: (event, ui) ->
@@ -27,4 +33,14 @@ define ['base/RoomrWidget', 'base/renderTemplate', 'jquery-ui'], (RoomrWidget, r
             $(this).append $(ui.draggable)
         }
 
-        $(element).append(form)
+        $(element).append($content)
+
+        # we expect to get the form as root element of the template
+        $form = $content
+
+        $form.submit (event) =>
+          event.preventDefault()
+          available = @getSelectedAppliances $form, 'available'
+          nonAvailable = @getSelectedAppliances $form, 'non-available'
+          true
+
