@@ -41,12 +41,6 @@ require ['base/EventMediator', 'backbone', 'Navigation', 'models/UserCollection'
   searchSection = new SearchSection()
   app.addSection searchSection
 
-  searchWidget = new SearchWidget()
-  searchSection.addWidget(searchWidget)
-
-  searchResultWidget = new SearchResultWidget()
-  searchSection.addWidget(searchResultWidget)
-
   testSection = new RoomrSection {
     name: 'test'
     title: 'test 2 title'
