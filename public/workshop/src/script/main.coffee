@@ -19,7 +19,6 @@
 require [
   'base/EventMediator',
   'backbone',
-  'models/UserCollection',
   'base/AppRouter',
   'base/RoomrSection',
   'sections/OfferRoomSection',
@@ -29,7 +28,6 @@ require [
   'widgets/LoginWidget'],
 (EventMediator,
   Backbone,
-  UserCollection,
   AppRouter,
   RoomrSection,
   OfferRoomSection,
