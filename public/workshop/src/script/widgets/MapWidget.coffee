@@ -50,6 +50,9 @@ define ['base/RoomrWidget', 'base/renderTemplate'], (RoomrWidget, renderTemplate
       for searchResult in searchResults
         lat = searchResult.roomOffer.flatshare.geoLocation.latitude
         long = searchResult.roomOffer.flatshare.geoLocation.longitude
-        @addMarker lat,long,'title'
+        street = searchResult.roomOffer.flatshare.address.street + ' ' + searchResult.roomOffer.flatshare.address.streetNumber
+        city = searchResult.roomOffer.flatshare.address.city;
+        title = street + ', ' + city
+        @addMarker lat,long,title
       
       
