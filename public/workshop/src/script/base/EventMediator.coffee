@@ -21,7 +21,7 @@ define ->
 
         pending = pendingSubscriptions[eventName]
         if pending?
-          pending.forEach (callback) -> emitter.subscribe eventName callback
+          pending.forEach (callback) -> emitter.subscribe eventName, callback
 
       subscribeToEvent: (eventName, callback) ->
         if not validString eventName
