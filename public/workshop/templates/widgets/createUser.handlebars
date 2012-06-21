@@ -1,4 +1,5 @@
 <form id="CreateUserWidgetForm">
+  <b>Neuen Account erstellen:</b>
   <p>
     <label>
       Name:
@@ -12,12 +13,15 @@
     <br/>
     <label>
       Geburtstag:
-      <input type="date" name="birthdate" placeholder="Geburtstag" required/>
+      <input name="birthdate_day" placeholder="Tag" required/>
+      <input name="birthdate_mon" placeholder="Monat" required/>
+      <input name="birthdate_year" placeholder="Jahr" required/>
     </label>
     <br/>
     <label>
       Geschlecht:
-      <input type="text" name="gender" placeholder="Männlein oder Weiblein" required/>
+      <input type="radio" name="gender" value="male" required>Mann
+      <input type="radio" name="gender" value="female" required>Frau
     </label>
     <br/>
     <label>

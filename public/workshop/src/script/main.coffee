@@ -34,16 +34,16 @@ require ['base/EventMediator', 'backbone', 'Navigation', 'models/UserCollection'
   offerRoomSection = new OfferRoomSection()
   app.addSection offerRoomSection
 
-  testSection = new RoomrSection {
-    name: 'test'
-    title: 'test 2 title'
+  photoUploadSection = new RoomrSection {
+    name: 'photoUpload'
+    title: 'Foto Upload'
   }
 
   photoUploadWidget = new PhotoUploadWidget()
-  testSection.addWidget(photoUploadWidget)
+  photoUploadSection.addWidget(photoUploadWidget)
 
 
-  app.addSection testSection
+  app.addSection photoUploadSection
 
 
   # App starten
