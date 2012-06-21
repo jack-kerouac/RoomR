@@ -3,14 +3,14 @@ define ['base/RoomrWidget', 'base/renderTemplate'], (RoomrWidget, renderTemplate
 
   class MapWidget extends RoomrWidget
 
-    searchResults: []
-
     nidus: undefined
 
     gmap: undefined  
 
     constructor: ->
       super('map')
+      @subscribeToEvent 'searchResultsChanged', (params) =>
+        @searchResultsChanged params
 
     renderInto: (element) ->
       @nidus = $(element)
@@ -47,5 +47,9 @@ define ['base/RoomrWidget', 'base/renderTemplate'], (RoomrWidget, renderTemplate
       @gmap.addMarker {lat:latitude, lng:longitude, title:markertitle}
 
     searchResultsChanged: (searchResults) ->
-      @searchResults = searchResults
+      for searchResult in searchResults
+        lat = searchResult.roomOffer.flatshare.geoLocation.latitude
+        long = searchResult.roomOffer.flatshare.geoLocation.longitude
+        @addMarker lat,long,'title'
+      
       
