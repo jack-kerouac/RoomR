@@ -8,7 +8,7 @@ define ->
 
     registerEvent: (eventName) ->
       @subscribers[eventName] = []
-      window.eventMediator.registerEvent this, eventName
+      window.roomr.eventMediator.registerEvent this, eventName
 
     registerPropChgEvent: (eventName) ->
       @cachedProps[eventName] = 'unknown'

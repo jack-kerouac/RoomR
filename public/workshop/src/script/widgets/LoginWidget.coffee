@@ -6,21 +6,39 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
     constructor: () ->
       super('login')
       @loginState = 'unknown'
+      @userName = 'foo'
+      @userEmail = 'foo'
+
       @registerPropChgEvent 'loginStateChanged'
-      window.eventMediator.subscribeToEvent 'loginStateChanged', @onLoginStateChanged
+      @registerPropChgEvent 'userNameChanged'
+      @registerPropChgEvent 'userEmailChanged'
+      @registerPropChgEvent 'userBirthdate'
+      @registerPropChgEvent 'userGender'
+
+      @subscribeToEvent 'loginStateChanged', (newState) => @loginState = newState; @render()
+      @subscribeToEvent 'userNameChanged', (newName) => @userName = newName
+      @subscribeToEvent 'userEmailChanged', (newEmail) => @userEmail = newEmail
+
       @findOutState()
+
+    emitUserInfoEvents: (userInfo) ->
+      @emit 'userNameChanged', userInfo.name
+      @emit 'userEmailChanged', userInfo.email
+      @emit 'userBirthdate', userInfo.birthdate
+      @emit 'userGender', userInfo.gender
+      @emit 'loginStateChanged', 'loggedIn'
 
     findOutState: ->
       $.ajax {
         url: '/rest/users/current'
         complete: (jqXHR, stat) =>
           if stat == 'success'
-            @emit 'loginStateChanged', 'loggedIn'
+            @emitUserInfoEvents JSON.parse jqXHR.responseText
           else
             @emit 'loginStateChanged', 'loggedOut'
       }
 
-    addEvents: ->
+    setLoginSubmitEvent: ->
       $('#LoginWidgetForm').submit (event) =>
         event.preventDefault()
         username = $('#LoginWidgetForm input[name=login]').val()
@@ -32,14 +50,33 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
           type: 'POST'
           complete: (jqXHR, stat) =>
             if stat == 'success'
-              @emit 'loginStateChanged', 'loggedIn'
+              userInfo = JSON.parse jqXHR.responseText
+              if userInfo.error?
+                alert "Fehler beim Login"
+              else
+                @emitUserInfoEvents userInfo
+            else
+              alert "Fehler beim Login"
+        }
+
+    setLogoutSubmitEvent: ->
+      $('#LogoutWidgetForm').submit (event) =>
+        event.preventDefault()
+        postData = { msg : "I'm off" }
+        $.ajax '/rest/logout', {
+          contentType : "application/json"
+          data: JSON.stringify postData
+          type: 'POST'
+          complete: (jqXHR, stat) =>
+            if stat == 'success'
+              @emit 'userNameChanged', ''
+              @emit 'userEmailChanged', ''
+              @emit 'userBirthdate', ''
+              @emit 'userGender', ''
+              @emit 'loginStateChanged', 'loggedOut'
             else
               console.log "Kaputt", jqXHR
         }
-
-    onLoginStateChanged: (newState) =>
-      @loginState = newState
-      @render()
 
     renderInto: (element) ->
       @elem = element
@@ -48,19 +85,20 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
     render: ->
       if @elem?
         if @loginState == 'loggedIn'
-          @renderLoggedIn()
+          @renderLogoutForm()
         else
-          @renderLoggedOut()
+          @renderLoginForm()
 
-    renderLoggedOut: () =>
-      @name = 'login'
+    renderLoginForm: () =>
       @renderTemplate {}, (html) =>
-          $(@elem).empty()
-          $(@elem).append(html)
-          @addEvents()
+        $(@elem).empty()
+        $(@elem).append(html)
+        @setLoginSubmitEvent()
+      , 'login'
 
-    renderLoggedIn: () =>
-      @name = 'profileInfo'
-      @renderTemplate {}, (html) =>
-          $(@elem).empty()
-          $(@elem).append(html)
+    renderLogoutForm: () =>
+      @renderTemplate { UserName: @userName, UserEmail: @userEmail}, (html) =>
+        $(@elem).empty()
+        $(@elem).append(html)
+        @setLogoutSubmitEvent()
+      , 'logout'

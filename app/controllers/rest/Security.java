@@ -7,9 +7,12 @@ import play.data.validation.Valid;
 import play.modules.guice.InjectSupport;
 import play.mvc.Controller;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableMap;
 
 import controllers.rest.dto.LoginData;
+import controllers.rest.RoomrUsers;
+
 import facade.UserFacade;
 import facade.exception.LoginFailedException;
 
@@ -27,9 +30,11 @@ public class Security extends Controller {
 			RoomrUser user = userFacade.login(loginData.email,
 					loginData.password);
 			session.put("username", user.email);
-			renderJSON(ImmutableMap.of("success", true));
+			// renderJSON(ImmutableMap.of("success", true));
+
+			RoomrUsers.get(user.id);
 		} catch (LoginFailedException e) {
-			renderJSON(ImmutableMap.of("success", false));
+			renderJSON(ImmutableMap.of("error", "authFailed"));
 		}
 	}
 
