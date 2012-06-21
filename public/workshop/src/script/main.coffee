@@ -16,8 +16,9 @@
 # bereitstellen, können wir beides in unserer Callback-Funkion verwenden, ohne sie dort
 # im Callback explizit aufzuführen.
 
-require ['base/EventMediator', 'backbone', 'base/AppRouter', 'sections/TestSection', 'sections/SearchSection', 'sections/MainSection'],
-(EventMediator, Backbone, AppRouter, TestSection, SearchSection, MainSection) ->
+require ['base/EventMediator', 'backbone', 'Navigation', 'models/UserCollection', 'base/AppRouter', 'base/RoomrSection',
+'sections/OfferRoomSection', 'widgets/PhotoUploadWidget', 'sections/SearchSection', 'sections/MainSection'],
+(EventMediator, Backbone, Navigation, UserCollection, AppRouter, RoomrSection, OfferRoomSection, PhotoUploadWidget, SearchSection, MainSection) ->
 
   'use strict'
 
@@ -30,8 +31,20 @@ require ['base/EventMediator', 'backbone', 'base/AppRouter', 'sections/TestSecti
   searchSection = new SearchSection()
   app.addSection searchSection
 
-  testSection = new TestSection()
+  offerRoomSection = new OfferRoomSection()
+  app.addSection offerRoomSection
+
+  testSection = new RoomrSection {
+    name: 'test'
+    title: 'test 2 title'
+  }
+
+  photoUploadWidget = new PhotoUploadWidget()
+  testSection.addWidget(photoUploadWidget)
+
+
   app.addSection testSection
+
 
   # App starten
   # -----------
