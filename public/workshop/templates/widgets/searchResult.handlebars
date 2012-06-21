@@ -1,7 +1,7 @@
 <h3>Search Result Widget!</h3>
-<ul>
+<ol>
   {{#each searchResults}}
-    <li>
+    <li class="searchResult" data-result-latitude={{roomOffer.flatshare.geoLocation.latitude}} data-result-longitude={{roomOffer.flatshare.geoLocation.longitude}}>
       <div>
         <div>Current Distance: {{currentDistance}}&nbsp;km</div>
         <div>MatchingScore {{matchingScore.value}} - {{matchingScore.defined}}</div>
@@ -34,4 +34,4 @@
       </div>
     </li>
   {{/each}}
-</ul>
+</ol>
