@@ -20,7 +20,7 @@ define ['backbone', 'base/RoomrWidget', 'base/roomrUtil', 'models/SearchResult']
       @registerShakeEvent()
 
     performSearch: ->
-      @searchResults.url = 'rest/roomOffers/search?' + $('#search_offers_form').serialize()
+      @searchResults.url = '/rest/roomOffers/search?' + $('#search_offers_form').serialize()
       @searchResults.fetch {
         success: (results) =>
           searchResultsArray = []
