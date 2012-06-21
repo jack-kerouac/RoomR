@@ -28,7 +28,10 @@ define ['backbone', 'base/RoomrWidget', 'base/roomrUtil', 'models/SearchResult']
           results.each (result) =>
             searchResult = new SearchResult(result.offer(), result.matchingScore(), @lat, @long)
             searchResultsArray.push searchResult
-          @emit 'searchResultsChanged', searchResultsArray
+          sortedResults = _.sortBy(searchResultsArray, (result) ->
+            return result.currentDistance
+          )
+          @emit 'searchResultsChanged', sortedResults
       }
 
     renderInto: (element) ->

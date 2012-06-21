@@ -2,7 +2,7 @@
 @import "nib/vendor"
 @import "nib/gradients"
 
-@import "src/style/progEnhance"
+@import "src/style/photoUpload"
 
 // Basics
 *
@@ -15,7 +15,7 @@ body
   background: -o-radial-gradient(center, ellipse cover,  #66b0c2 0%,#405e64 51%,#163538 100%)
   background: -ms-radial-gradient(center, ellipse cover,  #66b0c2 0%,#405e64 51%,#163538 100%)
   background: radial-gradient(center, ellipse cover,  #66b0c2 0%,#405e64 51%,#163538 100%)
-  margin-top: 0px
+  margin: 0px
 
 // Layout
 #Wrapper
@@ -42,6 +42,17 @@ body
 
 #Wrapper > header, #Main, #Side, .item-bigview
   padding 1em 2em
+
+#Wrapper header nav a
+  width: 20%
+  max-width: 200px
+  padding: 8px
+  border-radius: 5px
+  background: linear-gradient(top, rgb(181,196,212), rgb(133,164,189), rgb(103,145,173))
+  display: block
+  float: left
+  margin-right: 5px
+  text-align: center
 
 // Eintrags-Großansicht
 .item-bigview

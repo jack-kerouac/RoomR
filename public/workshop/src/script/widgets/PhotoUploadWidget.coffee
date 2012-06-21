@@ -2,7 +2,9 @@ define ['base/RoomrWidget', 'base/roomrUtil', 'modernizr'], (RoomrWidget, roomrU
   'use strict'
 
   class PhotoUploadWidget extends RoomrWidget
-    ImageModel = Backbone.Model.extend {}
+    ImageModel = Backbone.Model.extend {
+      url: -> @get('url')
+    }
 
     ImageCollection = Backbone.Collection.extend {
       model: ImageModel  # Was für ein Model findet sich in dieser Collection?
@@ -20,35 +22,30 @@ define ['base/RoomrWidget', 'base/roomrUtil', 'modernizr'], (RoomrWidget, roomrU
       @render()
 
     render: ->
-      @renderTemplate {}, (content) =>
-        @nidus.html content
-        @dropTarget = $('.drop-target', @nidus)
+      @existingImages.fetch {
+        success: =>
+          @renderTemplate {currentImages: @existingImages.models}, (content) =>
+            @nidus.html content
+            @dropTarget = $('.drop-target', @nidus)
 
-        $('.clickable', @nidus).on 'click', @uploadImages.bind this
-        
-        # file select field is made invisible by Modernizr powered CSS
-        @fileSelect = $('input[type="file"]', @nidus)
-        @fileSelect.on 'change', (changeEvent) =>
-          changeEvent.preventDefault()
-          @handleFiles @fileSelect[0].files
+            $('.clickable', @nidus).on 'click', @uploadImages.bind this
 
-        roomrUtil.addDropHandler @dropTarget, (dropEvent) =>
-          dt = dropEvent.dataTransfer;
-          @handleFiles dt.files
+            # file select field is made invisible by Modernizr powered CSS
+            @fileSelect = $('input[type="file"]', @nidus)
+            @fileSelect.on 'change', (changeEvent) =>
+              changeEvent.preventDefault()
+              @handleFiles @fileSelect[0].files
 
-        currentImageContainer = $('.current-images', @nidus)
-        @existingImages.fetch {
-          success: (images) =>
-            images.each (image) =>
-              imgElem = $('<img>')
-              imgElem.attr 'src', image.get('url')
-              currentImageContainer.append imgElem
-        }
+            roomrUtil.addDropHandler @dropTarget, (dropEvent) =>
+              dt = dropEvent.dataTransfer;
+              @handleFiles dt.files
 
-        currentImageContainer.click (event) =>
-          el = $(event.target)
-          if el.prop('nodeName').toLowerCase() == 'img'
-            @deleteImage el
+            currentImageContainer = $('.current-images', @nidus)
+            currentImageContainer.click (event) =>
+              el = $(event.target)
+              if el.hasClass('delete-image')
+                @deleteImage el.siblings 'img'
+      }
 
     handleFiles: (files) ->
       _.each files, (file) =>
@@ -113,7 +110,7 @@ define ['base/RoomrWidget', 'base/roomrUtil', 'modernizr'], (RoomrWidget, roomrU
         complete: (jqXHR, stat) ->
           if stat == 'success'
             console.log "File deleted successfully"
-            image.remove()
+            image.parents('.current-image').remove()
           else
             @reportError "Failed to delete file: #{jqXHR}"
       }

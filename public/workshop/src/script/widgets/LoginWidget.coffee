@@ -15,6 +15,9 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
       @registerPropChgEvent 'userBirthdate'
       @registerPropChgEvent 'userGender'
 
+      @subscribeToEvent 'newUserCreated',
+        (newUser) => @logInUser newUser.email, newUser.password
+
       @subscribeToEvent 'loginStateChanged',
         (newState) => @loginState = newState; @render()
       @subscribeToEvent 'userNameChanged', (newName) => @userName = newName
@@ -39,26 +42,29 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
             @emit 'loginStateChanged', 'loggedOut'
       }
 
+    logInUser: (email, password) =>
+      postData = { email: email, password: password }
+      $.ajax '/rest/login', {
+        contentType : "application/json"
+        data: JSON.stringify postData
+        type: 'POST'
+        complete: (jqXHR, stat) =>
+          if stat == 'success'
+            userInfo = JSON.parse jqXHR.responseText
+            if userInfo.error?
+              alert "Fehler beim Login"
+            else
+              @emitUserInfoEvents userInfo
+          else
+            alert "Fehler beim Login"
+      }
+
     setLoginSubmitEvent: ->
       $('#LoginWidgetForm').submit (event) =>
         event.preventDefault()
-        username = $('#LoginWidgetForm input[name=login]').val()
-        passwd = $('#LoginWidgetForm input[name=passwd]').val()
-        postData = { email: username, password: passwd }
-        $.ajax '/rest/login', {
-          contentType : "application/json"
-          data: JSON.stringify postData
-          type: 'POST'
-          complete: (jqXHR, stat) =>
-            if stat == 'success'
-              userInfo = JSON.parse jqXHR.responseText
-              if userInfo.error?
-                alert "Fehler beim Login"
-              else
-                @emitUserInfoEvents userInfo
-            else
-              alert "Fehler beim Login"
-        }
+        email = $('#LoginWidgetForm input[name=email]').val()
+        password = $('#LoginWidgetForm input[name=password]').val()
+        @logInUser email, password
 
     setLogoutSubmitEvent: ->
       $('#LogoutWidgetForm').submit (event) =>
