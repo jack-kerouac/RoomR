@@ -78,9 +78,7 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
               console.log "Kaputt", jqXHR
         }
 
-    renderInto: (element) ->
-      @elem = element
-      @render()
+    renderInto: (@elem) -> @render()
 
     render: ->
       if @elem?
