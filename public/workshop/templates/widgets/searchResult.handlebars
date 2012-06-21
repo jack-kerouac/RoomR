@@ -29,6 +29,11 @@
             <div>Beschreibung: {{description}}</div>
             <div>Kontakt E-Mail: {{contactEmail}}</div>
             <div>Bewerbungen: {{applications}}</div>
+            <form class="searchResultApplyForm"
+                id="SearchResultApplyForm_{{flatshare_id}}">
+              <input type="hidden" name="flatshare_id" value="{{flatshare_id}}">
+              <input type="submit" name="ApplyButton" value="Bewerben">
+            </form>
           </div>
         {{/with}}
       </div>
