@@ -1,7 +1,10 @@
 define ->
   'use strict'
 
-  window.eventMediator = do ->
+  if not window.room?
+    window.roomr = {}
+
+  window.roomr.eventMediator = do ->
     events = {}
     pendingSubscriptions = {}
 

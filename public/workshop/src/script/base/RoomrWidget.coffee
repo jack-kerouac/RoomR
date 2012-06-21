@@ -21,7 +21,7 @@ define ['base/EventEmitter', 'base/renderTemplate'], (EventEmitter, renderTempla
     renderInto: (element) ->
 
     subscribeToEvent: (eventName, callback) ->
-      $(window).eventMediator.subscribeToEvent eventName, callback
+      window.roomr.eventMediator.subscribeToEvent eventName, callback
 
     reportError: (widgetName, errorMsg) ->
       $(window).trigger('widgetError', [widgetName, errorMsg])
