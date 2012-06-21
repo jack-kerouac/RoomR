@@ -1,7 +1,7 @@
 define ->
   'use strict'
 
-  if not window.room?
+  if not window.roomr?
     window.roomr = {}
 
   window.roomr.eventMediator = do ->

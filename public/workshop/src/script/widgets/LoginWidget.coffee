@@ -15,7 +15,11 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
       @registerPropChgEvent 'userBirthdate'
       @registerPropChgEvent 'userGender'
 
-      @subscribeToEvent 'loginStateChanged', (newState) => @loginState = newState; @render()
+      @subscribeToEvent 'newUserCreated',
+        (newUser) => @logInUser newUser.email, newUser.password
+
+      @subscribeToEvent 'loginStateChanged',
+        (newState) => @loginState = newState; @render()
       @subscribeToEvent 'userNameChanged', (newName) => @userName = newName
       @subscribeToEvent 'userEmailChanged', (newEmail) => @userEmail = newEmail
 
@@ -24,9 +28,9 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
     emitUserInfoEvents: (userInfo) ->
       @emit 'userNameChanged', userInfo.name
       @emit 'userEmailChanged', userInfo.email
-      @emit 'loginStateChanged', 'loggedIn'
       @emit 'userBirthdate', userInfo.birthdate
       @emit 'userGender', userInfo.gender
+      @emit 'loginStateChanged', 'loggedIn'
 
     findOutState: ->
       $.ajax {
@@ -38,26 +42,29 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
             @emit 'loginStateChanged', 'loggedOut'
       }
 
+    logInUser: (email, password) =>
+      postData = { email: email, password: password }
+      $.ajax '/rest/login', {
+        contentType : "application/json"
+        data: JSON.stringify postData
+        type: 'POST'
+        complete: (jqXHR, stat) =>
+          if stat == 'success'
+            userInfo = JSON.parse jqXHR.responseText
+            if userInfo.error?
+              alert "Fehler beim Login"
+            else
+              @emitUserInfoEvents userInfo
+          else
+            alert "Fehler beim Login"
+      }
+
     setLoginSubmitEvent: ->
       $('#LoginWidgetForm').submit (event) =>
         event.preventDefault()
-        username = $('#LoginWidgetForm input[name=login]').val()
-        passwd = $('#LoginWidgetForm input[name=passwd]').val()
-        postData = { email: username, password: passwd }
-        $.ajax '/rest/login', {
-          contentType : "application/json"
-          data: JSON.stringify postData
-          type: 'POST'
-          complete: (jqXHR, stat) =>
-            if stat == 'success'
-              userInfo = JSON.parse jqXHR.responseText
-              if userInfo.error?
-                alert "Fehler beim Login"
-              else
-                @emitUserInfoEvents userInfo
-            else
-              alert "Fehler beim Login"
-        }
+        email = $('#LoginWidgetForm input[name=email]').val()
+        password = $('#LoginWidgetForm input[name=password]').val()
+        @logInUser email, password
 
     setLogoutSubmitEvent: ->
       $('#LogoutWidgetForm').submit (event) =>
@@ -69,16 +76,16 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
           type: 'POST'
           complete: (jqXHR, stat) =>
             if stat == 'success'
-              @emit 'loginStateChanged', 'loggedOut'
               @emit 'userNameChanged', ''
               @emit 'userEmailChanged', ''
+              @emit 'userBirthdate', ''
+              @emit 'userGender', ''
+              @emit 'loginStateChanged', 'loggedOut'
             else
               console.log "Kaputt", jqXHR
         }
 
-    renderInto: (element) ->
-      @elem = element
-      @render()
+    renderInto: (@elem) -> @render()
 
     render: ->
       if @elem?
@@ -88,15 +95,15 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
           @renderLoginForm()
 
     renderLoginForm: () =>
-      @name = 'login'
       @renderTemplate {}, (html) =>
-          $(@elem).empty()
-          $(@elem).append(html)
-          @setLoginSubmitEvent()
+        $(@elem).empty()
+        $(@elem).append(html)
+        @setLoginSubmitEvent()
+      , 'login'
 
     renderLogoutForm: () =>
-      @name = 'logout'
       @renderTemplate { UserName: @userName, UserEmail: @userEmail}, (html) =>
-          $(@elem).empty()
-          $(@elem).append(html)
-          @setLogoutSubmitEvent()
+        $(@elem).empty()
+        $(@elem).append(html)
+        @setLogoutSubmitEvent()
+      , 'logout'

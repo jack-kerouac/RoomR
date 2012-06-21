@@ -16,34 +16,23 @@
 # bereitstellen, können wir beides in unserer Callback-Funkion verwenden, ohne sie dort
 # im Callback explizit aufzuführen.
 
-require ['base/EventMediator', 'backbone', 'Navigation', 'models/UserCollection', 'base/AppRouter', 'base/RoomrSection', 'widgets/SearchWidget',
-'widgets/SearchResultWidget', 'widgets/LoginWidget', 'widgets/FlatshareWidget', 'widgets/PhotoUploadWidget'],
-(EventMediator, Backbone, Navigation, UserCollection, AppRouter, RoomrSection, SearchWidget, SearchResultWidget, LoginWidget, FlatshareWidget, PhotoUploadWidget) ->
+require ['base/EventMediator', 'backbone', 'Navigation', 'models/UserCollection', 'base/AppRouter', 'base/RoomrSection',
+'sections/OfferRoomSection', 'widgets/PhotoUploadWidget', 'sections/SearchSection', 'sections/MainSection'],
+(EventMediator, Backbone, Navigation, UserCollection, AppRouter, RoomrSection, OfferRoomSection, PhotoUploadWidget, SearchSection, MainSection) ->
 
   'use strict'
 
   # Router anwerfen
   app = new AppRouter()
 
-  mainSection = new RoomrSection {
-      name: 'main'
-      title: 'test title'
-      path: ''
-    }
-  loginWidget = new LoginWidget()
-  mainSection.addWidget(loginWidget)
-
-  searchWidget = new SearchWidget()
-  mainSection.addWidget(searchWidget)
-
-  searchResultWidget = new SearchResultWidget()
-  mainSection.addWidget(searchResultWidget)
-
-  searchWidget.subscribe 'searchResultsChanged', (params...) ->
-    searchResultWidget.searchResultsChanged.apply(searchResultWidget, params)
-
+  mainSection = new MainSection()
   app.addSection mainSection
 
+  searchSection = new SearchSection()
+  app.addSection searchSection
+
+  offerRoomSection = new OfferRoomSection()
+  app.addSection offerRoomSection
 
   testSection = new RoomrSection {
     name: 'test'
@@ -51,9 +40,8 @@ require ['base/EventMediator', 'backbone', 'Navigation', 'models/UserCollection'
   }
 
   photoUploadWidget = new PhotoUploadWidget()
-  flatshareWidget = new FlatshareWidget()
   testSection.addWidget(photoUploadWidget)
-  testSection.addWidget(flatshareWidget)
+
 
   app.addSection testSection
 
