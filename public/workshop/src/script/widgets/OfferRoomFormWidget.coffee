@@ -1,10 +1,10 @@
 define ['base/RoomrWidget', 'base/renderTemplate'], (RoomrWidget, renderTemplate) ->
   'use strict'
 
-  class FlatshareWidget extends RoomrWidget
+  class OfferRoomFormWidget extends RoomrWidget
 
     constructor: ->
-      super('flatshare')
+      super('offerRoomForm')
 
     renderInto: (element) ->
       @renderTemplate {}, (html) =>
