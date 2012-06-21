@@ -72,6 +72,7 @@ body
 #Navigation
   z-index: 1
   margin-top: -28px
+  margin-bottom: 18px
 
 #Navigation nav a
   display: inline-block
@@ -144,12 +145,33 @@ input
   stash-padding = 10px
   icon-size = 80px
   icon-margin = 5px
+  clearfix()
+
+  stashWidth(horizontalIcons)
+    horizontalIcons * (icon-size + 2 * icon-margin) + 2 * stash-padding
+  stashHeight(verticalIcons)
+    verticalIcons * (icon-size + 2 * icon-margin) + 2 * stash-padding
+
+
 
   ul
-    width 2 * (icon-size +2 * icon-margin) + 2 * stash-padding
-    height  2 * (icon-size + 2 * icon-margin) + 2 * stash-padding
-    background-color: blue
     padding stash-padding
+    float left
+
+    &.potential
+      background-color: blue
+      width stashWidth(2)
+      height stashHeight(2)
+
+    &.available
+      background-color: green
+      width stashWidth(4)
+      height stashHeight(1)
+
+    &.non-available
+      background-color: red
+      width stashWidth(4)
+      height stashHeight(1)
 
     li
       width icon-size
@@ -159,8 +181,7 @@ input
       list-style none outside none
       float left
 
-      background-color red
-      color white
+      background-color yellow
       cursor move
       text-align center
       border-radius(5px)
