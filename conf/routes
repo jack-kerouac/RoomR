@@ -150,7 +150,7 @@ DELETE	/rest/images/{id}						rest.Images.delete
 GET     /old                                       Start.start
 
 # Ignore favicon requests
-GET     /favicon.ico                            404
+GET     /favicon.ico                            staticFile:public/workshop/src/style/img/favicon.ico
 
 # Map static resources from the /app/public folder to the /public path
 GET     /old/public/                                staticDir:public
