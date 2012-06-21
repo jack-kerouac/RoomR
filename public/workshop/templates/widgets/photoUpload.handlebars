@@ -1,8 +1,13 @@
-<div class="current-images"></div>
-<div class="drop-target" style="width: 250px; height: 150px; margin: 10px;">
-
+<div class="current-images">
+	{{#each currentImages}}
+		<span class="current-image">
+			<img src="{{url}}" alt="" />
+			<span class="delete-image"></span>
+		</span>
+	{{/each}}
 </div>
-<div id="photoUploadInputField">
+<span class="drop-target"></span>
+<div class="fileUploadField">
   <label for="file-select">Bilder auswählen</label>
   <input id="file-select" type="file" multiple name="image"></input>
 </div>
