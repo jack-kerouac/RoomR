@@ -39,9 +39,6 @@ require ['base/EventMediator', 'backbone', 'Navigation', 'models/UserCollection'
   searchResultWidget = new SearchResultWidget()
   mainSection.addWidget(searchResultWidget)
 
-  searchWidget.subscribe 'searchResultsChanged', (params...) ->
-    searchResultWidget.searchResultsChanged.apply(searchResultWidget, params)
-
   app.addSection mainSection
 
 

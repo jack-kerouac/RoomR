@@ -7,6 +7,8 @@ define ['base/RoomrWidget'], (RoomrWidget) ->
 
     constructor: ->
       super('searchResult')
+      @subscribeToEvent 'searchResultsChanged', (params) =>
+        @searchResultsChanged params
 
     renderInto: (element) ->
       @nidus = $(element)
