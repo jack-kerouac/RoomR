@@ -14,11 +14,14 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
     setCreateUserSubmitEvent: () ->
       $('#CreateUserWidgetForm').submit (event) =>
         event.preventDefault()
+        day = $('#CreateUserWidgetForm input[name=birthdate_day]').val()
+        mon = $('#CreateUserWidgetForm input[name=birthdate_mon]').val()
+        year = $('#CreateUserWidgetForm input[name=birthdate_year]').val()
         userToCreate = {
           name: $('#CreateUserWidgetForm input[name=name]').val(),
           email: $('#CreateUserWidgetForm input[name=email]').val(),
-          password: $('#CreateUserWidgetForm input[name=passwd]').val(),
-          birthdate: $('#CreateUserWidgetForm input[name=bday]').val(),
+          password: $('#CreateUserWidgetForm input[name=password]').val(),
+          birthdate: "#{year}-#{mon}-#{day}T12:00:00.000+0100",
           gender: $('#CreateUserWidgetForm input[name=gender]').val(),
         }
         $.ajax '/rest/users', {
@@ -27,9 +30,9 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
           type: 'POST'
           complete: (jqXHR, stat) =>
             if stat == 'success'
-              sonsole.log "User angelegt", jqXHR
+              @emit 'newUserCreated', userToCreate
             else
-              console.log "Fehler beim Login", jqXHR
+              alert "Irgendwas ging schief. Sorry..."
         }
 
     renderInto: (@elem) -> @render()
