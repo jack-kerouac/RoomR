@@ -20,7 +20,7 @@ body
   background: -ms-radial-gradient(center, ellipse cover,  #66b0c2 0%,#405e64 51%,#163538 100%)
   background: radial-gradient(center, ellipse cover,  #66b0c2 0%,#405e64 51%,#163538 100%)
   margin: 0px
-  font-family: 'Maven Pro', sans-serif;
+  font-family: 'Inder', sans-serif;
   font-size: 14px
 
   #Headline
@@ -72,6 +72,7 @@ body
 #Navigation
   z-index: 1
   margin-top: -28px
+  margin-bottom: 18px
 
 #Navigation nav a
   display: inline-block
@@ -124,24 +125,53 @@ input
   background-color bcolor  
 
 .widget
+  border 1px solid rgba(255, 255, 255, 0.4)
   border-radius: 5px
-  background: linear-gradient(top, rgb(181,196,212), rgb(133,164,189), rgb(103,145,173))
-  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.75);
+  background-color rgba(255, 255, 255, 0.4)
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.75)
   padding 10px
   margin 5px
 
+  input
+    background-color white
+    box-shadow inset 0px 2px 5px 0px rgba(0, 0, 0, 0.75)
+    border 1px solid rgba(255, 255, 255, 0.4)
+    border-radius: 2px
+    margin 5px
+    padding 2px
 
 
 .itemChoice
   stash-padding = 10px
   icon-size = 80px
   icon-margin = 5px
+  clearfix()
+
+  stashWidth(horizontalIcons)
+    horizontalIcons * (icon-size + 2 * icon-margin) + 2 * stash-padding
+  stashHeight(verticalIcons)
+    verticalIcons * (icon-size + 2 * icon-margin) + 2 * stash-padding
+
+
 
   ul
-    width 2 * (icon-size +2 * icon-margin) + 2 * stash-padding
-    height  2 * (icon-size + 2 * icon-margin) + 2 * stash-padding
-    background-color: blue
     padding stash-padding
+    float left
+
+    &.potential
+      background-color: blue
+      width stashWidth(2)
+      height stashHeight(2)
+
+    &.available
+      background-color: green
+      width stashWidth(4)
+      height stashHeight(1)
+
+    &.non-available
+      background-color: red
+      width stashWidth(4)
+      height stashHeight(1)
 
     li
       width icon-size
@@ -151,8 +181,7 @@ input
       list-style none outside none
       float left
 
-      background-color red
-      color white
+      background-color yellow
       cursor move
       text-align center
       border-radius(5px)

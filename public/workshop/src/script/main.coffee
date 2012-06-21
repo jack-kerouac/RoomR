@@ -16,14 +16,32 @@
 # bereitstellen, können wir beides in unserer Callback-Funkion verwenden, ohne sie dort
 # im Callback explizit aufzuführen.
 
-require ['base/EventMediator', 'backbone', 'Navigation', 'models/UserCollection', 'base/AppRouter', 'base/RoomrSection',
-'sections/OfferRoomSection', 'widgets/PhotoUploadWidget', 'sections/SearchSection', 'sections/MainSection'],
-(EventMediator, Backbone, Navigation, UserCollection, AppRouter, RoomrSection, OfferRoomSection, PhotoUploadWidget, SearchSection, MainSection) ->
+require [
+  'base/EventMediator',
+  'backbone',
+  'base/AppRouter',
+  'sections/PhotoUploadSection',
+  'sections/OfferRoomSection',
+  'sections/SearchSection',
+  'sections/MainSection',
+  'widgets/LoginWidget'],
+(EventMediator,
+  Backbone,
+  AppRouter,
+  PhotoUploadSection,
+  OfferRoomSection,
+  SearchSection,
+  MainSection,
+  LoginWidget) ->
 
   'use strict'
 
   # Router anwerfen
   app = new AppRouter()
+
+  # handle login separately. do not add it to a section but render it straight into an element
+  loginWidget = new LoginWidget()
+  loginWidget.renderInto($('#login'))
 
   mainSection = new MainSection()
   app.addSection mainSection
@@ -34,15 +52,7 @@ require ['base/EventMediator', 'backbone', 'Navigation', 'models/UserCollection'
   offerRoomSection = new OfferRoomSection()
   app.addSection offerRoomSection
 
-  photoUploadSection = new RoomrSection {
-    name: 'photoUpload'
-    title: 'Foto Upload'
-  }
-
-  photoUploadWidget = new PhotoUploadWidget()
-  photoUploadSection.addWidget(photoUploadWidget)
-
-
+  photoUploadSection = new PhotoUploadSection()
   app.addSection photoUploadSection
 
 
