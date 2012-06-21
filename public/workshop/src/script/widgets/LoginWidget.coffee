@@ -15,12 +15,9 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
       @registerPropChgEvent 'userBirthdate'
       @registerPropChgEvent 'userGender'
 
-      window.eventMediator.subscribeToEvent 'loginStateChanged',
-        (newState) => @loginState = newState; @render()
-      window.eventMediator.subscribeToEvent 'userNameChanged',
-        (newName) => @userName = newName
-      window.eventMediator.subscribeToEvent 'userEmailChanged',
-        (newEmail) => @userEmail = newEmail
+      @subscribeToEvent 'loginStateChanged', (newState) => @loginState = newState; @render()
+      @subscribeToEvent 'userNameChanged', (newName) => @userName = newName
+      @subscribeToEvent 'userEmailChanged', (newEmail) => @userEmail = newEmail
 
       @findOutState()
 
