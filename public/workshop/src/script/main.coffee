@@ -16,26 +16,16 @@
 # bereitstellen, können wir beides in unserer Callback-Funkion verwenden, ohne sie dort
 # im Callback explizit aufzuführen.
 
-require ['base/EventMediator', 'backbone', 'Navigation', 'models/UserCollection', 'base/AppRouter', 'base/RoomrSection', 'widgets/LoginWidget',
-'widgets/FlatshareWidget', 'widgets/PhotoUploadWidget', 'sections/SearchSection', 'widgets/CreateUserWidget'],
-(EventMediator, Backbone, Navigation, UserCollection, AppRouter, RoomrSection, LoginWidget, FlatshareWidget, PhotoUploadWidget, SearchSection, CreateUserWidget) ->
+require ['base/EventMediator', 'backbone', 'Navigation', 'models/UserCollection', 'base/AppRouter', 'base/RoomrSection',
+'widgets/FlatshareWidget', 'widgets/PhotoUploadWidget', 'sections/SearchSection', 'sections/MainSection'],
+(EventMediator, Backbone, Navigation, UserCollection, AppRouter, RoomrSection, FlatshareWidget, PhotoUploadWidget, SearchSection, MainSection) ->
 
   'use strict'
 
   # Router anwerfen
   app = new AppRouter()
 
-  mainSection = new RoomrSection {
-      name: 'main'
-      title: 'test title'
-      path: ''
-    }
-  loginWidget = new LoginWidget()
-  mainSection.addWidget(loginWidget)
-
-  createUserWidget = new CreateUserWidget()
-  mainSection.addWidget(createUserWidget)
-
+  mainSection = new MainSection()
   app.addSection mainSection
 
   searchSection = new SearchSection()
