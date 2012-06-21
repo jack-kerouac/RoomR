@@ -7,6 +7,8 @@ define ['base/RoomrWidget', 'base/renderTemplate'], (RoomrWidget, renderTemplate
 
     nidus: undefined
 
+    gmap: undefined  
+
     constructor: ->
       super('map')
 
@@ -18,36 +20,31 @@ define ['base/RoomrWidget', 'base/renderTemplate'], (RoomrWidget, renderTemplate
               
     loadGoogle: ->
       window.roomr = window.roomr || {}
-      window.roomr.roomrMapWidgetDrawCallback = =>
-        @loadGmaps()
+      window.roomr.roomrMapWidgetDrawCallback = @loadGmaps.bind(this)
       $.getScript 'http://maps.google.com/maps/api/js?sensor=false&callback=roomr.roomrMapWidgetDrawCallback'
 
     loadGmaps: ->
-      $.getScript('src/script/vendor/gmaps.js', @createMap).fail (args...) -> console.log args
+      $.getScript('src/script/vendor/gmaps.js', @renderMap.bind(this)).fail (args...) -> console.log args
 
-    createMap: ->      
-
-      $(document).ready ->
-        console.log "document ready"
+    renderMap: ->      
+      $(document).ready =>
         if navigator.geolocation
-          console.log "geolocation"
-          navigator.geolocation.getCurrentPosition (position)->
-            console.log "set position"
-            new GMaps {
-              div: '#SearchResultMap',
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-              height: '400px'
-            }
+          navigator.geolocation.getCurrentPosition (position) =>
+            @createMap position.coords.latitude,position.coords.longitude
         else
-          new GMaps {
-            div: '#SearchResultMap',
-            lat: '-12.043333',
-            lng: '-77.028333',
-            height: '400px'
-          }
+          @createMap '-12.043333','-77.028333'          
 
+    createMap: (latitude, longitude) ->
+      @gmap = new GMaps {
+        div: '#SearchResultMap',
+        lat: latitude,
+        lng: longitude,
+        height: '400px'
+      }
+      @addMarker latitude,longitude,'aktueller Standort'
 
+    addMarker: (latitude, longitude, markertitle) ->
+      @gmap.addMarker {lat:latitude, lng:longitude, title:markertitle}
 
     searchResultsChanged: (searchResults) ->
       @searchResults = searchResults
