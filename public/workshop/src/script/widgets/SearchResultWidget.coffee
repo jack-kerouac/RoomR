@@ -15,6 +15,8 @@ define ['base/RoomrWidget'], (RoomrWidget) ->
         event.preventDefault()
         console.log "Apply Button pressed: ", event
         console.log "hidden id = ", $("input[name=id]", event.target).val()
+        enclosingLi = $(event.target).closest 'li'
+        enclosingLi.addClass 'rotated'
 
     renderInto: (element) ->
       @nidus = $(element)
