@@ -76,7 +76,8 @@ module.exports = function(grunt){
         'backbone': 'vendor/backbone-amd',    // AMD-Build (https://github.com/amdjs)
         'underscore': 'vendor/underscore-amd', // AMD-Build (https://github.com/amdjs)
         'Handlebars': 'vendor/Handlebars-1.0.beta.6', // AMD-Build (https://github.com/SlexAxton/require-handlebars-plugin)
-        'modernizr': 'vendor/modernizr-2.5.3'
+        'modernizr': 'vendor/modernizr-2.5.3',
+        'jquerymobile' : 'vendor/jquery.mobile-1.1.0'
       },
       name: 'main',             // Wurzelmodul
       out: 'app.js',            // Zieldatei
