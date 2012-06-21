@@ -24,9 +24,9 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
     emitUserInfoEvents: (userInfo) ->
       @emit 'userNameChanged', userInfo.name
       @emit 'userEmailChanged', userInfo.email
-      @emit 'loginStateChanged', 'loggedIn'
       @emit 'userBirthdate', userInfo.birthdate
       @emit 'userGender', userInfo.gender
+      @emit 'loginStateChanged', 'loggedIn'
 
     findOutState: ->
       $.ajax {
@@ -69,9 +69,11 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
           type: 'POST'
           complete: (jqXHR, stat) =>
             if stat == 'success'
-              @emit 'loginStateChanged', 'loggedOut'
               @emit 'userNameChanged', ''
               @emit 'userEmailChanged', ''
+              @emit 'userBirthdate', ''
+              @emit 'userGender', ''
+              @emit 'loginStateChanged', 'loggedOut'
             else
               console.log "Kaputt", jqXHR
         }
