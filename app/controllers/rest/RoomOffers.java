@@ -3,6 +3,8 @@ package controllers.rest;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import controllers.rest.dto.SearchData;
 import controllers.rest.serialize.FlatshareUrlSerializer;
@@ -92,8 +94,9 @@ public class RoomOffers extends Controller {
 		if (searchData.minRoomSizeSquareMeters != null)
 			rr.minRoomSize = new FloorSpace(searchData.minRoomSizeSquareMeters);
 
-		List<ScoredRoomOffer> offers =
-				seekerFacade.search(rr, Optional.fromNullable(seekerAge), Optional.fromNullable(searchData.gender));
+		List<ScoredRoomOffer> offers = Lists.newArrayList(Iterables.limit(
+				seekerFacade.search(rr, Optional.fromNullable(seekerAge), Optional.fromNullable(searchData.gender)),
+				2));
 
 		Gson gson =
 				RoomrGsonBuilder

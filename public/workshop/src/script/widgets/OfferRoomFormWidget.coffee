@@ -19,7 +19,7 @@ define ['base/RoomrWidget', 'base/renderTemplate', 'jquery-ui'], (RoomrWidget, r
         $items = $("li", $content)
         $items.draggable {
           drag: (event, ui) ->
-            $(this).draggable "option", "revert", "invalid"
+            $(this).draggable "option", "revert", true
             $(this).removeClass 'dropped'
 
           cursor: "move"
@@ -28,9 +28,12 @@ define ['base/RoomrWidget', 'base/renderTemplate', 'jquery-ui'], (RoomrWidget, r
           accept: $items
 
           drop: (event, ui) ->
-            draggableOffset = $(ui.draggable).offset()
-            thisOffset = $(this).offset()
+            ui.draggable.draggable "option", "revert", false
             $(this).append $(ui.draggable)
+            $(ui.draggable).css {
+              top: 0
+              left: 0
+            }
         }
 
         $(element).append($content)
