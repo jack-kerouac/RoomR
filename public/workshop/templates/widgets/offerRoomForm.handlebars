@@ -1,4 +1,4 @@
-<form id="flatshare_form" autocomplete="on">
+<form id="flatshare_form" method="POST" autocomplete="on">
 
     <datalist id="floornames">
         <option value="UG">
@@ -68,8 +68,7 @@
     <label for="numberOfRooms">Anzahl der Zimmer:</label> 
     <input type="number" name="numberOfRooms" id="numberOfRooms" min=1 pattern="[1-9][0-9]*" title="Zahl" required>
 
-    <br>
-    <input type="submit">
+
 
     <script type="text/javascript">
         $(document).ready(function() {
@@ -82,26 +81,27 @@
                 );
             }
         });
-
     </script>
 
-    <div id="appliances">
-        <ul id="potential-appliances" class="appliance-stash">
-            <li class="appliance-icon">Waschmaschine</li>
-            <li class="appliance-icon">Spülmaschine</li>
-            <li class="appliance-icon">Fernseher</li>
-            <li class="appliance-icon">Spielkonsole</li>
+    <div id="appliances" class="itemChoice">
+        <ul class="potential">
+            <li data-value="clothesWasher">Waschmaschine</li>
+            <li data-value="dishWasher">Spülmaschine</li>
+            <li data-value="tv">Fernseher</li>
+            <li data-value="gameConsole">Spielkonsole</li>
         </ul>
 
         available
-        <ul id="available-appliances" class="drop-target appliance-stash">
-
-        </ul>        
+        <ul class="available">
+        </ul>
 
         non-available
-        <ul id="non-available-appliances" class="drop-target appliance-stash">
+        <ul class="non-available">
         </ul>
     </div>
+
+    <br>
+    <input type="submit">
 
 </form>
 

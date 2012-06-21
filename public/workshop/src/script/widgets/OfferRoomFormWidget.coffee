@@ -6,25 +6,44 @@ define ['base/RoomrWidget', 'base/renderTemplate', 'jquery-ui'], (RoomrWidget, r
     constructor: ->
       super('offerRoomForm')
 
+    getSelectedAppliances: (form, type) ->
+      appliances = _.map $("#appliances .#{type} li", form), (elem) ->
+        $(elem).data('value')
+      appliances
+
+
     renderInto: (element) ->
-      @renderTemplate {}, (html) =>
-        form = $(html)
-        $(".appliance-icon", form).draggable {
+      @renderTemplate {}, (content) =>
+        $content = $(content)
+
+        $items = $("li", $content)
+        $items.draggable {
           drag: (event, ui) ->
             $(this).draggable "option", "revert", true
+            $(this).removeClass 'dropped'
 
           cursor: "move"
         }
-        $(".appliance-stash", form).droppable {
-          accept: ".appliance-icon"
+        $("ul", $content).droppable {
+          accept: $items
 
           drop: (event, ui) ->
             ui.draggable.draggable "option", "revert", false
-            $(ui.draggable).appendTo $(this)
+            $(this).append $(ui.draggable)
             $(ui.draggable).css {
               top: 0
               left: 0
             }
         }
 
-        $(element).append(form)
+        $(element).append($content)
+
+        # we expect to get the form as root element of the template
+        $form = $content
+
+        $form.submit (event) =>
+          event.preventDefault()
+          available = @getSelectedAppliances $form, 'available'
+          nonAvailable = @getSelectedAppliances $form, 'non-available'
+          true
+
