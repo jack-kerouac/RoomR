@@ -1,4 +1,4 @@
-define ['base/RoomrSection', 'widgets/OfferRoomFormWidget'], (RoomrSection, OfferRoomFormWidget) ->
+define ['base/RoomrSection', 'widgets/LoginWidget', 'widgets/OfferRoomFormWidget'], (RoomrSection, LoginWidget, OfferRoomFormWidget) ->
   'use strict'
 
   class OferRoomSection extends RoomrSection
@@ -9,5 +9,8 @@ define ['base/RoomrSection', 'widgets/OfferRoomFormWidget'], (RoomrSection, Offe
         title: 'Anzeige erstellen'
       }
 
+      loginWidget = new LoginWidget()
+      @addWidget loginWidget
+      
       offerRoomFormWidget = new OfferRoomFormWidget()
       @addWidget offerRoomFormWidget

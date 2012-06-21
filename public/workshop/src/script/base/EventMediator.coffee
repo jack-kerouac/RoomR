@@ -13,8 +13,6 @@ define ->
 
     return {
       registerEvent: (emitter, eventName) ->
-        if events[eventName]?
-          throw new Error "An event of this name is already registered"
         if not validString eventName
           throw new Error "Invalid name for event given"
         events[eventName] = emitter
