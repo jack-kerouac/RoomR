@@ -20,18 +20,16 @@ require [
   'base/EventMediator',
   'backbone',
   'base/AppRouter',
-  'base/RoomrSection',
+  'sections/PhotoUploadSection',
   'sections/OfferRoomSection',
-  'widgets/PhotoUploadWidget',
   'sections/SearchSection',
   'sections/MainSection',
   'widgets/LoginWidget'],
 (EventMediator,
   Backbone,
   AppRouter,
-  RoomrSection,
+  PhotoUploadSection,
   OfferRoomSection,
-  PhotoUploadWidget,
   SearchSection,
   MainSection,
   LoginWidget) ->
@@ -54,15 +52,7 @@ require [
   offerRoomSection = new OfferRoomSection()
   app.addSection offerRoomSection
 
-  photoUploadSection = new RoomrSection {
-    name: 'photoUpload'
-    title: 'Foto Upload'
-  }
-
-  photoUploadWidget = new PhotoUploadWidget()
-  photoUploadSection.addWidget(photoUploadWidget)
-
-
+  photoUploadSection = new PhotoUploadSection()
   app.addSection photoUploadSection
 
 
