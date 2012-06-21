@@ -27,9 +27,9 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
           type: 'POST'
           complete: (jqXHR, stat) =>
             if stat == 'success'
-              sonsole.log "User angelegt", jqXHR
+              @emit 'newUserCreated' userToCreate
             else
-              console.log "Fehler beim Login", jqXHR
+              alert "Irgendwas ging schief. Sorry..."
         }
 
     renderInto: (@elem) -> @render()
