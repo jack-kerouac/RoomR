@@ -8,12 +8,22 @@
 *
   box-sizing border-box
 body
-  background #CCC
-
+  background: #66b0c2
+  background: -moz-radial-gradient(center, ellipse cover,  #66b0c2 0%, #405e64 51%, #163538 100%)
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#66b0c2), color-stop(51%,#405e64), color-stop(100%,#163538))
+  background: -webkit-radial-gradient(center, ellipse cover,  #66b0c2 0%,#405e64 51%,#163538 100%)
+  background: -o-radial-gradient(center, ellipse cover,  #66b0c2 0%,#405e64 51%,#163538 100%)
+  background: -ms-radial-gradient(center, ellipse cover,  #66b0c2 0%,#405e64 51%,#163538 100%)
+  background: radial-gradient(center, ellipse cover,  #66b0c2 0%,#405e64 51%,#163538 100%)
 
 // Layout
 #Wrapper
   clearfix()
+  background-image: url(src/style/img/RoomR_Logo.png), url(src/style/img/oben.png), url(src/style/img/unten.png)
+  background-position: top center, top center, bottom center
+  background-repeat: no-repeat
+  padding-top: 150px 
+  padding-bottom: 50px
 #Main
   width 70%
   float left
@@ -24,10 +34,11 @@ body
 
 // Design
 #Wrapper, .item-bigview
-  background #FFF // url(img/bild.gif) center center no-repeat
-  margin 2em
-  border-radius(8px)
-  box-shadow(0.2em 0.2em 1.5em #999);
+  // background #FFF // url(img/bild.gif) center center no-repeat
+  // margin 2em
+  // border-radius(8px)
+  // box-shadow(0.2em 0.2em 1.5em #999);
+
 #Wrapper > header, #Main, #Side, .item-bigview
   padding 1em 2em
 
@@ -37,11 +48,11 @@ body
   top 15%
   left 15%
   right 15%
-  bottom 15%
+  bottom 15%		
 
 // Anklickbare Sachen die kein Link sind
 klickable()
-  cursor pointer
+  cursor pointer	
   font-weight bold
   color blue
   text-decoration underline
