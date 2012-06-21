@@ -17,8 +17,8 @@
 # im Callback explizit aufzuführen.
 
 require ['base/EventMediator', 'backbone', 'Navigation', 'models/UserCollection', 'base/AppRouter', 'base/RoomrSection', 'widgets/SearchWidget',
-'widgets/SearchResultWidget', 'widgets/LoginWidget', 'widgets/FlatshareWidget', 'widgets/PhotoUploadWidget'],
-(EventMediator, Backbone, Navigation, UserCollection, AppRouter, RoomrSection, SearchWidget, SearchResultWidget, LoginWidget, FlatshareWidget, PhotoUploadWidget) ->
+'widgets/SearchResultWidget', 'widgets/LoginWidget', 'widgets/CreateUserWidget', 'widgets/FlatshareWidget', 'widgets/PhotoUploadWidget'],
+(EventMediator, Backbone, Navigation, UserCollection, AppRouter, RoomrSection, SearchWidget, SearchResultWidget, LoginWidget, CreateUserWidget, FlatshareWidget, PhotoUploadWidget) ->
 
   'use strict'
 
@@ -32,6 +32,9 @@ require ['base/EventMediator', 'backbone', 'Navigation', 'models/UserCollection'
     }
   loginWidget = new LoginWidget()
   mainSection.addWidget(loginWidget)
+
+  createUserWidget = new CreateUserWidget()
+  mainSection.addWidget(createUserWidget)
 
   searchWidget = new SearchWidget()
   mainSection.addWidget(searchWidget)
