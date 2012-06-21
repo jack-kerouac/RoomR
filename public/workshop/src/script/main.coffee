@@ -16,9 +16,9 @@
 # bereitstellen, können wir beides in unserer Callback-Funkion verwenden, ohne sie dort
 # im Callback explizit aufzuführen.
 
-require ['base/EventMediator', 'backbone', 'Navigation', 'models/UserCollection', 'base/AppRouter', 'base/RoomrSection',
+require ['base/EventMediator', 'backbone', 'base/AppRouter', 'base/RoomrSection',
 'widgets/FlatshareWidget', 'widgets/PhotoUploadWidget', 'sections/SearchSection', 'sections/MainSection'],
-(EventMediator, Backbone, Navigation, UserCollection, AppRouter, RoomrSection, FlatshareWidget, PhotoUploadWidget, SearchSection, MainSection) ->
+(EventMediator, Backbone, AppRouter, RoomrSection, FlatshareWidget, PhotoUploadWidget, SearchSection, MainSection) ->
 
   'use strict'
 
