@@ -2,6 +2,14 @@ define ['base/RoomrWidget', 'base/roomrUtil', 'modernizr'], (RoomrWidget, roomrU
   'use strict'
 
   class PhotoUploadWidget extends RoomrWidget
+    ImageModel = Backbone.Model.extend {}
+
+    ImageCollection = Backbone.Collection.extend {
+      model: ImageModel  # Was für ein Model findet sich in dieser Collection?
+      url: '/rest/images'
+    }
+
+    existingImages: new ImageCollection()
     nidus: undefined
 
     constructor: ->
@@ -9,10 +17,15 @@ define ['base/RoomrWidget', 'base/roomrUtil', 'modernizr'], (RoomrWidget, roomrU
 
     renderInto: (element) ->
       @nidus = $(element)
+      @render()
+
+    render: ->
       @renderTemplate {}, (content) =>
         @nidus.html content
         @dropTarget = $('.drop-target', @nidus)
 
+        $('.clickable', @nidus).on 'click', @uploadImages.bind this
+        
         # file select field is made invisible by Modernizr powered CSS
         @fileSelect = $('input[type="file"]', @nidus)
         @fileSelect.on 'change', (changeEvent) =>
@@ -22,6 +35,20 @@ define ['base/RoomrWidget', 'base/roomrUtil', 'modernizr'], (RoomrWidget, roomrU
         roomrUtil.addDropHandler @dropTarget, (dropEvent) =>
           dt = dropEvent.dataTransfer;
           @handleFiles dt.files
+
+        currentImageContainer = $('.current-images', @nidus)
+        @existingImages.fetch {
+          success: (images) =>
+            images.each (image) =>
+              imgElem = $('<img>')
+              imgElem.attr 'src', image.get('url')
+              currentImageContainer.append imgElem
+        }
+
+        currentImageContainer.click (event) =>
+          el = $(event.target)
+          if el.prop('nodeName').toLowerCase() == 'img'
+            @deleteImage el
 
     handleFiles: (files) ->
       _.each files, (file) =>
@@ -47,3 +74,46 @@ define ['base/RoomrWidget', 'base/roomrUtil', 'modernizr'], (RoomrWidget, roomrU
           @dropTarget.before canvas
 
       reader.readAsDataURL(file);
+
+    uploadImages: ->
+      BlobBuilder = BlobBuilder || WebKitBlobBuilder || MozBlobBuilder || MSBlobBuilder
+      elements = $('canvas', @nidus)
+      fileUploadWidget = this
+      elements.each ->
+        dataUrl = this.toDataURL()
+        binary = atob dataUrl.replace(/^data:image\/(png|jpg);base64,/, "")
+        contentType = dataUrl.match(/image\/[^;]+/)[0]
+
+        blobBuilder = new BlobBuilder()
+        blobBuilder.append new Uint8Array(Array.prototype.map.call binary, (c) -> c.charCodeAt(0) & 0xff).buffer
+        blob = blobBuilder.getBlob contentType
+
+        formData = new FormData()
+        formData.append 'image', blob
+        formData.append 'contentType', contentType
+
+        $.ajax '/rest/images', {
+          data: formData
+          contentType: false
+          processData: false
+          type: 'POST'
+          complete: (jqXHR, stat) ->
+            if stat == 'success'
+              console.log "Fileupload successful"
+              fileUploadWidget.render()
+            else
+              fileUploadWidget.reportError "Fileupload failed: #{jqXHR}"
+        }
+
+    deleteImage: (image) ->
+      url = image.attr 'src'
+      $.ajax url, {
+        data: ''
+        type: 'DELETE'
+        complete: (jqXHR, stat) ->
+          if stat == 'success'
+            console.log "File deleted successfully"
+            image.remove()
+          else
+            @reportError "Failed to delete file: #{jqXHR}"
+      }
