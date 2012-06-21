@@ -15,8 +15,11 @@ define ['base/EventEmitter', 'base/renderTemplate'], (EventEmitter, renderTempla
 
     name: ''
 
-    renderTemplate: (context, callback) ->
-      renderTemplate "widgets/#{@name}", context, callback
+    renderTemplate: (context, callback, name) ->
+      if name?
+        renderTemplate "widgets/#{name}", context, callback  
+      else
+        renderTemplate "widgets/#{@name}", context, callback
 
     renderInto: (element) ->
 

@@ -88,15 +88,15 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
           @renderLoginForm()
 
     renderLoginForm: () =>
-      @name = 'login'
       @renderTemplate {}, (html) =>
-          $(@elem).empty()
-          $(@elem).append(html)
-          @setLoginSubmitEvent()
+        $(@elem).empty()
+        $(@elem).append(html)
+        @setLoginSubmitEvent()
+      , 'login'
 
     renderLogoutForm: () =>
-      @name = 'logout'
       @renderTemplate { UserName: @userName, UserEmail: @userEmail}, (html) =>
-          $(@elem).empty()
-          $(@elem).append(html)
-          @setLogoutSubmitEvent()
+        $(@elem).empty()
+        $(@elem).append(html)
+        @setLogoutSubmitEvent()
+      , 'logout'
