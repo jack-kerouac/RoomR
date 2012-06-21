@@ -201,7 +201,10 @@ input
   height: 100%
   position: absolute
   transform-style: preserve-3d
-  transition: transform 1s
+  -webkit-transition: -webkit-transform 1s ease-in-out
+  -moz-transition: -moz-transform 1s ease-in-out
+  -o-transition: -o-transform 1s ease-in-out
+  -ms-transition: -ms-transform 1s ease-in-out
   
   > div
     display: block;
