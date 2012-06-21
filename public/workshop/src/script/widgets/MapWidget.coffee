@@ -50,7 +50,10 @@ define ['base/RoomrWidget', 'base/renderTemplate'], (RoomrWidget, renderTemplate
       @addMarker4CurrentPosition()      
 
     addMarker4CurrentPosition: ->
-      @addMarker @currentLat,@currentLong,'aktueller Standort'
+      marker = @gmap.createMarker {lat:@currentLat, lng:@currentLong, title:'aktueller Standort'}
+      marker.setMap(@gmap.map);
+      marker.setIcon('src/style/img/home.png');
+      @gmap.markers.push(marker);
 
     addMarker: (latitude, longitude, markertitle) ->
       @gmap.addMarker {lat:latitude, lng:longitude, title:markertitle}
