@@ -16,9 +16,9 @@
 # bereitstellen, können wir beides in unserer Callback-Funkion verwenden, ohne sie dort
 # im Callback explizit aufzuführen.
 
-require ['base/EventMediator', 'backbone', 'Navigation', 'models/UserCollection', 'base/AppRouter', 'base/RoomrSection', 'widgets/SearchWidget',
-'widgets/SearchResultWidget', 'widgets/LoginWidget', 'widgets/FlatshareWidget', 'widgets/PhotoUploadWidget'],
-(EventMediator, Backbone, Navigation, UserCollection, AppRouter, RoomrSection, SearchWidget, SearchResultWidget, LoginWidget, FlatshareWidget, PhotoUploadWidget) ->
+require ['base/EventMediator', 'backbone', 'Navigation', 'models/UserCollection', 'base/AppRouter', 'base/RoomrSection', 'widgets/LoginWidget',
+'widgets/FlatshareWidget', 'widgets/PhotoUploadWidget', 'sections/SearchSection'],
+(EventMediator, Backbone, Navigation, UserCollection, AppRouter, RoomrSection, LoginWidget, FlatshareWidget, PhotoUploadWidget, SearchSection) ->
 
   'use strict'
 
@@ -33,14 +33,10 @@ require ['base/EventMediator', 'backbone', 'Navigation', 'models/UserCollection'
   loginWidget = new LoginWidget()
   mainSection.addWidget(loginWidget)
 
-  searchWidget = new SearchWidget()
-  mainSection.addWidget(searchWidget)
-
-  searchResultWidget = new SearchResultWidget()
-  mainSection.addWidget(searchResultWidget)
-
   app.addSection mainSection
 
+  searchSection = new SearchSection()
+  app.addSection searchSection
 
   testSection = new RoomrSection {
     name: 'test'
