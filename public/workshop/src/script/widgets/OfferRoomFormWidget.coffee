@@ -9,22 +9,22 @@ define ['base/RoomrWidget', 'base/renderTemplate', 'jquery-ui'], (RoomrWidget, r
     renderInto: (element) ->
       @renderTemplate {}, (html) =>
         form = $(html)
-        $(".appliance-icon", form).draggable {
+
+        $items = $("li", form)
+        $items.draggable {
           drag: (event, ui) ->
-            $(this).draggable "option", "revert", true
+            $(this).draggable "option", "revert", "invalid"
+            $(this).removeClass 'dropped'
 
           cursor: "move"
         }
-        $(".appliance-stash", form).droppable {
-          accept: ".appliance-icon"
+        $("ul", form).droppable {
+          accept: $items
 
           drop: (event, ui) ->
-            ui.draggable.draggable "option", "revert", false
-            $(ui.draggable).appendTo $(this)
-            $(ui.draggable).css {
-              top: 0
-              left: 0
-            }
+            draggableOffset = $(ui.draggable).offset()
+            thisOffset = $(this).offset()
+            $(this).append $(ui.draggable)
         }
 
         $(element).append(form)
