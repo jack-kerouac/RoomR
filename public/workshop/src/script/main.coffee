@@ -17,8 +17,8 @@
 # im Callback explizit aufzuführen.
 
 require ['base/EventMediator', 'backbone', 'Navigation', 'models/UserCollection', 'base/AppRouter', 'base/RoomrSection', 'widgets/LoginWidget',
-'widgets/FlatshareWidget', 'widgets/PhotoUploadWidget', 'sections/SearchSection'],
-(EventMediator, Backbone, Navigation, UserCollection, AppRouter, RoomrSection, LoginWidget, FlatshareWidget, PhotoUploadWidget, SearchSection) ->
+'sections/OfferRoomSection', 'widgets/PhotoUploadWidget', 'sections/SearchSection'],
+(EventMediator, Backbone, Navigation, UserCollection, AppRouter, RoomrSection, LoginWidget, OfferRoomSection, PhotoUploadWidget, SearchSection) ->
 
   'use strict'
 
@@ -38,15 +38,17 @@ require ['base/EventMediator', 'backbone', 'Navigation', 'models/UserCollection'
   searchSection = new SearchSection()
   app.addSection searchSection
 
+  offerRoomSection = new OfferRoomSection()
+  app.addSection offerRoomSection
+
   testSection = new RoomrSection {
     name: 'test'
     title: 'test 2 title'
   }
 
   photoUploadWidget = new PhotoUploadWidget()
-  flatshareWidget = new FlatshareWidget()
   testSection.addWidget(photoUploadWidget)
-  testSection.addWidget(flatshareWidget)
+
 
   app.addSection testSection
 
