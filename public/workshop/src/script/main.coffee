@@ -24,6 +24,7 @@ require [
   'sections/OfferRoomSection',
   'sections/SearchSection',
   'sections/MainSection',
+  'sections/RegisterSection',
   'widgets/LoginWidget'],
 (EventMediator,
   Backbone,
@@ -32,6 +33,7 @@ require [
   OfferRoomSection,
   SearchSection,
   MainSection,
+  RegisterSection,
   LoginWidget) ->
 
   'use strict'
@@ -51,6 +53,9 @@ require [
 
   offerRoomSection = new OfferRoomSection()
   app.addSection offerRoomSection
+
+  registerSection = new RegisterSection()
+  app.addSection registerSection
 
   photoUploadSection = new PhotoUploadSection()
   app.addSection photoUploadSection
