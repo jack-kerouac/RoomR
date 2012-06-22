@@ -38,7 +38,12 @@
         {{/with}}
       </div>
       <div class="searchResultBack">
-       Foo is silence
+        <form id="SearchResultApplyForm">
+          <input type="hidden" name="id" value="{{id}}">
+          <textarea placeholder="Warum willst du hier einziehen?">
+          </textarea>
+          <input type="submit" name="ApplyButton" value="Ab damit">
+        </form>
       </div>
     </li>
   {{/each}}
