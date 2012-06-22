@@ -3,11 +3,16 @@
 // specific styling for the start widget
 .widget[data-type="start"]
   border none
+  margin 0
   box-shadow none
-  background none
   width 1024px
   height 340px
   relative top 0px left -50px
+
+  background-image url(/src/style/img/door_lights.png)
+  background-color transparent
+  background-position 12px 231px
+  background-repeat no-repeat
 
   .man, .girl
     absolute top 0 left 0
@@ -15,14 +20,14 @@
     height 200px
 
   .man
-    background-image url(src/style/img/man.png)
+    background-image url(/src/style/img/man.png)
     background-position top center
     background-repeat no-repeat
 
   .girl
     margin-left 600px
     margin-top 95px
-    background-image url(src/style/img/girl.png)
+    background-image url(/src/style/img/girl.png)
     background-position top center
     background-repeat no-repeat
 
@@ -34,18 +39,18 @@
   .door-frame
     width 163px
     height 260px
-    background-image url(src/style/img/door_frame.png)
+    background-image url(/src/style/img/door_frame.png)
     background-repeat no-repeat
     box-shadow 3px 2px 15px rgba(0, 0, 0, 0.6)
     transform-origin 0 50% 0
-    transform rotateY(-15deg)
+    transform rotateY(-25deg)
     transform-style preserve-3d
 
   .door
     width 146px
     height 247px
     absolute left 9px top 10px
-    background-image url(src/style/img/door.png)
+    background-image url(/src/style/img/door.png)
     background-repeat no-repeat
 
     box-shadow 3px 2px 15px rgba(0, 0, 0, 0.6)
@@ -63,11 +68,5 @@
 
   .door-container:hover
     .door
-      transform rotateY(-60deg)
+      transform rotateY(-50deg)
       box-shadow none
-
-  .door-front-shadow
-    relative top 0 left 0
-    width 100px
-    height 100px
-    background linear-gradient(right, rgba(125,157,181,255), rgba(125,157,181,0))
