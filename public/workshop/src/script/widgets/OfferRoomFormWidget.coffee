@@ -16,7 +16,7 @@ define ['base/RoomrWidget', 'base/renderTemplate', 'jquery-ui'], (RoomrWidget, r
       @renderTemplate {}, (content) =>
         $content = $(content)
 
-        $items = $("li", $content)
+        $items = $(".itemChoice li", $content)
         $items.draggable {
           drag: (event, ui) ->
             $(this).draggable "option", "revert", true
@@ -24,7 +24,7 @@ define ['base/RoomrWidget', 'base/renderTemplate', 'jquery-ui'], (RoomrWidget, r
 
           cursor: "move"
         }
-        $("ul", $content).droppable {
+        $(".itemChoice ul", $content).droppable {
           accept: $items
 
           drop: (event, ui) ->
