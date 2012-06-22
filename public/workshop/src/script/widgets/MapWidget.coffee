@@ -36,18 +36,15 @@ define ['base/RoomrWidget', 'base/renderTemplate'], (RoomrWidget, renderTemplate
       $.getScript('src/script/vendor/gmaps.js', @renderMap.bind(this)).fail (args...) -> console.log args
 
     renderMap: ->    
-      console.log 'renderMap'
       $(document).ready =>
         #if navigator.geolocation
         #  navigator.geolocation.getCurrentPosition (position) =>
         #    @createMap position.coords.latitude,position.coords.longitude
         #else
-        console.log 'start creating map'
         @createMap '48.139126','11.580186'          
         @drawSearchResults()
 
     createMap: (latitude, longitude) ->
-      console.log 'create map'
       @currentLat = latitude
       @currentLong = longitude
       @gmap = new GMaps {
@@ -58,7 +55,6 @@ define ['base/RoomrWidget', 'base/renderTemplate'], (RoomrWidget, renderTemplate
         height: '400px'
       }
       @addMarker4CurrentPosition()      
-      console.log 'create map... finished'
 
     addMarker4CurrentPosition: ->
       marker = @gmap.createMarker {lat:@currentLat, lng:@currentLong, title:'aktueller Standort'}
@@ -80,10 +76,10 @@ define ['base/RoomrWidget', 'base/renderTemplate'], (RoomrWidget, renderTemplate
     cleanRoute: ->
       $('#instructions > *').remove()
       @gmap.cleanRoute()
+      $('#routeTo').hide()
 
     drawSearchResults: ->  
       number = 1
-      #console.log 'drawSearchResults' + @searchResults.length
       if @searchResults.length < 1
         return
       for searchResult in @searchResults
@@ -103,6 +99,12 @@ define ['base/RoomrWidget', 'base/renderTemplate'], (RoomrWidget, renderTemplate
           lat = $(domElem).data 'result-latitude'
           long = $(domElem).data 'result-longitude'
           @cleanRoute()
+          index = $(domElem).index()
+          searchResult = @searchResults[index]
+          #console.log 'index: ' + index + ' strasse: ' + searchResult.roomOffer.flatshare.address.street
+          address = searchResult.roomOffer.flatshare.address.street+ ' ' + searchResult.roomOffer.flatshare.address.streetNumber + ', ' + searchResult.roomOffer.flatshare.address.city
+          $('#routeToTarget').html(address)
+          $('#routeTo').show()
           #@gmap.drawRoute({
           #  origin: [@currentLat, @currentLong],
           #  destination: [lat, long],
@@ -116,8 +118,9 @@ define ['base/RoomrWidget', 'base/renderTemplate'], (RoomrWidget, renderTemplate
             destination: [lat, long],
             travelMode: 'walking',
             step: (e) =>
-              $('#instructions').append('<li>'+e.instructions+'</li>');
-              $('#instructions li:eq(' + e.step_number + ')').delay(450 * e.step_number).fadeIn(200, =>
+              
+              $('#instructions').delay(1000).fadeIn(200, =>
+                $('#instructions').append('<li>'+e.instructions+'</li>');
                 @gmap.setCenter e.end_location.lat(),e.end_location.lng()
                 @gmap.drawPolyline {
                   path: e.path,
