@@ -15,6 +15,8 @@ define ['base/RoomrWidget', 'base/renderTemplate'], (RoomrWidget, renderTemplate
       @searchResults = []
       @subscribeToEvent 'searchResultsChanged', (params) =>
         @searchResultsChanged params
+      @subscribeToEvent 'drawRoute', (params) =>
+        @drawRoute params
 
     renderInto: (element) ->
       @nidus = $(element)
@@ -66,6 +68,39 @@ define ['base/RoomrWidget', 'base/renderTemplate'], (RoomrWidget, renderTemplate
       iconUrl = 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld='+number+'|85A4BD|000000'
       @gmap.addMarker {lat:latitude, lng:longitude, title:markertitle,icon:iconUrl, infoWindow:{content:infoContent}}
 
+    drawRoute: (routeIndex) ->
+      #console.log 'drawRoute event: index=' + routeIndex
+      index = routeIndex - 1
+      searchResult = @searchResults[index]
+      lat = searchResult.roomOffer.flatshare.geoLocation.latitude
+      long = searchResult.roomOffer.flatshare.geoLocation.longitude      
+      @cleanRoute()
+   
+      address = searchResult.roomOffer.flatshare.address.street+ ' ' + searchResult.roomOffer.flatshare.address.streetNumber + ', ' + searchResult.roomOffer.flatshare.address.city
+      $('#routeToTarget').html(address)
+      $('#routeTo').show()
+        
+      new_position = $('#SearchResultMap').offset();
+      $('html,body').animate({scrollTop:new_position.top}, 1000)
+
+      @gmap.travelRoute {
+        origin: [@currentLat, @currentLong],
+        destination: [lat, long],
+        travelMode: 'walking',
+        step: (e) =>
+          
+          $('#instructions').delay(1000).fadeIn(200, =>
+            $('#instructions').append('<li>'+e.instructions+'</li>');
+            @gmap.setCenter e.end_location.lat(),e.end_location.lng()
+            @gmap.drawPolyline {
+              path: e.path,
+              strokeColor: '#131540',
+              strokeOpacity: 0.6,
+              strokeWeight: 6
+            }
+          )
+      }    
+
     searchResultsChanged: (searchResults) ->
       @searchResults = searchResults
       @cleanRoute()
@@ -93,40 +128,3 @@ define ['base/RoomrWidget', 'base/renderTemplate'], (RoomrWidget, renderTemplate
           Ort:'+city+'<br/>Miete: '+searchResult.roomOffer.roomDetails.totalRentPerMonthInEuro+' €<br/>
           Zimmergröße: '+searchResult.roomOffer.roomDetails.roomSize.squareMeters+' m²</p>'
         number++
-
-      $('.searchResult').each (e, domElem) =>
-        $(domElem).dblclick =>                    
-          lat = $(domElem).data 'result-latitude'
-          long = $(domElem).data 'result-longitude'
-          @cleanRoute()
-          index = $(domElem).index()
-          searchResult = @searchResults[index]
-          #console.log 'index: ' + index + ' strasse: ' + searchResult.roomOffer.flatshare.address.street
-          address = searchResult.roomOffer.flatshare.address.street+ ' ' + searchResult.roomOffer.flatshare.address.streetNumber + ', ' + searchResult.roomOffer.flatshare.address.city
-          $('#routeToTarget').html(address)
-          $('#routeTo').show()
-          #@gmap.drawRoute({
-          #  origin: [@currentLat, @currentLong],
-          #  destination: [lat, long],
-          #  travelMode: 'walking',
-          #  strokeColor: '#131540',
-          #  strokeOpacity: 0.6,
-          #  strokeWeight: 6
-          #});
-          @gmap.travelRoute {
-            origin: [@currentLat, @currentLong],
-            destination: [lat, long],
-            travelMode: 'walking',
-            step: (e) =>
-              
-              $('#instructions').delay(1000).fadeIn(200, =>
-                $('#instructions').append('<li>'+e.instructions+'</li>');
-                @gmap.setCenter e.end_location.lat(),e.end_location.lng()
-                @gmap.drawPolyline {
-                  path: e.path,
-                  strokeColor: '#131540',
-                  strokeOpacity: 0.6,
-                  strokeWeight: 6
-                }
-              )
-          }    

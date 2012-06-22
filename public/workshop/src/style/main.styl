@@ -3,7 +3,6 @@
 @import "nib/gradients"
 
 @import "src/style/photoUpload"
-@import "src/style/offerForm"
 @import "src/style/start"
 
 bg_color_out = #163538
@@ -11,77 +10,11 @@ bg_color_mid = #405e64
 bg_color_in  = #66b0c2
 
 // Basics
-
-@font-face
-  font-family 'Inder'
-  font-style normal
-  font-weight 400
-  src:  url(/styles/fonts/Inder-Regular.eot#) format("ignore me"),
-        url(/styles/fonts/Inder-Regular.woff) format("woff"),
-        url(/styles/fonts/Inder-Regular.ttf) format("truetype")
-
-
 *
   box-sizing border-box
 
 html
   min-height: 100%
-
-h1
-  color: white
-  font-weight: 300
-  font-size: 19px
-
-h1#Headline
-  margin-top: 29px
-  margin-left: 77px
-  width: 427px
-  text-align: center
-  float: left
-
-#login
-  margin-left: 15px
-  margin-top: 29px
-
-.MiniInput
-  background-color: white
-  box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, 0.75)
-  border: 0px 
-  margin-right: 5px
-  padding: 2px
-  width: 120px
-  height: 22px
-  line-height: 22px
-  float: left
-
-em.LoginLabel
-  color: white
-  margin-left: 5px
-  margin-right: 5px
-  float: left
-  font-style: normal
-  height: 22px
-  line-height: 22px
-
-.MiniButton
-  margin-left: 5px
-  margin-top: 1px
-  float: left
-  height: 21px
-  padding-left: 3px
-  padding-right: 3px
-  text-align: center
-  line-height: 21px
-  font-size: 10px
-  background: linear-gradient(top, rgb(181,196,212), rgb(133,164,189), rgb(103,145,173))
-  border: 0px
-  font-weight: bold
-  border-radius: 3px
-
-.MiniRegister
-  font-size: 11px
-  color: white
-  margin-left: 5px
 
 body
   background: bg_color_in
@@ -95,10 +28,13 @@ body
   font-family: 'Inder', sans-serif;
   font-size: 14px
 
+  #Headline
+    visibility: hidden
+
 // Layout
 #Wrapper
   clearfix()
-  background-image: url(/src/style/img/RoomR_Logo.png), url(/src/style/img/oben.png), url(/src/style/img/unten.png)
+  background-image: url(src/style/img/RoomR_Logo.png), url(src/style/img/oben.png), url(src/style/img/unten.png)
   background-position: top center, top center, bottom center
   background-repeat: no-repeat
   padding-top: 120px 
@@ -108,9 +44,11 @@ body
   max-width: 990px
   margin: auto
 
+.HeaderBack
+  background: linear-gradient(top, rgb(186,161,124), rgb(157,125,76), rgb(136,101,43))
+
 #Main
-  padding-left: 10px
-  padding-right: 10px 
+  padding: 5px 10px 5px 10px
 
 // Design
 #Wrapper, .item-bigview
@@ -120,49 +58,54 @@ body
   // box-shadow(0.2em 0.2em 1.5em #999);
 
 #Wrapper > header, #Main, #Side, .item-bigview
-  padding-top: 15px
-  padding-bottom: 15px
+  padding 1em 2em
+
+#Navigation nav li
+  display: inline-block
+  width: 20%
+  padding: 0px 3px
+  max-width: 160px
+
+#Navigation nav
+  margin: auto
+  width: auto
+  text-align:center
+  position: relative
+  z-index: 1
+
+#Navigation nav ul
+  margin: 0px
+  padding: 0px
 
 #Navigation
   z-index: 1
-  margin-top: -28px
+  margin-top: -30px
   margin-bottom: 18px
 
-  nav
-    margin: auto
-    width: auto
-    text-align:center
-    position: relative
-    z-index: 1
+basicBorderRadius = 5px
 
-    li
-      display: inline-block
-      width: 20%
-      padding: 0px 3px
-      max-width: 160px
+#Navigation nav a
+  display: inline-block
+  width:100%
+  height: 100%
+  padding: 20px 8px 8px 8px
+  border-radius: 0px 0px 5px 5px
+  background: linear-gradient(top, rgb(181,196,212), rgb(133,164,189), rgb(103,145,173))
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.75);
+  text-decoration: none
+  color: black
+  font-variant: small-caps;
+  font-weight: bold
+  &:hover
+    background: linear-gradient(top,  #ffd65e 0%,#febf04 100%);
 
-    ul
-      margin: 0px
-      padding: 0px
+  &.outerleftbutton
+    border-radius 0px 100% basicBorderRadius basicBorderRadius / 0px 15px basicBorderRadius basicBorderRadius
+    padding-top: 32px
 
-    a
-      display: inline-block
-      width:100%
-      height: 100%
-      padding: 20px 8px 8px 8px
-      border-radius: 0px 0px 5px 5px
-      background: linear-gradient(top, rgb(181,196,212), rgb(133,164,189), rgb(103,145,173))
-      box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.75);
-      text-decoration: none
-      color: black
-      font-variant: small-caps;
-      font-weight: bold
-
-      &:hover
-        background: linear-gradient(top,  #ffd65e 0%,#febf04 100%);
-
-      &.outernavbutton
-        padding-top: 32px
+  &.outerrightbutton
+    padding-top: 32px
+    border-radius 100% 0px basicBorderRadius basicBorderRadius / 15px 0px basicBorderRadius basicBorderRadius
 
 // Eintrags-Großansicht
 .item-bigview
@@ -180,7 +123,6 @@ klickable()
   text-decoration underline
   &:hover
     text-decoration none
-    
 li .item-title, .clickable
   klickable()
 
@@ -208,42 +150,74 @@ input
   input
     background-color white
     box-shadow inset 0px 2px 5px 0px rgba(0, 0, 0, 0.75)
-    border 0px 
+    border 1px solid rgba(255, 255, 255, 0.4)
+    border-radius: 2px
     margin 5px
-    padding 2px
-
-ul.form
-  list-style-type: none
-  margin: 0
-  padding: 0
-
-ul.form li
-  margin: 5px 10px 5px 0px
-
-ul.form li input
-  margin-bottom: 5px
-
-ul.form ul li
-  display:inline-block
+    padding-left 3px
+    padding-right 3px
+    font-size 12px
+    line-height 26px
+    height 26px
+    &[type=submit],&[type=button] 
+      border-width: 9px
+      border-image: url(/src/style/img/border.png) 9 9 9 9 repeat repeat;
+      height: 45px
+      background-clip: padding-box
+      background-color white
 
 
-ul.form li label
-  width: 65px
-  display:inline-block
-  margin-right: 10px
+.itemChoice
+  stash-padding = 10px
+  icon-size = 80px
+  icon-margin = 5px
+  clearfix()
 
-@media screen and (min-width: 478px)
-  .form li label 
-    text-align:right
-  .form li input[type="radio"]+label 
-    text-align:left
+  stashWidth(horizontalIcons)
+    horizontalIcons * (icon-size + 2 * icon-margin) + 2 * stash-padding
+  stashHeight(verticalIcons)
+    verticalIcons * (icon-size + 2 * icon-margin) + 2 * stash-padding
 
-@media screen and (max-width: 478px)
-  .form li input 
-    width: min(100px, 100%)
+
+
+  ul
+    padding stash-padding
+    float left
+
+    &.potential
+      background-color: blue
+      width stashWidth(2)
+      height stashHeight(2)
+
+    &.available
+      background-color: green
+      width stashWidth(4)
+      height stashHeight(1)
+
+    &.non-available
+      background-color: red
+      width stashWidth(4)
+      height stashHeight(1)
+
+    li
+      width icon-size
+      height icon-size
+      margin icon-margin
+      display list-item
+      list-style none outside none
+      float left
+
+      background-color yellow
+      cursor move
+      text-align center
+      border-radius(5px)
+
+  .dropped
+    transition(all 200ms)
 
 .searchResultContainer
   position: static
+  transform-style: preserve-3d
+  perspective: 1600px
 
 .searchResult
   width: 100%
@@ -253,7 +227,7 @@ ul.form li label
   -moz-transition: -moz-transform 1s ease-in-out
   -o-transition: -o-transform 1s ease-in-out
   -ms-transition: -ms-transform 1s ease-in-out
-  
+
   > div
     display: block;
     position: absolute;
@@ -262,10 +236,10 @@ ul.form li label
     backface-visibility: hidden;
 
 .searchResultFront
-  background: #66b0c2
+  background-color: #66b0c2
 
 .searchResultBack
-  background: #66b0c2
+  background-color: #66b0c2
   transform: rotateY( 180deg )
 
 .searchResult.rotated
