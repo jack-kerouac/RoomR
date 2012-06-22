@@ -21,7 +21,7 @@ module.exports = function(grunt){
     stylus: {
       main: {
         file: 'src/style/main.styl', // Quelldatei
-        dest: 'app.css',             // Zieldatei
+        dest: 'styles/app.css',             // Zieldatei
         options: {                   // Zusatzoptionen
           url: {
             paths: [ 'src/style' ]   // Pfad(e) für Bilder
@@ -80,7 +80,7 @@ module.exports = function(grunt){
         'modernizr': 'vendor/modernizr-2.5.3'
       },
       name: 'main',             // Wurzelmodul
-      out: 'app.js',            // Zieldatei
+      out: 'scripts/app.js',            // Zieldatei
       optimize: 'none'          // Optimierung deaktivieren (Debugging/Schnellerer Build)
     },
 
