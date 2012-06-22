@@ -41,7 +41,7 @@ define ['base/RoomrWidget'], (RoomrWidget) ->
       $(document).ready =>
         widget = this
         $('.DrawRouteButton').bind 'click', ->
-          #console.log 'click button. index=' + $(this).data('index')
+          #console.log 'click button. id=' + $(this).data('index')
           widget.emit 'drawRoute', $(this).data('index')
 
     searchResultsChanged: (searchResults) ->
