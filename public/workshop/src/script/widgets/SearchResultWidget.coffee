@@ -26,8 +26,9 @@ define ['base/RoomrWidget'], (RoomrWidget) ->
               console.log "sending apply. Good luck..."
             if targetName == 'saveDraft'
               console.log "saving text as draft..."
-            if targetName == 'discard'
-              console.log "forgetting text..."
+            if targetName == 'turnBack'
+              enclosingLi = $(target).closest 'li'
+              enclosingLi.removeClass 'rotated'
         #console.log "hidden id = ", $("input[name=id]", event.target).val()
         #enclosingLi = $(event.target).closest 'li'
         #enclosingLi.addClass 'rotated'
