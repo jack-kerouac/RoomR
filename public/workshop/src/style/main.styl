@@ -3,6 +3,7 @@
 @import "nib/gradients"
 
 @import "src/style/photoUpload"
+@import "src/style/start"
 
 // Basics
 *
@@ -72,6 +73,7 @@ body
 #Navigation
   z-index: 1
   margin-top: -28px
+  margin-bottom: 18px
 
 #Navigation nav a
   display: inline-block
@@ -97,11 +99,11 @@ body
   top 15%
   left 15%
   right 15%
-  bottom 15%		
+  bottom 15%
 
 // Anklickbare Sachen die kein Link sind
 klickable()
-  cursor pointer	
+  cursor pointer
   font-weight bold
   color blue
   text-decoration underline
@@ -124,24 +126,53 @@ input
   background-color bcolor  
 
 .widget
+  border 1px solid rgba(255, 255, 255, 0.4)
   border-radius: 5px
-  background: linear-gradient(top, rgb(181,196,212), rgb(133,164,189), rgb(103,145,173))
-  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.75);
+  background-color rgba(255, 255, 255, 0.4)
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.75)
   padding 10px
   margin 5px
 
+  input
+    background-color white
+    box-shadow inset 0px 2px 5px 0px rgba(0, 0, 0, 0.75)
+    border 1px solid rgba(255, 255, 255, 0.4)
+    border-radius: 2px
+    margin 5px
+    padding 2px
 
 
 .itemChoice
   stash-padding = 10px
   icon-size = 80px
   icon-margin = 5px
+  clearfix()
+
+  stashWidth(horizontalIcons)
+    horizontalIcons * (icon-size + 2 * icon-margin) + 2 * stash-padding
+  stashHeight(verticalIcons)
+    verticalIcons * (icon-size + 2 * icon-margin) + 2 * stash-padding
+
+
 
   ul
-    width 2 * (icon-size +2 * icon-margin) + 2 * stash-padding
-    height  2 * (icon-size + 2 * icon-margin) + 2 * stash-padding
-    background-color: blue
     padding stash-padding
+    float left
+
+    &.potential
+      background-color: blue
+      width stashWidth(2)
+      height stashHeight(2)
+
+    &.available
+      background-color: green
+      width stashWidth(4)
+      height stashHeight(1)
+
+    &.non-available
+      background-color: red
+      width stashWidth(4)
+      height stashHeight(1)
 
     li
       width icon-size
@@ -151,8 +182,7 @@ input
       list-style none outside none
       float left
 
-      background-color red
-      color white
+      background-color yellow
       cursor move
       text-align center
       border-radius(5px)
@@ -165,7 +195,7 @@ ul.form
   margin: 0
   padding: 0
 
-ulform li
+ul.form li
   margin: 5px 10px 5px 0px
 
 ul.form li input
@@ -190,3 +220,35 @@ ul.form li label
   .form li input 
     width: min(100px, 100%)
 
+.searchResultContainer
+  width: 400px
+  height: 250px
+  position: relative
+  perspective: 800px
+
+.searchResult
+  width: 100%
+  height: 100%
+  position: absolute
+  transform-style: preserve-3d
+  -webkit-transition: -webkit-transform 1s ease-in-out
+  -moz-transition: -moz-transform 1s ease-in-out
+  -o-transition: -o-transform 1s ease-in-out
+  -ms-transition: -ms-transform 1s ease-in-out
+  
+  > div
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+
+.searchResultFront
+  background-color: red
+
+.searchResultBack
+  background-color: blue
+  transform: rotateY( 180deg )
+
+.searchResult.rotated
+  transform: rotateY( 180deg )
