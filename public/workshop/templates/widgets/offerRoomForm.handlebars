@@ -18,38 +18,39 @@
     <h3>Adresse</h3>
 
     <ul class="form">
-        <ul class="form">
-            <li>
+        <li>
 
-                <label for="address_street">Straße:</label>
-                <input id="address_street" type="text" name="address_street" size="30" required>
+            <label>
+                <span>Straße:</span>
+                <input type="text" name="street-address" required>
+                <span></span>
+            </label>
 
-            <li>
+        <li class="breakBefore">
+            <label>
+                <span>PLZ:</span>
+                <input name="zip" type="text" pattern="[0-9]{5}" title="fünf Ziffern" required>
+            </label>
+            
+        <li class="breakAfter">
 
-                <label for="address_streetNumber">Hausnr.:</label>
-                <input id="address_streetNumber" type="text" name="address_streetNumber" pattern="[0-9]{1,4}[a-z]?"
-                    size="5" title="Nummer (gegebenenfalls mit Zusatz)" required>
+            <label>
+                <span>Ort:</span>
+                <input name="city" type="text" required>
+            </label>
 
-        </ul>
-        <ul class="form">
-            <li>
-
-                <label for="address_zipCode">PLZ:</label>
-                <input id="address_zipCode" name="address_zipCode" type="text" pattern="[0-9]{5}"
-                    size="5" title="fünf Ziffern" required>
-                
-            <li>
-
-                <label for="address_city">Ort:</label>
-                <input id="address_city" name="address_city" type="text" size="30" required>
-
-        </ul>
         <li>
     
-            <label for="floor">Etage:</label>
-            <input id="floor" name="floor" type="text" list="floornames" required>
+            <label>
+                <span>Etage:</span>
+                <input name="floor" type="text" list="floornames" required>
+            </label>
+
+        <li class="breakBefore">
+            <input type="submit">
     </ul>
 
+<!-- 
     <h3>Geolocation</h3>
     <ul class="form">
         <ul class="form">
@@ -106,9 +107,13 @@
         <ul class="non-available">
         </ul>
     </div>
-
+ 
     <br>
+
+
+
     <input type="submit">
+-->
 
 </form>
 

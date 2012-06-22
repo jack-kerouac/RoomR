@@ -153,6 +153,8 @@ input
     border 1px solid rgba(255, 255, 255, 0.4)
     border-radius: 2px
     margin 5px
+    margin-left 0
+    //<<<<<<< Updated upstream
     padding-left 3px
     padding-right 3px
     font-size 12px
@@ -165,54 +167,73 @@ input
       background-clip: padding-box
       background-color white
 
+form
+  max-width 500px
 
-.itemChoice
-  stash-padding = 10px
-  icon-size = 80px
-  icon-margin = 5px
-  clearfix()
-
-  stashWidth(horizontalIcons)
-    horizontalIcons * (icon-size + 2 * icon-margin) + 2 * stash-padding
-  stashHeight(verticalIcons)
-    verticalIcons * (icon-size + 2 * icon-margin) + 2 * stash-padding
-
-
-
-  ul
-    padding stash-padding
+  li
+    list-style-type none
     float left
 
-    &.potential
-      background-color: blue
-      width stashWidth(2)
-      height stashHeight(2)
+  ul
+    clearfix()
+    padding 0
 
-    &.available
-      background-color: green
-      width stashWidth(4)
-      height stashHeight(1)
+  label > span:first-child
+    display inline-block
+    min-width 60px
 
-    &.non-available
-      background-color: red
-      width stashWidth(4)
-      height stashHeight(1)
+  input
+    margin-left 0
 
-    li
-      width icon-size
-      height icon-size
-      margin icon-margin
-      display list-item
-      list-style none outside none
-      float left
+  input:required
+    margin-bottom 0  
 
-      background-color yellow
-      cursor move
-      text-align center
-      border-radius(5px)
+    + span
+      display block
 
-  .dropped
-    transition(all 200ms)
+      &:after
+        content "(Pflichtfeld)"
+        font-size 12px
+        margin-right 10px
+    
+  // break elements after the ownline element
+  .breakAfter + li
+    clear left
+
+  // break elements before the ownline element
+  .breakBefore
+    clear left
+    
+
+
+
+#flatshare_form
+  input[name=street-address]
+    width 200px
+
+  input[name=city]
+    width 200px
+
+  input[name=zip]
+    width 45px
+
+  input[name=floor]
+    width 80px
+
+ 
+@media screen and (min-width: 478px)
+  .form li label > span
+    text-align:right
+  .form li input[type="radio"]+label 
+    text-align:left
+
+@media screen and (max-width: 478px)
+  .form li
+    float none
+    input 
+      width: min(100px, 100%) !important
+    label > span
+      display block
 
 .searchResultContainer
   position: static
