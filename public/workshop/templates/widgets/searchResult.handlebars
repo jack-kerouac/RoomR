@@ -38,7 +38,16 @@
         {{/with}}
       </div>
       <div class="searchResultBack">
-       Foo is silence
+        <form id="SearchResultApplyForm">
+          <input type="hidden" name="id" value="{{id}}">
+          <textarea lines="30" cols="100">
+		Warum willst du hier einziehen?
+          </textarea>
+	  <br/>
+          <input type="submit" name="ApplyButton" value="Ab damit">
+          <input type="submit" name="Save" value="Entwurf speichern">
+          <input type="submit" name="ApplyButton" value="Verwerfen">
+        </form>
       </div>
     </li>
   {{/each}}

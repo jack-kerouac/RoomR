@@ -18,6 +18,11 @@ RoomR.sublime-project
 RoomR.sublime-workspace
 .DS_Store
 data
+/public/workshop/src/script/main.js
+/public/workshop/src/script/ErrorLogger.js
 /public/workshop/src/script/base/*.js
+/public/workshop/src/script/models/*.js
 /public/workshop/src/script/widgets/*.js
 /public/workshop/src/script/sections/*.js
+/public/workshop/test/*.js
+/public/workshop/test/lib/jqueryMock.js
