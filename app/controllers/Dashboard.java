@@ -39,4 +39,10 @@ public class Dashboard extends AbstractRoomrController {
 		}
 	}
 
+
+	public static void manifest() {
+		request.format = "mf";
+		render();
+	}
+
 }

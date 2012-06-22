@@ -1,0 +1,16 @@
+CACHE MANIFEST
+
+# COMMENT
+
+app.css
+app.js
+index.html
+src/script/vendor/require.js
+src/style/img/oben.png
+
+NETWORK:
+*
+
+FALLBACK:
+
+
