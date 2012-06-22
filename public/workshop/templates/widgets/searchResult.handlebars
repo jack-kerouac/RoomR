@@ -29,24 +29,22 @@
             <div>Beschreibung: {{description}}</div>
             <div>Kontakt E-Mail: {{contactEmail}}</div>
             <div>Bewerbungen: {{applications}}</div>
-            <form class="searchResultApplyForm"
-                id="SearchResultApplyForm_{{id}}">
-              <input type="hidden" name="id" value="{{id}}">
-              <input type="submit" name="ApplyButton" value="Bewerben">
+            <form>
+              <input type="button" name="apply" value="Bewerben">
             </form>
           </div>
         {{/with}}
       </div>
       <div class="searchResultBack">
-        <form id="SearchResultApplyForm">
+        <form>
           <input type="hidden" name="id" value="{{id}}">
           <textarea lines="30" cols="100">
 		Warum willst du hier einziehen?
           </textarea>
 	  <br/>
-          <input type="submit" name="ApplyButton" value="Ab damit">
-          <input type="submit" name="Save" value="Entwurf speichern">
-          <input type="submit" name="ApplyButton" value="Verwerfen">
+          <input type="button" name="sendApply" value="Ab damit">
+          <input type="button" name="saveDraft" value="Entwurf speichern">
+          <input type="button" name="discard" value="Verwerfen">
         </form>
       </div>
     </li>
