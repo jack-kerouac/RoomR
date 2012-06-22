@@ -4,7 +4,7 @@ define ['base/RoomrWidget', 'base/renderTemplate'], (RoomrWidget, renderTemplate
   class MapWidget extends RoomrWidget
 
     nidus: undefined
-
+    
     gmap: undefined  
 
     currentLat: undefined
@@ -12,6 +12,7 @@ define ['base/RoomrWidget', 'base/renderTemplate'], (RoomrWidget, renderTemplate
 
     constructor: ->
       super('map')
+      @searchResults = []
       @subscribeToEvent 'searchResultsChanged', (params) =>
         @searchResultsChanged params
 
@@ -24,20 +25,29 @@ define ['base/RoomrWidget', 'base/renderTemplate'], (RoomrWidget, renderTemplate
     loadGoogle: ->
       window.roomr = window.roomr || {}
       window.roomr.roomrMapWidgetDrawCallback = @loadGmaps.bind(this)
-      $.getScript 'http://maps.google.com/maps/api/js?sensor=false&callback=roomr.roomrMapWidgetDrawCallback'
+      if window.roomr.isGoogleMapJSLoaded
+        @createMap @currentLat,@currentLong
+        @drawSearchResults()
+      else
+        $.getScript 'http://maps.google.com/maps/api/js?sensor=false&callback=roomr.roomrMapWidgetDrawCallback'
 
     loadGmaps: ->
+      window.roomr.isGoogleMapJSLoaded = yes
       $.getScript('src/script/vendor/gmaps.js', @renderMap.bind(this)).fail (args...) -> console.log args
 
-    renderMap: ->      
+    renderMap: ->    
+      console.log 'renderMap'
       $(document).ready =>
-        if navigator.geolocation
-          navigator.geolocation.getCurrentPosition (position) =>
-            @createMap position.coords.latitude,position.coords.longitude
-        else
-          @createMap '-12.043333','-77.028333'          
+        #if navigator.geolocation
+        #  navigator.geolocation.getCurrentPosition (position) =>
+        #    @createMap position.coords.latitude,position.coords.longitude
+        #else
+        console.log 'start creating map'
+        @createMap '48.139126','11.580186'          
+        @drawSearchResults()
 
     createMap: (latitude, longitude) ->
+      console.log 'create map'
       @currentLat = latitude
       @currentLong = longitude
       @gmap = new GMaps {
@@ -48,6 +58,7 @@ define ['base/RoomrWidget', 'base/renderTemplate'], (RoomrWidget, renderTemplate
         height: '400px'
       }
       @addMarker4CurrentPosition()      
+      console.log 'create map... finished'
 
     addMarker4CurrentPosition: ->
       marker = @gmap.createMarker {lat:@currentLat, lng:@currentLong, title:'aktueller Standort'}
@@ -60,11 +71,22 @@ define ['base/RoomrWidget', 'base/renderTemplate'], (RoomrWidget, renderTemplate
       @gmap.addMarker {lat:latitude, lng:longitude, title:markertitle,icon:iconUrl, infoWindow:{content:infoContent}}
 
     searchResultsChanged: (searchResults) ->
-      @gmap.cleanRoute()
+      @searchResults = searchResults
+      @cleanRoute()
       @gmap.removeMarkers()
       @addMarker4CurrentPosition()
+      @drawSearchResults()  
+
+    cleanRoute: ->
+      $('#instructions > *').remove()
+      @gmap.cleanRoute()
+
+    drawSearchResults: ->  
       number = 1
-      for searchResult in searchResults
+      #console.log 'drawSearchResults' + @searchResults.length
+      if @searchResults.length < 1
+        return
+      for searchResult in @searchResults
         
         lat = searchResult.roomOffer.flatshare.geoLocation.latitude
         long = searchResult.roomOffer.flatshare.geoLocation.longitude
@@ -80,13 +102,28 @@ define ['base/RoomrWidget', 'base/renderTemplate'], (RoomrWidget, renderTemplate
         $(domElem).dblclick =>                    
           lat = $(domElem).data 'result-latitude'
           long = $(domElem).data 'result-longitude'
-          @gmap.cleanRoute()
-          @gmap.drawRoute({
+          @cleanRoute()
+          #@gmap.drawRoute({
+          #  origin: [@currentLat, @currentLong],
+          #  destination: [lat, long],
+          #  travelMode: 'walking',
+          #  strokeColor: '#131540',
+          #  strokeOpacity: 0.6,
+          #  strokeWeight: 6
+          #});
+          @gmap.travelRoute {
             origin: [@currentLat, @currentLong],
             destination: [lat, long],
             travelMode: 'walking',
-            strokeColor: '#131540',
-            strokeOpacity: 0.6,
-            strokeWeight: 6
-          });
-      
+            step: (e) =>
+              $('#instructions').append('<li>'+e.instructions+'</li>');
+              $('#instructions li:eq(' + e.step_number + ')').delay(450 * e.step_number).fadeIn(200, =>
+                @gmap.setCenter e.end_location.lat(),e.end_location.lng()
+                @gmap.drawPolyline {
+                  path: e.path,
+                  strokeColor: '#131540',
+                  strokeOpacity: 0.6,
+                  strokeWeight: 6
+                }
+              )
+          }    
