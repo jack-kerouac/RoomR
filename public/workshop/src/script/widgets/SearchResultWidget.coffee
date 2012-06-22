@@ -9,6 +9,7 @@ define ['base/RoomrWidget'], (RoomrWidget) ->
       super('searchResult')
       @subscribeToEvent 'searchResultsChanged', (params) =>
         @searchResultsChanged params
+      @registerEvent 'drawRoute'
 
     installEventDelegator: (element) ->
       $(".searchResultContainer").each (index, element) ->
@@ -36,6 +37,11 @@ define ['base/RoomrWidget'], (RoomrWidget) ->
       @renderTemplate {searchResults: @searchResults}, (content) =>
         @nidus.html content
       @installEventDelegator content
+      $(document).ready =>
+        widget = this
+        $('.DrawRouteButton').bind 'click', ->
+          #console.log 'click button. index=' + $(this).data('index')
+          widget.emit 'drawRoute', $(this).data('index')
 
     searchResultsChanged: (searchResults) ->
       @searchResults = searchResults
