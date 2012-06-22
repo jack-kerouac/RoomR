@@ -8,6 +8,7 @@ define ->
     currentDistance: ->
       lat1 = @roomOffer.flatshare.geoLocation.latitude
       lon1 = @roomOffer.flatshare.geoLocation.longitude
+      #console.log 'ID='+@roomOffer.flatshare.id
       lat2 = @currentLat
       lon2 = @currentLong
       R = 6371

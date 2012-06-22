@@ -1,86 +1,20 @@
-<script type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>
+<script type='text/javascript' src='src/script/vendor/jquery.js'></script>
 <script type="text/javascript" src="http://10.22.11.162:1337/socket.io/socket.io.js"></script>
+<script type="text/javascript" src="scripts/require.js" data-main="src/script/chat/chatclient"></script>
 
+<style type="text/css">
+#chatarea {
+	height:80%;
+	font-family:monospace;
+	overflow: scroll;
+}
+</style>
 <body>
-<script>
-	var socket = io.connect('ws://10.22.11.162:1337');
-	var username;
-	var color = get_random_color();
-	// Add a connect listener
-	socket.on('connect',function() {
-  		console.log('Client has connected to the server!');
-	});
 
-	$(document).ready(function(){
-		while (username == null || username === ""){
-			username = window.prompt('Bitte User-Name eingeben');
-		}
-		$('#username').text(username);
-		$('#username').append(': ');
-		$('#chatform').submit(function(evt){
-			evt.preventDefault();
-			sendMessage(username);
-		});
-		socket.on('message', function(json){
-			console.log("Client received a message");
-			console.log(json);
-			var data = JSON.parse(json);
-			console.log(data);
-			console.log(data.message);
-			appendMessage(data.message,data.color,data.username);
-		});
-	});
-
-	var sendMessage = function (username){
-		var chatMessage =  $('#chatfeld').val();
-		console.log(chatMessage);
-		var data = {message : chatMessage,color : color, username : username};
-		console.log(data.message);
-		socket.send(JSON.stringify(data));
-		appendMessage(chatMessage, color, username);
-		$('#chatfeld').val('');
-	};
-
-	var appendMessage = function(messageText, color,username){
-		var user = $('<b></b>').text(username + " (" + getTime() + "):");
-		var message = $('<div></div>');
-		console.log(user);
-		message.text(messageText);
-		message.css('color',color);
-		message.prepend('&nbsp;')
-		message.prepend(user);
-		console.log(message);
-		$('#chatarea').append(message);
-	};
-
-	function get_random_color() {
-	    var letters = '0123456789ABCDEF'.split('');
-	    var color = '#';
-	    for (var i = 0; i < 6; i++ ) {
-	        color += letters[Math.round(Math.random() * 15)];
-	    }
-	    return color;
-	}
-
-	function getTime(){
-		var date = new Date();
-		return format(date.getHours()) + ':' + format(date.getMinutes()) + ':' + format(date.getSeconds());
-	}
-
-	function format(value){
-		if (value < 10){
-			return '0' + value;
-		}
-		return value;
-	}
-
-	
-	
-</script>
 <div id="chatarea" >
 </div>
 <form id="chatform">
 	<span id="username">User-Name: </span>
-	<input id="chatfeld" type="text"  autofocus placeholder="Type here" size="100"/>
+	<input id="chatfeld" type="text"  onkeyup="fillInHistory(event);" autofocus placeholder="Type here" size="100"/>
 </form>
 
