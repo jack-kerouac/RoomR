@@ -159,3 +159,34 @@ input
 
   .dropped
     transition(all 200ms)
+
+ul.form
+  list-style-type: none
+  margin: 0
+  padding: 0
+
+ulform li
+  margin: 5px 10px 5px 0px
+
+ul.form li input
+  margin-bottom: 5px
+
+ul.form ul li
+  display:inline-block
+
+
+ul.form li label
+  width: 65px
+  display:inline-block
+  margin-right: 10px
+
+@media screen and (min-width: 478px)
+  .form li label 
+    text-align:right
+  .form li input[type="radio"]+label 
+    text-align:left
+
+@media screen and (max-width: 478px)
+  .form li input 
+    width: min(100px, 100%)
+
