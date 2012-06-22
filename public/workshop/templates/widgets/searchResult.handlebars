@@ -3,6 +3,7 @@
   {{#each searchResults}}
     <li class="searchResult" data-result-latitude={{roomOffer.flatshare.geoLocation.latitude}} data-result-longitude={{roomOffer.flatshare.geoLocation.longitude}}>
       <div class="searchResultFront">
+        <b>{{roomOffer.flatshare.address.street}} {{roomOffer.flatshare.address.streetNumber}}</b>
         <div>Current Distance: {{currentDistance}}&nbsp;km</div>
         <div>MatchingScore {{matchingScore.value}} - {{matchingScore.defined}}</div>
 
@@ -36,12 +37,13 @@
         {{/with}}
       </div>
       <div class="searchResultBack">
+        <b>{{roomOffer.flatshare.address.street}} {{roomOffer.flatshare.address.streetNumber}}</b>
         <form>
           <input type="hidden" name="id" value="{{id}}">
           <textarea lines="30" cols="100">
-		Warum willst du hier einziehen?
+          Warum willst du hier einziehen?
           </textarea>
-	  <br/>
+          <br/>
           <input type="button" name="sendApply" value="Ab damit">
           <input type="button" name="saveDraft" value="Entwurf speichern">
           <input type="button" name="discard" value="Verwerfen">
