@@ -1,0 +1,48 @@
+@import "nib/positions"
+
+// specific styling for the start widget
+.widget[data-type="start"]
+  border none
+  box-shadow none
+  background none
+
+  .man, .girl
+    width 300px
+    height 200px
+
+  .man
+    float left
+    background-image url(src/style/img/man.png)
+    background-position top center
+    background-repeat no-repeat
+
+  .girl
+    float right
+    background-image url(src/style/img/girl.png)
+    background-position top center
+    background-repeat no-repeat
+
+  .door-container
+    width 240px
+    height 320px
+    margin auto
+    transform-style preserve-3d
+    perspective 800px
+
+  .door
+    width 240px
+    height 320px
+    background-image url(src/style/img/door_clean.png)
+    background-position top center
+    background-repeat no-repeat
+
+    transform-origin 0 50% 0
+    transform rotateY(-15deg)
+
+    -webkit-transition: -webkit-transform 1s ease-in-out
+    -moz-transition: -moz-transform 1s ease-in-out
+    -o-transition: -o-transform 1s ease-in-out
+    -ms-transition: -ms-transform 1s ease-in-out
+
+    &:hover
+      transform rotateY(-75deg)
