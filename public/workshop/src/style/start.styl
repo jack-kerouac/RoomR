@@ -5,45 +5,69 @@
   border none
   box-shadow none
   background none
+  width 1024px
+  height 340px
+  relative top 0px left -50px
 
   .man, .girl
+    absolute top 0 left 0
     width 300px
     height 200px
 
   .man
-    float left
     background-image url(src/style/img/man.png)
     background-position top center
     background-repeat no-repeat
 
   .girl
-    float left
+    margin-left 600px
+    margin-top 95px
     background-image url(src/style/img/girl.png)
     background-position top center
     background-repeat no-repeat
 
   .door-container
-    float left
-    width 240px
-    height 320px
-    margin auto
+    absolute left 400px top 20px
     transform-style preserve-3d
     perspective 800px
 
-  .door
-    box-shadow 3px 2px 15px rgba(0, 0, 0, 0.6)
+  .door-frame
     width 163px
     height 260px
-    background-image url(src/style/img/door_clean.png)
-    background-position top center
+    background-image url(src/style/img/door_frame.png)
     background-repeat no-repeat
-
+    box-shadow 3px 2px 15px rgba(0, 0, 0, 0.6)
     transform-origin 0 50% 0
     transform rotateY(-15deg)
+    transform-style preserve-3d
 
+  .door
+    width 146px
+    height 247px
+    absolute left 9px top 10px
+    background-image url(src/style/img/door.png)
+    background-repeat no-repeat
+
+    box-shadow 3px 2px 15px rgba(0, 0, 0, 0.6)
+    transform-origin 0 50% 0
+    transform-style preserve-3d
     transition all 1s ease-in-out
+
+  .door-edge
+    absolute top 0 right 0
+    width 4px
+    height 100%
+    background-color #aa783e
+    transform-origin 100% 50% 0
+    transform rotateY(-90deg)
 
   .door-container:hover
     .door
-      transform rotateY(-75deg)
+      transform rotateY(-60deg)
       box-shadow none
+
+  .door-front-shadow
+    relative top 0 left 0
+    width 100px
+    height 100px
+    background linear-gradient(right, rgba(125,157,181,255), rgba(125,157,181,0))
