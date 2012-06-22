@@ -3,6 +3,7 @@
   {{#each searchResults}}
     <li class="searchResult" data-result-latitude={{roomOffer.flatshare.geoLocation.latitude}} data-result-longitude={{roomOffer.flatshare.geoLocation.longitude}}>
       <div class="searchResultFront">
+        <b>{{roomOffer.flatshare.address.street}} {{roomOffer.flatshare.address.streetNumber}}</b>
         <div>Current Distance: {{currentDistance}}&nbsp;km</div>
         <div>MatchingScore {{matchingScore.value}} - {{matchingScore.defined}}</div>
 
@@ -29,25 +30,24 @@
             <div>Beschreibung: {{description}}</div>
             <div>Kontakt E-Mail: {{contactEmail}}</div>
             <div>Bewerbungen: {{applications}}</div>
-            <form class="searchResultApplyForm"
-                id="SearchResultApplyForm_{{id}}">
-              <input type="hidden" name="id" value="{{id}}">
-              <input type="submit" name="ApplyButton" value="Bewerben">
+            <form>
+              <input type="button" name="apply" value="Bewerben...">
               <input type="button" data-index="{{id}}" class="DrawRouteButton" id="DrawRouteButton{{id}}" name="DrawRouteButton{{id}}" value="Route anzeigen">
             </form>
           </div>
         {{/with}}
       </div>
       <div class="searchResultBack">
-        <form id="SearchResultApplyForm">
+        <b>{{roomOffer.flatshare.address.street}} {{roomOffer.flatshare.address.streetNumber}}</b>
+        <form>
           <input type="hidden" name="id" value="{{id}}">
           <textarea lines="30" cols="100">
-		Warum willst du hier einziehen?
+          Warum willst du hier einziehen?
           </textarea>
-	  <br/>
-          <input type="submit" name="ApplyButton" value="Ab damit">
-          <input type="submit" name="Save" value="Entwurf speichern">
-          <input type="submit" name="ApplyButton" value="Verwerfen">
+          <br/>
+          <input type="button" name="sendApply" value="Ab damit">
+          <input type="button" name="saveDraft" value="Entwurf speichern">
+          <input type="button" name="turnBack" value="Zurückdrehen">
         </form>
       </div>
     </li>
