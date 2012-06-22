@@ -1,39 +1,30 @@
 <form id="CreateUserWidgetForm">
   <b>Neuen Account erstellen:</b>
-  <p>
-    <label>
-      Name:
-      <input type="text" name="name" placeholder="Vor- und Nachname" required/>
-    </label>
-    <br/>
-    <label>
-      Email:
-      <input type="text" name="email" placeholder="E-Mail Adresse" required/>
-    </label>
-    <br/>
-    <label>
-      Geburtstag:
-      <input name="birthdate_day" placeholder="Tag" required/>
-      <input name="birthdate_mon" placeholder="Monat" required/>
-      <input name="birthdate_year" placeholder="Jahr" required/>
-    </label>
-    <br/>
-    <label>
-      Geschlecht:
-      <input type="radio" name="gender" value="male" required>Mann
+  <ul class="form">
+    <li>
+      <label for="inputRegisterName" >Name:</label>
+      <input id="inputRegisterName" type="text" name="name" placeholder="Vor- und Nachname" required/>
+    
+    <li>
+      <label for="inputRegisterEmail" >E-Mail:</label>
+      <input id="inputRegisterEmail" type="text" name="email" placeholder="E-Mail Adresse" required/>
+    
+    <li>
+      <label for="inputRegisterBirthdayDay">Geburtstag:</label>
+      <input id="inputRegisterBirthdayDay" name="birthdate_day" placeholder="Tag" size="2" type="number" required/>
+      <input name="birthdate_mon" placeholder="Monat" size="2" type="number" required/>
+      <input name="birthdate_year" placeholder="Jahr" size="2" type="number" required/>
+    <li>
+      <label for="inputRegisterGender">Geschlecht:</label>
+      <input id="inputRegisterGender" type="radio" name="gender" value="male" required>Mann
       <input type="radio" name="gender" value="female" required>Frau
-    </label>
-    <br/>
-    <label>
-      Passwort:
-      <input type="password" name="password" placeholder="Passwort" required/>
-    </label>
-    <br/>
-    <label>
-      Passwort (Kontrolle):
-      <input type="password" name="duppedPasswd" placeholder="Passwort (zur Kontrolle)" required/>
-    </label>
-    <br/>
-    <input type="submit"/>
-  </p>
+    <li>
+      <label for="inputRegisterPassword">Passwort:</label>
+      <input id="inputRegisterPassword" type="password" name="password" placeholder="Passwort" required/>
+    <li>
+      <label for="inputRegisterPassword2">Passwort (Kontrolle):</label>
+      <input id="inputRegisterPassword2" type="password" name="duppedPasswd" placeholder="Passwort (zur Kontrolle)" required/>
+    <li>
+      <input type="submit"/>
+  </ul>
 </form>
