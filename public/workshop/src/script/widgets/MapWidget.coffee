@@ -113,6 +113,10 @@ define ['base/RoomrWidget', 'base/renderTemplate'], (RoomrWidget, renderTemplate
           #  strokeOpacity: 0.6,
           #  strokeWeight: 6
           #});
+            
+          new_position = $('#SearchResultMap').offset();
+          $('html,body').animate({scrollTop:new_position.top}, 1000)
+
           @gmap.travelRoute {
             origin: [@currentLat, @currentLong],
             destination: [lat, long],
