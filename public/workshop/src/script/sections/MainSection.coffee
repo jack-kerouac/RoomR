@@ -1,4 +1,4 @@
-define ['base/RoomrSection', 'widgets/CreateUserWidget'], (RoomrSection, CreateUserWidget) ->
+define ['base/RoomrSection', 'widgets/StartWidget'], (RoomrSection, StartWidget) ->
   'use strict'
 
   class MainSection extends RoomrSection
@@ -10,6 +10,6 @@ define ['base/RoomrSection', 'widgets/CreateUserWidget'], (RoomrSection, CreateU
         path: ''
       }
 
-      createUserWidget = new CreateUserWidget()
-      @addWidget createUserWidget
+      startWidget = new StartWidget()
+      @addWidget startWidget
 

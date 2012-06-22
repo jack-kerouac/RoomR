@@ -193,6 +193,7 @@ GET		/old/reset									DevModels.reset
 
 GET     /search/		                            staticDir:public/workshop
 GET     /offerRoom/		                            staticDir:public/workshop
+GET     /register/		                            staticDir:public/workshop
 GET     /photoUpload/	                            staticDir:public/workshop
 GET     /test/			                            staticDir:public/workshop
 GET     /				                            staticDir:public/workshop
