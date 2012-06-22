@@ -19,19 +19,17 @@ define ['base/RoomrWidget'], (RoomrWidget) ->
           targetName = event.explicitOriginalTarget.name
           if targetName?
             if targetName == 'apply'
-              console.log "will rotate now ..."
               enclosingLi = $(target).closest 'li'
               enclosingLi.addClass 'rotated'
             if targetName == 'sendApply'
               console.log "sending apply. Good luck..."
+              alert "Not yet implemented. Sorry for that"
             if targetName == 'saveDraft'
               console.log "saving text as draft..."
+              alert "Not yet implemented. Sorry for that"
             if targetName == 'turnBack'
               enclosingLi = $(target).closest 'li'
               enclosingLi.removeClass 'rotated'
-        #console.log "hidden id = ", $("input[name=id]", event.target).val()
-        #enclosingLi = $(event.target).closest 'li'
-        #enclosingLi.addClass 'rotated'
 
     renderInto: (element) ->
       @nidus = $(element)
