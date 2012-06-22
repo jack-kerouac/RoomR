@@ -17,71 +17,78 @@
     <h2>WG</h2>
     <h3>Adresse</h3>
 
-    <label for="address_street">Straße:</label>
-    <input id="address_street" type="text" name="address_street" required>
+    <ul class="form">
+        <ul class="form">
+            <li>
 
-    <label for="address_streetNumber">Straßennummer:</label>
-    <input id="address_streetNumber" type="text" name="address_streetNumber" pattern="[0-9]{1,4}[a-z]?"
-    title="Nummer (gegebenenfalls mit Zusatz)" required>
+                <label for="address_street">Straße:</label>
+                <input id="address_street" type="text" name="address_street" size="30" required>
 
-    <br>
+            <li>
 
-    <label for="address_zipCode">PLZ:</label>
-    <input id="address_zipCode" name="address_zipCode" type="number" min=10000 max=99999 pattern="[1-9][0-9]{4}"
-    title="fünfstellige Zahl" required>
-    <label for="address_city">Ort:</label>
-    <input id="address_city" name="address_city" type="text" required>
+                <label for="address_streetNumber">Hausnr.:</label>
+                <input id="address_streetNumber" type="text" name="address_streetNumber" pattern="[0-9]{1,4}[a-z]?"
+                    size="5" title="Nummer (gegebenenfalls mit Zusatz)" required>
+
+        </ul>
+        <ul class="form">
+            <li>
+
+                <label for="address_zipCode">PLZ:</label>
+                <input id="address_zipCode" name="address_zipCode" type="text" pattern="[0-9]{5}"
+                    size="5" title="fünf Ziffern" required>
+                
+            <li>
+
+                <label for="address_city">Ort:</label>
+                <input id="address_city" name="address_city" type="text" size="30" required>
+
+        </ul>
+        <li>
     
-    <br>
-
-    <label for="floor">Etage:</label>
-    <input id="floor" name="floor" type="text" list="floornames" required>
+            <label for="floor">Etage:</label>
+            <input id="floor" name="floor" type="text" list="floornames" required>
+    </ul>
 
     <h3>Geolocation</h3>
-    <label for="geolocation_latitude">Latitude:</label>
-    <input type="text" name="geolocation_latitude" id="geolocation_latitude" value="latitude" readonly>
-    <label for="geolocation_longitude">Longitude:</label>
-    <input type="text" name="geolocation_longitude" id="geolocation_longitude" value="longitude" readonly>
-
-    <br>
-    <br>
-
-    <label for="smokingtolarance">Rauchertoleranz:</label> 
-    <select name="smokingtolarance" id="smokingtolarance">
-        <option value="allowedInRoom">Erlaubt im Zimmer</option>
-        <option value="allowedInFlat">Erlaubt in Wohnung</option>
-        <option value="prohibited">Verboten</option>
-    </select>
+    <ul class="form">
+        <ul class="form">
+            <li>
+                <label for="geolocation_latitude">Latitude:</label>
+                <input type="text" name="geolocation_latitude" id="geolocation_latitude" value="latitude" readonly>
+            <li>
+                <label for="geolocation_longitude">Longitude:</label>
+                <input type="text" name="geolocation_longitude" id="geolocation_longitude" value="longitude" readonly>
+        </ul>
+    </ul>
 
     <br>
 
-    <label for="typeOfHouse">Haustyp:</label> 
-    <select name="typeOfHouse" id="typeOfHouse">
-        <option value="old">Altbau</option>
-        <option value="new">Neubau</option>
-        <option value="renovated">Renoviert</option>
-    </select>
+   <ul class="form">
 
-    <br>
+        <li>
+            <label for="smokingtolarance">Raucher:</label> 
+            <select name="smokingtolarance" id="smokingtolarance">
+                <option value="allowedInRoom">Erlaubt im Zimmer</option>
+                <option value="allowedInFlat">Erlaubt in Wohnung</option>
+                <option value="prohibited">Verboten</option>
+            </select>
 
+        <li>
+            <label for="typeOfHouse">Haustyp:</label> 
+            <select name="typeOfHouse" id="typeOfHouse">
+                <option value="old">Altbau</option>
+                <option value="new">Neubau</option>
+                <option value="renovated">Renoviert</option>
+            </select>
+
+        <li>
     
-    <label for="numberOfRooms">Anzahl der Zimmer:</label> 
-    <input type="number" name="numberOfRooms" id="numberOfRooms" min=1 pattern="[1-9][0-9]*" title="Zahl" required>
+            <label for="numberOfRooms">Anzahl der Zimmer:</label> 
+            <input type="number" name="numberOfRooms" id="numberOfRooms" min=1 pattern="[1-9][0-9]*" title="Zahl" required>
 
+    </ul>
 
-
-    <script type="text/javascript">
-        $(document).ready(function() {
-            if (navigator.geolocation) {                
-                navigator.geolocation.getCurrentPosition(  
-                    function (position) { 
-                        $('#geolocation_longitude').val(position.coords.longitude);
-                        $('#geolocation_latitude').val(position.coords.latitude);
-                    }
-                );
-            }
-        });
-    </script>
 
     <div id="appliances" class="itemChoice">
         <ul class="potential">

@@ -17,12 +17,13 @@
     background-repeat no-repeat
 
   .girl
-    float right
+    float left
     background-image url(src/style/img/girl.png)
     background-position top center
     background-repeat no-repeat
 
   .door-container
+    float left
     width 240px
     height 320px
     margin auto
@@ -30,8 +31,9 @@
     perspective 800px
 
   .door
-    width 240px
-    height 320px
+    box-shadow 3px 2px 15px rgba(0, 0, 0, 0.6)
+    width 163px
+    height 260px
     background-image url(src/style/img/door_clean.png)
     background-position top center
     background-repeat no-repeat
@@ -39,10 +41,9 @@
     transform-origin 0 50% 0
     transform rotateY(-15deg)
 
-    -webkit-transition: -webkit-transform 1s ease-in-out
-    -moz-transition: -moz-transform 1s ease-in-out
-    -o-transition: -o-transform 1s ease-in-out
-    -ms-transition: -ms-transform 1s ease-in-out
+    transition all 1s ease-in-out
 
-    &:hover
+  .door-container:hover
+    .door
       transform rotateY(-75deg)
+      box-shadow none

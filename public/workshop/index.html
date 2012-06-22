@@ -1,12 +1,13 @@
 <!doctype html>
+<!-- <html manifest="/manifest.appcache"> -->
 <meta charset="utf-8">
 <title></title>
 
 <!-- require.js (requirejs.org) lädt die fertig optimierte Haupt-App -->
-<script data-main="app.js" src="src/script/vendor/require.js"></script>
+<script data-main="scripts/app.js" src="scripts/require.js"></script>
 
 <!-- Fertig optimiertes, aus Stylus generiertes CSS -->
-<link rel="stylesheet" href="app.css">
+<link rel="stylesheet" href="styles/app.css">
 <!-- <link href='http://fonts.googleapis.com/css?family=Maven+Pro:400,700' rel='stylesheet' type='text/css'> -->
 <link href='http://fonts.googleapis.com/css?family=Inder' rel='stylesheet' type='text/css'>
 <body>
@@ -28,6 +29,8 @@
         <li><a href="/offerRoom/">Anzeige erstellen</a>
         <li><a href="chat.html">Chat</a>
         <li><a class="outernavbutton" href="/photoUpload/">Foto Upload</a>
-        </ul>
-    </nav>
-  </div>
+      </ul>
+  </nav>
+</div>
+
+<!-- <script src="http://remote-tilt.com/js/device-motion-polyfill.js"></script> -->

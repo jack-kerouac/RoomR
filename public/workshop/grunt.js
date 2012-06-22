@@ -21,7 +21,7 @@ module.exports = function(grunt){
     stylus: {
       main: {
         file: 'src/style/main.styl', // Quelldatei
-        dest: 'app.css',             // Zieldatei
+        dest: 'styles/app.css',             // Zieldatei
         options: {                   // Zusatzoptionen
           url: {
             paths: [ 'src/style' ]   // Pfad(e) für Bilder
@@ -77,11 +77,10 @@ module.exports = function(grunt){
         'backbone': 'vendor/backbone-amd',    // AMD-Build (https://github.com/amdjs)
         'underscore': 'vendor/underscore-amd', // AMD-Build (https://github.com/amdjs)
         'Handlebars': 'vendor/Handlebars-1.0.beta.6', // AMD-Build (https://github.com/SlexAxton/require-handlebars-plugin)
-        'modernizr': 'vendor/modernizr-2.5.3',
-        'jquerymobile' : 'vendor/jquery.mobile-1.1.0'
+        'modernizr': 'vendor/modernizr-2.5.3'
       },
       name: 'main',             // Wurzelmodul
-      out: 'app.js',            // Zieldatei
+      out: 'scripts/app.js',            // Zieldatei
       optimize: 'none'          // Optimierung deaktivieren (Debugging/Schnellerer Build)
     },
 

@@ -8,8 +8,9 @@
 # Import secure routes
 *		/										module:secure
 
-
-
+GET  /manifest.appcache              Dashboard.manifest
+    
+  
 #######################################################################
 # REST interface
 #######################################################################

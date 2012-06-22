@@ -1,4 +1,4 @@
-define ['base/renderTemplate', 'base/RoomrWidget'],
+define ['base/renderTemplate', 'base/RoomrWidget', 'base/roomrUtil'],
 (renderTemplate, RoomrWidget) ->
   'use strict'
 
@@ -24,16 +24,10 @@ define ['base/renderTemplate', 'base/RoomrWidget'],
           birthdate: "#{year}-#{mon}-#{day}T12:00:00.000+0100",
           gender: $('#CreateUserWidgetForm input[name=gender]').val(),
         }
-        $.ajax '/rest/users', {
-          contentType : "application/json"
-          data: JSON.stringify userToCreate
-          type: 'POST'
-          complete: (jqXHR, stat) =>
-            if stat == 'success'
-              @emit 'newUserCreated', userToCreate
-            else
-              alert "Irgendwas ging schief. Sorry..."
-        }
+        $.postJson '/rest/users', userToCreate, =>
+          @emit 'newUserCreated', userToCreate
+        , =>
+          alert "Irgendwas ging schief. Sorry..."
 
     renderInto: (@elem) -> @render()
 

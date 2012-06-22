@@ -1,13 +1,17 @@
 <form id="LoginWidgetForm">
 <b>Einloggen:</b>
-<p>
-<label>
-Email: <input type="text" name="email" placeholder="E-Mail Adresse" required/>
-</label>
-<label>
-Passwort: <input type="password" name="password" placeholder="Passwort" required/>
-</label>
-<input type="submit"/>
-<a href="/register/">Registrieren</a>
-</p>
+<ul class="form">
+  <ul class="form">
+    <li>
+      <label for="inputLoginEmail">E-Mail:</label>
+      <input id="inputLoginEmail" type="text" name="email" placeholder="E-Mail-Adresse" required/>
+    <li>
+      <label for="inputLoginPassword">Passwort:</label>
+      <input id="inputLoginPassword" type="password" name="password" placeholder="Passwort" required/>
+    <li>  
+      <input type="submit"/>
+  </ul>
+  <li>
+    <a href="/register/">Registrieren</a>
+</ul>
 </form>
