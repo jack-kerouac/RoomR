@@ -11,6 +11,16 @@ bg_color_mid = #405e64
 bg_color_in  = #66b0c2
 
 // Basics
+
+@font-face
+  font-family 'Inder'
+  font-style normal
+  font-weight 400
+  src:  url(/styles/fonts/Inder-Regular.eot#) format("ignore me"),
+        url(/styles/fonts/Inder-Regular.woff) format("woff"),
+        url(/styles/fonts/Inder-Regular.ttf) format("truetype")
+
+
 *
   box-sizing border-box
 
@@ -24,7 +34,7 @@ h1
 
 h1#Headline
   margin-top: 29px
-  margin-left: 52px
+  margin-left: 77px
   width: 427px
   text-align: center
   float: left
@@ -99,7 +109,8 @@ body
   margin: auto
 
 #Main
-  padding: 5px 10px 5px 10px
+  padding-left: 10px
+  padding-right: 10px 
 
 // Design
 #Wrapper, .item-bigview
@@ -109,7 +120,8 @@ body
   // box-shadow(0.2em 0.2em 1.5em #999);
 
 #Wrapper > header, #Main, #Side, .item-bigview
-  padding 1em 2em
+  padding-top: 15px
+  padding-bottom: 15px
 
 #Navigation
   z-index: 1
