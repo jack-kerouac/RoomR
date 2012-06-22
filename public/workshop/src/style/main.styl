@@ -3,6 +3,7 @@
 @import "nib/gradients"
 
 @import "src/style/photoUpload"
+@import "src/style/offerForm"
 
 // Basics
 *
@@ -52,45 +53,46 @@ body
 #Wrapper > header, #Main, #Side, .item-bigview
   padding 1em 2em
 
-#Navigation nav li
-  display: inline-block
-  width: 20%
-  padding: 0px 3px
-  max-width: 160px
-
-#Navigation nav
-  margin: auto
-  width: auto
-  text-align:center
-  position: relative
-  z-index: 1
-
-#Navigation nav ul
-  margin: 0px
-  padding: 0px
-
 #Navigation
   z-index: 1
   margin-top: -28px
   margin-bottom: 18px
 
-#Navigation nav a
-  display: inline-block
-  width:100%
-  height: 100%
-  padding: 20px 8px 8px 8px
-  border-radius: 0px 0px 5px 5px
-  background: linear-gradient(top, rgb(181,196,212), rgb(133,164,189), rgb(103,145,173))
-  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.75);
-  text-decoration: none
-  color: black
-  font-variant: small-caps;
-  font-weight: bold
-  &:hover
-    background: linear-gradient(top,  #ffd65e 0%,#febf04 100%);
+  nav
+    margin: auto
+    width: auto
+    text-align:center
+    position: relative
+    z-index: 1
 
-#Navigation nav a.outernavbutton
-  padding-top: 32px
+    li
+      display: inline-block
+      width: 20%
+      padding: 0px 3px
+      max-width: 160px
+
+    ul
+      margin: 0px
+      padding: 0px
+
+    a
+      display: inline-block
+      width:100%
+      height: 100%
+      padding: 20px 8px 8px 8px
+      border-radius: 0px 0px 5px 5px
+      background: linear-gradient(top, rgb(181,196,212), rgb(133,164,189), rgb(103,145,173))
+      box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.75);
+      text-decoration: none
+      color: black
+      font-variant: small-caps;
+      font-weight: bold
+
+      &:hover
+        background: linear-gradient(top,  #ffd65e 0%,#febf04 100%);
+
+      &.outernavbutton
+        padding-top: 32px
 
 // Eintrags-Großansicht
 .item-bigview
@@ -108,6 +110,7 @@ klickable()
   text-decoration underline
   &:hover
     text-decoration none
+    
 li .item-title, .clickable
   klickable()
 
@@ -139,52 +142,3 @@ input
     border-radius: 2px
     margin 5px
     padding 2px
-
-
-.itemChoice
-  stash-padding = 10px
-  icon-size = 80px
-  icon-margin = 5px
-  clearfix()
-
-  stashWidth(horizontalIcons)
-    horizontalIcons * (icon-size + 2 * icon-margin) + 2 * stash-padding
-  stashHeight(verticalIcons)
-    verticalIcons * (icon-size + 2 * icon-margin) + 2 * stash-padding
-
-
-
-  ul
-    padding stash-padding
-    float left
-
-    &.potential
-      background-color: blue
-      width stashWidth(2)
-      height stashHeight(2)
-
-    &.available
-      background-color: green
-      width stashWidth(4)
-      height stashHeight(1)
-
-    &.non-available
-      background-color: red
-      width stashWidth(4)
-      height stashHeight(1)
-
-    li
-      width icon-size
-      height icon-size
-      margin icon-margin
-      display list-item
-      list-style none outside none
-      float left
-
-      background-color yellow
-      cursor move
-      text-align center
-      border-radius(5px)
-
-  .dropped
-    transition(all 200ms)
