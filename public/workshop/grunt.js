@@ -21,7 +21,7 @@ module.exports = function(grunt){
     stylus: {
       main: {
         file: 'src/style/main.styl', // Quelldatei
-        dest: 'styles/app.css',             // Zieldatei
+        dest: 'src/style/app.css',             // Zieldatei
         options: {                   // Zusatzoptionen
           url: {
             paths: [ 'src/style' ]   // Pfad(e) für Bilder
