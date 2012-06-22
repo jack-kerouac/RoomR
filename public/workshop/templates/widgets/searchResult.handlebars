@@ -1,8 +1,8 @@
 <h3>Search Result Widget!</h3>
-<ol>
+<ol class="searchResultContainer">
   {{#each searchResults}}
     <li class="searchResult" data-result-latitude={{roomOffer.flatshare.geoLocation.latitude}} data-result-longitude={{roomOffer.flatshare.geoLocation.longitude}}>
-      <div>
+      <div class="searchResultFront">
         <div>Current Distance: {{currentDistance}}&nbsp;km</div>
         <div>MatchingScore {{matchingScore.value}} - {{matchingScore.defined}}</div>
 
@@ -29,8 +29,16 @@
             <div>Beschreibung: {{description}}</div>
             <div>Kontakt E-Mail: {{contactEmail}}</div>
             <div>Bewerbungen: {{applications}}</div>
+            <form class="searchResultApplyForm"
+                id="SearchResultApplyForm_{{id}}">
+              <input type="hidden" name="id" value="{{id}}">
+              <input type="submit" name="ApplyButton" value="Bewerben">
+            </form>
           </div>
         {{/with}}
+      </div>
+      <div class="searchResultBack">
+       Foo is silence
       </div>
     </li>
   {{/each}}

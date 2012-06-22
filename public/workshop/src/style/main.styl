@@ -99,11 +99,11 @@ body
   top 15%
   left 15%
   right 15%
-  bottom 15%		
+  bottom 15%
 
 // Anklickbare Sachen die kein Link sind
 klickable()
-  cursor pointer	
+  cursor pointer
   font-weight bold
   color blue
   text-decoration underline
@@ -189,3 +189,36 @@ input
 
   .dropped
     transition(all 200ms)
+
+.searchResultContainer
+  width: 400px
+  height: 250px
+  position: relative
+  perspective: 800px
+
+.searchResult
+  width: 100%
+  height: 100%
+  position: absolute
+  transform-style: preserve-3d
+  -webkit-transition: -webkit-transform 1s ease-in-out
+  -moz-transition: -moz-transform 1s ease-in-out
+  -o-transition: -o-transform 1s ease-in-out
+  -ms-transition: -ms-transform 1s ease-in-out
+  
+  > div
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+
+.searchResultFront
+  background-color: red
+
+.searchResultBack
+  background-color: blue
+  transform: rotateY( 180deg )
+
+.searchResult.rotated
+  transform: rotateY( 180deg )
