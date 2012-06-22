@@ -10,14 +10,17 @@ define ['base/RoomrWidget'], (RoomrWidget) ->
       @subscribeToEvent 'searchResultsChanged', (params) =>
         @searchResultsChanged params
 
-    installEventDelegators: (element) ->
+    installEventDelegator: (element) ->
       $(".searchResultContainer").each (index, element) ->
         addEventListener 'click', (event) =>
           event.preventDefault()
+          target = event.explicitOriginalTarget
           targetName = event.explicitOriginalTarget.name
           if targetName?
             if targetName == 'apply'
               console.log "will rotate now ..."
+              enclosingLi = $(target).closest 'li'
+              enclosingLi.addClass 'rotated'
             if targetName == 'sendApply'
               console.log "sending apply. Good luck..."
             if targetName == 'saveDraft'
@@ -32,7 +35,7 @@ define ['base/RoomrWidget'], (RoomrWidget) ->
       @nidus = $(element)
       @renderTemplate {searchResults: @searchResults}, (content) =>
         @nidus.html content
-      @installEventDelegators content
+      @installEventDelegator content
 
     searchResultsChanged: (searchResults) ->
       @searchResults = searchResults
