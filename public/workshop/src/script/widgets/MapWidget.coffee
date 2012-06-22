@@ -68,10 +68,19 @@ define ['base/RoomrWidget', 'base/renderTemplate'], (RoomrWidget, renderTemplate
       iconUrl = 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld='+number+'|85A4BD|000000'
       @gmap.addMarker {lat:latitude, lng:longitude, title:markertitle,icon:iconUrl, infoWindow:{content:infoContent}}
 
-    drawRoute: (routeIndex) ->
-      #console.log 'drawRoute event: index=' + routeIndex
-      index = routeIndex - 1
-      searchResult = @searchResults[index]
+    drawRoute: (routeId) ->
+      #console.log 'drawRoute event: id=' + routeId
+      
+      searchResult = null
+      for entry in @searchResults
+        #console.log 'search result id=' + entry.roomOffer.flatshare.id
+        if entry.roomOffer.flatshare.id == routeId
+          #console.log 'found route to draw!!!'
+          searchResult = entry
+
+      if searchResult == null
+        return
+
       lat = searchResult.roomOffer.flatshare.geoLocation.latitude
       long = searchResult.roomOffer.flatshare.geoLocation.longitude      
       @cleanRoute()

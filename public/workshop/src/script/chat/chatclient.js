@@ -1,6 +1,35 @@
 var recent = [];
 var keyCount = 0;
 
+
+var socket = io.connect('ws://10.22.11.162:1337');
+var username;
+var color = get_random_color();
+// Add a connect listener
+socket.on('connect',function() {
+		console.log('Client has connected to the server!');
+});
+
+$(document).ready(function(){
+	while (username == null || username === ""){
+		username = window.prompt('Bitte User-Name eingeben');
+	}
+	$('#username').text(username);
+	$('#username').append(': ');
+	$('#chatform').submit(function(evt){
+		evt.preventDefault();
+		sendMessage(username, socket);
+	});
+	socket.on('message', function(json){
+		console.log("Client received a message");
+		console.log(json);
+		var data = JSON.parse(json);
+		console.log(data);
+		console.log(data.message);
+		appendMessage(data.message,data.color,data.username);
+	});
+});
+
 function sendMessage (username,socket){
 	var chatMessage =  $('#chatfeld').val();
 	if (chatMessage){
@@ -54,3 +83,4 @@ function fillInHistory(event){
 		--keyCount;
 	} 
 }
+
