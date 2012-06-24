@@ -16,7 +16,7 @@ define ['backbone', 'base/renderTemplate'], (Backbone, renderTemplate) ->
       @widgets = []
       @title = options.title
       @name = options.name
-      @path = if options.path? then options.path else options.name + '/'
+      @path = if options.path? then options.path else options.name
 
     addWidget: (widget) ->
       @widgets[widget.name] = widget;
