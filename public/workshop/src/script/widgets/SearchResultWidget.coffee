@@ -35,7 +35,7 @@ define ['base/RoomrWidget'], (RoomrWidget) ->
       @nidus = $(element)
       @renderTemplate {searchResults: @searchResults}, (content) =>
         @nidus.html content
-      @installEventDelegator content
+        @installEventDelegator content
       $(document).ready =>
         widget = this
         $('.DrawRouteButton').bind 'click', ->
