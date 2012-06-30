@@ -61,7 +61,8 @@ public class RoomOffer extends ObjectifyModel {
 	@Override
 	public String toString() {
 		return Objects.toStringHelper(this).add("id", id).add("flatshare", getFlatshare())
-				.add("room details", roomDetails).add("seeker criteria", criteria).toString();
+				.add("room details", roomDetails).add("seeker criteria", criteria).add("state", currentState)
+				.toString();
 	}
 
 	@Override
