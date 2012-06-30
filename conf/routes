@@ -38,6 +38,7 @@ POST	/applications							Applications.apply
 
 # dashboard
 GET		/dashboard								Dashboard.view
+GET		/dashboard/removeApplication/{id}		Dashboard.removeApplication					
 GET		/applications							Applications.view
 
 

@@ -7,7 +7,10 @@
 	<h1>Deine Bewerbungen bei anderen WGs</h1>
 	<ul>
 	#{list items:myApplications, as:'application'}
-		<li>#{application application /}</li>
+		<li>
+			#{application application /}
+			<a href="/dashboard/removeApplication/${application.id}"> Diese Bewerbung zurücknehmen</a>
+		</li>
 	#{/list}
 	</ul>
 </div>

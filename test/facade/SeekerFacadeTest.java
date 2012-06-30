@@ -35,29 +35,34 @@ public class SeekerFacadeTest extends UnitTest {
 		// set up mocks
 		RoomOffer mockedOffer = new RoomOffer();
 		mockedOffer.currentState = RoomOffer.State.DELETED;
+		Long mockedOfferApplicationId = 32L;
 		RoomOfferApplication mockedApplication = mock(RoomOfferApplication.class);
 		when(mockedApplication.getRoomOffer()).thenReturn(mockedOffer);
-
+		when(roomOfferApplicationRepository.findApplication(mockedOfferApplicationId))
+			.thenReturn(mockedApplication);
+		
 		// trigger method
-		facadeUnderTest.removeRoomOfferApplication(mockedApplication);
+		facadeUnderTest.removeRoomOfferApplication(mockedOfferApplicationId );
 
 		// verify
 		verifyZeroInteractions(notificationService);
-		verifyZeroInteractions(roomOfferApplicationRepository);
 	}
 
 	@Test(expected = IllegalStateException.class)
 	public void testRemoveRoomOfferApplicationWithInvalidApplicationState() {
 		// set up mocks
 		RoomOffer mockedOffer = new RoomOffer();
+		Long mockedOfferApplicationId = 32L;
 		mockedOffer.currentState = RoomOffer.State.PUBLIC;
 		RoomOfferApplication application = new RoomOfferApplication();
 		RoomOfferApplication spyedApplication = spy(application);
 		spyedApplication.currentState = RoomOfferApplication.State.ACCEPTED;
+		when(roomOfferApplicationRepository.findApplication(mockedOfferApplicationId))
+			.thenReturn(spyedApplication);
 		when(spyedApplication.getRoomOffer()).thenReturn(mockedOffer);
 
 		// trigger method
-		facadeUnderTest.removeRoomOfferApplication(spyedApplication);
+		facadeUnderTest.removeRoomOfferApplication(mockedOfferApplicationId);
 
 		// verify
 		verifyZeroInteractions(notificationService);
@@ -68,14 +73,17 @@ public class SeekerFacadeTest extends UnitTest {
 	public void testRemoveRoomOfferApplicationAlreadyInvited() {
 		// set up mocks
 		RoomOffer mockedOffer = new RoomOffer();
+		Long mockedOfferApplicationId = 32L;
 		mockedOffer.currentState = RoomOffer.State.PUBLIC;
 		RoomOfferApplication application = new RoomOfferApplication();
 		RoomOfferApplication spyedApplication = spy(application);
 		spyedApplication.currentState = RoomOfferApplication.State.INVITED;
 		when(spyedApplication.getRoomOffer()).thenReturn(mockedOffer);
+		when(roomOfferApplicationRepository.findApplication(mockedOfferApplicationId))
+			.thenReturn(spyedApplication);
 
 		// trigger method
-		facadeUnderTest.removeRoomOfferApplication(spyedApplication);
+		facadeUnderTest.removeRoomOfferApplication(mockedOfferApplicationId);
 
 		// verify
 		verify(notificationService).notifyFlatshareOfRemovedApplication(mockedOffer, spyedApplication);
@@ -87,13 +95,16 @@ public class SeekerFacadeTest extends UnitTest {
 		// set up mocks
 		RoomOffer mockedOffer = new RoomOffer();
 		mockedOffer.currentState = RoomOffer.State.PUBLIC;
+		Long mockedOfferApplicationId = 32L;
 		RoomOfferApplication application = new RoomOfferApplication();
 		RoomOfferApplication spyedApplication = spy(application);
 		spyedApplication.currentState = RoomOfferApplication.State.INVITED;
 		when(spyedApplication.getRoomOffer()).thenReturn(mockedOffer);
+		when(roomOfferApplicationRepository.findApplication(mockedOfferApplicationId))
+			.thenReturn(spyedApplication);
 
 		// trigger method
-		facadeUnderTest.removeRoomOfferApplication(spyedApplication);
+		facadeUnderTest.removeRoomOfferApplication(mockedOfferApplicationId);
 
 		// verify
 		verify(notificationService).notifyFlatshareOfRemovedApplication(mockedOffer, spyedApplication);

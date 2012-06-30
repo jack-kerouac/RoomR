@@ -53,8 +53,12 @@ public class SeekerFacade {
 		return ranker.search(request, seekerAge, seekerGender);
 	}
 
-	public void removeRoomOfferApplication(RoomOfferApplication application) {
+	public void removeRoomOfferApplication(Long applicationId) {
+		// load room offer application
+		RoomOfferApplication application = roomOfferApplicationRepository.findApplication(applicationId);
+		
 		// check preconditons
+		Preconditions.checkState(application != null, "No application could be found for the given id");
 		RoomOffer associatedOffer = application.getRoomOffer();
 		Preconditions.checkState(associatedOffer.currentState == RoomOffer.State.PUBLIC,
 				"Room Offer has to be in state public");
