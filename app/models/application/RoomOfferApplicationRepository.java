@@ -4,6 +4,8 @@ import java.util.Set;
 
 public interface RoomOfferApplicationRepository {
 
+	public RoomOfferApplication findApplication(Long applicationId);
+	
 	public void add(RoomOfferApplication newApplication);
 
 	public Set<RoomOfferApplication> findAll();

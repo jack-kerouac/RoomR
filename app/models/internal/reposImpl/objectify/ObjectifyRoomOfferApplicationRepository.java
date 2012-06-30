@@ -4,6 +4,7 @@ import java.util.Set;
 
 import models.application.RoomOfferApplication;
 import models.application.RoomOfferApplicationRepository;
+import models.offer.RoomOffer;
 import play.modules.objectify.Datastore;
 
 import com.google.common.collect.ImmutableSet;
@@ -32,4 +33,8 @@ public class ObjectifyRoomOfferApplicationRepository implements RoomOfferApplica
 		Datastore.delete(application);
 	}
 
+	@Override
+	public RoomOfferApplication findApplication(Long applicationId) {
+			return Datastore.find(RoomOfferApplication.class, applicationId, false);
+	}
 }
