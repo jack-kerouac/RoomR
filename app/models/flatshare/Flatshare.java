@@ -1,19 +1,27 @@
 package models.flatshare;
 
 import java.util.HashSet;
+
+
+import static com.google.common.base.Preconditions.checkState;
 import java.util.Set;
 
 import javax.persistence.Embedded;
 import javax.persistence.Id;
 
+import models.application.RoomOfferApplication;
 import models.common.Address;
 import models.common.Floor;
+import models.offer.RoomOffer;
 import models.user.RoomrUser;
+import play.modules.objectify.Datastore;
 import play.modules.objectify.ObjectifyModel;
 
 import com.google.appengine.api.datastore.GeoPt;
+import com.google.appengine.repackaged.com.google.common.collect.Iterables;
 import com.google.common.base.Objects;
 import com.google.common.collect.Sets;
+import com.googlecode.objectify.Query;
 import com.googlecode.objectify.annotation.Cached;
 
 @Cached
@@ -49,6 +57,13 @@ public class Flatshare extends ObjectifyModel {
 		return new HashSet<RoomrUser>();
 	}
 
+	public RoomOffer getRoomOffer(){
+		Query<RoomOffer> query = Datastore.query(RoomOffer.class).filter("flatshareKey", Datastore.key(RoomOffer.class, this.id));
+		checkState(query.countAll() == 1,"Exactly one room offer expected for a flatshare");
+		return Iterables.getOnlyElement(query);
+	}
+	
+	
 	@Override
 	public String toString() {
 		return Objects.toStringHelper(this).add("id", id).add("address", address).add("geoLocation", geoLocation)
@@ -77,5 +92,4 @@ public class Flatshare extends ObjectifyModel {
 			return false;
 		return true;
 	}
-
 }
