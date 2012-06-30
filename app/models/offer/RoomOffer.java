@@ -9,7 +9,6 @@ import play.modules.objectify.ObjectifyModel;
 
 import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
-import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Cached;
 
 @Cached
@@ -22,7 +21,7 @@ public class RoomOffer extends ObjectifyModel {
 	@Id
 	public Long id;
 
-	private Key<Flatshare> flatshareKey;
+	public Long flatshareId;
 
 	@Embedded
 	public RoomDetails roomDetails;
@@ -44,9 +43,7 @@ public class RoomOffer extends ObjectifyModel {
 	 */
 	public void setFlatshare(Flatshare flatshare) {
 		Preconditions.checkState(flatshare.id != null, "flatshare must have been persisted before it can be set");
-		Key<Flatshare> keyOfNewFlatshare;
-		keyOfNewFlatshare = new Key<Flatshare>(Flatshare.class, flatshare.id);
-		this.flatshareKey = keyOfNewFlatshare;
+		this.flatshareId = flatshare.id;
 	}
 
 	/**
@@ -55,10 +52,10 @@ public class RoomOffer extends ObjectifyModel {
 	 * @return the flatshare for this user
 	 */
 	public Flatshare getFlatshare() {
-		if (this.flatshareKey == null) {
+		if (this.flatshareId == null) {
 			return null;
 		}
-		return Datastore.find(this.flatshareKey, false);
+		return Datastore.find(Flatshare.class, flatshareId, false);
 	}
 
 	@Override

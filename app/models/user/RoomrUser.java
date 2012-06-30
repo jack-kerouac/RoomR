@@ -22,7 +22,7 @@ import com.google.appengine.repackaged.com.google.common.base.Predicate;
 import com.google.appengine.repackaged.com.google.common.collect.Iterables;
 import com.google.common.base.Objects;
 import com.google.common.base.Objects.ToStringHelper;
-import com.googlecode.objectify.Key;
+import com.google.common.base.Preconditions;
 import com.googlecode.objectify.Query;
 
 //@Cached
@@ -38,7 +38,7 @@ public class RoomrUser extends ObjectifyModel {
 
 	public Gender gender;
 
-	private Key<Flatshare> flatshareKey;
+	public Long flatshareId;
 
 	public int getAge() {
 		Period period = new Period(new DateTime(birthdate), new DateTime());
@@ -51,11 +51,10 @@ public class RoomrUser extends ObjectifyModel {
 	 * @return the flatshare for this user
 	 */
 	public Flatshare getFlatshare() {
-		// TODO (Gernot) use id as parameter for the find method
-		if (this.flatshareKey == null) {
+		if (this.flatshareId == null) {
 			return null;
 		}
-		return Datastore.find(this.flatshareKey, false);
+		return Datastore.find(Flatshare.class, this.flatshareId, false);
 	}
 
 	/**
@@ -66,15 +65,8 @@ public class RoomrUser extends ObjectifyModel {
 	 *            the Flatshare which should be set for this user
 	 */
 	public void setFlatshare(Flatshare flatshare) {
-		// TODO (Gernot) use preconditions to check if flatshare has a valid id
-		Key<Flatshare> keyOfNewFlatshare;
-		if (flatshare.id == null) {
-			// flatshare has to be persisted first to obtain a valid key
-			keyOfNewFlatshare = Datastore.put(flatshare);
-		} else {
-			keyOfNewFlatshare = new Key<Flatshare>(Flatshare.class, flatshare.id);
-		}
-		this.flatshareKey = keyOfNewFlatshare;
+		Preconditions.checkState(flatshare.id != null, "flatshare must have been persisted before it can be set");
+		this.flatshareId = flatshare.id;
 	}
 
 	/**
@@ -130,7 +122,7 @@ public class RoomrUser extends ObjectifyModel {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((birthdate == null) ? 0 : birthdate.hashCode());
-		result = prime * result + ((flatshareKey == null) ? 0 : flatshareKey.hashCode());
+		result = prime * result + ((flatshareId == null) ? 0 : flatshareId.hashCode());
 		result = prime * result + ((gaeUser == null) ? 0 : gaeUser.hashCode());
 		result = prime * result + ((gaeUserEmail == null) ? 0 : gaeUserEmail.hashCode());
 		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
@@ -152,10 +144,10 @@ public class RoomrUser extends ObjectifyModel {
 				return false;
 		} else if (!birthdate.equals(other.birthdate))
 			return false;
-		if (flatshareKey == null) {
-			if (other.flatshareKey != null)
+		if (flatshareId == null) {
+			if (other.flatshareId != null)
 				return false;
-		} else if (!flatshareKey.equals(other.flatshareKey))
+		} else if (!flatshareId.equals(other.flatshareId))
 			return false;
 		if (gaeUser == null) {
 			if (other.gaeUser != null)
