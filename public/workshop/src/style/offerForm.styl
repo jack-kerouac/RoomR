@@ -12,6 +12,11 @@
 
 
   ul
+    clearfix()
+
+    &:before
+      content attr(data-value)
+
     padding stash-padding
     float left
 
@@ -42,6 +47,3 @@
       cursor move
       text-align center
       border-radius(5px)
-
-  .dropped
-    transition(all 200ms)
