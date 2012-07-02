@@ -1,4 +1,4 @@
-define ['base/RoomrWidget', 'base/roomrUtil', 'modernizr'], (RoomrWidget, roomrUtil) ->
+define ['base/RoomrWidget.coffee#', 'base/roomrUtil.coffee#', 'lib/modernizr'], (RoomrWidget, roomrUtil) ->
   'use strict'
 
   class PhotoUploadWidget extends RoomrWidget

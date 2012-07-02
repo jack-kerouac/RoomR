@@ -1,4 +1,4 @@
-define ['base/RoomrWidget', 'base/renderTemplate', 'jquery-ui'], (RoomrWidget, renderTemplate) ->
+define ['base/RoomrWidget.coffee#', 'base/renderTemplate.coffee#', 'lib/jquery-ui'], (RoomrWidget, renderTemplate) ->
   'use strict'
 
   class OfferRoomFormWidget extends RoomrWidget

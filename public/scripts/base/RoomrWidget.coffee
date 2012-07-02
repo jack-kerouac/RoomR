@@ -4,7 +4,7 @@
 # `widgets/<NAME>`. Concrete widgets need to override the method renderInto that
 # takes the element into which the widget should render itself as an argument.
 
-define ['base/EventEmitter', 'base/renderTemplate'], (EventEmitter, renderTemplate) ->
+define ['base/EventEmitter.coffee#', 'base/renderTemplate.coffee#'], (EventEmitter, renderTemplate) ->
   'use strict'
 
   class RoomrWidget extends EventEmitter

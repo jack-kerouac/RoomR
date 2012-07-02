@@ -193,13 +193,13 @@ GET		/old/applications							Applications.view
 GET		/old/reset									DevModels.reset
 
 
-GET     /search			                            staticFile:public/workshop/index.html
-GET     /offerRoom		                            staticFile:public/workshop/index.html
-GET     /register		                            staticFile:public/workshop/index.html
-GET     /photoUpload	                            staticFile:public/workshop/index.html
-GET     /test			                            staticFile:public/workshop/index.html
-GET     /				                            staticFile:public/workshop/index.html
-GET		/scripts/									staticDir:public/workshop/scripts
+GET     /search			                            staticFile:public/index.html
+GET     /offerRoom		                            staticFile:public/index.html
+GET     /register		                            staticFile:public/index.html
+GET     /photoUpload	                            staticFile:public/index.html
+GET     /test			                            staticFile:public/index.html
+GET     /				                            staticFile:public/index.html
+GET		/scripts/									staticDir:public/scripts
 GET		/styles/									staticDir:public/workshop/styles
 # TODO FLO: remove /src URL
 GET		/src/										staticDir:public/workshop/src

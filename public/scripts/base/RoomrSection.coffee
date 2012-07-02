@@ -6,7 +6,7 @@
 # widgets. Their `data-widget-name` attribute defines the name of the widget that is
 # rendered into this `div`.
 
-define ['backbone', 'base/renderTemplate'], (Backbone, renderTemplate) ->
+define ['lib/backbone', 'base/renderTemplate.coffee#'], (Backbone, renderTemplate) ->
 
   return Backbone.View.extend {
 

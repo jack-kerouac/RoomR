@@ -16,25 +16,27 @@
 # bereitstellen, können wir beides in unserer Callback-Funkion verwenden, ohne sie dort
 # im Callback explizit aufzuführen.
 
-require [
-  'base/EventMediator',
-  'backbone',
-  'base/AppRouter',
-  'sections/PhotoUploadSection',
-  'sections/OfferRoomSection',
-  'sections/SearchSection',
-  'sections/MainSection',
-  'sections/RegisterSection',
-  'widgets/LoginWidget'],
-(EventMediator,
-  Backbone,
-  AppRouter,
-  PhotoUploadSection,
-  OfferRoomSection,
-  SearchSection,
-  MainSection,
-  RegisterSection,
-  LoginWidget) ->
+requirejs.config {
+  baseUrl: 'scripts/'
+  paths: {
+    "lib/modernizr" : "lib/modernizr-2.5.3"
+    "lib/jquery-ui" : "lib/jquery-ui-1.8.21.custom.min"
+    "lib/underscore" : "lib/underscore-amd"
+    "lib/handlebars" : "lib/Handlebars-1.0.beta.6"
+    "lib/backbone" : "lib/backbone-amd"
+  }
+  shim: {
+    'lib/backbone' : {
+      deps: ['lib/underscore', 'lib/jquery']
+      # exports: 'Backbone'
+    }
+  }
+}
+
+
+
+require ['base/EventMediator.coffee#','lib/backbone','base/AppRouter.coffee#','sections/PhotoUploadSection.coffee#','sections/OfferRoomSection.coffee#','sections/SearchSection.coffee#','sections/MainSection.coffee#','sections/RegisterSection.coffee#','widgets/LoginWidget.coffee#'],\
+(EventMediator, Backbone, AppRouter, PhotoUploadSection, OfferRoomSection, SearchSection, MainSection, RegisterSection, LoginWidget) ->
 
   'use strict'
 
