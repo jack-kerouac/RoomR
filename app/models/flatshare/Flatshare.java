@@ -50,10 +50,8 @@ public class Flatshare extends Model {
 
 	@Override
 	public String toString() {
-		return Objects.toStringHelper(this).add("id", id)
-				.add("address", address).add("geoLocation", geoLocation)
-				.add("floor", floor).add("smoking tolerance", smokingTolerance)
-				.add("residents", residents).add("roomOffers", roomOffers)
-				.toString();
+		return Objects.toStringHelper(this).add("id", id).add("address", address).add("geoLocation", geoLocation)
+				.add("floor", floor).add("smoking tolerance", smokingTolerance).add("residents", residents)
+				.add("roomOffers", roomOffers).toString();
 	}
 }

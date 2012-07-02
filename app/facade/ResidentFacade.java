@@ -2,16 +2,22 @@ package facade;
 
 import javax.inject.Inject;
 
+import models.application.RoomOfferApplication;
 import models.flatshare.Flatshare;
 import models.notification.NotificationService;
 import models.offer.RoomOffer;
 import models.user.RoomrUser;
+import play.modules.guice.InjectSupport;
 
 import com.google.common.base.Optional;
+import com.google.common.base.Preconditions;
 
 import facade.exception.RoomOfferUpdateException;
 
+@InjectSupport
 public class ResidentFacade {
+
+	@Inject
 	private NotificationService notificationService;
 
 	public Flatshare createFlatshare(Flatshare newFlatshare, Optional<RoomrUser> potentialCreator) {
@@ -32,6 +38,18 @@ public class ResidentFacade {
 		}
 	}
 
+	@Deprecated
+	public Flatshare createFlatshareAndOffer(Flatshare newFlatshare, RoomOffer roomOffer,
+			Optional<RoomrUser> potentialCreator) {
+		Flatshare result = createFlatshare(newFlatshare, potentialCreator);
+		roomOffer.flatshare = newFlatshare;
+		roomOffer.currentState = RoomOffer.State.PUBLIC;
+		roomOffer.save();
+		notificationService.notifyFlatshareOfCreatedOffer(roomOffer);
+
+		return result;
+	}
+
 	public void addOfferToFlatshare(Flatshare flatshare, RoomOffer roomOffer) {
 		roomOffer.flatshare = flatshare;
 		roomOffer.save();
@@ -39,18 +57,6 @@ public class ResidentFacade {
 		// flatshare's collection of room offers
 		flatshare.refresh();
 		notificationService.notifyFlatshareOfCreatedOffer(roomOffer);
-	}
-
-	@Deprecated
-	public Flatshare createFlatshareAndOffer(Flatshare newFlatshare, RoomOffer roomOffer,
-			Optional<RoomrUser> potentialCreator) {
-		Flatshare result = createFlatshare(newFlatshare, potentialCreator);
-		roomOffer.flatshare = newFlatshare;
-		roomOffer.save();
-		notificationService.notifyFlatshareOfCreatedOffer(roomOffer);
-
-		// have to be refreshed as a roomOffer has been added...
-		return result.refresh();
 	}
 
 	public Flatshare updateFlatshare(Flatshare flatshare) {
@@ -67,21 +73,42 @@ public class ResidentFacade {
 	 * @throws RoomOfferUpdateException
 	 *             when the room offer doesn't belong to the flatshare
 	 */
-	public Flatshare updateRoomOfferForFlatshare(RoomOffer offer, Flatshare flatshare) throws RoomOfferUpdateException {
+	public void updateRoomOfferForFlatshare(RoomOffer offer, Flatshare flatshare) throws RoomOfferUpdateException {
 		// check if the offer really belongs to the given flatshare
 		if (flatshare.id != offer.flatshare.id) {
 			throw new RoomOfferUpdateException("Room Offer doesn't belong to the given flatshare");
 		}
 
 		// update entities
-		Flatshare result = flatshare.merge();
+		flatshare.merge();
 		offer.merge();
-		return result;
 	}
 
-	@Inject
-	public void setNotificationService(NotificationService notificationService) {
-		this.notificationService = notificationService;
-	}
+	/**
+	 * invites the applicant associated to the given application. the user is
+	 * notified and the state of the room offer application is set to INVITED.
+	 * 
+	 * @param roomOfferApplicationId
+	 *            id of the room offer application for which the applicant
+	 *            should be invited.
+	 */
+	public void inviteApplicant(Long roomOfferApplicationId) {
 
+		RoomOfferApplication application = RoomOfferApplication.findById(roomOfferApplicationId);
+
+		// check preconditons
+		Preconditions.checkArgument(application != null, "Couldn\'t find a application for the given id");
+		Preconditions.checkState(application.currentState == RoomOfferApplication.State.WAITING_FOR_INVITATION,
+				"Application has to be in state WAITING_FOR_INVITATION if an applicant should be invited but is in state "
+						+ application.currentState);
+		Preconditions.checkState(application.roomOffer.currentState == RoomOffer.State.PUBLIC,
+				"Room Offer has to be in state public to invite an applicant");
+
+		// notify user
+		this.notificationService.notifyUserOfInvitation(application.applicant, application);
+
+		// advance ROA state
+		application.currentState = RoomOfferApplication.State.INVITED;
+		application.merge();
+	}
 }

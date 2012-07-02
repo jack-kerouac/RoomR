@@ -2,6 +2,7 @@ package models.notification;
 
 import models.application.RoomOfferApplication;
 import models.offer.RoomOffer;
+import models.user.RoomrUser;
 import notifiers.RoomrMailer;
 
 public class PlayMailNotificationService implements NotificationService {
@@ -10,10 +11,20 @@ public class PlayMailNotificationService implements NotificationService {
 	public void notifyFlatshareOfCreatedOffer(RoomOffer offer) {
 		RoomrMailer.offerCreated(offer);
 	}
-	
+
 	@Override
 	public void notifyFlatshareOfNewApplication(RoomOffer offer, RoomOfferApplication application) {
 		RoomrMailer.newApplication(offer, application);
 	}
 
+	@Override
+	public void notifyFlatshareOfRemovedApplication(RoomOffer offer, RoomOfferApplication application) {
+		RoomrMailer.applicationRemoved(offer, application);
+	}
+
+	@Override
+	public void notifyUserOfInvitation(RoomrUser applicant, RoomOfferApplication application) {
+		// TODO Auto-generated method stub
+
+	}
 }

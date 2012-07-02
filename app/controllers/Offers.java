@@ -1,5 +1,7 @@
 package controllers;
 
+import static com.google.common.base.Preconditions.checkState;
+
 import java.util.ArrayList;
 
 import javax.inject.Inject;
@@ -61,8 +63,7 @@ public class Offers extends AbstractRoomrController {
 			formData.minAge = 18;
 			formData.maxAge = 50;
 			formData.genders = Sets.newHashSet(Gender.male, Gender.female);
-			formData.appliances = ImmutableSet.of(Appliance.clothesWasher,
-					Appliance.dishWasher);
+			formData.appliances = ImmutableSet.of(Appliance.clothesWasher, Appliance.dishWasher);
 			Optional<RoomrUser> loggedInUser = userFacade.getLoggedInUser();
 			if (loggedInUser.isPresent()) {
 				formData.email = userFacade.getLoggedInUser().get().email;
@@ -74,23 +75,19 @@ public class Offers extends AbstractRoomrController {
 
 	public static void createOffer(@Valid OfferFormData formData) {
 		if (formData.genders.isEmpty()) {
-			validation.addError("formData.genders",
-					"validation.offerFormData.gendersEmpty");
+			validation.addError("formData.genders", "validation.offerFormData.gendersEmpty");
 		}
 
 		// min/max age being null is handled by @Required annotations
 		if (formData.minAge != null && formData.maxAge != null) {
 			if (formData.minAge > formData.maxAge) {
-				validation.addError("formData.maxAge",
-						"validation.offerFormData.maxAgeSmallerThanMinAge");
+				validation.addError("formData.maxAge", "validation.offerFormData.maxAgeSmallerThanMinAge");
 			}
 		}
 
 		// free from being null is handled by @Required annotations
-		if (formData.freeFrom != null && formData.freeTo != null
-				&& formData.freeFrom.after(formData.freeTo)) {
-			validation.addError("formData.freeTo",
-					"validation.offerFormData.freeToBeforeFreeFrom");
+		if (formData.freeFrom != null && formData.freeTo != null && formData.freeFrom.after(formData.freeTo)) {
+			validation.addError("formData.freeTo", "validation.offerFormData.freeToBeforeFreeFrom");
 		}
 
 		if (validation.hasErrors()) {
@@ -104,13 +101,16 @@ public class Offers extends AbstractRoomrController {
 
 		copy(formData, flatshare, offer);
 
-		residentFacade.createFlatshareAndOffer(flatshare, offer, userFacade.getLoggedInUser());
+		Optional<RoomrUser> loggedInUser = userFacade.getLoggedInUser();
+		// TODO (Gernot) always associate the current user with the given
+		// flatshare?
+		checkState(loggedInUser.isPresent(), "User needed to associate it with the flatshare for the offer");
+		residentFacade.createFlatshareAndOffer(flatshare, offer, loggedInUser);
 
 		viewOffer(offer.id);
 	}
 
-	public static void editOfferForm(
-			@Required(message = "room offer ID required") Long id,
+	public static void editOfferForm(@Required(message = "room offer ID required") Long id,
 			@Required(message = "authentication token required") String authToken) {
 		if (validation.hasErrors()) {
 			response.print(validation.errors());
@@ -136,8 +136,7 @@ public class Offers extends AbstractRoomrController {
 		renderOfferForm(formData);
 	}
 
-	public static void editOffer(@Required Long roomOfferId,
-			@Valid OfferFormData formData) {
+	public static void editOffer(@Required Long roomOfferId, @Valid OfferFormData formData) {
 		checkAuthenticity();
 
 		RoomOffer offer = seekerFacade.findOffer(roomOfferId);
@@ -161,25 +160,21 @@ public class Offers extends AbstractRoomrController {
 		TypeOfHouse[] typesOfHouse = TypeOfHouse.values();
 		Appliance[] appliances = Appliance.values();
 		AdditionalSpace[] additionalSpaces = AdditionalSpace.values();
-		render(formData, genders, floors, smokingTolerances, typesOfHouse,
-				appliances, additionalSpaces);
+		render(formData, genders, floors, smokingTolerances, typesOfHouse, appliances, additionalSpaces);
 	}
 
 	/**
 	 * Copy attributes from form backing object {@code formData} to
 	 * {@code flatshare} and {@code offer}.
 	 */
-	private static void copy(OfferFormData formData, Flatshare flatshare,
-			RoomOffer offer) {
+	private static void copy(OfferFormData formData, Flatshare flatshare, RoomOffer offer) {
 		// FLATSHARE
-		flatshare.address = new Address(formData.street, formData.streetNumber,
-				formData.zipCode, formData.city);
+		flatshare.address = new Address(formData.street, formData.streetNumber, formData.zipCode, formData.city);
 		flatshare.geoLocation = new GeoPt(formData.lat, formData.lng);
 
 		flatshare.streetViewParameters = new StreetViewParameters();
 		flatshare.streetViewParameters.displayStreetView = formData.displayStreetView;
-		flatshare.streetViewParameters.streetViewGeoLocation = new GeoPt(
-				formData.streetViewLat, formData.streetViewLng);
+		flatshare.streetViewParameters.streetViewGeoLocation = new GeoPt(formData.streetViewLat, formData.streetViewLng);
 		flatshare.streetViewParameters.streetViewHeading = formData.streetViewHeading;
 		flatshare.streetViewParameters.streetViewPitch = formData.streetViewPitch;
 		flatshare.streetViewParameters.streetViewZoom = formData.streetViewZoom;
@@ -219,8 +214,7 @@ public class Offers extends AbstractRoomrController {
 	 * Copy attributes from {@code flatshare} and {@code offer} to form backing
 	 * object {@code formData};
 	 */
-	private static void copy(Flatshare flatshare, RoomOffer offer,
-			OfferFormData formData) {
+	private static void copy(Flatshare flatshare, RoomOffer offer, OfferFormData formData) {
 		// FLATSHARE
 
 		formData.street = flatshare.address.street;
@@ -268,8 +262,7 @@ public class Offers extends AbstractRoomrController {
 	}
 
 	public static void viewAll() {
-		ArrayList<RoomOffer> offers = Lists.newArrayList(administrationFacade
-				.findAllOffers());
+		ArrayList<RoomOffer> offers = Lists.newArrayList(administrationFacade.findAllOffers());
 		render(offers);
 	}
 

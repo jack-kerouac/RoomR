@@ -14,14 +14,21 @@ import modules.CoreModule;
 
 import org.junit.Before;
 
-import play.test.BaseTest;
 import play.test.Fixtures;
+import play.test.UnitTest;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
-public abstract class AbstractCoreTest extends BaseTest {
+/**
+ * This class inherits from {@link UnitTest} so that all core tests are
+ * displayed in the tests overview of play (.../@tests).
+ * 
+ * @author "Florian Rampp (Florian.Rampp@jambit.com)"
+ * 
+ */
+public abstract class AbstractCoreTest extends UnitTest {
 
 	protected Injector injector;
 
@@ -30,8 +37,7 @@ public abstract class AbstractCoreTest extends BaseTest {
 
 	@Before
 	public final void setupInjector() {
-		injector = Guice.createInjector(new CoreModule(),
-				new InfrastructureMockModule());
+		injector = Guice.createInjector(new CoreModule(), new InfrastructureMockModule());
 
 		Fixtures.deleteDatabase();
 	}
@@ -54,8 +60,7 @@ public abstract class AbstractCoreTest extends BaseTest {
 
 		dummyRoomOffer = new RoomOffer();
 		dummyRoomOffer.criteria = new SeekerCriteria();
-		dummyRoomOffer.criteria.genders = ImmutableSet.of(Gender.male,
-				Gender.female);
+		dummyRoomOffer.criteria.genders = ImmutableSet.of(Gender.male, Gender.female);
 		dummyRoomOffer.criteria.minAge = 20;
 		dummyRoomOffer.criteria.maxAge = 30;
 

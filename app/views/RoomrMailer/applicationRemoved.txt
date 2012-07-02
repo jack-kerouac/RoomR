@@ -1,0 +1,5 @@
+Hallo,
+
+${application.applicant.name} hat seine Bewerbung für deine Anzeige ${roomOffer} zurückgezogen.
+
+Dein RoomR Team

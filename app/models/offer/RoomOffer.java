@@ -15,6 +15,9 @@ import com.google.common.base.Objects;
 
 @Entity
 public class RoomOffer extends Model {
+	public static enum State {
+		PUBLIC, DELETED
+	}
 
 	@OneToOne(optional = false)
 	public Flatshare flatshare;
@@ -31,11 +34,12 @@ public class RoomOffer extends Model {
 
 	@OneToMany(mappedBy = "roomOffer")
 	public Set<RoomOfferApplication> applications;
+	public State currentState;
 
 	@Override
 	public String toString() {
 		return Objects.toStringHelper(this).add("id", id)
 				.add("flatshareID", (flatshare != null ? flatshare.id : "null")).add("room details", roomDetails)
-				.add("seeker criteria", criteria).toString();
+				.add("seeker criteria", criteria).add("state", currentState).toString();
 	}
 }

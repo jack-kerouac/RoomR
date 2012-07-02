@@ -31,16 +31,11 @@ public class DevelopmentModelDataLoader {
 
 	public static void loadFixtures(InputStream is) {
 		Constructor constructor = new Constructor();
-		constructor.addTypeDescription(new TypeDescription(RoomrUser.class,
-				"!user"));
-		constructor.addTypeDescription(new TypeDescription(Flatshare.class,
-				"!flatshare"));
-		constructor.addTypeDescription(new TypeDescription(RoomOffer.class,
-				"!offer"));
-		constructor.addTypeDescription(new TypeDescription(
-				RoomOfferApplication.class, "!application"));
-		constructor.addTypeDescription(new TypeDescription(GeoPt.class,
-				"!geoPt"));
+		constructor.addTypeDescription(new TypeDescription(RoomrUser.class, "!user"));
+		constructor.addTypeDescription(new TypeDescription(Flatshare.class, "!flatshare"));
+		constructor.addTypeDescription(new TypeDescription(RoomOffer.class, "!offer"));
+		constructor.addTypeDescription(new TypeDescription(RoomOfferApplication.class, "!application"));
+		constructor.addTypeDescription(new TypeDescription(GeoPt.class, "!geoPt"));
 		Yaml yaml = new Yaml(constructor);
 
 		List<Object> all;

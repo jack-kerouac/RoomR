@@ -7,7 +7,6 @@ import com.google.common.base.Optional;
 import controllers.Security;
 import facade.exception.LoginFailedException;
 import facade.exception.NoAuthenticationProviderUserLoggedInException;
-import facade.exception.NoUserLoggedInException;
 import facade.exception.UserAlreadyCreatedException;
 
 public class UserFacade {
@@ -44,10 +43,9 @@ public class UserFacade {
 	}
 
 	/**
-	 * @return the currently logged in {@link RoomrUser}
-	 * @throws NoUserLoggedInException
-	 *             If either no GAE user is logged in, or the logged in GAE user
-	 *             has no associated {@link RoomrUser}.
+	 * @return the currently logged in {@link RoomrUser} or absent, if either no
+	 *         GAE user is logged in, or the logged in GAE user has no
+	 *         associated {@link RoomrUser}.
 	 */
 	public Optional<RoomrUser> getLoggedInUser() {
 		if (!Security.isConnected()) {

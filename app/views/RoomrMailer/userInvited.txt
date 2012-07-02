@@ -1,0 +1,5 @@
+Hallo,
+
+du wurdest für deine Bewerbung ${application} zu einem Besuch in die WG eingeladen.
+
+Dein RoomR Team

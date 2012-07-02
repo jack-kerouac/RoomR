@@ -7,7 +7,10 @@
 	<h1>Deine Bewerbungen bei anderen WGs</h1>
 	<ul>
 	#{list items:myApplications, as:'application'}
-		<li>#{application application /}</li>
+		<li>
+			#{application application /}
+			#{a @Dashboard.removeApplication(application.id)}Diese Bewerbung zurücknehmen#{/a}
+		</li>
 	#{/list}
 	</ul>
 </div>
@@ -24,7 +27,10 @@
 	<h1>Die Bewerbungen für deine WG</h1>
 	<ul>
 	#{list items:flatshareApplications, as:'application'}
-		<li>#{application application /}</li>
+		<li>
+			#{application application /}
+			#{a @Dashboard.inviteApplicant(application.id)}Diesen Bewerber einladen#{/a}
+		</li>
 	#{/list}
 	</ul>
 </div>

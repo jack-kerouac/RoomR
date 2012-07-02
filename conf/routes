@@ -184,6 +184,8 @@ POST	/old/applications							Applications.apply
 
 # dashboard
 GET		/old/dashboard								Dashboard.view
+GET		/old/dashboard/removeApplication/{id}		Dashboard.removeApplication
+GET		/old/dashboard/inviteApplicant/{roaId}		Dashboard.inviteApplicant					
 GET		/old/applications							Applications.view
 
 
