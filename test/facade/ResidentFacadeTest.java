@@ -1,7 +1,12 @@
 package facade;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import models.application.RoomOfferApplication;
+import models.common.FloorSpace;
 import models.flatshare.Flatshare;
+import models.notification.NotificationService;
+import models.offer.RoomDetails;
 import models.offer.RoomOffer;
 
 import org.junit.Before;
@@ -17,12 +22,15 @@ public class ResidentFacadeTest extends UnitTest {
 	private ResidentFacade residentFacade;
 	private RoomOffer roomOffer;
 	private Flatshare flatshare;
+	private NotificationService notificationService;
 
 	@Before
 	public void setUp() {
 		residentFacade = new ResidentFacade();
 		flatshare = FlatshareBuilder.validFlatshare().build();
 		roomOffer = RoomOfferBuilder.inFlatshare(flatshare).build();
+		notificationService = mock(NotificationService.class);
+		residentFacade.setNotificationService(notificationService);
 	}
 
 	/**
@@ -60,85 +68,54 @@ public class ResidentFacadeTest extends UnitTest {
 	@Test(expected = IllegalStateException.class)
 	public void testInviteApplicantForInvalidRoomOfferState() {
 		// set up mocks
+		RoomOffer offer = createRoomOfferWithState(RoomOffer.State.DELETED);
 		RoomOfferApplication mockedApplication = new RoomOfferApplication();
-		RoomOffer mockedRoomOffer = new RoomOffer();
-		mockedRoomOffer.currentState = RoomOffer.State.DELETED;
-		mockedApplication.roomOffer = mockedRoomOffer;
+		mockedApplication.roomOffer = roomOffer;
+		mockedApplication.save();
 
-		// trigger method
-		// TODO (Gernot) finish test
+		residentFacade.inviteApplicant(mockedApplication.id);
 	}
 
 	@Test(expected = IllegalStateException.class)
 	public void testInviteApplicantForInvalidApplicationState() {
 		// set up mocks
+		RoomOffer roomOffer = createRoomOfferWithState(RoomOffer.State.PUBLIC);
 		RoomOfferApplication mockedApplication = new RoomOfferApplication();
+		mockedApplication.roomOffer = roomOffer;
 		mockedApplication.currentState = RoomOfferApplication.State.REJECTED;
-		RoomOffer mockedRoomOffer = new RoomOffer();
-		mockedRoomOffer.currentState = RoomOffer.State.PUBLIC;
-		mockedApplication.roomOffer = mockedRoomOffer;
+		mockedApplication.save();
 
-		// trigger method
-		// TODO (Gernot) finish test
+		residentFacade.inviteApplicant(mockedApplication.id);
 	}
 
 	@Test
 	public void testInviteApplicantForValidParameters() {
-		// set up mocks
-		/*
-		 * final RoomOfferApplication mockedApplication =
-		 * mock(RoomOfferApplication.class);
-		 * when(mockedApplication.currentState)
-		 * .thenReturn(RoomOfferApplication.State.WAITING_FOR_INVITATION); final
-		 * RoomOffer mockedRoomOffer = new RoomOffer();
-		 * mockedRoomOffer.currentState = RoomOffer.State.PUBLIC; final
-		 * RoomrUser mockedApplicant = new RoomrUser();
-		 * mockedApplicant.gaeUserEmail = "mockedApplicantEmail";
-		 * 
-		 * when(mockedApplication.getRoomOffer()).thenReturn(mockedRoomOffer);
-		 * when(mockedApplication.getApplicant()).thenReturn(mockedApplicant);
-		 * 
-		 * // set up verification for mocked dependencies
-		 * this.residentFacade.setNotificationService(new NotificationService()
-		 * {
-		 * 
-		 * @Override public void notifyUserOfInvitation(RoomrUser applicant,
-		 * RoomOfferApplication application) { assertEquals(mockedApplicant,
-		 * applicant); assertEquals(mockedApplication, application); }
-		 * 
-		 * @Override public void notifyFlatshareOfRemovedApplication(RoomOffer
-		 * offer, RoomOfferApplication application) { fail(); }
-		 * 
-		 * @Override public void notifyFlatshareOfNewApplication(RoomOffer
-		 * offer, RoomOfferApplication application) { fail(); }
-		 * 
-		 * @Override public void notifyFlatshareOfCreatedOffer(RoomOffer offer)
-		 * { fail(); } });
-		 * 
-		 * this.residentFacade.setRoomOfferApplicationRepository(new
-		 * RoomOfferApplicationRepository() {
-		 * 
-		 * @Override public void update(RoomOfferApplication application) {
-		 * assertEquals(mockedApplication, application);
-		 * assertEquals(RoomOfferApplication.State.INVITED,
-		 * application.currentState); }
-		 * 
-		 * @Override public void remove(RoomOfferApplication application) {
-		 * fail(); }
-		 * 
-		 * @Override public Set<RoomOfferApplication> findAll() { fail(); return
-		 * null; }
-		 * 
-		 * @Override public void add(RoomOfferApplication newApplication) {
-		 * fail(); } });
-		 * 
-		 * // trigger method
-		 * this.residentFacade.inviteApplicant(mockedApplication); } // //
-		 * notify user //
-		 * this.notificationService.notifyUserOfInvitation(application
-		 * .getApplicant(), // application); // // // advance ROA state //
-		 * application.currentState = RoomOfferApplication.State.INVITED; //
-		 * this.roomOfferApplicationRepository.update(application); // }
-		 */
+		// persist room offer application for testing
+		RoomOffer roomOffer = createRoomOfferWithState(RoomOffer.State.PUBLIC);
+		RoomOfferApplication mockedApplication = new RoomOfferApplication();
+		mockedApplication.roomOffer = roomOffer;
+		mockedApplication.currentState = RoomOfferApplication.State.WAITING_FOR_INVITATION;
+		mockedApplication.save();
+
+		residentFacade.inviteApplicant(mockedApplication.id);
+
+		// verify
+		verify(notificationService).notifyUserOfInvitation(mockedApplication.applicant, mockedApplication);
+
 	}
+
+	private RoomOffer createRoomOfferWithState(RoomOffer.State state) {
+		RoomOffer offer = new RoomOffer();
+
+		// create flatshare for offer
+		Flatshare flatshare = FlatshareBuilder.validFlatshare().build();
+		offer.flatshare = flatshare;
+		offer.currentState = state;
+		offer.flatshare = flatshare;
+		offer.roomDetails = new RoomDetails();
+		offer.roomDetails.roomSize = new FloorSpace(13);
+		offer.save();
+		return offer;
+	}
+
 }
