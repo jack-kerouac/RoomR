@@ -1,4 +1,4 @@
-define ['base/RoomrSection', 'widgets/StartWidget'], (RoomrSection, StartWidget) ->
+define ['base/RoomrSection.coffee#', 'widgets/StartWidget.coffee#'], (RoomrSection, StartWidget) ->
   'use strict'
 
   class MainSection extends RoomrSection

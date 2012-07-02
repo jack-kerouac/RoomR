@@ -1,4 +1,4 @@
-define ['base/renderTemplate', 'base/RoomrWidget'],
+define ['base/renderTemplate.coffee#', 'base/RoomrWidget.coffee#'],
 (renderTemplate, RoomrWidget) ->
   'use strict'
 

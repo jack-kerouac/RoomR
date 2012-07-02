@@ -1,4 +1,4 @@
-define ['base/RoomrWidget'], (RoomrWidget) ->
+define ['base/RoomrWidget.coffee#'], (RoomrWidget) ->
   'use strict'
 
   class SearchResultWidget extends RoomrWidget

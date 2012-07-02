@@ -1,4 +1,4 @@
-define ['base/RoomrSection', 'widgets/OfferRoomFormWidget'], (RoomrSection, OfferRoomFormWidget) ->
+define ['base/RoomrSection.coffee#', 'widgets/OfferRoomFormWidget.coffee#'], (RoomrSection, OfferRoomFormWidget) ->
   'use strict'
 
   class OferRoomSection extends RoomrSection

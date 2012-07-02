@@ -5,7 +5,7 @@
 # In unserem Fall machen diese Funktionen nichts weiter, als die entspechenden
 # Änderungen im Page-Model auszulösen. Auf diese Änderungen können dann wiederum andere
 # Teile der Applikation reagieren
-define ['backbone'], (Backbone) -> Backbone.Router.extend {
+define ['lib/backbone'], (Backbone) -> Backbone.Router.extend {
 
   initialize: ->
     @allRoutes = new Array()

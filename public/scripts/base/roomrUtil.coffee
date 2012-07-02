@@ -1,4 +1,4 @@
-define ['jquery'], ->
+define ['lib/jquery'], ->
   'use strict'
 
   $.postJson = (url, object, success, error) =>

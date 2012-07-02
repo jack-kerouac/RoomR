@@ -1,4 +1,4 @@
-define ['backbone', 'base/RoomrWidget'],
+define ['lib/backbone', 'base/RoomrWidget.coffee#'],
 (Backbone, RoomrWidget) ->
   'use strict'
 

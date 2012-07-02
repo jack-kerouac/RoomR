@@ -1,4 +1,4 @@
-define ['base/RoomrWidget', 'base/renderTemplate'], (RoomrWidget, renderTemplate) ->
+define ['base/RoomrWidget.coffee#', 'base/renderTemplate.coffee#'], (RoomrWidget, renderTemplate) ->
   'use strict'
 
   class MapWidget extends RoomrWidget
@@ -35,7 +35,7 @@ define ['base/RoomrWidget', 'base/renderTemplate'], (RoomrWidget, renderTemplate
 
     loadGmaps: ->
       window.roomr.isGoogleMapJSLoaded = yes
-      $.getScript('src/script/vendor/gmaps.js', @renderMap.bind(this)).fail (args...) -> console.log args
+      $.getScript('scripts/lib/gmaps.js', @renderMap.bind(this)).fail (args...) -> console.log args
 
     renderMap: ->    
       $(document).ready =>

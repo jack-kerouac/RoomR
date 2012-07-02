@@ -197,7 +197,7 @@ GET     /register		                            staticFile:public/workshop/index.
 GET     /photoUpload	                            staticFile:public/workshop/index.html
 GET     /test			                            staticFile:public/workshop/index.html
 GET     /				                            staticFile:public/workshop/index.html
-GET		/scripts/									staticDir:public/workshop/scripts
+GET		/scripts/									staticDir:public/scripts
 GET		/styles/									staticDir:public/workshop/styles
 # TODO FLO: remove /src URL
 GET		/src/										staticDir:public/workshop/src

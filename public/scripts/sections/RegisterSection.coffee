@@ -1,4 +1,4 @@
-define ['base/RoomrSection', 'widgets/CreateUserWidget'], (RoomrSection, CreateUserWidget) ->
+define ['base/RoomrSection.coffee#', 'widgets/CreateUserWidget.coffee#'], (RoomrSection, CreateUserWidget) ->
   'use strict'
 
   class RegisterSection extends RoomrSection
