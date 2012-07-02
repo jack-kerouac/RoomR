@@ -17,7 +17,6 @@ import facade.exception.RoomOfferUpdateException;
 @InjectSupport
 public class ResidentFacade {
 
-	@Inject
 	private NotificationService notificationService;
 
 	public Flatshare createFlatshare(Flatshare newFlatshare, Optional<RoomrUser> potentialCreator) {
@@ -104,11 +103,17 @@ public class ResidentFacade {
 		Preconditions.checkState(application.roomOffer.currentState == RoomOffer.State.PUBLIC,
 				"Room Offer has to be in state public to invite an applicant");
 
-		// notify user
-		this.notificationService.notifyUserOfInvitation(application.applicant, application);
-
 		// advance ROA state
 		application.currentState = RoomOfferApplication.State.INVITED;
 		application.merge();
+
+		// notify user
+		this.notificationService.notifyUserOfInvitation(application.applicant, application);
 	}
+
+	@Inject
+	public void setNotificationService(NotificationService service) {
+		notificationService = service;
+	}
+
 }
