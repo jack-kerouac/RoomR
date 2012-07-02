@@ -3,13 +3,17 @@ package facade;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import models.application.RoomOfferApplication;
+import models.common.FloorSpace;
+import models.flatshare.Flatshare;
 import models.notification.NotificationService;
+import models.offer.RoomDetails;
 import models.offer.RoomOffer;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import play.test.UnitTest;
+import support.FlatshareBuilder;
 
 public class SeekerFacadeTest extends UnitTest {
 
@@ -26,8 +30,12 @@ public class SeekerFacadeTest extends UnitTest {
 	@Test(expected = IllegalStateException.class)
 	public void testRemoveRoomOfferApplicationWithInvalidOfferState() {
 		// set up mocks
+		Flatshare flatshare = FlatshareBuilder.validFlatshare().build();
 		RoomOffer mockedOffer = new RoomOffer();
 		mockedOffer.currentState = RoomOffer.State.DELETED;
+		mockedOffer.flatshare = flatshare;
+		mockedOffer.roomDetails = new RoomDetails();
+		mockedOffer.roomDetails.roomSize = new FloorSpace(13);
 		mockedOffer.save();
 		RoomOfferApplication mockedApplication = new RoomOfferApplication();
 		mockedApplication.roomOffer = mockedOffer;
