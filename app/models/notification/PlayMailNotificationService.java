@@ -24,7 +24,6 @@ public class PlayMailNotificationService implements NotificationService {
 
 	@Override
 	public void notifyUserOfInvitation(RoomrUser applicant, RoomOfferApplication application) {
-		// TODO Auto-generated method stub
-
+		RoomrMailer.userInvited(applicant, application);
 	}
 }
