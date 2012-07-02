@@ -27,7 +27,10 @@
 	<h1>Die Bewerbungen für deine WG</h1>
 	<ul>
 	#{list items:flatshareApplications, as:'application'}
-		<li>#{application application /}</li>
+		<li>
+			#{application application /}
+			<a href="/dashboard/inviteApplicant/${application.id}"> Diesen Bewerber einladen</a>
+		</li>
 	#{/list}
 	</ul>
 </div>

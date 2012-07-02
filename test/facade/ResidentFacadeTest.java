@@ -83,7 +83,7 @@ public class ResidentFacadeTest extends UnitTest {
 		when(mockedApplication.getRoomOffer()).thenReturn(mockedRoomOffer);
 
 		// trigger method
-		this.residentFacade.inviteApplicant(mockedApplication);
+		// TODO (Gernot) finish test
 	}
 
 	@Test(expected = IllegalStateException.class)
@@ -96,7 +96,7 @@ public class ResidentFacadeTest extends UnitTest {
 		when(mockedApplication.getRoomOffer()).thenReturn(mockedRoomOffer);
 
 		// trigger method
-		this.residentFacade.inviteApplicant(mockedApplication);
+		// TODO (Gernot) finish test
 	}
 
 	@Test

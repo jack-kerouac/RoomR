@@ -1,14 +1,19 @@
 package models.offer;
 
+import java.util.Set;
+
 import javax.persistence.Embedded;
 import javax.persistence.Id;
 
+import models.application.RoomOfferApplication;
 import models.flatshare.Flatshare;
 import play.modules.objectify.Datastore;
 import play.modules.objectify.ObjectifyModel;
 
+import com.google.appengine.repackaged.com.google.common.collect.Sets;
 import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
+import com.googlecode.objectify.Query;
 import com.googlecode.objectify.annotation.Cached;
 
 @Cached
@@ -90,4 +95,8 @@ public class RoomOffer extends ObjectifyModel {
 		return true;
 	}
 
+	public Set<RoomOfferApplication> getApplications() {
+		Query<RoomOfferApplication> query = Datastore.query(RoomOfferApplication.class).filter("roomOfferId", this.id);
+		return Sets.newHashSet(query);
+	}
 }

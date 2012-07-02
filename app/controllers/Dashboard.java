@@ -6,12 +6,14 @@ import javax.inject.Inject;
 
 import models.application.RoomOfferApplication;
 import models.flatshare.Flatshare;
+import models.offer.RoomOffer;
 import models.user.RoomrUser;
 import play.data.validation.Required;
 import play.modules.guice.InjectSupport;
 
 import com.google.common.base.Optional;
 
+import facade.ResidentFacade;
 import facade.SeekerFacade;
 import facade.UserFacade;
 
@@ -22,6 +24,8 @@ public class Dashboard extends AbstractRoomrController {
 	private static UserFacade userFacade;
 	@Inject
 	private static SeekerFacade seekerFacade;
+	@Inject
+	private static ResidentFacade residentFacade;
 
 	public static void view() {
 		Optional<RoomrUser> loggedInUser = userFacade.getLoggedInUser();
@@ -30,13 +34,10 @@ public class Dashboard extends AbstractRoomrController {
 
 			if (loggedInUser.get().hasFlatshare()) {
 				Flatshare myFlatshare = loggedInUser.get().getFlatshare();
-				System.out.println("my flatshare");
-				System.out.println(myFlatshare.getRoomOffer());
-
-				// Set<RoomOfferApplication> flatshareApplications = repository
-				// .findAllApplicationsFor(currentUser.getFlatshare());
-				// render(myApplications, myFlatshare, flatshareApplications);
-				// render(myApplications);
+				RoomOffer offerForResidentsFlatshare = loggedInUser.get().getFlatshare().getRoomOffer();
+				Set<RoomOfferApplication> flatshareApplications = offerForResidentsFlatshare.getApplications();
+				System.out.println(flatshareApplications);
+				render(myApplications, myFlatshare, flatshareApplications);
 			} else {
 				render(myApplications);
 			}
@@ -48,6 +49,11 @@ public class Dashboard extends AbstractRoomrController {
 
 	public static void removeApplication(@Required Long id) {
 		seekerFacade.removeRoomOfferApplication(id);
+		Dashboard.view();
+	}
+
+	public static void inviteApplicant(@Required Long roaId) {
+		residentFacade.inviteApplicant(roaId);
 		Dashboard.view();
 	}
 

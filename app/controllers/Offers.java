@@ -1,5 +1,7 @@
 package controllers;
 
+import static com.google.common.base.Preconditions.checkState;
+
 import java.util.ArrayList;
 
 import javax.inject.Inject;
@@ -100,7 +102,11 @@ public class Offers extends AbstractRoomrController {
 
 		copy(formData, flatshare, offer);
 
-		residentFacade.createFlatshareAndOffer(flatshare, offer);
+		Optional<RoomrUser> loggedInUser = userFacade.getLoggedInUser();
+		// TODO (Gernot) always associate the current user with the given
+		// flatshare?
+		checkState(loggedInUser.isPresent(), "User needed to associate it with the flatshare for the offer");
+		residentFacade.createFlatshareAndOffer(flatshare, offer, loggedInUser.get());
 
 		viewOffer(offer.id);
 	}
@@ -127,7 +133,7 @@ public class Offers extends AbstractRoomrController {
 
 		OfferFormData formData = new OfferFormData();
 		copy(flatshare, offer, formData);
-		
+
 		renderOfferForm(formData);
 	}
 
@@ -147,7 +153,6 @@ public class Offers extends AbstractRoomrController {
 			badRequest();
 		}
 	}
-	
 
 	private static void renderOfferForm(OfferFormData formData) {
 		Gender[] genders = Gender.values();
@@ -158,7 +163,6 @@ public class Offers extends AbstractRoomrController {
 		AdditionalSpace[] additionalSpaces = AdditionalSpace.values();
 		render(formData, genders, floors, smokingTolerances, typesOfHouse, appliances, additionalSpaces);
 	}
-
 
 	/**
 	 * Copy attributes from form backing object {@code formData} to
@@ -206,10 +210,10 @@ public class Offers extends AbstractRoomrController {
 		// CONTACT DATA
 		offer.contactEmail = formData.email;
 	}
-	
-	
+
 	/**
-	 * Copy attributes from {@code flatshare} and {@code offer} to form backing object {@code formData};
+	 * Copy attributes from {@code flatshare} and {@code offer} to form backing
+	 * object {@code formData};
 	 */
 	private static void copy(Flatshare flatshare, RoomOffer offer, OfferFormData formData) {
 		// FLATSHARE
@@ -218,10 +222,10 @@ public class Offers extends AbstractRoomrController {
 		formData.streetNumber = flatshare.address.streetNumber;
 		formData.zipCode = flatshare.address.zipCode;
 		formData.city = flatshare.address.city;
-		
+
 		formData.lat = flatshare.geoLocation.getLatitude();
 		formData.lng = flatshare.geoLocation.getLongitude();
-		
+
 		formData.displayStreetView = flatshare.streetViewParameters.displayStreetView;
 		formData.streetViewLat = flatshare.streetViewParameters.streetViewGeoLocation.getLatitude();
 		formData.streetViewLng = flatshare.streetViewParameters.streetViewGeoLocation.getLongitude();
@@ -229,19 +233,19 @@ public class Offers extends AbstractRoomrController {
 		formData.streetViewHeading = (float) flatshare.streetViewParameters.streetViewHeading;
 		formData.streetViewPitch = (float) flatshare.streetViewParameters.streetViewPitch;
 		formData.streetViewZoom = (float) flatshare.streetViewParameters.streetViewZoom;
-		
+
 		formData.floor = flatshare.floor;
 		formData.numberOfRooms = flatshare.numberOfRooms;
 		formData.smokingTolerance = flatshare.smokingTolerance;
 		formData.typeOfHouse = flatshare.typeOfHouse;
 		formData.appliances = flatshare.appliances;
 		formData.additionalSpaces = flatshare.additionalSpaces;
-		
+
 		// CRITERIA
 		formData.genders = offer.criteria.genders;
 		formData.minAge = offer.criteria.minAge.years;
 		formData.maxAge = offer.criteria.maxAge.years;
-		
+
 		// ROOM DETAILS
 		formData.roomSize = offer.roomDetails.roomSize.squareMeters;
 		formData.totalRentPerMonthInEuro = offer.roomDetails.totalRentPerMonthInEuro;
@@ -250,14 +254,13 @@ public class Offers extends AbstractRoomrController {
 		formData.freeTo = offer.roomDetails.freeTo;
 
 		// DESCRIPTION
-		
+
 		formData.description = offer.description;
 
 		// CONTACT DATA
-		
+
 		formData.email = offer.contactEmail;
 	}
-	
 
 	public static void viewAll() {
 		ArrayList<RoomOffer> offers = Lists.newArrayList(administrationFacade.findAllOffers());

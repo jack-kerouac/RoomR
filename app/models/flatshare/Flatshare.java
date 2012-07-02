@@ -1,15 +1,13 @@
 package models.flatshare;
 
-import java.util.HashSet;
-
-
 import static com.google.common.base.Preconditions.checkState;
+
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Embedded;
 import javax.persistence.Id;
 
-import models.application.RoomOfferApplication;
 import models.common.Address;
 import models.common.Floor;
 import models.offer.RoomOffer;
@@ -40,30 +38,27 @@ public class Flatshare extends ObjectifyModel {
 	@Embedded
 	public StreetViewParameters streetViewParameters;
 
-
 	public SmokingTolerance smokingTolerance;
 
 	public TypeOfHouse typeOfHouse;
-	
+
 	public Integer numberOfRooms;
-	
+
 	public Set<Appliance> appliances = Sets.newLinkedHashSet();
-	
+
 	public Set<AdditionalSpace> additionalSpaces = Sets.newLinkedHashSet();
-	
-	
+
 	public Set<RoomrUser> getResidents() {
 		// TODO implement
 		return new HashSet<RoomrUser>();
 	}
 
-	public RoomOffer getRoomOffer(){
-		Query<RoomOffer> query = Datastore.query(RoomOffer.class).filter("flatshareKey", Datastore.key(RoomOffer.class, this.id));
-		checkState(query.countAll() == 1,"Exactly one room offer expected for a flatshare");
+	public RoomOffer getRoomOffer() {
+		Query<RoomOffer> query = Datastore.query(RoomOffer.class).filter("flatshareId", id);
+		checkState(query.countAll() == 1, "Exactly one room offer expected for a flatshare");
 		return Iterables.getOnlyElement(query);
 	}
-	
-	
+
 	@Override
 	public String toString() {
 		return Objects.toStringHelper(this).add("id", id).add("address", address).add("geoLocation", geoLocation)
