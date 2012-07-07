@@ -200,9 +200,7 @@ GET     /photoUpload	                            staticFile:public/index.html
 GET     /test			                            staticFile:public/index.html
 GET     /				                            staticFile:public/index.html
 GET		/scripts/									staticDir:public/scripts
-GET		/styles/									staticDir:public/workshop/styles
-# TODO FLO: remove /src URL
-GET		/src/										staticDir:public/workshop/src
+GET		/styles/									staticDir:public/styles
 GET		/templates/									staticDir:public/workshop/templates
 
 # Catch all
