@@ -64,7 +64,8 @@ module.exports = function(grunt){
 		docco: {
 			src: {
 				files: [             // Zu dokumentierende Files
-					'src/**/*.coffee',
+					'src/coffee/**/*.coffee',
+					'build/tasks/*.js',
 					'grunt.js'
 				],
 				dest: ''             // Zielverzeichnis, in dem `/docs` angelegt wird
