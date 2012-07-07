@@ -97,6 +97,10 @@ module.exports = function(grunt){
 			images: {
 				src: ['images/**/*'],
 				dest: '../public'
+			},
+			requirejs: {
+				src: ['scripts/**/*'],
+				dest: '../public'
 			}
 		},
 
@@ -119,7 +123,7 @@ module.exports = function(grunt){
 
 	// Alle automatisch zu startenden Tasks unter dem Label 'default' ablegen
 	// `cleanup` rauswerfen um die generierten JavaScript-Dateien zu inspizieren
-	grunt.registerTask('default', 'lint stylus coffee server qunit docco requirejs copy:images clean');
+	grunt.registerTask('default', 'lint stylus coffee server qunit docco requirejs copy clean');
 
 	grunt.registerTask('defaultWatch', 'lint stylus coffee requirejs copy clean');
 

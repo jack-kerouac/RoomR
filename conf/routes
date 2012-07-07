@@ -202,6 +202,7 @@ GET     /				                            staticFile:public/index.html
 GET		/scripts/									staticDir:public/scripts
 GET		/styles/									staticDir:public/styles
 GET		/templates/									staticDir:public/workshop/templates
+GET		/images/									staticDir:public/images
 
 # Catch all
 #*       /old/{controller}/{action}                  {controller}.{action}
