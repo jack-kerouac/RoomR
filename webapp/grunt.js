@@ -100,14 +100,9 @@ module.exports = function(grunt){
 			}
 		},
 
-		// clean: {
-		//	tmp: {
-		//		folder: "tmp"
-		//	},
-		//	images: {
-		//		folder: '../public/images'
-		//	}
-		// },
+		clean: {
+			folder: "tmp"
+		},
 
 		watch: {
 			files: ['src/**/*', 'lib/**/*', 'images/**/*'],
