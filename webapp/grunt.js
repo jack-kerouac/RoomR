@@ -76,12 +76,12 @@ module.exports = function(grunt){
 		requirejs: {
 			baseUrl: 'tmp/scripts',  // Script-Source-Verzeichnis
 			paths: {                  // Pfade für Libraries mit doofen/abweichenden Dateinamen
-				'jquery': '../../lib/jquery-1.7.2',      // Versionsnummer
-				'jquery-ui': '../../lib/jquery-ui-1.8.21.custom.min',
-				'backbone': '../../lib/backbone-amd',    // AMD-Build (https://github.com/amdjs)
-				'underscore': '../../lib/underscore-amd', // AMD-Build (https://github.com/amdjs)
-				'handlebars': '../../lib/Handlebars-1.0.beta.6', // AMD-Build (https://github.com/SlexAxton/require-handlebars-plugin)
-				'modernizr': '../../lib/modernizr-2.5.3'
+				'jquery': '../../src/js/lib/jquery-1.7.2',      // Versionsnummer
+				'jquery-ui': '../../src/js/lib/jquery-ui-1.8.21.custom.min',
+				'backbone': '../../src/js/lib/backbone-amd',    // AMD-Build (https://github.com/amdjs)
+				'underscore': '../../src/js/lib/underscore-amd', // AMD-Build (https://github.com/amdjs)
+				'handlebars': '../../src/js/lib/Handlebars-1.0.beta.6', // AMD-Build (https://github.com/SlexAxton/require-handlebars-plugin)
+				'modernizr': '../../src/js/lib/modernizr-2.5.3'
 			},
 			name: 'main',             // Wurzelmodul
 			out: '../public/scripts/app.js',            // Zieldatei
