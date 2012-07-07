@@ -1,0 +1,14 @@
+{
+	"folders":
+	[
+		{
+			"path": "public/workshop"
+		},
+		{
+			"path": "webapp"
+		},
+		{
+			"path": "public"
+		}
+	]
+}
