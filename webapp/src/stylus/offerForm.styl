@@ -1,0 +1,49 @@
+.itemChoice
+  stash-padding = 10px
+  icon-size = 80px
+  icon-margin = 5px
+  clearfix()
+
+  stashWidth(horizontalIcons)
+    horizontalIcons * (icon-size + 2 * icon-margin) + 2 * stash-padding
+  stashHeight(verticalIcons)
+    verticalIcons * (icon-size + 2 * icon-margin) + 2 * stash-padding
+
+
+
+  ul
+    clearfix()
+
+    &:before
+      content attr(data-value)
+
+    padding stash-padding
+    float left
+
+    &.potential
+      background-color: blue
+      width stashWidth(2)
+      height stashHeight(2)
+
+    &.available
+      background-color: green
+      width stashWidth(4)
+      height stashHeight(1)
+
+    &.non-available
+      background-color: red
+      width stashWidth(4)
+      height stashHeight(1)
+
+    li
+      width icon-size
+      height icon-size
+      margin icon-margin
+      display list-item
+      list-style none outside none
+      float left
+
+      background-color yellow
+      cursor move
+      text-align center
+      border-radius(5px)

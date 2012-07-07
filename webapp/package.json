@@ -1,0 +1,22 @@
+{
+  "name": "workshop",
+  "description": "Ein wilder Ritt durch die moderne Webentwicklung.",
+  "version": "0.0.1",
+  "homepage": "https://github.com/SirPepe/HTML5Workshop2",
+  "author": {
+    "name": "Peter Kröner",
+    "email": "peter@peterkroener.de"
+  },
+  "engines": {
+    "node": ">= 0.6.0"
+  },
+  "dependencies": {
+    "coffee-script": "1.3.x",
+    "docco": "0.3.x",
+    "grunt": "0.3.x",
+    "grunt-requirejs": "0.2.x",
+    "grunt-clean": "0.3.x",
+    "nib": "0.5.x",
+    "stylus": "0.27.x"
+  }
+}
