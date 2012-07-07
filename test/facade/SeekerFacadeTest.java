@@ -1,6 +1,7 @@
 package facade;
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import models.application.RoomOfferApplication;
 import models.common.FloorSpace;
@@ -48,65 +49,79 @@ public class SeekerFacadeTest extends UnitTest {
 		verifyZeroInteractions(notificationService);
 	}
 
-	// @Test(expected = IllegalStateException.class)
-	// public void testRemoveRoomOfferApplicationWithInvalidApplicationState() {
-	// // set up mocks
-	// RoomOffer mockedOffer = new RoomOffer();
-	// Long mockedOfferApplicationId = 32L;
-	// mockedOffer.currentState = RoomOffer.State.PUBLIC;
-	// RoomOfferApplication application = new RoomOfferApplication();
-	// RoomOfferApplication spyedApplication = spy(application);
-	// spyedApplication.currentState = RoomOfferApplication.State.ACCEPTED;
-	// when(roomOfferApplicationRepository.findApplication(mockedOfferApplicationId)).thenReturn(spyedApplication);
-	// when(spyedApplication.getRoomOffer()).thenReturn(mockedOffer);
-	//
-	// // trigger method
-	// facadeUnderTest.removeRoomOfferApplication(mockedOfferApplicationId);
-	//
-	// // verify
-	// verifyZeroInteractions(notificationService);
-	// verifyZeroInteractions(roomOfferApplicationRepository);
-	// }
-	//
-	// @Test
-	// public void testRemoveRoomOfferApplicationAlreadyInvited() {
-	// // set up mocks
-	// RoomOffer mockedOffer = new RoomOffer();
-	// Long mockedOfferApplicationId = 32L;
-	// mockedOffer.currentState = RoomOffer.State.PUBLIC;
-	// RoomOfferApplication application = new RoomOfferApplication();
-	// RoomOfferApplication spyedApplication = spy(application);
-	// spyedApplication.currentState = RoomOfferApplication.State.INVITED;
-	// when(spyedApplication.getRoomOffer()).thenReturn(mockedOffer);
-	// when(roomOfferApplicationRepository.findApplication(mockedOfferApplicationId)).thenReturn(spyedApplication);
-	//
-	// // trigger method
-	// facadeUnderTest.removeRoomOfferApplication(mockedOfferApplicationId);
-	//
-	// // verify
-	// verify(notificationService).notifyFlatshareOfRemovedApplication(mockedOffer,
-	// spyedApplication);
-	// verify(roomOfferApplicationRepository).remove(spyedApplication);
-	// }
-	//
-	// @Test
-	// public void testRemoveRoomOfferApplicationNotInvited() {
-	// // set up mocks
-	// RoomOffer mockedOffer = new RoomOffer();
-	// mockedOffer.currentState = RoomOffer.State.PUBLIC;
-	// Long mockedOfferApplicationId = 32L;
-	// RoomOfferApplication application = new RoomOfferApplication();
-	// RoomOfferApplication spyedApplication = spy(application);
-	// spyedApplication.currentState = RoomOfferApplication.State.INVITED;
-	// when(spyedApplication.getRoomOffer()).thenReturn(mockedOffer);
-	// when(roomOfferApplicationRepository.findApplication(mockedOfferApplicationId)).thenReturn(spyedApplication);
-	//
-	// // trigger method
-	// facadeUnderTest.removeRoomOfferApplication(mockedOfferApplicationId);
-	//
-	// // verify
-	// verify(notificationService).notifyFlatshareOfRemovedApplication(mockedOffer,
-	// spyedApplication);
-	// verify(roomOfferApplicationRepository).remove(spyedApplication);
-	// }
+	@Test(expected = IllegalStateException.class)
+	public void testRemoveRoomOfferApplicationWithInvalidApplicationState() {
+		// set up mocks
+		Flatshare flatshare = FlatshareBuilder.validFlatshare().build();
+		RoomOffer mockedOffer = new RoomOffer();
+		mockedOffer.currentState = RoomOffer.State.PUBLIC;
+		mockedOffer.flatshare = flatshare;
+		mockedOffer.roomDetails = new RoomDetails();
+		mockedOffer.roomDetails.roomSize = new FloorSpace(13);
+		mockedOffer.save();
+		RoomOfferApplication mockedApplication = new RoomOfferApplication();
+		mockedApplication.roomOffer = mockedOffer;
+		mockedApplication.currentState = RoomOfferApplication.State.ACCEPTED;
+		mockedApplication.save();
+
+		// trigger method
+		facadeUnderTest.removeRoomOfferApplication(mockedApplication.id);
+
+		// verify
+		verifyZeroInteractions(notificationService);
+	}
+
+	@Test
+	public void testRemoveRoomOfferApplicationWithApplicantInvited() {
+		// set up mocks
+		Flatshare flatshare = FlatshareBuilder.validFlatshare().build();
+		RoomOffer mockedOffer = new RoomOffer();
+		mockedOffer.currentState = RoomOffer.State.PUBLIC;
+		mockedOffer.flatshare = flatshare;
+		mockedOffer.roomDetails = new RoomDetails();
+		mockedOffer.roomDetails.roomSize = new FloorSpace(13);
+		mockedOffer.save();
+		RoomOfferApplication mockedApplication = new RoomOfferApplication();
+		mockedApplication.roomOffer = mockedOffer;
+		mockedApplication.currentState = RoomOfferApplication.State.INVITED;
+		mockedApplication.save();
+
+		Long longMockedApplicationId = mockedApplication.id;
+
+		// trigger method
+		facadeUnderTest.removeRoomOfferApplication(mockedApplication.id);
+
+		// verify that notification has been sent
+		verify(notificationService).notifyFlatshareOfRemovedApplication(mockedOffer, mockedApplication);
+
+		// verify that application has been deleted#
+		assertNull(RoomOfferApplication.findById(longMockedApplicationId));
+	}
+
+	@Test
+	public void testRemoveRoomOfferApplicationWithApplicantNotInvited() {
+		// set up mocks
+		Flatshare flatshare = FlatshareBuilder.validFlatshare().build();
+		RoomOffer mockedOffer = new RoomOffer();
+		mockedOffer.currentState = RoomOffer.State.PUBLIC;
+		mockedOffer.flatshare = flatshare;
+		mockedOffer.roomDetails = new RoomDetails();
+		mockedOffer.roomDetails.roomSize = new FloorSpace(13);
+		mockedOffer.save();
+		RoomOfferApplication mockedApplication = new RoomOfferApplication();
+		mockedApplication.roomOffer = mockedOffer;
+		mockedApplication.currentState = RoomOfferApplication.State.WAITING_FOR_INVITATION;
+		mockedApplication.save();
+
+		Long longMockedApplicationId = mockedApplication.id;
+
+		// trigger method
+		facadeUnderTest.removeRoomOfferApplication(mockedApplication.id);
+
+		// verify that notification has been sent
+		verifyZeroInteractions(notificationService);
+
+		// verify that application has been deleted#
+		assertNull(RoomOfferApplication.findById(longMockedApplicationId));
+	}
 }
