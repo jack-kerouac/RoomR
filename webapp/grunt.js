@@ -96,11 +96,11 @@ module.exports = function(grunt){
 
 		copy: {
 			images: {
-				src: ['images/**/*'],
-				dest: '../public'
+				src: 'images',
+				dest: '../public/images'
 			},
-			requirejs: {
-				src: ['scripts/**/*'],
+			staticContent: {
+				src: 'static',
 				dest: '../public'
 			}
 		},
@@ -120,7 +120,6 @@ module.exports = function(grunt){
 	grunt.loadTasks('build/tasks');         // Alle Tasks in build/task, z.B. der CS-Compiler
 	grunt.loadNpmTasks('grunt-requirejs'); // Task in Form eines NPM-Moduls
 	grunt.loadNpmTasks('grunt-clean'); // Task in Form eines NPM-Moduls
-
 
 	// Alle automatisch zu startenden Tasks unter dem Label 'default' ablegen
 	// `cleanup` rauswerfen um die generierten JavaScript-Dateien zu inspizieren
