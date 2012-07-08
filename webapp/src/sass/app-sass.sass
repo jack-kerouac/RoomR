@@ -1,0 +1,346 @@
+// @import "compass/reset"
+@import "compass/utilities/general/clearfix"
+
+@import "compass/css3/images"
+@import "compass/css3/border-radius"
+@import "compass/css3/box-shadow"
+@import "compass/css3/box-sizing"
+@import "compass/css3/transform"
+@import "compass/css3/transition"
+@import "compass/css3/background-clip"
+
+@import "offerForm"
+@import "photoUpload"
+
+
+$bg_color_out: #163538
+$bg_color_mid: #405e64
+$bg_color_in: #66b0c2
+
+@font-face
+  font-family: 'Inder'
+  font-style: normal
+  font-weight: 400
+  src: font-url("Inder-Regular.eot#") format("ignore me"), font-url("Inder-Regular.woff") format("woff"), font-url("Inder-Regular.ttf") format("truetype")
+
+
+*
+  @include box-sizing(border-box)
+
+
+html
+  min-height: 100%
+
+h1
+  color: white
+  font-weight: 300
+  font-size: 19px
+
+h1#Headline
+  margin-top: 29px
+  margin-left: 77px
+  width: 427px
+  text-align: center
+  float: left
+
+#login
+  margin-left: 15px
+  margin-top: 29px
+
+.MiniInput
+  background-color: white
+  @include box-shadow(inset 0px 2px 3px 0px rgba(0, 0, 0, 0.75))
+  border: 0px 
+  margin-right: 5px
+  padding: 2px
+  width: 120px
+  height: 22px
+  line-height: 22px
+  float: left
+
+em.LoginLabel
+  color: white
+  margin-left: 5px
+  margin-right: 5px
+  float: left
+  font-style: normal
+  height: 22px
+  line-height: 22px
+
+
+
+.MiniButton
+  margin-left: 5px
+  margin-top: 1px
+  float: left
+  height: 21px
+  padding-left: 3px
+  padding-right: 3px
+  text-align: center
+  line-height: 21px
+  font-size: 10px
+  @include background(linear-gradient(top, rgb(181,196,212), rgb(133,164,189), rgb(103,145,173)))
+  border: 0px
+  font-weight: bold
+  @include border-radius(3px)
+
+
+
+.MiniRegister
+  font-size: 11px
+  color: white
+  margin-left: 5px
+
+
+body
+  background: $bg_color_in
+  @include background(radial-gradient(center center, ellipse cover,  $bg_color_in 0%, $bg_color_mid 51%, $bg_color_out 100%))
+  margin: 0px
+  font-family: "Inder", sans-serif
+  font-size: 14px
+
+
+// Layout
+#Wrapper
+  @include pie-clearfix
+  background-image: inline-image("RoomR_Logo.png"), inline-image("oben.png"), inline-image("unten.png")
+  background-position: top center, top center, bottom center
+  background-repeat: no-repeat
+  padding-top: 120px 
+  padding-bottom: 50px
+  position: relative
+  z-index: 2
+  max-width: 990px
+  margin: auto
+
+.HeaderBack
+  @include background(linear-gradient(top, rgb(186,161,124), rgb(157,125,76), rgb(136,101,43)))
+
+
+
+#Main > section
+  padding-left: 10px
+  padding-right: 10px 
+
+// Design
+#Wrapper, .item-bigview
+  // background #FFF // url(/images/bild.gif) center center no-repeat
+  // margin 2em
+  // border-radius(8px)
+  // box-shadow(0.2em 0.2em 1.5em #999);
+
+#Wrapper > header, #Main, #Side, .item-bigview
+  padding-top: 15px
+  padding-bottom: 15px
+
+
+
+
+#Navigation
+  z-index: 1
+  margin-top: -28px
+  margin-bottom: 18px
+
+  nav
+    margin: auto
+    width: auto
+    text-align: center
+    position: relative
+    z-index: 1
+
+    li
+      display: inline-block
+      width: 20%
+      padding: 0px 3px
+      max-width: 160px
+
+    ul
+      margin: 0px
+      padding: 0px
+
+    a
+      display: inline-block
+      width: 100%
+      height: 100%
+      padding: 20px 8px 8px 8px
+      @include border-radius(0px, 5px)
+      @include background(linear-gradient(top, rgb(181,196,212), rgb(133,164,189), rgb(103,145,173)))
+      @include box-shadow(0px 2px 5px 0px rgba(0, 0, 0, 0.75))
+      text-decoration: none
+      color: black
+      font-variant: small-caps
+      font-weight: bold
+
+      &:hover
+        @include background(linear-gradient(top,  #ffd65e 0%,#febf04 100%))
+
+  &.outerleftbutton
+    padding-top: 32px
+
+  &.outerrightbutton
+    padding-top: 32px
+
+
+// Eintrags-Großansicht
+.item-bigview
+  position: absolute
+  top: 15%
+  left: 15%
+  right: 15%
+  bottom: 15%
+
+  // Anklickbare Sachen die kein Link sind
+@mixin klickable
+  cursor: pointer
+  font-weight: bold
+  color: blue
+  text-decoration: underline
+  &:hover
+    text-decoration: none
+
+li .item-title, .clickable
+  @include klickable
+
+
+// Thomas' furchtbare versuche...
+.drop-target
+  background-color: red
+
+.active
+  background-color: yellow
+
+
+// flatshare styles
+input
+  background-color: #bebebe
+  
+
+.widget
+  border: 1px solid rgba(255, 255, 255, 0.4)
+  @include border-radius(5px)
+  background-color: rgba(255, 255, 255, 0.4)
+  @include box-shadow(0px 2px 5px 0px rgba(0, 0, 0, 0.75))
+  padding: 10px
+  margin: 5px
+
+  input
+    background-color: white
+    @include box-shadow(inset 0px 2px 5px 0px rgba(0, 0, 0, 0.75))
+    border: 1px solid rgba(255, 255, 255, 0.4)
+    @include border-radius(2px)
+    margin: 5px
+    margin-left: 0
+    padding-left: 3px
+    padding-right: 3px
+    font-size: 12px
+    line-height: 26px
+    height: 26px
+    &[type=submit],&[type=button] 
+      border-width: 9px
+      border-image: inline-image("border.png") 9 9 9 9 repeat repeat
+      height: 45px
+      @include background-clip(padding-box)
+      background-color: white
+
+
+form
+  max-width: 500px
+
+  li
+    list-style-type: none
+    float: left
+
+  ul
+    @include pie-clearfix
+    padding: 0
+
+  label > span:first-child
+    display: inline-block
+    min-width: 60px
+
+  input
+    margin-left: 0
+
+  input:required
+    margin-bottom: 0  
+
+    + span
+      display: block
+
+      &:after
+        content: "(Pflichtfeld)"
+        font-size: 12px
+        margin-right: 10px
+    
+
+  // break elements after the ownline element
+  .breakAfter + li
+    clear: left
+
+  // break elements before the ownline element
+  .breakBefore
+    clear: left
+    
+
+
+#flatshare_form
+  input[name=street-address]
+    width: 200px
+
+  input[name=city]
+    width: 200px
+
+  input[name=zip]
+    width: 45px
+
+  input[name=floor]
+    width: 80px
+
+
+@media screen and (min-width: 478px)
+  .form li label > span
+    text-align: right
+  .form li input[type="radio"]+label 
+    text-align: left
+
+@media screen and (max-width: 478px)
+  .form li
+    float: none
+    input 
+      width: 100% !important
+    label > span
+      display: block
+
+
+.searchResultContainer
+  position: static
+  @include transform-style(preserve-3d)
+  @include perspective(1600px)
+
+.searchResult
+  width: 100%
+  height: 250px
+  @include transform-style(preserve-3d)
+  @include transition(transform 1s ease-in-out)
+  // -webkit-transition: -webkit-transform 1s ease-in-out
+  // -moz-transition: -moz-transform 1s ease-in-out
+  // -o-transition: -o-transform 1s ease-in-out
+  // -ms-transition: -ms-transform 1s ease-in-out
+
+  > div
+    display: block
+    position: absolute
+    width: 100%
+    height: 90%
+    @include backface-visibility(hidden)
+
+.searchResultFront
+  background-color: #66b0c2
+
+.searchResultBack
+  background-color: #66b0c2
+  @include transform(rotateY(180deg))
+
+.searchResult.rotated
+  @include transform(rotateY(180deg))
+
