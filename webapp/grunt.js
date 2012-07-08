@@ -16,18 +16,44 @@ module.exports = function(grunt){
 			build: ['grunt.js', 'build/**/*.js'] // Alle .js-Files in build (inkl. Unterverzeichnisse)
 		},
 
+
+		copy: {
+			images: {
+				src: 'images',
+				dest: '../public/images'
+			},
+			staticContent: {
+				src: 'static',
+				dest: '../public'
+			}
+		},
+
 		// Haupt-.styl-File(s) nach CSS kompilieren. Alles was als Modul in die Haupt-Files
 		// eingebunden ist, wird direkt in den Output hineinkompiliert.
 		stylus: {
 			main: {
 				file: 'src/stylus/main.styl', // Quelldatei
-				dest: '../public/styles/app.css',             // Zieldatei
+				dest: '../public/styles/app-stylus.css',             // Zieldatei
 				options: {                   // Zusatzoptionen
 					url: {
 						paths: [ 'src/stylus', 'images' ]   // Pfad(e) für Bilder
 					},
 					compress: false             // Code-Komprimierung an/aus
 				}
+			}
+		},
+
+
+		compass: {
+			dev: {
+				src: 'src/sass',
+				dest: '../public/styles/',
+				linecomments: true,
+				forcecompile: true,
+				// require: 'animate-sass mylib',
+				debugsass: true,
+				images: 'images',
+				relativeassets: true
 			}
 		},
 
@@ -94,23 +120,13 @@ module.exports = function(grunt){
 		//   test: '<config:coffee.test>' // Alle Test-JS-Files
 		// },
 
-		copy: {
-			images: {
-				src: 'images',
-				dest: '../public/images'
-			},
-			staticContent: {
-				src: 'static',
-				dest: '../public'
-			}
-		},
-
 		clean: {
 			folder: "tmp"
 		},
 
+		// if you get "Error: watch EMFILE" the reason is that watch uses inotifyd and thus can only monitor up to `sysctl -a | grep fs.inotify.max_user_instances` files
 		watch: {
-			files: ['src/**/*', 'lib/**/*', 'images/**/*'],
+			files: ['src/**/*', 'images/**/*', 'static/**/*'],
 			tasks: 'defaultWatch'
 		}
 
@@ -120,11 +136,13 @@ module.exports = function(grunt){
 	grunt.loadTasks('build/tasks');         // Alle Tasks in build/task, z.B. der CS-Compiler
 	grunt.loadNpmTasks('grunt-requirejs'); // Task in Form eines NPM-Moduls
 	grunt.loadNpmTasks('grunt-clean'); // Task in Form eines NPM-Moduls
+	grunt.loadNpmTasks('grunt-compass');
 
 	// Alle automatisch zu startenden Tasks unter dem Label 'default' ablegen
 	// `cleanup` rauswerfen um die generierten JavaScript-Dateien zu inspizieren
-	grunt.registerTask('default', 'lint stylus coffee server qunit docco requirejs copy clean');
+	grunt.registerTask('default', 'lint stylus compass coffee server docco requirejs copy clean');
 
-	grunt.registerTask('defaultWatch', 'lint stylus coffee requirejs copy clean');
+	// TODO Flo: add compass:dev
+	grunt.registerTask('defaultWatch', 'lint stylus compass coffee requirejs copy clean');
 
 };

@@ -201,7 +201,7 @@ GET     /test			                            staticFile:public/index.html
 GET     /				                            staticFile:public/index.html
 GET		/scripts/									staticDir:public/scripts
 GET		/styles/									staticDir:public/styles
-GET		/templates/									staticDir:public/workshop/templates
+GET		/templates/									staticDir:public/templates
 GET		/images/									staticDir:public/images
 
 # Catch all
