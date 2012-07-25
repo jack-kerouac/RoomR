@@ -1,10 +1,10 @@
 @import "susy"
 
 // SUSY STUFF
-$total-columns  : 6              // a 12-column grid
-$column-width   : 200px            // each column is 4em wide
-$gutter-width   : 20px            // 1em gutters between columns
-$grid-padding   : 10px  // grid-padding equal to gutters
+$total-columns  : 6              
+$column-width   : 150px            
+$gutter-width   : 20px            //  between columns
+$grid-padding   : 0px  // grid-padding equal to gutters
 
 
 @import "compass/reset"
@@ -17,3 +17,33 @@ $grid-padding   : 10px  // grid-padding equal to gutters
 @import "compass/css3/transform"
 @import "compass/css3/transition"
 @import "compass/css3/background-clip"
+
+@import "compass/typography/vertical_rhythm"
+$base-font-size: 14px
+$base-line-height: 20px
+
++establish-baseline
+
+
+
+$text-color: #111111
+$grey: #666666
+
+$blue1: #0088aa
+$blue2: #388ab2
+$blue3: #3eb3cc
+
+$green1: #44aa00
+$green2: #639f2a
+$green3: #71c837
+
+
+@mixin box()
+  color: white
+  +border-radius(20px)
+  +single-box-shadow(rgba(0,0,0,0.5), 5px, 5px)
+  padding: 20px
+  position: relative
+  h1
+    font-size: 30px
+    font-family: 'Patua One'

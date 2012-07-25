@@ -10,30 +10,38 @@
 
 <!-- Fertig optimiertes, aus Stylus generiertes CSS -->
 <link rel="stylesheet" href="/styles/app-sass.css">
-<!-- <link href='http://fonts.googleapis.com/css?family=Maven+Pro:400,700' rel='stylesheet' type='text/css'> -->
+<link href='http://fonts.googleapis.com/css?family=Leckerli+One|Patua+One' rel='stylesheet' type='text/css'>
+
 <body>
 
-<div id="Wrapper">
+<div id="page">
   <header>
-    <h1 id="Headline"></h1>
-    <div id="login"></div>
-  </header>
-  <div id="Main">
-    <div class="left">Links</div>
-    <div class="right">Rechts</div>
-<!--     <section></section> -->
-  </div>
-</div>
-<div id="Navigation">
     <nav>
       <ul>
-        <li><a class="outerleftbutton" href="/">Haupt&shy;seite</a>
-        <li><a href="/search">Suche</a>
-        <li><a href="/offerRoom">Anzeige erstellen</a>
-        <li><a href="chat.html">Chat</a>
-        <li><a class="outerrightbutton" href="/photoUpload">Foto Upload</a>
+        <li><a href="/" class="logo"><span>Room</span><span>R</span></a>
+        <li><a href="/search" class="seek current">WG finden</a>
+        <li><a href="/create" class="reside">WG anlegen</a>
+        <li>&nbsp;</li>
+        <li><a href="/about">Über uns</a>
+        <li><a href="/contact">Kontakt</a>
       </ul>
-  </nav>
+    </nav>
+  </header>
+  <div id="content" class="start">
+    <div>
+      <div class="seek">
+        <!-- TODO: Philip: Wie kann ich image nach h1 machen? -->
+        <div class="image"></div>
+        <h1>WG finden</h1>
+      </div>
+    </div>
+    <div>
+      <div class="reside">
+        <div class="image"></div>
+        <h1>WG anlegen</h1>
+      </div>
+    </div>
+  </div>
+  <footer>
+  </footer>
 </div>
-
-<!-- <script src="http://remote-tilt.com/js/device-motion-polyfill.js"></script> -->

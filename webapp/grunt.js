@@ -50,10 +50,10 @@ module.exports = function(grunt){
 				dest: '../public/styles/',
 				linecomments: true,
 				forcecompile: true,
-				// require: 'animate-sass mylib',
+				require: 'susy',
 				debugsass: true,
-				images: 'images',
-				relativeassets: true
+				images: 'images'
+				//relativeassets: true
 			}
 		},
 
@@ -140,9 +140,9 @@ module.exports = function(grunt){
 
 	// Alle automatisch zu startenden Tasks unter dem Label 'default' ablegen
 	// `cleanup` rauswerfen um die generierten JavaScript-Dateien zu inspizieren
-	grunt.registerTask('default', 'lint stylus compass coffee server docco requirejs copy clean');
+	grunt.registerTask('default', 'lint compass coffee server docco requirejs copy clean');
 
 	// TODO Flo: add compass:dev
-	grunt.registerTask('defaultWatch', 'lint stylus compass coffee requirejs copy clean');
+	grunt.registerTask('defaultWatch', 'lint compass coffee requirejs copy clean');
 
 };

@@ -1,0 +1,45 @@
+$header-height: 80px
+$header-padding: 15px
+
+header
+  clear: both
+  height: $header-height
+  padding: $header-padding 0
+  font-family: 'Patua One'
+  font-size: 20px
+  color: $grey
+
+  border-bottom: 2px solid $grey
+
+  nav
+    li
+      height: $header-height - 2 * $header-padding
+      +span-columns(1)
+      text-align: center
+      // TODO: Philip: vertical center der lis?
+
+    li:last-child
+      +span-columns(1 omega)
+
+    .seek
+      color: $blue1
+
+    .reside
+      color: $green1
+
+    a:not(.logo)
+      padding: 5px
+      &:hover
+        background: $grey
+        color: white
+        +border-radius(5px)
+        +single-box-shadow(rgba(0,0,0,0.5))
+
+
+.logo
+  font-family: 'Leckerli One'
+  font-size: 35px
+  span:nth-child(1)
+    color: $text-color
+  span:nth-child(2)
+    color: $grey

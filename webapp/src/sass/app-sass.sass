@@ -1,41 +1,39 @@
 @import "base"
+@import "header"
+@import "start"
 
-@import "offerForm"
-@import "photoUpload"
-
-
-$bg_color_out: #163538
-$bg_color_mid: #405e64
-$bg_color_in: #66b0c2
 
 @font-face
-  font-family: 'Inder'
+  font-family: ''
   font-style: normal
   font-weight: 400
   src: font-url("Inder-Regular.eot#") format("ignore me"), font-url("Inder-Regular.woff") format("woff"), font-url("Inder-Regular.ttf") format("truetype")
 
 
 *
-  @include box-sizing(border-box)
+  +box-sizing(border-box)
+
+html
+  background-image: image-url('cloth.jpg')
+
+a
+  text-decoration: none
+  color: $text-color
 
 
-#Wrapper
-  @include container
+#page
+  +container
+  // ENABLE THIS FOR COLUMN BACKGROUNDS
+  //+susy-grid-background
 
-header
-  clear: both
+#content
+  +span-columns(6 omega, 6)
 
+  padding: 20px 0 0 0
 
-#Main
-  // content spans the final (omega) 9 columns of 12.
-  @include span-columns(6, 6)
+  > div:nth-child(1)
+    +span-columns(3, 6)
 
-  // main content spans 6 of those 9 columns.
-  .left
-    @include span-columns(3,6)
-
-
-
-  // secondary content spans the final 3 (omega) of 9 columns.
-  .right
-    @include span-columns(3 omega, 6)
+  // secondary content spans the final 3 (omega) of 6 columns.
+  > div:nth-child(2)
+    +span-columns(3 omega, 6)
