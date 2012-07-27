@@ -1,5 +1,5 @@
 define ['base/renderTemplate', 'base/RoomrWidget', 'base/roomrUtil'],
-(renderTemplate, RoomrWidget) ->
+(renderTemplate, RoomrWidget, util) ->
   'use strict'
 
   class CreateUserWidget extends RoomrWidget
@@ -24,7 +24,7 @@ define ['base/renderTemplate', 'base/RoomrWidget', 'base/roomrUtil'],
           birthdate: "#{year}-#{mon}-#{day}T12:00:00.000+0100",
           gender: $('#CreateUserWidgetForm input[name=gender]').val(),
         }
-        $.postJson '/rest/users', userToCreate, =>
+        util.postJson '/rest/users', userToCreate, =>
           @emit 'newUserCreated', userToCreate
         , =>
           alert "Irgendwas ging schief. Sorry..."

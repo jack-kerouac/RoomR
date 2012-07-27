@@ -9,7 +9,7 @@
 # parameter being the templateName and the second parameter being te options element that
 # is returned by jQuery.
 
-define ['handlebars', 'underscore'], ->
+define ['handlebars', 'underscore'], (Handlebars, _) ->
   'use strict'
 
   Handlebars.registerHelper 'date', (date) -> new Date(date).toLocaleDateString()
