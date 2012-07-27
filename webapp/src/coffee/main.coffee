@@ -15,8 +15,15 @@
 # je doch diese beiden Libraries  ihre APIs (`$` und `_`) als globale Objekte
 # bereitstellen, können wir beides in unserer Callback-Funkion verwenden, ohne sie dort
 # im Callback explizit aufzuführen.
-require ['base/EventMediator','backbone','base/AppRouter','sections/PhotoUploadSection','sections/OfferRoomSection','sections/SearchSection','sections/MainSection','sections/RegisterSection','widgets/LoginWidget'],\
-(EventMediator, Backbone, AppRouter, PhotoUploadSection, OfferRoomSection, SearchSection, MainSection, RegisterSection, LoginWidget) ->
+require [ \
+  'base/EventMediator','backbone','base/AppRouter', \
+  'sections/PhotoUploadSection','sections/OfferRoomSection','sections/SearchSection', \
+  'sections/MainSection','sections/RegisterSection','widgets/LoginWidget', \
+  'knockback'], \
+  (EventMediator, Backbone, AppRouter, \
+  PhotoUploadSection, OfferRoomSection, SearchSection, \
+  MainSection, RegisterSection, LoginWidget, \
+  kb) ->
 
   'use strict'
 

@@ -1,11 +1,11 @@
 {
-  "name": "workshop",
-  "description": "Ein wilder Ritt durch die moderne Webentwicklung.",
+  "name": "RoomR",
+  "description": "WG Suche - The next level.",
   "version": "0.0.1",
-  "homepage": "https://github.com/SirPepe/HTML5Workshop2",
+  "homepage": "https://github.com/jack-kerouac/RoomR",
   "author": {
-    "name": "Peter Kröner",
-    "email": "peter@peterkroener.de"
+    "name": "The RoomR team",
+    "email": "hopefully-someone@roo.mr"
   },
   "engines": {
     "node": ">= 0.6.0"
@@ -16,7 +16,7 @@
     "grunt": "0.3.x",
     "grunt-requirejs": "0.2.x",
     "grunt-clean": "0.3.x",
-	"grunt-compass": "0.2.x",
+    "grunt-compass": "0.2.x",
     "nib": "0.5.x",
     "stylus": "0.27.x"
   }
