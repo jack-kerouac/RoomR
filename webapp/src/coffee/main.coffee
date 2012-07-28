@@ -15,15 +15,7 @@
 # je doch diese beiden Libraries  ihre APIs (`$` und `_`) als globale Objekte
 # bereitstellen, können wir beides in unserer Callback-Funkion verwenden, ohne sie dort
 # im Callback explizit aufzuführen.
-require [ \
-  'base/EventMediator','backbone','base/AppRouter', \
-  'sections/PhotoUploadSection','sections/OfferRoomSection','sections/SearchSection', \
-  'sections/MainSection','sections/RegisterSection','widgets/LoginWidget', \
-  'knockback'], \
-  (EventMediator, Backbone, AppRouter, \
-  PhotoUploadSection, OfferRoomSection, SearchSection, \
-  MainSection, RegisterSection, LoginWidget, \
-  kb) ->
+require ['backbone', 'base/AppRouter', 'sections/MainSection'], (Backbone, AppRouter, MainSection) ->
 
   'use strict'
 
@@ -31,24 +23,23 @@ require [ \
   app = new AppRouter()
 
   # handle login separately. do not add it to a section but render it straight into an element
-  loginWidget = new LoginWidget()
-  loginWidget.renderInto($('#login'))
+  #loginWidget = new LoginWidget()
+  #loginWidget.renderInto($('#login'))
 
   mainSection = new MainSection()
   app.addSection mainSection
 
-  searchSection = new SearchSection()
-  app.addSection searchSection
+  # searchSection = new SearchSection()
+  # app.addSection searchSection
 
-  offerRoomSection = new OfferRoomSection()
-  app.addSection offerRoomSection
+  # offerRoomSection = new OfferRoomSection()
+  # app.addSection offerRoomSection
 
-  registerSection = new RegisterSection()
-  app.addSection registerSection
+  # registerSection = new RegisterSection()
+  # app.addSection registerSection
 
-  photoUploadSection = new PhotoUploadSection()
-  app.addSection photoUploadSection
-
+  # photoUploadSection = new PhotoUploadSection()
+  # app.addSection photoUploadSection
 
   # App starten
   # -----------
