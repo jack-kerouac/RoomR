@@ -1,6 +1,7 @@
 @import "base"
 @import "header"
 @import "start"
+@import "search"
 
 
 @mixin box()
@@ -86,3 +87,41 @@ h1
   margin-bottom: 20px
   font-size: 30px
   font-family: 'Patua One'
+
+
+
+
+
+
+
+
+
+
+
+.seek-box
+  +box
+  +background(linear-gradient(top, $blue3, $blue1), $blue1)
+
+  .person-image
+    width: 127px
+    height: 153px
+    +background(image-url('girl.png') no-repeat)
+    position: relative
+    top: -45px
+    left: -15px
+    float: left
+
+
+.reside-box
+  +box
+  +background(linear-gradient(top, $green3, $green1), $green1)
+
+  .person-image
+    +background(image-url('boy.png') no-repeat)
+    width: 127px
+    height: 164px
+
+    position: relative
+    top: -45px
+    left: -15px
+    float: left
