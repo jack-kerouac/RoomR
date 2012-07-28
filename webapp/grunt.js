@@ -162,6 +162,7 @@ module.exports = function(grunt){
 	grunt.registerTask('default', 'lint compass coffee server docco requirejs copy clean');
 
 	// TODO Flo: add compass:dev
-	grunt.registerTask('defaultWatch', 'lint compass coffee requirejs copy clean');
+	// grunt.registerTask('defaultWatch', 'lint compass coffee requirejs copy clean');
+	grunt.registerTask('defaultWatch', 'compass copy clean');
 
 };

@@ -3,6 +3,13 @@
 @import "start"
 
 
+@mixin box()
+  color: white
+  +border-radius(20px)
+  +single-box-shadow(rgba(0,0,0,0.5), 5px, 5px)
+  padding: 20px
+  position: relative
+
 @font-face
   font-family: ''
   font-style: normal
@@ -77,3 +84,5 @@ button
 
 h1
   margin-bottom: 20px
+  font-size: 30px
+  font-family: 'Patua One'
