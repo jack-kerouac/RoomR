@@ -4,12 +4,22 @@
 @import "search"
 
 
-@mixin box()
+@mixin box($image)
   color: white
   +border-radius(20px)
   +single-box-shadow(rgba(0,0,0,0.5), 5px, 5px)
   padding: 20px
   position: relative
+
+  .person-image
+    width: image-width($image)
+    height: image-height($image)
+    +background(image-url($image) no-repeat)
+    position: relative
+    top: -45px
+    left: -15px
+    float: left
+
 
 @font-face
   font-family: ''
@@ -93,35 +103,10 @@ h1
 
 
 
-
-
-
-
-
 .seek-box
-  +box
+  +box('girl.png')
   +background(linear-gradient(top, $blue3, $blue1), $blue1)
 
-  .person-image
-    width: 127px
-    height: 153px
-    +background(image-url('girl.png') no-repeat)
-    position: relative
-    top: -45px
-    left: -15px
-    float: left
-
-
 .reside-box
-  +box
+  +box('boy.png')
   +background(linear-gradient(top, $green3, $green1), $green1)
-
-  .person-image
-    +background(image-url('boy.png') no-repeat)
-    width: 127px
-    height: 164px
-
-    position: relative
-    top: -45px
-    left: -15px
-    float: left
