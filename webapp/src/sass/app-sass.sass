@@ -75,6 +75,7 @@ input, button
   +box-shadow(inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75))
   border: 1px solid $grey
   +border-radius(5px)
+  outline-style: none
   padding: 3px
   height: 30px
   font-family: 'Patua One'
@@ -82,7 +83,8 @@ input, button
 
 
   &:focus
-    border: 1px solid $orange1
+    +box-shadow(inset 0px 0px 10px 0px $blue1)
+
 
   &[type=submit],&[type=button] 
     border-width: 9px
