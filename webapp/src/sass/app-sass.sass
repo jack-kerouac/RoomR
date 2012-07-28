@@ -4,13 +4,26 @@
 @import "search"
 
 
-@mixin box($image)
+@mixin box($image, $lightcolor, $darkcolor)
   color: white
   +border-radius(20px)
   +single-box-shadow(rgba(0,0,0,0.5), 5px, 5px)
+  +background(linear-gradient(top, $lightcolor, $darkcolor), $darkcolor)
   padding: 20px
   position: relative
+  font-size: 1.5em
+  font-family: 'Patua One'
 
+  a
+    color: $darkcolor
+    padding: 5px 10px
+    background-color: white
+    +box-shadow(inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75))
+    border: 1px solid $grey
+    +border-radius(5px)
+
+
+  // this is for the person image
   &:before
     content: ''
     display: block
@@ -24,11 +37,9 @@
 
 
 @font-face
-  font-family: ''
+  font-family: 'Inika'
   font-style: normal
   font-weight: 400
-  src: font-url("Inder-Regular.eot#") format("ignore me"), font-url("Inder-Regular.woff") format("woff"), font-url("Inder-Regular.ttf") format("truetype")
-
 
 *
   +box-sizing(border-box)
@@ -36,10 +47,12 @@
 html
   background-image: image-url('cloth.jpg')
 
+body
+  font-size: 62.5%
+  font-family: 'Inika'
+
 a
   text-decoration: none
-  color: $text-color
-
 
 #page
   +container
@@ -48,13 +61,13 @@ a
 
 #content
   +span-columns(6 omega, 6)
+  font-size: 1.5em
 
   padding: 20px 0 0 0
 
 
 
 form
-  max-width: 500px
 
   li
     // float: left
@@ -66,9 +79,8 @@ form
   label > span:first-child
     display: inline-block
     min-width: 100px
-
+  label > span
     font-family: 'Patua One'
-    font-size: 1.3em
 
 input, button
   background-color: white
@@ -78,9 +90,6 @@ input, button
   outline-style: none
   padding: 3px
   height: 30px
-  font-family: 'Patua One'
-  font-size: 1.3em
-
 
   &:focus
     +box-shadow(inset 0px 0px 10px 0px $blue1)
@@ -108,9 +117,7 @@ h1
 
 
 .seek-box
-  +box('girl.png')
-  +background(linear-gradient(top, $blue3, $blue1), $blue1)
+  +box('girl.png', $blue3, $blue1)
 
 .reside-box
-  +box('boy.png')
-  +background(linear-gradient(top, $green3, $green1), $green1)
+  +box('boy.png', $green3, $green1)

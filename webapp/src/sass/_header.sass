@@ -18,13 +18,16 @@ header
     li:last-child
       +span-columns(1 omega)
 
-    .seek
-      color: $blue1
-
-    .reside
-      color: $green1
-
     a:not(.logo)
+      color: $text-color
+
+      &.seek
+        color: $blue1
+
+      &.reside
+        color: $green1
+
+
       padding: 5px
       &:hover
         background: $grey
