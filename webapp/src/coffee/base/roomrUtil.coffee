@@ -3,6 +3,7 @@ define ['jquery', 'handlebars', 'underscore'], ($, Handlebars, _) ->
 
   Handlebars.registerHelper 'date', (date) -> new Date(date).toLocaleDateString()
 
+  # TODO: It seems as if the cache doesn't work...
   templateCache = {}
 
   defaultErrorHandler = (templateName, options) ->

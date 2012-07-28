@@ -1,14 +1,12 @@
 # Einfaches Datenobject, dass Suchergebnisse hält
-define ->
-  class SearchResult
-    constructor: (@roomOffer, @matchingScore, @currentLat, @currentLong) ->
-      throw new Error('roomOffer is undefined!') unless @roomOffer?
-      throw new Error('matchingScore is undefined!') unless @matchingScore?
+define ['backbone'], (Backbone) ->
+  class SearchResult extends Backbone.Model
 
+
+    # doesn't quite work right now, but I leave it in because of the fancy formula...
     currentDistance: ->
       lat1 = @roomOffer.flatshare.geoLocation.latitude
       lon1 = @roomOffer.flatshare.geoLocation.longitude
-      #console.log 'ID='+@roomOffer.flatshare.id
       lat2 = @currentLat
       lon2 = @currentLong
       R = 6371

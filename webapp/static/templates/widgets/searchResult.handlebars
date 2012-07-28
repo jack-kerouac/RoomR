@@ -1,13 +1,13 @@
 <h3>Search Result Widget!</h3>
 <ol class="searchResultContainer">
   {{#each searchResults}}
-    <li class="searchResult" data-result-latitude={{roomOffer.flatshare.geoLocation.latitude}} data-result-longitude={{roomOffer.flatshare.geoLocation.longitude}}>
+    <li class="searchResult" data-result-latitude={{offer.flatshare.geoLocation.latitude}} data-result-longitude={{offer.flatshare.geoLocation.longitude}}>
       <div class="searchResultFront">
-        <b>{{roomOffer.flatshare.address.street}} {{roomOffer.flatshare.address.streetNumber}}</b>
+        <b>{{offer.flatshare.address.street}} {{offer.flatshare.address.streetNumber}}</b>
         <div>Current Distance: {{currentDistance}}&nbsp;km</div>
         <div>MatchingScore {{matchingScore.value}} - {{matchingScore.defined}}</div>
 
-        {{#with roomOffer}}
+        {{#with offer}}
           <div>{{roomDetails.totalRentPerMonthInEuro}}€</div>
     
           <div>
@@ -38,7 +38,7 @@
         {{/with}}
       </div>
       <div class="searchResultBack">
-        <b>{{roomOffer.flatshare.address.street}} {{roomOffer.flatshare.address.streetNumber}}</b>
+        <b>{{offer.flatshare.address.street}} {{offer.flatshare.address.streetNumber}}</b>
         <form>
           <input type="hidden" name="id" value="{{id}}">
           <textarea lines="30" cols="100">

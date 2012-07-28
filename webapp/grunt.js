@@ -107,7 +107,7 @@ module.exports = function(grunt){
 				'underscore': '../../src/js/lib/underscore-1.3.3-amd', // AMD-Build (https://github.com/amdjs)
 				'backbone': '../../src/js/lib/backbone-0.9.2-amd',    // AMD-Build (https://github.com/amdjs)
 				'knockout': '../../src/js/lib/knockout-2.1.0',
-				'knockback': '../../src/js/lib/knockback-0.15.4',
+				'knockback': '../../src/js/lib/knockback-0.15.4-amd',
 				'handlebars': '../../src/js/lib/Handlebars-1.0.beta.6', // AMD-Build (https://github.com/SlexAxton/require-handlebars-plugin)
 				'modernizr': '../../src/js/lib/modernizr-2.5.3'
 			},
@@ -119,9 +119,8 @@ module.exports = function(grunt){
 					exports: 'jQuery'
 				},
 				'jquery-ui': ['jquery'],
-				'knockback': {
-					deps: ['backbone', 'knockout'],
-					exports: 'kb'
+				'knockout': {
+					exports: 'ko'
 				},
 				'handlebars': {
 					exports: 'Handlebars'

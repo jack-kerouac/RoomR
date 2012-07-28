@@ -1,10 +1,8 @@
-define ['backbone', 'base/roomrUtil'], (Backbone, roomrUtil) ->
+define ['backbone', 'base/roomrUtil', 'model/searchResults'], (Backbone, roomrUtil, searchResults) ->
   'use strict'
 
   class SearchResultWidget extends Backbone.View
     name: 'searchResult'
-
-    searchResults: []
 
     events: {
       'click': (element) ->
@@ -26,11 +24,10 @@ define ['backbone', 'base/roomrUtil'], (Backbone, roomrUtil) ->
             enclosingLi.removeClass 'rotated'
     }
 
+    initialize: ->
+      searchResults.on 'change add remove reset', => @render()
+
     render: ->
-      roomrUtil.renderTemplate "widgets/#{this.name}", {searchResults: @searchResults}, (content) =>
+      roomrUtil.renderTemplate "widgets/#{this.name}", {'searchResults': searchResults.toJSON()}, (content) =>
         @$el.html content
       return @
-
-    searchResultsChanged: (searchResults) ->
-      @searchResults = searchResults
-      @render
