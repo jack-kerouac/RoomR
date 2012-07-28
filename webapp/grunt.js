@@ -104,8 +104,8 @@ module.exports = function(grunt){
 			paths: {                  // Pfade für Libraries mit doofen/abweichenden Dateinamen
 				'jquery': '../../src/js/lib/jquery-1.7.2',      // Versionsnummer
 				'jquery-ui': '../../src/js/lib/jquery-ui-1.8.21.custom.min',
-				'backbone': '../../src/js/lib/backbone-0.9.2-amd',    // AMD-Build (https://github.com/amdjs)
 				'underscore': '../../src/js/lib/underscore-1.3.3-amd', // AMD-Build (https://github.com/amdjs)
+				'backbone': '../../src/js/lib/backbone-0.9.2-amd',    // AMD-Build (https://github.com/amdjs)
 				'knockout': '../../src/js/lib/knockout-2.1.0',
 				'knockback': '../../src/js/lib/knockback-0.15.4',
 				'handlebars': '../../src/js/lib/Handlebars-1.0.beta.6', // AMD-Build (https://github.com/SlexAxton/require-handlebars-plugin)

@@ -1,4 +1,4 @@
-define ['base/RoomrSection', 'widgets/StartWidget'], (RoomrSection, StartWidget) ->
+define ['base/RoomrSection'], (RoomrSection) ->
   'use strict'
 
   class MainSection extends RoomrSection
@@ -9,7 +9,3 @@ define ['base/RoomrSection', 'widgets/StartWidget'], (RoomrSection, StartWidget)
         title: 'Hauptseite'
         path: ''
       }
-
-      startWidget = new StartWidget()
-      @addWidget startWidget
-

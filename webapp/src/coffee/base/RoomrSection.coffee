@@ -5,12 +5,11 @@
 # in the template that have the class `widget` set will be used as the containers for 
 # widgets. Their `data-widget-name` attribute defines the name of the widget that is
 # rendered into this `div`.
-
 define ['backbone', 'base/renderTemplate'], (Backbone, renderTemplate) ->
+  'use strict'
 
   return Backbone.View.extend {
-
-    el: '#Main > section'
+    el: '#content'
 
     initialize: (options) ->
       @widgets = []
@@ -27,8 +26,7 @@ define ['backbone', 'base/renderTemplate'], (Backbone, renderTemplate) ->
 
       successCallback = (template) =>
         @$el.html(template)
-        @$el.attr('id', "#{@name}-section")
-        this.$('.widget').each (index, element) =>
+        @$('.widget').each (index, element) =>
           widgetType = $(element).attr('data-type')
           widget = @widgets[widgetType]
           if widget?
@@ -38,6 +36,5 @@ define ['backbone', 'base/renderTemplate'], (Backbone, renderTemplate) ->
         if callback? then callback()
 
       renderTemplate "sections/#{@name}", {}, successCallback
-      
-      return this
+      return @
   }
