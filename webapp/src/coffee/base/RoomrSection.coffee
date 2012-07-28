@@ -23,6 +23,7 @@ define ['backbone', 'base/roomrUtil'], (Backbone, roomrUtil) ->
     render: (callback) ->
       $('title').text("RoomR - #{@title}")
       $('#Headline').html(@title)
+      $('#page').attr('class', @name)
 
       successCallback = (template) =>
         @$el.html(template)

@@ -1,9 +1,3 @@
-@import "base"
-@import "header"
-@import "start"
-@import "search"
-
-
 @mixin box($image, $lightcolor, $darkcolor)
   color: white
   +border-radius(20px)
@@ -34,6 +28,18 @@
     top: -45px
     left: -15px
     float: left
+
+@mixin inverse($color)
+  background: $color
+  color: white
+  +border-radius(5px)
+  +single-box-shadow(rgba(0,0,0,0.5))
+
+@import "base"
+@import "header"
+@import "start"
+@import "search"
+
 
 
 @font-face
