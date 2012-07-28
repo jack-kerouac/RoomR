@@ -2,7 +2,6 @@ define ['base/RoomrSection', 'widgets/SearchWidget', 'widgets/SearchResultWidget
   'use strict'
 
   class SearchSection extends RoomrSection
-
     constructor: ->
       super {
         name: 'search'

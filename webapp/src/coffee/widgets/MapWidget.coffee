@@ -1,9 +1,8 @@
-define ['base/RoomrWidget', 'base/renderTemplate'], (RoomrWidget, renderTemplate) ->
+define ['backbone', 'base/roomrUtil'], (Backbone, roomrUtil) ->
   'use strict'
 
-  class MapWidget extends RoomrWidget
-
-    nidus: undefined
+  class MapWidget extends Backbone.View
+    name: 'map'
     
     gmap: undefined  
 
@@ -11,17 +10,11 @@ define ['base/RoomrWidget', 'base/renderTemplate'], (RoomrWidget, renderTemplate
     currentLong: undefined
 
     constructor: ->
-      super('map')
       @searchResults = []
-      @subscribeToEvent 'searchResultsChanged', (params) =>
-        @searchResultsChanged params
-      @subscribeToEvent 'drawRoute', (params) =>
-        @drawRoute params
 
-    renderInto: (element) ->
-      @nidus = $(element)
-      @renderTemplate {}, (html) =>
-        @nidus.html html
+    render: ->
+      roomrUtil.renderTemplate "widgets/#{this.name}", {}, (html) =>
+        @$el.html html
         @loadGoogle()
               
     loadGoogle: ->
@@ -35,7 +28,7 @@ define ['base/RoomrWidget', 'base/renderTemplate'], (RoomrWidget, renderTemplate
 
     loadGmaps: ->
       window.roomr.isGoogleMapJSLoaded = yes
-      $.getScript('scripts/gmaps.js', @renderMap.bind(this)).fail (args...) -> console.log args
+      $.getScript('scripts/lib/gmaps.js', @renderMap.bind(this)).fail (args...) -> console.log args
 
     renderMap: ->    
       $(document).ready =>

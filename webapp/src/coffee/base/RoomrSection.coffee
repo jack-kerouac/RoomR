@@ -5,7 +5,7 @@
 # in the template that have the class `widget` set will be used as the containers for 
 # widgets. Their `data-widget-name` attribute defines the name of the widget that is
 # rendered into this `div`.
-define ['backbone', 'base/renderTemplate'], (Backbone, renderTemplate) ->
+define ['backbone', 'base/roomrUtil'], (Backbone, roomrUtil) ->
   'use strict'
 
   return Backbone.View.extend {
@@ -30,11 +30,12 @@ define ['backbone', 'base/renderTemplate'], (Backbone, renderTemplate) ->
           widgetType = $(element).attr('data-type')
           widget = @widgets[widgetType]
           if widget?
-            widget.renderInto(element)
+            widget.setElement(element)
+            widget.render()
           else
             alert "no widget found for <... data-type=\"#{widgetType}\">"
         if callback? then callback()
 
-      renderTemplate "sections/#{@name}", {}, successCallback
+      roomrUtil.renderTemplate "sections/#{@name}", {}, successCallback
       return @
   }
