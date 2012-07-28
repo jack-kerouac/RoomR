@@ -1,4 +1,4 @@
-define ['base/RoomrSection', 'widgets/PhotoUploadWidget'], (RoomrSection, PhotoUploadWidget) ->
+define ['base/RoomrSection', 'widget/PhotoUploadWidget'], (RoomrSection, PhotoUploadWidget) ->
   'use strict'
 
   class PhotoUploadSection extends RoomrSection

@@ -1,4 +1,4 @@
-define ['base/RoomrSection', 'widgets/SearchWidget', 'widgets/SearchResultWidget','widgets/MapWidget'], (RoomrSection, SearchWidget, SearchResultWidget, MapWidget) ->
+define ['base/RoomrSection', 'widget/SearchWidget', 'widget/SearchResultWidget','widget/MapWidget'], (RoomrSection, SearchWidget, SearchResultWidget, MapWidget) ->
   'use strict'
 
   class SearchSection extends RoomrSection
