@@ -2,7 +2,6 @@
 define ['backbone'], (Backbone) ->
   class SearchResult extends Backbone.Model
 
-
     # doesn't quite work right now, but I leave it in because of the fancy formula...
     currentDistance: ->
       lat1 = @roomOffer.flatshare.geoLocation.latitude

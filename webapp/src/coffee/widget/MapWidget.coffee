@@ -1,4 +1,5 @@
-define ['backbone', 'base/roomrUtil'], (Backbone, roomrUtil) ->
+define ['backbone', 'base/mapsUtil', 'base/roomrUtil', 'model/searchResults'], \
+        (Backbone,  mapsUtil,        roomrUtil,        searchResults) ->
   'use strict'
 
   class MapWidget extends Backbone.View
@@ -6,50 +7,47 @@ define ['backbone', 'base/roomrUtil'], (Backbone, roomrUtil) ->
     
     gmap: undefined  
 
-    currentLat: undefined
-    currentLong: undefined
+    currentLat: 48.139126
+    currentLong: 11.580186
 
-    constructor: ->
-      @searchResults = []
+    initialize: ->
+      searchResults.on 'change add remove reset', =>
+        mapsUtil.whenMapsLoaded =>
+          @drawSearchResults()
 
     render: ->
       roomrUtil.renderTemplate "widgets/#{this.name}", {}, (html) =>
         @$el.html html
-        @loadGoogle()
-              
-    loadGoogle: ->
-      window.roomr = window.roomr || {}
-      window.roomr.roomrMapWidgetDrawCallback = @loadGmaps.bind(this)
-      if window.roomr.isGoogleMapJSLoaded
-        @createMap @currentLat,@currentLong
-        @drawSearchResults()
-      else
-        $.getScript 'http://maps.google.com/maps/api/js?sensor=false&callback=roomr.roomrMapWidgetDrawCallback'
+        mapsUtil.whenMapsLoaded =>
+          @createMap()
 
-    loadGmaps: ->
-      window.roomr.isGoogleMapJSLoaded = yes
-      $.getScript('scripts/lib/gmaps.js', @renderMap.bind(this)).fail (args...) -> console.log args
-
-    renderMap: ->    
-      $(document).ready =>
-        #if navigator.geolocation
-        #  navigator.geolocation.getCurrentPosition (position) =>
-        #    @createMap position.coords.latitude,position.coords.longitude
-        #else
-        @createMap '48.139126','11.580186'          
-        @drawSearchResults()
-
-    createMap: (latitude, longitude) ->
-      @currentLat = latitude
-      @currentLong = longitude
+    createMap: ->
       @gmap = new GMaps {
-        div: '#SearchResultMap',
-        lat: latitude,
-        lng: longitude,
+        div: '#search-result-map',
+        lat: @currentLat,
+        lng: @currentLong,
         zoom: 13,
         height: '400px'
       }
-      @addMarker4CurrentPosition()      
+      @addMarker4CurrentPosition()
+
+    drawSearchResults: ->
+      @cleanRoute()
+      @gmap.removeMarkers()
+      @addMarker4CurrentPosition()
+
+      number = 1
+      searchResults.each (searchResult) =>
+        offer = searchResult.get('offer')
+        lat = offer.flatshare.geoLocation.latitude
+        long = offer.flatshare.geoLocation.longitude
+        street = offer.flatshare.address.street + ' ' + offer.flatshare.address.streetNumber
+        city = offer.flatshare.address.city;
+        title = street + ', ' + city
+        @addMarker lat,long,title,number, '<p>Straße: '+street+'<br/>
+          Ort:'+city+'<br/>Miete: '+offer.roomDetails.totalRentPerMonthInEuro+' €<br/>
+          Zimmergröße: '+offer.roomDetails.roomSize.squareMeters+' m²</p>'
+        number++
 
     addMarker4CurrentPosition: ->
       marker = @gmap.createMarker {lat:@currentLat, lng:@currentLong, title:'aktueller Standort'}
@@ -103,30 +101,7 @@ define ['backbone', 'base/roomrUtil'], (Backbone, roomrUtil) ->
           )
       }    
 
-    searchResultsChanged: (searchResults) ->
-      @searchResults = searchResults
-      @cleanRoute()
-      @gmap.removeMarkers()
-      @addMarker4CurrentPosition()
-      @drawSearchResults()  
-
     cleanRoute: ->
       $('#instructions > *').remove()
       @gmap.cleanRoute()
       $('#routeTo').hide()
-
-    drawSearchResults: ->  
-      number = 1
-      if @searchResults.length < 1
-        return
-      for searchResult in @searchResults
-        
-        lat = searchResult.roomOffer.flatshare.geoLocation.latitude
-        long = searchResult.roomOffer.flatshare.geoLocation.longitude
-        street = searchResult.roomOffer.flatshare.address.street + ' ' + searchResult.roomOffer.flatshare.address.streetNumber
-        city = searchResult.roomOffer.flatshare.address.city;
-        title = street + ', ' + city
-        @addMarker lat,long,title,number, '<p>Straße: '+street+'<br/>
-          Ort:'+city+'<br/>Miete: '+searchResult.roomOffer.roomDetails.totalRentPerMonthInEuro+' €<br/>
-          Zimmergröße: '+searchResult.roomOffer.roomDetails.roomSize.squareMeters+' m²</p>'
-        number++

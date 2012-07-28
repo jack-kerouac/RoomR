@@ -22,7 +22,7 @@ define ['backbone', 'model/searchResults'], (Backbone, searchResults) ->
     params = {}
     _.each searchQuery.toJSON(), (value, key) ->
       params["searchData.#{key}"] = value
-    searchResults.url = '/rest/roomOffers/search?' + $.param params
+    searchResults.url = '/rest/roomOffers/search?' + $.param(params)
     searchResults.fetch()
 
   return searchQuery
