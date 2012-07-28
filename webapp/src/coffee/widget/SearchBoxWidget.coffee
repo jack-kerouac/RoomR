@@ -3,7 +3,7 @@ define ['backbone', 'knockout', 'knockback', 'base/roomrUtil', 'model/searchQuer
   'use strict'
 
   class SearchWidget extends Backbone.View
-    name: 'search'
+    name: 'searchBox'
 
     render: ->
       roomrUtil.renderTemplate "widgets/#{this.name}", {}, (html) =>

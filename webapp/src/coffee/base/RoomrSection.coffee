@@ -37,6 +37,6 @@ define ['backbone', 'base/roomrUtil'], (Backbone, roomrUtil) ->
             alert "no widget found for <... data-type=\"#{widgetType}\">"
         if callback? then callback()
 
-      roomrUtil.renderTemplate "sections/#{@name}", {}, successCallback
+      roomrUtil.renderTemplate "sections/#{@name}Section", {}, successCallback
       return @
   }

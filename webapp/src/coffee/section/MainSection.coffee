@@ -1,4 +1,4 @@
-define ['base/RoomrSection'], (RoomrSection) ->
+define ['base/RoomrSection', 'widget/SearchBoxWidget'], (RoomrSection, SearchBoxWidget) ->
   'use strict'
 
   class MainSection extends RoomrSection
@@ -9,3 +9,6 @@ define ['base/RoomrSection'], (RoomrSection) ->
         title: 'Hauptseite'
         path: ''
       }
+
+      searchBoxWidget = new SearchBoxWidget()
+      @addWidget searchBoxWidget
