@@ -143,6 +143,7 @@ module.exports = function(grunt){
 		},
 
 		// if you get "Error: watch EMFILE" the reason is that watch uses inotifyd and thus can only monitor up to `sysctl -a | grep fs.inotify.max_user_instances` files
+		// increase it with $ sudo sh -c 'echo 8192 > /proc/sys/fs/inotify/max_user_instances"
 		watch: {
 			files: ['src/**/*', 'images/**/*', 'static/**/*'],
 			tasks: 'defaultWatch'

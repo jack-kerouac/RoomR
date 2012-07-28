@@ -1,32 +1,35 @@
 .start
-  .seek
-    +background(linear-gradient(top, $blue1, $blue2), $blue1)
+  .quickbox
     width: 100%
     height: 200px
     +box
+    input
+      width: 80px
+    button
+      margin-left: 30px
+
+
+  .person-image
+    position: relative
+    top: -45px
+    left: -15px
+    float: left
     
-    .image
+  .seek
+    +background(linear-gradient(top, $blue3, $blue1), $blue1)
+    +span-columns(3, 6)
+
+    .person-image
       width: 127px
       height: 153px
       +background(image-url('girl.png') no-repeat)
-      position: relative
-      top: -40px
-      left: -15px
-      float: left
-
-
 
   .reside
-    +background(linear-gradient(top, $green1, $green2), $green1)
-    width: 100%
-    height: 200px
-    +box
-    
-    .image
+    +background(linear-gradient(top, $green3, $green1), $green1)
+    // secondary content spans the final 3 (omega) of 6 columns.
+    +span-columns(3 omega, 6)
+
+    .person-image
       width: 127px
       height: 164px
       +background(image-url('boy.png') no-repeat)
-      position: relative
-      top: -40px
-      left: -15px
-      float: left

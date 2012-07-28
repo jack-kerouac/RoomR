@@ -24,16 +24,56 @@ a
 #page
   +container
   // ENABLE THIS FOR COLUMN BACKGROUNDS
-  //+susy-grid-background
+  // +susy-grid-background
 
 #content
   +span-columns(6 omega, 6)
 
   padding: 20px 0 0 0
 
-  > div:nth-child(1)
-    +span-columns(3, 6)
 
-  // secondary content spans the final 3 (omega) of 6 columns.
-  > div:nth-child(2)
-    +span-columns(3 omega, 6)
+
+form
+  max-width: 500px
+
+  li
+    // float: left
+    margin: 5px 0
+
+  ul
+    // +clearfix
+
+  label > span:first-child
+    display: inline-block
+    min-width: 100px
+
+    font-family: 'Patua One'
+    font-size: 1.3em
+
+input, button
+  background-color: white
+  +box-shadow(inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75))
+  border: 1px solid $grey
+  +border-radius(5px)
+  padding: 3px
+  height: 30px
+  font-family: 'Patua One'
+  font-size: 1.3em
+
+
+  &:focus
+    border: 1px solid $orange1
+
+  &[type=submit],&[type=button] 
+    border-width: 9px
+    border-image: url(/images/border.png) 9 9 9 9 repeat repeat
+    height: 45px
+    background-clip: padding-box
+    background-color: white
+
+button
+  padding: 3px 10px
+
+
+h1
+  margin-bottom: 20px
