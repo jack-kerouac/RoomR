@@ -7,14 +7,12 @@
 # Teile der Applikation reagieren
 define ['backbone'], (Backbone) -> Backbone.Router.extend {
   initialize: ->
-    $(document).ready =>
-      $('body').click (event) =>
-        el = $(event.target)
-        if el.prop('nodeName').toLowerCase() == 'a'
-          link = el.attr('href')
-          if link? and link != '' and link[0] == '/'
-            event.preventDefault()
-            @navigate link, { trigger : yes }
+    router = this
+    $(document).on 'click', 'a', (event) ->
+      link = $(this).attr('href')
+      if link? and link != '' and link[0] == '/'
+        event.preventDefault()
+        router.navigate link, { trigger : yes }
 
   # TODO: Flo: handle unexpected hash tags
   addSection: (section) ->
