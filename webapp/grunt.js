@@ -164,4 +164,7 @@ module.exports = function(grunt){
 	// grunt.registerTask('defaultWatch', 'lint compass coffee requirejs copy clean');
 	grunt.registerTask('defaultWatch', 'compass copy clean');
 
+	grunt.registerTask('styles', 'compass copy clean');
+
+
 };
