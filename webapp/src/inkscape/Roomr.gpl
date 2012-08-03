@@ -1,0 +1,11 @@
+GIMP Palette
+Name: Roomr
+# The Roomr palette
+0 0 0 black
+255 255 255 white
+153 153 153 gray1
+62 179 204 blue1
+56 138 178 blue2
+113 200 55 green1
+99 159 42 green2
+218 87 0 orange1
