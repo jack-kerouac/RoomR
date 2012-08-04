@@ -52,7 +52,7 @@ define ['backbone', 'base/mapsUtil', 'base/roomrUtil', 'model/searchResults'], \
     addMarker4CurrentPosition: ->
       marker = @gmap.createMarker {lat:@currentLat, lng:@currentLong, title:'aktueller Standort'}
       marker.setMap(@gmap.map);
-      marker.setIcon('src/style/img/home.png');
+      marker.setIcon('/images/home.png');
       @gmap.markers.push(marker);
 
     addMarker: (latitude, longitude, markertitle, number, infoContent) ->
