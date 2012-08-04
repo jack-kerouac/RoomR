@@ -20,7 +20,7 @@ define ['backbone', 'base/roomrUtil'], (Backbone, roomrUtil) ->
     addWidget: (widget) ->
       @widgets[widget.name] = widget;
 
-    render: (callback) ->
+    render: (id, callback) ->
       $('title').text("RoomR - #{@title}")
       $('#Headline').html(@title)
       $('#page').attr('class', @name)
@@ -32,7 +32,7 @@ define ['backbone', 'base/roomrUtil'], (Backbone, roomrUtil) ->
           widget = @widgets[widgetType]
           if widget?
             widget.setElement(element)
-            widget.render()
+            widget.render id
           else
             alert "no widget found for <... data-type=\"#{widgetType}\">"
         if callback? then callback()

@@ -16,5 +16,5 @@ define ['backbone'], (Backbone) -> Backbone.Router.extend {
 
   # TODO: Flo: handle unexpected hash tags
   addSection: (section) ->
-    @route section.path, section.name, -> section.render()
+    @route section.path, section.name, (id) -> section.render(id)
 }

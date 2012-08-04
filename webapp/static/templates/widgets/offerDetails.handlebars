@@ -1,0 +1,51 @@
+<h3>Details Widget</h3>
+
+<div data-result-latitude={{flatshare.geoLocation.latitude}} data-result-longitude={{flatshare.geoLocation.longitude}}>
+  <div class="searchResultFront">
+    <b>{{flatshare.address.street}} {{flatshare.address.streetNumber}}</b>
+    <div>Current Distance: {{currentDistance}}&nbsp;km</div>
+    <div>MatchingScore {{matchingScore.value}} - {{matchingScore.defined}}</div>
+
+      <div>{{roomDetails.totalRentPerMonthInEuro}}€</div>
+
+      <div>
+        <div>Zimmergröße:&nbsp;{{roomDetails.roomSize.squareMeters}}&nbsp;m²</div>
+        <div>Zeitraum:
+          {{#unless roomDetails.freeTo}}
+            ab {{date roomDetails.freeFrom}}
+          {{else}}
+            {{date roomDetails.freeFrom}}&nbsp;bis&nbsp;{{date roomDetails.freeTo}}
+          {{/unless}}
+        </div>
+      </div>
+
+      <div>
+        <div>gewünschtes Alter: {{criteria.minAge}}&nbsp;bis&nbsp;{{criteria.maxAge}}</div>
+        <div>gewünschtes Geschlecht: {{criteria.genders}}</div>
+      </div>
+
+      <div>
+        <div>Beschreibung: {{description}}</div>
+        <div>Kontakt E-Mail: {{contactEmail}}</div>
+        <div>Bewerbungen: {{applications}}</div>
+        <a href="/offers/{{id}}">Details</a>
+        <form>
+          <input type="button" name="apply" value="Bewerben...">
+          <input type="button" data-index="{{flatshare.id}}" class="DrawRouteButton" id="DrawRouteButton{{flatshare.id}}" name="DrawRouteButton{{flatshare.id}}" value="Route anzeigen">
+        </form>
+      </div>
+  </div>
+  <div class="searchResultBack">
+    <b>{{flatshare.address.street}} {{flatshare.address.streetNumber}}</b>
+    <form>
+      <input type="hidden" name="id" value="{{id}}">
+      <textarea lines="30" cols="100">
+      Warum willst du hier einziehen?
+      </textarea>
+      <br/>
+      <input type="button" name="sendApply" value="Ab damit">
+      <input type="button" name="saveDraft" value="Entwurf speichern">
+      <input type="button" name="turnBack" value="Zurückdrehen">
+    </form>
+  </div>
+</div>

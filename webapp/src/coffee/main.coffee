@@ -15,7 +15,8 @@
 # je doch diese beiden Libraries  ihre APIs (`$` und `_`) als globale Objekte
 # bereitstellen, können wir beides in unserer Callback-Funkion verwenden, ohne sie dort
 # im Callback explizit aufzuführen.
-require ['backbone', 'base/AppRouter', 'base/ErrorLogger', 'section/MainSection', 'section/SearchSection'], (Backbone, AppRouter, ErrorLogger, MainSection, SearchSection) ->
+require ['backbone', 'base/AppRouter', 'base/ErrorLogger', 'section/MainSection', 'section/SearchSection', 'section/OfferDetailsSection'],
+(Backbone, AppRouter, ErrorLogger, MainSection, SearchSection, OfferDetailsSection) ->
 
   'use strict'
 
@@ -31,6 +32,9 @@ require ['backbone', 'base/AppRouter', 'base/ErrorLogger', 'section/MainSection'
 
   searchSection = new SearchSection()
   app.addSection searchSection
+
+  offerDetailsSection = new OfferDetailsSection()
+  app.addSection offerDetailsSection
 
   # offerRoomSection = new OfferRoomSection()
   # app.addSection offerRoomSection
