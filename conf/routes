@@ -193,16 +193,12 @@ GET		/old/applications							Applications.view
 GET		/old/reset									DevModels.reset
 
 
-GET     /search			                            staticFile:public/index.html
-GET     /offerRoom		                            staticFile:public/index.html
-GET     /register		                            staticFile:public/index.html
-GET     /photoUpload	                            staticFile:public/index.html
-GET     /test			                            staticFile:public/index.html
-GET     /				                            staticFile:public/index.html
+# static ressources
 GET		/scripts/									staticDir:public/scripts
 GET		/styles/									staticDir:public/styles
 GET		/templates/									staticDir:public/templates
 GET		/images/									staticDir:public/images
 
-# Catch all
-#*       /old/{controller}/{action}                  {controller}.{action}
+# requests mapping to js routing
+GET     / 											IndexPageProvider.get
+GET     /search 									IndexPageProvider.get
