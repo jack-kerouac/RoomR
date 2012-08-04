@@ -202,3 +202,4 @@ GET		/images/									staticDir:public/images
 # requests mapping to js routing
 GET     / 											IndexPageProvider.get
 GET     /search 									IndexPageProvider.get
+GET     /offers/{id} 									IndexPageProvider.get
