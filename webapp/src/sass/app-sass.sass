@@ -7,6 +7,7 @@
   position: relative
   font-size: 1.5em
   font-family: 'Patua One'
+  margin-bottom: 10px
 
   a
     color: $darkcolor
@@ -27,6 +28,10 @@
     left: -15px
     float: left
 
+  h1
+    // bigger font size for headings in boxes
+    font-size: 1.8em
+
 @mixin inverse($color)
   background: $color
   color: white
@@ -37,6 +42,7 @@
 @import "header"
 @import "start"
 @import "search"
+@import "offerDetails"
 
 
 
@@ -55,6 +61,8 @@ html
 body
   font-size: 62.5%
   font-family: 'Inika'
+  color: $text-color
+  line-height: 2.3em
 
 a
   text-decoration: none
@@ -124,10 +132,26 @@ button
   padding: 3px 10px
 
 
+
+
 h1
-  margin-bottom: 20px
-  font-size: 30px
+  margin-bottom: 0.5em
+  font-size: 1.8em
   font-family: 'Patua One'
+
+.seek h1
+  color: $blue1
+
+.reside h1
+  color: $green1
+
+
+
+em
+  font-family: 'Patua One'
+  font-size: 1.5em
+  line-height: 1.2em
+
 
 
 
@@ -139,3 +163,9 @@ h1
 
 .reside-box
   +box('boy.png', $green3, $green1)
+
+
+
+table.facts
+  td:first-child
+    padding-right: 1em
