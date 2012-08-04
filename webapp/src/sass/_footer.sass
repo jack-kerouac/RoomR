@@ -1,0 +1,16 @@
+// FOOTER
+
+// make the footer stick to the bottom.
++sticky-footer(image-height('munich-skyline.png') + 10px, "#page", "#root-footer", "footer")
+
+// this footer keeps the content out from the footer! the clear both is required since we have floats inside the content
+// see the comment of Per Wiklander on this page: http://compass-style.org/reference/compass/layout/sticky_footer/
+#root-footer
+  clear: both
+
+footer
+  // since the footer must be outside of the page div, make it a container as well
+  +container
+  +background(image-url('munich-skyline.png') no-repeat)
+  +background-size(100%)
+  background-position: center bottom

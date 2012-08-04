@@ -1,4 +1,5 @@
 @mixin box($image, $lightcolor, $darkcolor)
+
   color: white
   +border-radius(20px)
   +single-box-shadow(rgba(0,0,0,0.5), 5px, 5px)
@@ -40,6 +41,7 @@
 
 @import "base"
 @import "header"
+@import "footer"
 @import "start"
 @import "search"
 @import "offerDetails"
@@ -56,6 +58,7 @@
 
 html
   background-image: image-url('cloth.jpg')
+  // force scrollbar
   overflow-y: scroll
 
 body
@@ -77,20 +80,10 @@ a
   +span-columns(6 omega, 6)
   font-size: 1.5em
 
-  padding: 20px 0 0 0
+  padding-top: 20px
   // this is required for not clipping the box shadows of content. Susy sets overflow to hidden
   overflow: visible
 
-footer
-  +span-columns(6 omega, 6)
-  +background(image-url('munich-skyline.png') no-repeat)
-  +background-size(100%)
-
-  position: fixed
-  bottom: 0px
-
-  width: $total-columns * $column-width + ($total-columns - 1) * $gutter-width
-  height: image-height('munich-skyline.png')
 
 
 form
