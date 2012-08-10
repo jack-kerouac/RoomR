@@ -6,3 +6,18 @@
   #content
     .search-box
       height: 200px
+
+    ol
+
+      li
+        +box(rgba(255,255,255,0.5))
+        +clearfix
+
+        &:last-child
+          margin-bottom: 0
+
+    .info
+      +span-columns(3, 6)
+
+    .map
+      +span-columns(3 omega, 6)

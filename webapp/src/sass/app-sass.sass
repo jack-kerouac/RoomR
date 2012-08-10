@@ -1,14 +1,18 @@
-@mixin box($image, $lightcolor, $darkcolor)
-
-  color: white
+@mixin box($background-color)
   +border-radius(20px)
+  background-color: $background-color
+
+  padding: 20px
+  margin-bottom: 10px
+
+@mixin main-box($image, $lightcolor, $darkcolor)
+  +box($darkcolor)
+  color: white
   +single-box-shadow(rgba(0,0,0,0.5), 5px, 5px)
   +background(linear-gradient(top, $lightcolor, $darkcolor), $darkcolor)
-  padding: 20px
   position: relative
   font-size: 1.5em
   font-family: 'Patua One'
-  margin-bottom: 10px
 
   a
     color: $darkcolor
@@ -152,10 +156,10 @@ em
 
 
 .search-box
-  +box('girl.png', $blue3, $blue1)
+  +main-box('girl.png', $blue3, $blue1)
 
 .reside-box
-  +box('boy.png', $green3, $green1)
+  +main-box('boy.png', $green3, $green1)
 
 
 
