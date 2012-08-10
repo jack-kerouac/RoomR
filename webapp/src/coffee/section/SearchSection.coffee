@@ -16,3 +16,5 @@ define ['base/RoomrSection', 'widget/SearchWidget', 'widget/SearchResultWidget',
 
       mapWidget = new MapWidget()
       @addWidget mapWidget
+
+      searchWidget.search()

@@ -9,3 +9,7 @@ define ['backbone', 'knockout', 'knockback', 'base/roomrUtil', 'model/searchQuer
       roomrUtil.renderTemplate "widgets/#{this.name}", {}, (html) =>
         @$el.append(html)
         ko.applyBindings kb.viewModel(searchQuery), @el
+
+    search: ->
+      searchQuery.search()
+

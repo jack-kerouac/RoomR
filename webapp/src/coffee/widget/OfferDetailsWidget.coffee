@@ -12,14 +12,10 @@ define ['backbone', 'knockout', 'knockback', 'base/roomrUtil', 'base/mapsUtil', 
       offer.id = id
       
       offer.fetch().done =>
-        console.log offer
-        
         # fetch flatshare
         fs = offer.flatshare()
         fs.fetch().done =>
           offerAttr = offer.toJSON()
-
-          console.log fs
 
           roomrUtil.renderTemplate "widgets/#{@name}", {
               roomDetails: offerAttr.roomDetails

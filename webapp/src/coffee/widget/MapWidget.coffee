@@ -32,22 +32,23 @@ define ['backbone', 'base/mapsUtil', 'base/roomrUtil', 'model/searchResults'], \
       @addMarker4CurrentPosition()
 
     drawSearchResults: ->
-      @cleanRoute()
-      @gmap.removeMarkers()
-      @addMarker4CurrentPosition()
+      if(@gmaps)
+        @cleanRoute()
+        @gmap.removeMarkers()
+        @addMarker4CurrentPosition()
 
-      number = 1
-      searchResults.each (searchResult) =>
-        offer = searchResult.get('offer')
-        lat = offer.flatshare.geoLocation.latitude
-        long = offer.flatshare.geoLocation.longitude
-        street = offer.flatshare.address.street + ' ' + offer.flatshare.address.streetNumber
-        city = offer.flatshare.address.city;
-        title = street + ', ' + city
-        @addMarker lat,long,title,number, '<p>Straße: '+street+'<br/>
-          Ort:'+city+'<br/>Miete: '+offer.roomDetails.totalRentPerMonthInEuro+' €<br/>
-          Zimmergröße: '+offer.roomDetails.roomSize.squareMeters+' m²</p>'
-        number++
+        number = 1
+        searchResults.each (searchResult) =>
+          offer = searchResult.get('offer')
+          lat = offer.flatshare.geoLocation.latitude
+          long = offer.flatshare.geoLocation.longitude
+          street = offer.flatshare.address.street + ' ' + offer.flatshare.address.streetNumber
+          city = offer.flatshare.address.city;
+          title = street + ', ' + city
+          @addMarker lat,long,title,number, '<p>Straße: '+street+'<br/>
+            Ort:'+city+'<br/>Miete: '+offer.roomDetails.totalRentPerMonthInEuro+' €<br/>
+            Zimmergröße: '+offer.roomDetails.roomSize.squareMeters+' m²</p>'
+          number++
 
     addMarker4CurrentPosition: ->
       marker = @gmap.createMarker {lat:@currentLat, lng:@currentLong, title:'aktueller Standort'}
