@@ -2,9 +2,12 @@
 define ['jquery', 'handlebars', 'underscore', 'moment', 'moment-de'], ($, Handlebars, _, moment, moment_de) ->
   'use strict'
 
-  #Handlebars.registerHelper 'date', (date) -> new Date(date).toLocaleDateString()
   Handlebars.registerHelper 'date', (date) -> moment(date).format('D. MMMM YYYY')
-
+  Handlebars.registerHelper 'threeDigits', (number) ->
+    s = number + ''
+    while (s.length < 3)
+      s = '0' + s
+    return s
 
   # TODO: It seems as if the cache doesn't work...
   templateCache = {}

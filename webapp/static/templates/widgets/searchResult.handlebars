@@ -5,15 +5,16 @@
     <li>
       <div class="info">
         <h2>
+          <small title="Anzeige #{{threeDigits id}}">{{threeDigits id}}:&nbsp;</small>
           <em title="Gesamtmiete pro Monat">{{roomDetails.totalRentPerMonthInEuro}} €</em> für <em title="Zimmergröße">{{roomDetails.roomSize.squareMeters}} m²</em>
         </h2>
-        <!--<div class="adr">
+        <div class="adr">
           {{#with flatshare.address}}
           <div class="street-address">
             <span class="street">{{street}}</span>&nbsp;<span class="streetnumber">{{streetNumber}}</span>
           </div>
           {{/with}}
-        </div>-->
+        </div>
 
         <div>
           {{#unless roomDetails.freeTo}}
