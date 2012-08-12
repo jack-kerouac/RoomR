@@ -2,9 +2,9 @@
   {{#each searchResults}}
     <!--<div>MatchingScore {{matchingScore.value}} - {{matchingScore.defined}}</div>-->
     {{#with offer}}
-    <li data-result-latitude={{flatshare.geoLocation.latitude}} data-result-longitude={{flatshare.geoLocation.longitude}}>
-      <em>
+    <li>
       <div class="info">
+        <em>
         <div>{{roomDetails.totalRentPerMonthInEuro}} €</div>
         <div>{{roomDetails.roomSize.squareMeters}} m²</div>
         <div class="adr">
@@ -30,14 +30,15 @@
 
         <div>
           <a href="/offers/{{id}}">Details</a>
-          <form>
+          <!--<form>
             <input type="button" name="apply" value="Bewerben...">
             <input type="button" data-index="{{flatshare.id}}" class="DrawRouteButton" id="DrawRouteButton{{flatshare.id}}" name="DrawRouteButton{{flatshare.id}}" value="Route anzeigen">
-          </form>
+          </form>-->
         </div>
-      </em>
+        </em>
+      </div>
 
-      <div class="map">
+      <div class="map" data-result-latitude={{flatshare.geoLocation.latitude}} data-result-longitude={{flatshare.geoLocation.longitude}}>
       </div>
   
     </li>
