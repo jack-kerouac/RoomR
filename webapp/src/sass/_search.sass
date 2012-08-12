@@ -10,15 +10,37 @@
     ol
 
       li
+        // padding of the elements inside the li comes from the column gutter
+        $search-result-padding: $gutter-width
+
+        height: 250px
+        position: relative
+
+        > *
+          // all content columns have full height inside the li
+          height: 100%
+
         +box(rgba(255,255,255,0.5))
         +clearfix
 
         &:last-child
           margin-bottom: 0
 
+        h2
+          span
+            background-color: white
+            padding: 3px
+            +border-radius(10px)
+            color: $blue1
+
         .map
-          height: 200px
           border: 1px solid white
+
+        a
+          +button-link($blue1)
+          position: absolute
+          bottom: $search-result-padding
+
 
     .info
       +span-columns(3, 6)

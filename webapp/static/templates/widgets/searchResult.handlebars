@@ -5,15 +5,16 @@
     <li>
       <div class="info">
         <em>
-        <div>{{roomDetails.totalRentPerMonthInEuro}} €</div>
-        <div>{{roomDetails.roomSize.squareMeters}} m²</div>
-        <div class="adr">
+        <h2>
+          <span title="Gesamtmiete pro Monat">{{roomDetails.totalRentPerMonthInEuro}} €</span> für <span title="Zimmergröße">{{roomDetails.roomSize.squareMeters}} m²</span>
+        </h2>
+        <!--<div class="adr">
           {{#with flatshare.address}}
           <div class="street-address">
             <span class="street">{{street}}</span>&nbsp;<span class="streetnumber">{{streetNumber}}</span>
           </div>
           {{/with}}
-        </div>
+        </div>-->
 
         <div>
           {{#unless roomDetails.freeTo}}
@@ -22,23 +23,18 @@
             {{date roomDetails.freeFrom}}&nbsp;bis&nbsp;{{date roomDetails.freeTo}}
           {{/unless}}
         </div>
-        <div>Current Distance: {{currentDistance}}&nbsp;km</div>
-        <div>
-          <div>gewünschtes Alter: {{criteria.minAge}}&nbsp;bis&nbsp;{{criteria.maxAge}}</div>
-          <div>gewünschtes Geschlecht: {{criteria.genders}}</div>
-        </div>
 
-        <div>
-          <a href="/offers/{{id}}">Details</a>
-          <!--<form>
-            <input type="button" name="apply" value="Bewerben...">
-            <input type="button" data-index="{{flatshare.id}}" class="DrawRouteButton" id="DrawRouteButton{{flatshare.id}}" name="DrawRouteButton{{flatshare.id}}" value="Route anzeigen">
-          </form>-->
-        </div>
+        <a href="/offers/{{id}}">Details</a>
+        <!--<form>
+          <input type="button" name="apply" value="Bewerben...">
+          <input type="button" data-index="{{flatshare.id}}" class="DrawRouteButton" id="DrawRouteButton{{flatshare.id}}" name="DrawRouteButton{{flatshare.id}}" value="Route anzeigen">
+        </form>-->
         </em>
       </div>
 
-      <div class="map" data-result-latitude={{flatshare.geoLocation.latitude}} data-result-longitude={{flatshare.geoLocation.longitude}}>
+        {{#with flatshare}}
+        <div class="map" data-result-latitude={{geoLocation.latitude}} data-result-longitude={{geoLocation.longitude}} data-address="{{address.street}} {{address.streetNumber}}">
+        {{/with}}
       </div>
   
     </li>

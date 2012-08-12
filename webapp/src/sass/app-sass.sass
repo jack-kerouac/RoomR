@@ -5,22 +5,27 @@
   padding: 20px
   margin-bottom: 10px
 
-@mixin main-box($image, $lightcolor, $darkcolor)
-  +box($darkcolor)
+@mixin button-link($text-color)
+  display: inline-block
+  padding: 5px 10px
+  +box-shadow(inset 0px 0px 5px 0px rgba(0, 0, 0, 0.5))
+  border: 1px solid $grey
+  +border-radius(5px)
+  color: $text-color
+  background-color: white
+
+
+@mixin main-box($image, $light-color, $dark-color)
+  +box($dark-color)
   color: white
   +single-box-shadow(rgba(0,0,0,0.5), 5px, 5px)
-  +background(linear-gradient(top, $lightcolor, $darkcolor), $darkcolor)
+  +background(linear-gradient(top, $light-color, $dark-color), $dark-color)
   position: relative
   font-size: 1.5em
   font-family: 'Patua One'
 
   a
-    color: $darkcolor
-    padding: 5px 10px
-    background-color: white
-    +box-shadow(inset 0px 0px 5px 0px rgba(0, 0, 0, 0.5))
-    border: 1px solid $grey
-    +border-radius(5px)
+    +button-link($dark-color)
 
   // this is for the person image
   &:before
@@ -133,7 +138,12 @@ button
 
 h1
   margin-bottom: 0.5em
-  font-size: 1.8em
+  font-size: 1.6em
+  font-family: 'Patua One'
+
+h2
+  margin-bottom: 0.5em
+  font-size: 1.3em
   font-family: 'Patua One'
 
 .seek h1

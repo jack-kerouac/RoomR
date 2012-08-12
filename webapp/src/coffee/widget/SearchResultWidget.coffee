@@ -14,7 +14,7 @@ define ['backbone', 'base/roomrUtil', 'model/searchResults', 'base/mapsUtil'], (
           mapElem = $('.map', this)
           long = mapElem.data 'result-longitude'
           lat = mapElem.data 'result-latitude'
-          console.log mapElem
+          address = mapElem.data 'address'
           mapsUtil.whenMapsLoaded ->
             gmap = new GMaps {
               div: mapElem
@@ -23,9 +23,9 @@ define ['backbone', 'base/roomrUtil', 'model/searchResults', 'base/mapsUtil'], (
               zoom: 14
             }
             marker = gmap.addMarker {
-              lat:lat
-              lng:long
-              title:'aktueller Standort'
+              lat: lat
+              lng: long
+              title: address
             }
 
       return @
