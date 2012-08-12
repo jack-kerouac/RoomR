@@ -87,12 +87,14 @@ a
 #content
   +clearfix
   +span-columns(6 omega, 6)
-  font-size: 1.5em
 
   padding-top: 20px
   // this is required for not clipping the box shadows of content. Susy sets overflow to hidden
   overflow: visible
 
+  font-family: 'Patua One'
+  font-size: 1.5em
+  line-height: 1.2em
 
 
 form
@@ -153,16 +155,11 @@ h2
   color: $green1
 
 
-
 em
-  font-family: 'Patua One'
-  font-size: 1.5em
-  line-height: 1.2em
-
-
-
-
-
+  background-color: white
+  padding: 0.15em
+  +border-radius(0.4em)
+  +box-shadow(0 0 0.4em rgba(0,0,0,0.10))
 
 
 .search-box

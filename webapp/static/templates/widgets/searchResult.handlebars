@@ -4,9 +4,8 @@
     {{#with offer}}
     <li>
       <div class="info">
-        <em>
         <h2>
-          <span title="Gesamtmiete pro Monat">{{roomDetails.totalRentPerMonthInEuro}} €</span> für <span title="Zimmergröße">{{roomDetails.roomSize.squareMeters}} m²</span>
+          <em title="Gesamtmiete pro Monat">{{roomDetails.totalRentPerMonthInEuro}} €</em> für <em title="Zimmergröße">{{roomDetails.roomSize.squareMeters}} m²</em>
         </h2>
         <!--<div class="adr">
           {{#with flatshare.address}}
@@ -29,7 +28,6 @@
           <input type="button" name="apply" value="Bewerben...">
           <input type="button" data-index="{{flatshare.id}}" class="DrawRouteButton" id="DrawRouteButton{{flatshare.id}}" name="DrawRouteButton{{flatshare.id}}" value="Route anzeigen">
         </form>-->
-        </em>
       </div>
 
         {{#with flatshare}}

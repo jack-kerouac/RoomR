@@ -1,7 +1,10 @@
-define ['jquery', 'handlebars', 'underscore'], ($, Handlebars, _) ->
+# just import moment-de in order to switch to german
+define ['jquery', 'handlebars', 'underscore', 'moment', 'moment-de'], ($, Handlebars, _, moment, moment_de) ->
   'use strict'
 
-  Handlebars.registerHelper 'date', (date) -> new Date(date).toLocaleDateString()
+  #Handlebars.registerHelper 'date', (date) -> new Date(date).toLocaleDateString()
+  Handlebars.registerHelper 'date', (date) -> moment(date).format('D. MMMM YYYY')
+
 
   # TODO: It seems as if the cache doesn't work...
   templateCache = {}

@@ -109,7 +109,9 @@ module.exports = function(grunt){
 				'knockout': '../../src/js/lib/knockout-2.1.0',
 				'knockback': '../../src/js/lib/knockback-0.15.4-amd',
 				'handlebars': '../../src/js/lib/Handlebars-1.0.beta.6', // AMD-Build (https://github.com/SlexAxton/require-handlebars-plugin)
-				'modernizr': '../../src/js/lib/modernizr-2.5.3'
+				'modernizr': '../../src/js/lib/modernizr-2.5.3',
+				'moment': '../../src/js/lib/moment-1.6.2',
+				'moment-de': '../../src/js/lib/moment-de'
 			},
 			shim: {
 				'modernizr': {

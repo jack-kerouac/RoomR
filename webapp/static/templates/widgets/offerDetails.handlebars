@@ -3,73 +3,63 @@
 <ul>
   <li>
     <h1>Die WG</h1>
-    <em>
-      <div class="adr">
-        {{#with flatshare.address}}
-        <div class="street-address">
-          <span class="street">{{street}}</span>&nbsp;<span class="streetnumber">{{streetNumber}}</span>
-        </div>
-        <div>
-          <span class="postal-code">{{zipCode}}</span>&nbsp;<span class="locality">{{city}}</span>
-        </div>
-        {{/with}}
+    <div class="adr">
+      {{#with flatshare.address}}
+      <div class="street-address">
+        <span class="street">{{street}}</span>&nbsp;<span class="streetnumber">{{streetNumber}}</span>
       </div>
-    </em>
+      <div>
+        <span class="postal-code">{{zipCode}}</span>&nbsp;<span class="locality">{{city}}</span>
+      </div>
+      {{/with}}
+    </div>
   </li>
   <li>
     <h1>Der Preis</h1>
-    <em>
-      <table class="facts">
-        <tr>
-          <td>Gesamtmiete:</td>
-          <td>{{roomDetails.totalRentPerMonthInEuro}} €</td>
-        </tr>
-        <tr>
-          <td>Kaution:</td>
-          <td>{{roomDetails.depositInEuro}} €</td>
-        </tr>
-      </table>
-    </em>
+    <table class="facts">
+      <tr>
+        <td>Gesamtmiete:</td>
+        <td>{{roomDetails.totalRentPerMonthInEuro}} €</td>
+      </tr>
+      <tr>
+        <td>Kaution:</td>
+        <td>{{roomDetails.depositInEuro}} €</td>
+      </tr>
+    </table>
   </li>
 
   <li>
     <h1>Der Zeitraum</h1>
-    <em>
-      {{#unless roomDetails.freeTo}}
-        ab {{date roomDetails.freeFrom}}
-      {{else}}
-        {{date roomDetails.freeFrom}}&nbsp;‒ {{date roomDetails.freeTo}}
-      {{/unless}}
-    </em>
+    {{#unless roomDetails.freeTo}}
+      ab {{date roomDetails.freeFrom}}
+    {{else}}
+      {{date roomDetails.freeFrom}}&nbsp;‒ {{date roomDetails.freeTo}}
+    {{/unless}}
   </li>
 
   <li>
     <h1>Das Zimmer</h1>
-    <em>
-      <table class="facts">
-        <tr>
-          <td>Größe:</td>
-          <td>{{roomDetails.roomSize.squareMeters}} m²</td>
-        </tr>
-      </table>
-    </em>
+    <table class="facts">
+      <tr>
+        <td>Größe:</td>
+        <td>{{roomDetails.roomSize.squareMeters}} m²</td>
+      </tr>
+    </table>
   </li>
 
   <li>
     <h1>Die Anforderungen</h1>
     {{#with criteria}}
-    <em>
-      <table class="facts">
-        <tr>
-          <td>Alter:</td>
-          <td>{{minAge}}&nbsp;‒ {{maxAge}} Jahre</td>
-        </tr>
-        <tr>
-          <td>Geschlecht:</td>
-          <td>{{genders}}</td>
-        </tr>
-      </table>
-    </em>
+    <table class="facts">
+      <tr>
+        <td>Alter:</td>
+        <td>{{minAge}}&nbsp;‒ {{maxAge}} Jahre</td>
+      </tr>
+      <tr>
+        <td>Geschlecht:</td>
+        <td>{{genders}}</td>
+      </tr>
+    </table>
     {{/with}}
   </li>
 </ul>
