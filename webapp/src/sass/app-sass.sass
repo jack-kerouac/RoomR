@@ -48,6 +48,18 @@
   +border-radius(5px)
   +single-box-shadow(rgba(0,0,0,0.5))
 
+@mixin control-elem
+  background-color: #F5F5F5
+  color: black
+  +box-shadow(inset 0px 0px 5px 0px rgba(0, 0, 0, 0.5))
+  border: 1px solid $grey
+  +border-radius(5px)
+  outline-style: none
+  
+  &:focus
+    +box-shadow(inset 0px 0px 5px 0px $blue1)
+
+
 @import "base"
 @import "header"
 @import "footer"
@@ -113,17 +125,9 @@ form
     font-family: 'Patua One'
 
 input, button
-  background-color: #F5F5F5
-  +box-shadow(inset 0px 0px 5px 0px rgba(0, 0, 0, 0.5))
-  border: 1px solid $grey
-  +border-radius(5px)
-  outline-style: none
+  +control-elem
   padding: 3px
   height: 30px
-
-  &:focus
-    +box-shadow(inset 0px 0px 5px 0px $blue1)
-
 
   &[type=submit],&[type=button] 
     border-width: 9px
@@ -171,7 +175,22 @@ small
   +main-box('boy.png', $green3, $green1)
 
 
-
 table.facts
   td:first-child
     padding-right: 1em
+
+
+
+.textual-icon
+  display: inline-block
+  width: 35px
+  height: 35px
+  font-size: 30px
+
+  &.male
+    padding-left: 3px
+    padding-top: 8px
+
+  &.female
+    padding-left: 5px
+    padding-top: 6px

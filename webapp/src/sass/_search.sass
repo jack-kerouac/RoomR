@@ -7,6 +7,21 @@
     .search-box
       height: 200px
 
+    form .textual-icon
+      +control-elem
+      cursor: pointer
+
+      color: #888888
+      background-color: #DDDDDD
+
+
+      &:hover
+        +box-shadow(inset 0px 0px 7px 0px $blue1)
+
+      &.selected
+        +control-elem
+
+    
     em
       color: $blue1
 
@@ -31,10 +46,17 @@
         .info
           position: relative
 
-          a
-            +button-link($blue1)
+          .bottom
             position: absolute
             bottom: 0
+
+          a
+            +button-link($blue1)
+
+          img
+            position: relative
+            top: 9px
+            left: 20px
 
         .map
           border: 1px solid white
