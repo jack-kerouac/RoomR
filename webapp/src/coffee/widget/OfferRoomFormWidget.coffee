@@ -7,6 +7,6 @@ define ['backbone', 'knockout', 'knockback', 'base/roomrUtil'],
 
     render: ->
       console.log('Offer Room widget rendered')
-      # roomrUtil.renderTemplate "widgets/#{this.name}", {}, (html) =>
-      #   @$el.append(html)
+      roomrUtil.renderTemplate "widgets/#{this.name}", {}, (html) =>
+        @$el.append(html)
       #   ko.applyBindings kb.viewModel(searchQuery), @el

@@ -1,44 +1,17 @@
-$stash-padding: 10px
-$icon-size: 80px
-$icon-margin: 5px
+#page.offerRoom
+  header .reside
+    +inverse($green1)
 
-@mixin stashSize($horizontalIcons, $verticalIcons)
-  width: $horizontalIcons * ($icon-size + 2 * $icon-margin) + 2 * $stash-padding
-  height: $verticalIcons * ($icon-size + 2 * $icon-margin) + 2 * $stash-padding
+  #content
 
-.itemChoice
-  @include pie-clearfix
+    h1
+      font-size: 30px
+      margin-top: 20px
+      margin-bottom: 20px
 
-  ul
-    @include pie-clearfix
-
-    &:before
-      content: attr(data-value)
-
-    padding: $stash-padding
-    float: left
-
-    &.potential
-      background-color: blue
-      @include stashSize(2, 2)
-
-    &.available
-      background-color: green
-      @include stashSize(4, 1)
-
-    &.non-available
-      background-color: red
-      @include stashSize(4, 1)
-
-    li
-      width: $icon-size
-      height: $icon-size
-      margin: $icon-margin
-      display: list-item
-      list-style: none outside none
-      float: left
-
-      background-color: yellow
-      cursor: move
-      text-align: center
-      @include border-radius(5px)
+    .ageInput
+      width: 80px
+    
+    // TODO (Gernot) move this to base.sass or change li floating?
+    .cleaner
+      clear: both
