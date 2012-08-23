@@ -6,10 +6,12 @@ define ['backbone', 'knockout', 'knockback', 'base/roomrUtil', 'model/roomOffer'
     name: 'offerRoomForm'
 
     render: ->
-      console.log('Offer Room widget rendered')
-      roomrUtil.renderTemplate "widgets/#{this.name}", {}, (html) =>
+      roomrUtil.renderTemplate "widgets/#{this.name}", 
+      {'floorOptions' : roomOfferModel.floorOptions}, (html) =>
         @$el.append(html)
         ko.applyBindings kb.viewModel(roomOfferModel), @el
+
+      console.log(roomOfferModel)
 
       roomOfferModel.on 'change', ->
         console.log(roomOfferModel)

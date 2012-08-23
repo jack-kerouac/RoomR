@@ -3,22 +3,23 @@
     <fieldset name="seeker criteria">
         <ul>
             <li>
-                <label><span>Geschlecht</span>
+                <label><span data-bind="visible: gender">Geschlecht</span>
                     <label>
                         <span>
                             Männlich 
-                            <input name="gender" type="radio" value="male">
+                            <input name="gender" type="radio" value="male" data-bind="checked: gender">
                         </span>
                     </label>
                     <label>
                         <span>
                             Weiblich 
-                            <input name="gender" type="radio" value="female">
+                            <input name="gender" type="radio" value="female" data-bind="checked: gender">
                         </span>
-                        
                     </label>
                 </label>
             </li>
+
+
             <div class="cleaner"></div>
             <li>
                 <label><span>Alter</span>
@@ -38,14 +39,18 @@
                 <li>
                     <label>
                         <span>Straße:</span>
-                        <input type="text" name="street-address" class="street-address" required>
+                        <input type="text" name="street-address" class="street-address"
+                            data-bind="value: street" type="number"
+                         required>
                     </label>
                 </li>
                 <div class="cleaner"></div>
                 <li>
                     <label>
                         <span>PLZ:</span>
-                        <input name="zip" type="text" pattern="[0-9]{5}" title="fünf Ziffern" class="postal-code" required>
+                        <input name="zip" type="text" pattern="[0-9]{5}" title="fünf Ziffern"
+                        data-bind="value: postalCode" type="number"
+                         class="postal-code" required>
                     </label>
                 </li>
                 <div class="cleaner"></div>
@@ -93,169 +98,108 @@
             </ul>
             <input name="lat" type="hidden">
             <input name="lng" type="hidden"-->
+        
         </fieldset>
-        
+    <h1>Allgemeine Infos</h1>
+        <fieldset>
+            <ul>
+                <li>
+                    <label>Stockwerk</label>
+                    <select data-bind="options: floorOptions, value: floor">
+                    </select>
+                </li>
+                <div class="cleaner"></div>
+                <li>
+                    <label>Rauchen</label>
+                    <select data-bind="options: smokingToleranceOptions, value: smokingTolerance">
+                    </select>
+                </li>
+                <div class="cleaner"></div>
+                <li>
+                    <label>
+                        <span>Anzahl Zimmer</span>
+                            <input type="text" data-bind="value: numberOfRooms" type="number"
+                             required>
+                    </label>
+                </li>
+                <div class="cleaner"></div>
+                <li>
+                    <label>Haustyp</label>
+                    <select data-bind="options: typeOfHouseOptions, value: typeOfHouse">
+                    </select>
+                </li>
+                <div class="cleaner"></div>
+                <li>
+                    <label>Gadgets</label>
+                    <select data-bind="options: gadgetOptions,  value: gadgets" size="5" multiple="true">
+                    </select>
+                </li>
+            </ul>
+        </fieldset>
 
-        <!-- TODO: continue here -->
-
-        <!--ul>
-            <li>
-            #{field 'formData.floor'}
-                <label for="${field.id}" class="caption">Stockwerk</label>
-                #{enumSelect field.name, id:field.id, items:floors, value:'ground', class:'field' /}
-                <span class="error">${field.error}</span>
-            #{/}
-            </li>
-            
-            <datalist id="floornames">
-                <option value="UG">
-                <option value="EG">
-                <option value="1. OG">
-                <option value="2. OG">
-                <option value="3. OG">
-                <option value="4. OG">
-                <option value="5. OG">
-                <option value="6. OG">
-                <option value="7. OG">
-                <option value="8. OG">
-                <option value="9. OG">
-                <option value="10. OG">
-            </datalist>
-        
-            <li>
-                <label>
-                    <span>Etage:</span>
-                    <input name="floor" type="text" list="floornames" required>
-                </label>
 
 
-            <li>
-            #{field 'formData.numberOfRooms'}
-                <label for="${field.id}" class="caption">Bewohnte Zimmer</label>
-                <input id="${field.id}" name="${field.name}" type="number" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}" maxlength="2">
-                <span class="error">${field.error}</span>
-            #{/}
-            </li>
-            
-            <li>
-            #{field 'formData.smokingTolerance'}
-                <label for="${field.id}" class="caption">Rauchen</label>
-                #{enumSelect field.name, id:field.id, items:smokingTolerances, value:'prohibited', class:'field' /}
-                <span class="error">${field.error}</span>
-            #{/}
-            </li>
-            
-            <li>
-            #{field 'formData.typeOfHouse'}
-                <label for="${field.id}" class="caption">Haustyp</label>
-                #{enumSelect field.name, id:field.id, items:typesOfHouse, value:field.value, class:'field' /}
-                <span class="error">${field.error}</span>
-            #{/}
-            </li>
-            
-            <li>
-            #{field 'formData.appliances'}
-                <label for="${field.id}" class="caption">Gadgets</label>
-                #{enumMultiSelect field.name, id:field.id, items:appliances, values:field.value, class:'field' /}
-                <span class="error">${field.error}</span>
-            #{/}
-            </li>
+    <h1>Über das Zimmer</h1>
+        <fieldset>
+            <ul>
+                <li>
+                    <label>
+                        <span>Monatliche Miete</span>
+                        <input data-bind="value: totalRentPerMonthInEuro" type="number"    
+                        value="" required>
+                    </label>
+                </li>
+                <div class="cleaner"></div>
+                <li>
+                    <label>
+                        <span>Kaution</span>
+                        <input data-bind="value: depositInEuro" type="number"    
+                        value="" required>
+                    </label>
+                </li>
+                <div class="cleaner"></div>
+                <li>
+                    <label>
+                        <span>Größe des Zimmers</span>
+                        <input data-bind="value: roomSize" type="number"    
+                        value="" required>
+                    </label>
+                </li>
+                <div class="cleaner"></div>
+                <li>
+                    <label>
+                        <span>Frei von </span>
+                        <input class="ageInput" data-bind="value: freeFrom" type="date"    
+                          value="" required>
+                        bis
+                        <input class="ageInput" data-bind="value: freeTo" type="date"    
+                        value="" required>
+                    </label>
+                </li>
+                <div class="cleaner"></div>
+            </ul>
+        </fieldset>
 
-            <div id="appliances" class="itemChoice">
-                <ul data-value="" class="potential">
-                    <li data-value="clothesWasher">Waschmaschine</li>
-                    <li data-value="dishWasher">Spülmaschine</li>
-                    <li data-value="tv">Fernseher</li>
-                    <li data-value="gameConsole">Spielkonsole</li>
-                </ul>
 
-                <ul data-value="verfügbar" class="available">
-                </ul>
 
-                <ul data-value="nicht verfügbar" class="non-available">
-                </ul>
-            </div>
-
-            
-            <li>
-            #{field 'formData.additionalSpaces'}
-                <label for="${field.id}" class="caption">Zusatzflächen</label>
-                #{enumMultiSelect field.name, id:field.id, items:additionalSpaces, values:field.value, class:'field' /}
-                <span class="error">${field.error}</span>
-            #{/}
-            </li>
-        </ul>
-    </fieldset>
-    
-    <fieldset name="room details">
-        <legend>Das Zimmer</legend>
-        <ul>
-            <li>
-            #{field 'formData.totalRentPerMonthInEuro'}
-                <label for="${field.id}" class="caption">Gesamtmiete / Monat</label>
-                <input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
-                <label for="${field.id}">€</label>
-                <span class="error">${field.error}</span>
-            #{/}
-            </li>
-            <li>
-            #{field 'formData.depositInEuro'}
-                <label for="${field.id}" class="caption">Kaution</label>
-                <input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
-                <label for="${field.id}">€</label>
-                <span class="error">${field.error}</span>
-            #{/}
-            </li>
-            <li>
-            #{field 'formData.roomSize'}
-                <label for="${field.id}" class="caption">Zimmergröße</label>
-                <input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
-                <label for="${field.id}">m²</label>
-                <span class="error">${field.error}</span>
-            #{/}
-            </li>
-            
-            <li id="free_period_select">
-                <label class="caption">Zeitraum</label>
-                #{field 'formData.freeFrom'}
-                <input id="${field.id}" name="${field.name}" type="date" data-validate="${field.validationData}" value="${field.value?.format()}" class="age ${field.errorClass}">
-                <span class="error">${field.error}</span>
-                #{/}
-                &nbsp;&#8210;&nbsp;
-                #{field 'formData.freeTo'}
-                <input id="${field.id}" name="${field.name}" type="date" data-validate="${field.validationData}" value="${field.value?.format()}" class="age ${field.errorClass}" placeholder="unbegrenzt">
-                <span class="error">${field.error}</span>
-                #{/}
-            </li>
-        </ul>
-    </fieldset>
-    
-    <fieldset name="description">
-        <legend>Beschreibung</legend>
-        <ul>
-            <li>
-            #{field 'formData.description'}
-                <textarea id="${field.id}" name="${field.name}" data-validate="${field.validationData}" class="${field.errorClass}" placeholder="Schreib was über deine WG!"></textarea>
-                <span class="error">${field.error}</span>
-            #{/}
-            </li>
-        </ul>
-    </fieldset>
-    
-    <fieldset name="contact data">
-        <legend>Deine Kontaktdaten</legend>
-        <ul>
-            <li>
-            #{field 'formData.email'}
-                <label for="${field.id}" class="caption">Deine Email</label>
-                <input id="${field.id}" name="${field.name}" type="text" data-validate="${field.validationData}" value="${field.value}" class="${field.errorClass}">
-                <span class="error">${field.error}</span>
-            #{/}
-            </li>
-        </ul>
-    </fieldset-->
-    
+    <h1>Beschreibung und Kontakt</h1>
+        <fieldset>
+            <ul>
+                <li>
+                    <label>
+                        <span>Schreib was über deine WG</span>
+                    </label>
+                    <textarea  data-bind="value: description">
+                    </textarea>
+                </li>
+                <div class="cleaner"></div>
+                <li>
+                    <label>
+                        <span>Deine Email</span>
+                        <input data-bind="value: contactEmail" type="email"    
+                          value="" required>
+                </li>
+                <div class="cleaner"></div>
+        </fieldset>
     <button type="submit">Anzeige einstellen!</button>
-
 </form>
-
