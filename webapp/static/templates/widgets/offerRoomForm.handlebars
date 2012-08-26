@@ -40,7 +40,7 @@
                     <label>
                         <span>Straße:</span>
                         <input type="text" name="street-address" class="street-address"
-                            data-bind="value: street" type="number"
+                            data-bind="value: street" type="text"
                          required>
                     </label>
                 </li>
@@ -49,7 +49,7 @@
                     <label>
                         <span>PLZ:</span>
                         <input name="zip" type="text" pattern="[0-9]{5}" title="fünf Ziffern"
-                        data-bind="value: postalCode" type="number"
+                        data-bind="value: zipCode" type="number"
                          class="postal-code" required>
                     </label>
                 </li>
@@ -57,7 +57,8 @@
                 <li>
                     <label>
                         <span>Ort:</span>
-                        <input name="city" type="text" class="locality" required>
+                        <input name="city" type="text" class="locality" 
+                        data-bind="value: city" type="text" required>
                     </label>
                 </li>
 
@@ -201,5 +202,5 @@
                 </li>
                 <div class="cleaner"></div>
         </fieldset>
-    <button type="submit">Anzeige einstellen!</button>
+    <button id="offerRoomSubmitButton" type="submit">Anzeige einstellen!</button>
 </form>

@@ -51,6 +51,7 @@ public class Flatshares extends Controller {
 	}
 
 	public static void create(@Valid Flatshare flatshare) {
+		System.out.println("Creating flatshare" + flatshare);
 		Set<RoomOffer> roomOffers = flatshare.roomOffers;
 		if (roomOffers.size() > 1) {
 			response.print("At most one room offer is allowed to be created together with the flatshare!");
@@ -68,7 +69,7 @@ public class Flatshares extends Controller {
 		response.setHeader("Location", getUrlFor(createdFlatshare));
 		renderJSON(createFlatshareGson().toJson(createdFlatshare));
 	}
-	
+
 	public static void addRoomOffer(long id, @Valid RoomOffer roomOffer) {
 		Flatshare flatshare = getFlatshare(id);
 		residentFacade.addOfferToFlatshare(flatshare, roomOffer);
@@ -78,7 +79,7 @@ public class Flatshares extends Controller {
 		renderJSON(createFlatshareGson().toJson(roomOffer));
 
 	}
-	
+
 	public static void update(long id, @Valid Flatshare flatshare) {
 		flatshare.id = id;
 		residentFacade.updateFlatshare(flatshare);

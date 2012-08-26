@@ -7,11 +7,14 @@ define ['backbone', 'knockout', 'knockback', 'base/roomrUtil', 'model/roomOffer'
 
     render: ->
       roomrUtil.renderTemplate "widgets/#{this.name}", 
-      {'floorOptions' : roomOfferModel.floorOptions}, (html) =>
+      {}, (html) =>
         @$el.append(html)
         ko.applyBindings kb.viewModel(roomOfferModel), @el
-
-      console.log(roomOfferModel)
+        submitButton = @$el.find('#offerRoomSubmitButton')
+        console.log(submitButton)
+        submitButton.click (e)->
+          e.preventDefault()
+          roomOfferModel.save()
 
       roomOfferModel.on 'change', ->
         console.log(roomOfferModel)
