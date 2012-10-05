@@ -167,6 +167,4 @@ module.exports = function(grunt){
 	grunt.registerTask('defaultWatch', 'compass copy clean');
 
 	grunt.registerTask('styles', 'compass copy clean');
-
-
 };

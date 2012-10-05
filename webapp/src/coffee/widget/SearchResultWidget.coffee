@@ -11,22 +11,20 @@ define ['backbone', 'base/roomrUtil', 'model/searchResults', 'base/mapsUtil'], (
       roomrUtil.renderTemplate "widgets/#{this.name}", {'searchResults': searchResults.toJSON()}, (content) =>
         @$el.html content
         $("li", @el).each ->
-          mapElem = $('.map', this)
+          mapElem = $('.static-map', this)
           long = mapElem.data 'result-longitude'
           lat = mapElem.data 'result-latitude'
           address = mapElem.data 'address'
           mapsUtil.whenMapsLoaded ->
-            gmap = new GMaps {
-              div: mapElem
-              lat: lat
-              lng: long
-              zoom: 14
-            }
-            marker = gmap.addMarker {
-              lat: lat
-              lng: long
-              title: address
-            }
+            url = GMaps.staticMapURL({
+              size: [mapElem.width(), mapElem.height()],
+              lat: lat,
+              lng: long,
+              markers: [
+                {lat: lat, lng: long}
+              ]
+            })
+            mapElem.attr('src', url);
 
       return @
 
